@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_navigation.xml"
+    app:startDestination="@id/authenticatorFragment">
+
+    <fragment
+        android:id="@+id/authenticatorFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.AuthenticatorFragment"
+        android:label="fragment_authenticator"
+        tools:layout="@layout/fragment_authenticator" >
+        <action
+            android:id="@+id/action_authenticatorFragment_to_accountsDetails"
+            app:destination="@id/accountsDetails" />
+        <action
+            android:id="@+id/action_authenticatorFragment_to_QRScannerScreen"
+            app:destination="@id/QRScannerScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountsDetails"
+        android:name="com.example.my.project.authenticator.ui.fragments.AccountsDetails"
+        android:label="fragment_accounts_details"
+        tools:layout="@layout/fragment_accounts_details" />
+
+    <fragment
+        android:id="@+id/QRScannerScreen"
+        android:name="com.example.my.project.authenticator.ui.fragments.QRScannerScreen"
+        android:label="fragment_q_r_scanner_screen"
+        tools:layout="@layout/fragment_q_r_scanner_screen" />
+</navigation>

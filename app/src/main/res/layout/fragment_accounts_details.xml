@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.AccountsDetails">
+
+    <ImageView
+        android:id="@+id/ivBackIcon"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:contentDescription="@string/app_name"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/provide_account_details"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ivBackIcon"
+        app:layout_constraintStart_toEndOf="@+id/ivBackIcon"
+        app:layout_constraintTop_toTopOf="@id/ivBackIcon" />
+
+
+    <EditText
+        android:id="@+id/etPasscode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:autofillHints="Account Name"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:background="@null"
+        android:hint="@string/account_name"
+        android:inputType="text"
+        android:textColorHint="@color/light_gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle" />
+
+
+    <View
+        android:id="@+id/simple_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@+id/etPasscode" />
+
+
+    <EditText
+        android:id="@+id/etAccountKey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:autofillHints="Your Key"
+        android:background="@null"
+        android:hint="@string/account_key"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:inputType="text"
+        android:textColorHint="@color/light_gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simple_view" />
+
+
+    <View
+        android:id="@+id/keyView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@+id/etAccountKey" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:text="@string/add"
+        app:backgroundTint="@color/secondary_color"
+        app:cornerRadius="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/keyView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

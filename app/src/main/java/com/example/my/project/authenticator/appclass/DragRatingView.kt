@@ -1,0 +1,334 @@
+package com.example.my.project.authenticator.appclass
+
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewConfiguration
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.content.res.ResourcesCompat
+import com.example.my.project.authenticator.R
+import java.util.Locale
+import java.util.SortedMap
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.min
+
+class DragRatingView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayoutCompat(context, attrs, defStyleAttr) {
+    private var mIsDragging = false
+    private var mScaledTouchSlop = 0
+    private var mTouchDownX = 0f
+    private var ratingSpace = 0.0f
+    private var maxRating = 5
+    private var previousRating = 0f
+    private var _currentRating = 0f
+        set(value) {
+            if (value > maxRating) {
+                throw IllegalArgumentException("Rating cannot be more than max rating")
+            } else if (value < 0) {
+                throw IllegalArgumentException("Rating cannot be less than 0")
+            }
+
+            previousRating = field
+            val newRating = roundOffRating(value)
+
+            if (previousRating == newRating) {
+                return
+            }
+
+            field = newRating
+
+            refreshRatingView()
+        }
+
+    var rating: Float
+        get() = _currentRating
+        set(value) {
+            _currentRating = value
+        }
+
+    private fun refreshRatingView() {
+        for (i in 0..childCount) {
+            val childAt = getChildAt(i)
+            if (childAt != null) {
+                setRatingResource(childAt as ImageView, i)
+            }
+        }
+    }
+
+    var callback: RatingChangeCallback? = null
+
+    // We multiply the decimal value by 100 so that we can convert the
+    // decimal to ints It gives us more control on rounding off to the
+    // nearest available.
+    private fun roundOffRating(rating: Float): Float {
+
+        // If the rating is 3.2, decimalRating will hold 0.2
+
+//        Timber.e("checkRatingIssue22- $rating")
+        val decimalRating = (rating - floor(rating))
+        val decimalMultiplied = decimalRating * 100
+
+        val keys = assetMap.keys.toList()
+        for (step in 1 until assetMap.size) {
+
+            val previousStep = step - 1
+
+            val currentMultiple = keys[step] * 100
+            val previousMultiple = keys[previousStep] * 100
+
+            if (previousStep == 0) {
+
+                // If it is first step return the closest key from the user supplied
+                // key value map. This is being to handle the zero rating case.
+                if (decimalMultiplied > previousMultiple && decimalMultiplied < currentMultiple) {
+                    val differPreviousMultiple = decimalMultiplied - previousMultiple
+                    val differCurrentMultiple = currentMultiple - decimalMultiplied
+
+                    val minDifference = min(differCurrentMultiple, differPreviousMultiple)
+                    return when {
+                        differPreviousMultiple == differCurrentMultiple -> floor(rating) + keys[step]
+                        minDifference == differPreviousMultiple -> floor(rating) + keys[previousStep]
+                        else -> floor(rating) + keys[step]
+                    }
+                }
+            } else {
+
+                // If it's not first step just return the next bigger key
+                // from the user supplied key value map.
+                if (currentMultiple > decimalMultiplied) {
+                    return floor(rating) + keys[step]
+                }
+            }
+        }
+
+        return rating
+    }
+
+    private var assetMap: SortedMap<Float, Drawable> = convertToDrawableMap(
+        mapOf(
+            0f to R.drawable.ic_rate_us_unfilled,
+//            0.5f to R.drawable.ic_rating_filled,
+            1f to R.drawable.ic_rate_us_filled
+        )
+    )
+
+    init {
+        attrs?.let {
+            val typedArray = context.obtainStyledAttributes(
+                it,
+                R.styleable.DragRatingView, 0, 0
+            )
+
+            ratingSpace = typedArray.getDimension(
+                R.styleable.DragRatingView_rating_space, 0f
+            )
+            maxRating = typedArray.getInt(
+                R.styleable.DragRatingView_max_rating, 5
+            )
+            _currentRating = typedArray.getFloat(
+                R.styleable.DragRatingView_initial_rating, 0f
+            )
+
+            typedArray.recycle()
+        }
+
+        isClickable = true
+        isFocusable = true
+        mScaledTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
+        addViews()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (!isEnabled) {
+            return false
+        }
+
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                if (isInScrollingContainer()) {
+                    mTouchDownX = event.x
+                } else {
+                    startDrag(event)
+                }
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                if (mIsDragging) {
+                    trackTouchEvent(event)
+                } else {
+                    val x = event.x
+                    if (Math.abs(x - mTouchDownX) > mScaledTouchSlop) {
+                        startDrag(event)
+                    }
+                }
+            }
+
+            MotionEvent.ACTION_UP -> {
+                if (mIsDragging) {
+                    trackTouchEvent(event)
+                    onStopTrackingTouch()
+                    isPressed = false
+
+                    callback?.onRatingChange(previousRating, _currentRating)
+                } else {
+                    // Touch up when we never crossed the touch slop threshold should
+                    // be interpreted as a tap-seek to that location.
+                    onStartTrackingTouch()
+                    trackTouchEvent(event)
+                    onStopTrackingTouch()
+                }
+            }
+
+            MotionEvent.ACTION_CANCEL -> {
+                if (mIsDragging) {
+                    onStopTrackingTouch()
+                    isPressed = false
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun startDrag(event: MotionEvent) {
+        isPressed = true
+        onStartTrackingTouch()
+        trackTouchEvent(event)
+    }
+
+    private fun isInScrollingContainer(): Boolean {
+        var p = parent
+        while (p != null && p is ViewGroup) {
+            if (p.shouldDelayChildPressedState()) {
+                return true
+            }
+            p = p.parent
+        }
+
+        return false
+    }
+
+    protected fun trackTouchEvent(event: MotionEvent) {
+        val x = Math.round(event.x)
+
+        for (i in 0..childCount) {
+            val child: View = getChildAt(i) ?: return
+
+            if (x > child.left && x < (child.left + child.width)) {
+
+                val dragOnView = x - child.left
+                val ratioCross = dragOnView / child.width.toFloat()
+                var rating = 0f
+                val namFormat = String.format(Locale.ENGLISH, "%.2f", ratioCross).toFloat()
+//                Timber.e("checkLang- $namFormat")
+                rating = try {
+                    i + namFormat
+                } catch (ex: NumberFormatException) {
+                    5f
+                }
+
+                when (rating) {
+                    in 0.5..1.0 -> {
+                        rating = 1f
+                    }
+                    in 1.0..2.0 -> {
+                        rating = 2f
+                    }
+                    in 2.0..3.0 -> {
+                        rating = 3f
+                    }
+                    in 3.0..4.0 -> {
+                        rating = 4f
+                    }
+                    in 4.0..5.0 -> {
+                        rating = 5f
+                    }
+                }
+                _currentRating = rating
+
+            }
+        }
+    }
+
+    private fun onStartTrackingTouch() {
+        mIsDragging = true
+    }
+
+    private fun onStopTrackingTouch() {
+        mIsDragging = false
+    }
+
+    private fun addViews() {
+        for (i in 0 until maxRating) {
+            addRatingViews(i)
+        }
+    }
+
+    private fun addRatingViews(pos: Int) {
+
+        val imageView = getImageView(pos)
+        addView(imageView)
+    }
+
+    private fun getImageView(pos: Int): ImageView {
+        val imageView = ImageView(context)
+        val layoutParams = LayoutParams(0, LayoutParams.MATCH_PARENT, 1f)
+        layoutParams.marginEnd = if (pos != (maxRating - 1)) ratingSpace.toInt() else 0
+
+        imageView.layoutParams = layoutParams
+        setRatingResource(imageView, pos)
+
+        return imageView
+    }
+
+    private fun setRatingResource(imageView: ImageView, index: Int) {
+        val pos = index + 1
+        val drawable = when {
+            pos <= floor(_currentRating) -> assetMap[1f]
+            pos == ceil(_currentRating).toInt() -> {
+                val decimal = _currentRating - floor(_currentRating)
+                assetMap[decimal]
+            }
+            else -> assetMap[0f]
+        }
+
+        drawable?.let {
+            imageView.setImageDrawable(it)
+        } ?: imageView.setImageDrawable(null) // Handle missing drawable
+    }
+
+    private fun convertToDrawableMap(map: Map<Float, Int>): SortedMap<Float, Drawable> {
+        val sortedMap: SortedMap<Float, Drawable> = sortedMapOf()
+        for (entry in map) {
+            val drawable = ResourcesCompat.getDrawable(resources, entry.value, null) ?: throw IllegalArgumentException("Resource ID ${entry.value} could not be found.")
+            sortedMap[entry.key] = drawable
+        }
+        return sortedMap
+    }
+
+
+    fun setDrawableAssetMap(map: Map<Float, Drawable>) {
+        assetMap = map.toSortedMap()
+
+        // Need to redraw since the asset have been updated.
+        refreshRatingView()
+    }
+
+    fun setDrawableResourceAssetMap(map: Map<Float, Int>) {
+        assetMap = convertToDrawableMap(map)
+
+        // Need to redraw since the asset have been updated.
+        refreshRatingView()
+    }
+
+    interface RatingChangeCallback {
+        fun onRatingChange(previous: Float, current: Float)
+    }
+}
