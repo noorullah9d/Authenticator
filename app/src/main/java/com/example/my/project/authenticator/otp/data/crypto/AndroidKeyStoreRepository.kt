@@ -1,4 +1,4 @@
-package retanar.totp_android.data.crypto
+package com.example.my.project.authenticator.otp.data.crypto
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties

@@ -30,14 +30,12 @@ class AccountsDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val prefsHelper = SharedPreferencesHelper(requireActivity())
         binding.apply {
 
             ivBackIcon.setOnClickListener {
                 findNavController().popBackStack()
             }
 
-            Log.d(TAG, "onViewCreated: ${homeViewModel.homeState.value}")
 
 
             btnAdd.setOnClickListener {
@@ -48,8 +46,12 @@ class AccountsDetails : Fragment() {
                 } else if (etPasscode.text.toString().isEmpty()) {
                     toast(requireActivity().getString(R.string.key_should_not_empty))
                 } else {
-//                    saveDataToDB(prefsHelper.userEmail!!, etAccountKey.text.toString(), etPasscode.text.toString())
-                    homeViewModel.addTotp(etPasscode.text.toString(), etAccountKey.text.toString())
+                    val result = homeViewModel.addTotp(etPasscode.text.toString(), etAccountKey.text.toString())
+                    if (result){
+                        requireActivity().finish()
+                    }else{
+                        toast(requireActivity().getString(R.string.error_occurs))
+                    }
                 }
             }
 

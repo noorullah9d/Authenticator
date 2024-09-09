@@ -93,5 +93,18 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
 
+    //lottie animation
+    implementation("com.airbnb.android:lottie:6.0.1")
+
+    // CameraX dependencies
+    implementation("androidx.camera:camera-core:1.3.4")
+    implementation("androidx.camera:camera-camera2:1.3.4")
+    implementation("androidx.camera:camera-lifecycle:1.3.4")
+    implementation("androidx.camera:camera-view:1.3.4")
+
+    // Guava library to resolve ListenableFuture
+    implementation("com.google.guava:guava:31.0.1-jre")
+
+
 }
 

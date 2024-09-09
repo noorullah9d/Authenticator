@@ -1,4 +1,4 @@
-package retanar.totp_android.data.crypto
+package com.example.my.project.authenticator.otp.data.crypto
 
 import com.lambdapioneer.argon2kt.Argon2Kt
 import com.lambdapioneer.argon2kt.Argon2Mode

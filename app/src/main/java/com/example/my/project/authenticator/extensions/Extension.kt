@@ -6,11 +6,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.SystemClock
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -131,6 +134,49 @@ fun Context.toast(message: String) {
 
 fun Fragment.toast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun TextView.setProfileImage(accountName: String) {
+    // Predefined colors for letters A-Z
+    val letterColors = mapOf(
+        'A' to Color.parseColor("#F44336"),  // Red
+        'B' to Color.parseColor("#E91E63"),  // Pink
+        'C' to Color.parseColor("#9C27B0"),  // Purple
+        'D' to Color.parseColor("#673AB7"),  // Deep Purple
+        'E' to Color.parseColor("#3F51B5"),  // Indigo
+        'F' to Color.parseColor("#2196F3"),  // Blue
+        'G' to Color.parseColor("#03A9F4"),  // Light Blue
+        'H' to Color.parseColor("#00BCD4"),  // Cyan
+        'I' to Color.parseColor("#009688"),  // Teal
+        'J' to Color.parseColor("#4CAF50"),  // Green
+        'K' to Color.parseColor("#8BC34A"),  // Light Green
+        'L' to Color.parseColor("#CDDC39"),  // Lime
+        'M' to Color.parseColor("#FFEB3B"),  // Yellow
+        'N' to Color.parseColor("#FFC107"),  // Amber
+        'O' to Color.parseColor("#FF9800"),  // Orange
+        'P' to Color.parseColor("#FF5722"),  // Deep Orange
+        'Q' to Color.parseColor("#795548"),  // Brown
+        'R' to Color.parseColor("#9E9E9E"),  // Gray
+        'S' to Color.parseColor("#607D8B"),  // Blue Gray
+        'T' to Color.parseColor("#FF5722"),  // Deep Orange
+        'U' to Color.parseColor("#9C27B0"),  // Purple
+        'V' to Color.parseColor("#673AB7"),  // Deep Purple
+        'W' to Color.parseColor("#3F51B5"),  // Indigo
+        'X' to Color.parseColor("#2196F3"),  // Blue
+        'Y' to Color.parseColor("#03A9F4"),  // Light Blue
+        'Z' to Color.parseColor("#00BCD4")   // Cyan
+    )
+
+    // Extract the first letter of the account name
+    val firstLetter = accountName.firstOrNull()?.uppercaseChar() ?: 'A'
+    this.text = firstLetter.toString()
+
+    // Get the color for the first letter from the letterColors map, fallback to a default color
+    val color = letterColors[firstLetter] ?: Color.GRAY
+
+    // Set the circular background with the retrieved color
+    val background = this.background as? GradientDrawable
+    background?.setColor(color)
 }
 
 

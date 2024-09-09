@@ -3,7 +3,6 @@ package com.example.my.project.authenticator.otp.data.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/** Set `id` to 0 to autogenerate id by the database */
 @Entity(tableName = totpTableName)
 data class TotpDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,

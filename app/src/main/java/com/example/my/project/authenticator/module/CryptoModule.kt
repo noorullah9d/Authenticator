@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retanar.totp_android.data.crypto.AesGcmSecretEncryptor
-import retanar.totp_android.data.crypto.AndroidKeyStoreRepository
-import retanar.totp_android.data.crypto.Argon2PasswordHasher
-import retanar.totp_android.data.crypto.TotpCodeGeneratorImpl
+import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
+import com.example.my.project.authenticator.otp.data.crypto.AndroidKeyStoreRepository
+import com.example.my.project.authenticator.otp.data.crypto.Argon2PasswordHasher
+import com.example.my.project.authenticator.otp.data.crypto.TotpCodeGeneratorImpl
 import javax.inject.Singleton
 
 @Module

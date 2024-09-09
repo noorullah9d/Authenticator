@@ -1,4 +1,4 @@
-package retanar.totp_android.data.crypto
+package com.example.my.project.authenticator.otp.data.crypto
 
 import org.apache.commons.codec.digest.HmacAlgorithms
 import org.apache.commons.codec.digest.HmacUtils

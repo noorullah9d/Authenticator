@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_10sdp">
+    android:layout_marginTop="@dimen/_10sdp"
+    android:foreground="?selectableItemBackground">
 
 
-    <ImageView
+    <TextView
         android:id="@+id/ivProfileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_locked_img"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/circle_background"
+        android:gravity="center"
+        android:text="G"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,13 +49,22 @@
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <com.owl93.dpb.CircularProgressView
+        android:id="@+id/circularProgress"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        app:maxValue="30"
-        app:progressAnimationDuration="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxValue="30"
+        app:progress="10"
+        app:progressAnimationDuration="30"
+        app:strokeColor="@color/secondary_color"
+        app:strokeWidth="@dimen/_2sdp"
+        app:text="30"
+        app:textColor="@color/secondary_color"
+        app:textSize="@dimen/_9ssp"
+        app:trackColor="@color/light_gray"
+        app:trackWidth="@dimen/_1sdp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
@@ -17,9 +18,10 @@ import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.Account
+import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import com.example.my.project.authenticator.utils.TOTPGenerator
+import com.example.my.project.authenticator.utils.TotpCardState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -28,22 +30,22 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
 
     private lateinit var binding: FragmentHomeBinding
 
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
-    private var prefsHelper : SharedPreferencesHelper? = null
+    private var prefsHelper: SharedPreferencesHelper? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -78,10 +80,18 @@ class HomeFragment : Fragment() {
         retrieveDataFromDB(prefsHelper?.userEmail!!)
 
 
+
+
+        homeViewModel.homeState.observe(viewLifecycleOwner) {
+            Log.d(TAG, "onViewCreated: ${it.totpList}")
+
+            setupRecyclerView(it.totpList)
+
+        }
+
+
+
         binding.apply {
-
-
-
 
 
             icProfile.setOnClickListener {
@@ -145,7 +155,7 @@ class HomeFragment : Fragment() {
                         Account(it["accountName"].toString(), it["passcode"].toString())
                     } ?: listOf()
                     // Pass the accountObjects to the RecyclerView adapter
-                    setupRecyclerView(accountObjects)
+//                    setupRecyclerView(accountObjects)
                 } else {
                     toast("No data found for this email")
                 }
@@ -156,9 +166,11 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setupRecyclerView(accounts: List<Account>) {
+    private fun setupRecyclerView(accounts: List<TotpCardState>) {
         binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
-        binding.accountData.adapter = AccountAdapter(accounts)
+        binding.accountData.adapter = AccountAdapter(accounts) { id ->
+            homeViewModel.removeTotpById(id)
+        }
     }
 
 

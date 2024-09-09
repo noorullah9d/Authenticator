@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.otp.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.example.my.project.authenticator.otp.data.database.TotpDao
@@ -16,6 +17,7 @@ class TotpKeyRepositoryImpl(
     }
 
     override suspend fun addKey(key: EncryptedTotpKey) {
+        Log.d(TAG, "addKey: $key")
         dao.insert(TotpDbMapper.fromTotpKey(key))
     }
 
@@ -27,3 +29,5 @@ class TotpKeyRepositoryImpl(
         dao.update(TotpDbMapper.fromTotpKey(key))
     }
 }
+
+private const val TAG = "TotpKeyRepositoryImpl"
