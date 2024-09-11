@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/_10sdp" />
+        app:layout_constraintGuide_begin="@dimen/_15sdp" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -54,7 +54,8 @@
         android:id="@+id/oneTimePassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_25sdp"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle">
@@ -90,7 +91,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/authenticate_login"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toEndOf="@+id/ivLockImage"
             app:layout_constraintTop_toBottomOf="@+id/tvPassEnable" />
 
@@ -99,10 +100,10 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accountData"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/accountData"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
@@ -110,12 +111,13 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llPlaceHolderLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_90sdp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
         app:layout_constraintTop_toTopOf="parent">

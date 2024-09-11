@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
+import com.example.my.project.authenticator.extensions.beGone
+import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.Account
@@ -31,6 +33,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -57,10 +63,7 @@ class HomeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
@@ -77,15 +80,19 @@ class HomeFragment : Fragment() {
         }
 
 
-        retrieveDataFromDB(prefsHelper?.userEmail!!)
-
-
+//        retrieveDataFromDB(prefsHelper?.userEmail!!)
 
 
         homeViewModel.homeState.observe(viewLifecycleOwner) {
-            Log.d(TAG, "onViewCreated: ${it.totpList}")
+            if (it.totpList.isEmpty()) {
+                binding.llPlaceHolderLayout.beVisible()
+                binding.oneTimePassword.beGone()
+            } else {
+                binding.llPlaceHolderLayout.beGone()
+                binding.oneTimePassword.beVisible()
+                setupRecyclerView(it.totpList)
+            }
 
-            setupRecyclerView(it.totpList)
 
         }
 
@@ -132,37 +139,33 @@ class HomeFragment : Fragment() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    Log.d(TAG, "signInWithCredential:success $user")
-                } else {
-                    Log.d(TAG, "signInWithCredential:failure", task.exception)
-                }
+        auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                Log.d(TAG, "signInWithCredential:success $user")
+            } else {
+                Log.d(TAG, "signInWithCredential:failure", task.exception)
             }
+        }
     }
 
 
     private fun retrieveDataFromDB(email: String) {
-        val firebaseFirestore = FirebaseFirestore.getInstance()
-        firebaseFirestore.collection("users").document(email)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val accountsList = document.get("accounts") as? List<Map<String, String>>
-                    val accountObjects = accountsList?.map {
-                        Account(it["accountName"].toString(), it["passcode"].toString())
-                    } ?: listOf()
-                    // Pass the accountObjects to the RecyclerView adapter
+        val fireStore = FirebaseFirestore.getInstance()
+        fireStore.collection("users").document(email).get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val accountsList = document.get("accounts") as? List<Map<String, String>>
+                val accountObjects = accountsList?.map {
+                    Account(it["accountName"].toString(), it["passcode"].toString())
+                } ?: listOf()
+                // Pass the accountObjects to the RecyclerView adapter
 //                    setupRecyclerView(accountObjects)
-                } else {
-                    toast("No data found for this email")
-                }
+            } else {
+                toast("No data found for this email")
             }
-            .addOnFailureListener { e ->
-                toast("Failed to retrieve data: ${e.message}")
-            }
+        }.addOnFailureListener { e ->
+            toast("Failed to retrieve data: ${e.message}")
+        }
     }
 
 

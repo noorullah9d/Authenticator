@@ -17,7 +17,7 @@ class TotpKeyRepositoryImpl(
     }
 
     override suspend fun addKey(key: EncryptedTotpKey) {
-        Log.d(TAG, "addKey: $key")
+        Log.d(TAG, "addKey: ${TotpDbMapper.fromTotpKey(key)}")
         dao.insert(TotpDbMapper.fromTotpKey(key))
     }
 

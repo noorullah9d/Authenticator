@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.ui.activities.FeedbackScreen
+import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +40,7 @@ class SettingScreen : Fragment() {
             }
 
             importExport.setOnClickListener {
-
+                requireActivity().startActivityWithAnimation<ImportExportScreen>()
             }
 
             feedback.setOnClickListener {

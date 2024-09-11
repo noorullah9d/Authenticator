@@ -13,6 +13,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
@@ -25,6 +27,14 @@ import com.google.android.material.card.MaterialCardView
 
 inline fun <reified A : Activity> Activity.startActivityWithAnimation() {
     val intent = Intent(this, A::class.java)
+    val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+    this.startActivity(intent, options.toBundle())
+}
+
+inline fun <reified A : Activity> Activity.startActivityWithAnimationAndClearStack() {
+    val intent = Intent(this, A::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
     val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
     this.startActivity(intent, options.toBundle())
 }
@@ -177,6 +187,43 @@ fun TextView.setProfileImage(accountName: String) {
     // Set the circular background with the retrieved color
     val background = this.background as? GradientDrawable
     background?.setColor(color)
+}
+
+
+
+
+fun Context.showAskPasswordDialog(
+    onDismiss: () -> Unit,
+    onSuccess: (String) -> Unit
+) {
+    // Inflate the custom dialog layout
+    val dialogView = LayoutInflater.from(this).inflate(R.layout.ask_password_dialog, null)
+    val dialogBuilder = AlertDialog.Builder(this)
+        .setView(dialogView)
+        .setCancelable(false) // Disallow closing dialog by clicking outside
+
+    val alertDialog = dialogBuilder.create()
+
+    // Get references to dialog views
+    val passwordEditText = dialogView.findViewById<EditText>(R.id.passwordEditText)
+    val okButton = dialogView.findViewById<Button>(R.id.okButton)
+    val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
+
+    // Set the "OK" button listener
+    okButton.setOnClickListener {
+        val password = passwordEditText.text.toString().trim()
+        onSuccess(password)
+        alertDialog.dismiss()
+    }
+
+    // Set the "CANCEL" button listener
+    cancelButton.setOnClickListener {
+        onDismiss()
+        alertDialog.dismiss()
+    }
+
+    // Show the dialog
+    alertDialog.show()
 }
 
 

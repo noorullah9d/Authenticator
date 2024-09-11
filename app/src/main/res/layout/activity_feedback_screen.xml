@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_35sdp"
         android:fontFamily="@font/lato_regular"
         android:text="@string/rate_experience"
         android:textColor="@color/primary"
@@ -52,10 +52,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/satisfied_service"
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />
 
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvQuestions" />
 
     <View
@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="@dimen/_15sdp"
-        android:background="@color/light_gray"
+        android:background="@color/view_color"
         app:layout_constraintTop_toBottomOf="@+id/rating_stars" />
 
 
@@ -92,23 +92,11 @@
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
-    <!--    <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="90dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.google.android.material.textfield.TextInputLayout>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/allQuestionLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/improveQuestion"
         app:layout_constraintTop_toBottomOf="@+id/improveQuestion">
@@ -332,15 +320,53 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/responseLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:maxWidth="@dimen/_60sdp"
+        app:layout_constraintBottom_toTopOf="@+id/submitProblem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allQuestionLayout">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:autofillHints="How can we improve"
+                android:background="@null"
+                android:hint="@string/tell_us_how_can_we_improve"
+                android:inputType="text"
+                android:textAlignment="textStart"
+                android:textColor="@color/natural_color"
+                android:textSize="@dimen/_11ssp"
+                tools:ignore="LabelFor" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitProblem"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
         android:backgroundTint="@color/secondary_color"
         android:text="@string/submit"
         app:cornerRadius="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/allQuestionLayout" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,8 +18,8 @@ class SharedPreferencesHelper(context: Context) {
         set(value) = sharedPreferences.edit().putBoolean(isFirstTime, value).apply()
 
 
-    var userEmail: String?
-        get() = sharedPreferences.getString(Constants.userEmail, "")
+    var userEmail: String
+        get() = sharedPreferences.getString(Constants.userEmail, "") ?: ""
         set(value) = sharedPreferences.edit().putString(Constants.userEmail, value).apply()
 
 }

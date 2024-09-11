@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
@@ -81,16 +82,23 @@ class QRScannerScreen : Fragment() {
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
-            val preview = Preview.Builder().build()
+            // Unbind all previous use cases before rebinding
+            cameraProvider.unbindAll()
+
+            // Define the preview use case
+            val preview = Preview.Builder()
+                .setTargetResolution(Size(640, 480)) // Set a compatible resolution
+                .build()
+
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             // ImageAnalyzer for detecting barcodes
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .setTargetResolution(Size(640, 480)) // Ensure matching resolution with Preview
                 .build()
                 .also {
                     it.setAnalyzer(Executors.newSingleThreadExecutor(), BarcodeAnalyzer { barcode ->
-                        // Handle barcode results
                         result++
                         if (result < 2) {
                             val infoData = barcode.displayValue?.let { it1 -> parseTotpUri(it1) }
@@ -106,15 +114,22 @@ class QRScannerScreen : Fragment() {
                     })
                 }
 
-            // Bind the lifecycle of the camera to the fragment
-            cameraProvider.bindToLifecycle(
-                this as LifecycleOwner,
-                cameraSelector,
-                preview,
-                imageAnalyzer
-            )
+            try {
+                // Bind the lifecycle of the camera to the fragment with the preview and imageAnalyzer
+                cameraProvider.bindToLifecycle(
+                    this as LifecycleOwner,
+                    cameraSelector,
+                    preview,
+                    imageAnalyzer
+                )
 
-            preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+                // Set the preview surface
+                preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
+            }
+
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 

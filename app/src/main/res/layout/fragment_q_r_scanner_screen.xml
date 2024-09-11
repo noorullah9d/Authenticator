@@ -13,12 +13,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent" />
-
 
     <ImageView
         android:id="@+id/cancelScanning"
@@ -45,18 +39,16 @@
         app:layout_constraintTop_toBottomOf="@+id/cancelScanning" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="@dimen/_160sdp"
-        android:layout_height="@dimen/_190sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/scanning_image"
-        android:background="@color/scan_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="center"
         app:layout_constraintTop_toBottomOf="@+id/scanningText"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/scanner" />
+        app:lottie_rawRes="@raw/scan_qr" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

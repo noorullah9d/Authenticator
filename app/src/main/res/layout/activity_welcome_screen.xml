@@ -8,16 +8,17 @@
     tools:context=".ui.activities.WelcomeScreen">
 
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivLockMode"
         android:layout_width="@dimen/_210sdp"
         android:layout_height="@dimen/_180sdp"
         android:layout_marginTop="@dimen/_90sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/img_welcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/welcome" />
 
 
     <TextView

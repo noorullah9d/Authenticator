@@ -11,7 +11,7 @@
         android:id="@+id/tvSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/lato_bold"
         android:text="@string/settings"
@@ -23,16 +23,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/languageSelection"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:foreground="?selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@+id/tvSettings">
 
         <ImageView
             android:id="@+id/ivSettings"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
             android:src="@drawable/ic_settings"
@@ -44,9 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
             android:text="@string/language"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivSettings"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,6 +60,7 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +69,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/natural_color"
+            android:background="@color/view_color"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -75,7 +78,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recently_deleted"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:foreground="?selectableItemBackground"
@@ -83,8 +86,8 @@
 
         <ImageView
             android:id="@+id/ivDelete"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
             android:src="@drawable/ic_recently_deleted"
@@ -96,9 +99,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
             android:text="@string/deleted"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivDelete"
             app:layout_constraintTop_toTopOf="parent" />
@@ -110,6 +115,7 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +124,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/natural_color"
+            android:background="@color/view_color"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -127,7 +133,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/importExport"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:foreground="?selectableItemBackground"
@@ -135,8 +141,8 @@
 
         <ImageView
             android:id="@+id/ivImportExport"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
             android:src="@drawable/ic_import_export"
@@ -148,9 +154,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
             android:text="@string/import_export"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivImportExport"
             app:layout_constraintTop_toTopOf="parent" />
@@ -162,6 +170,7 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +179,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/natural_color"
+            android:background="@color/view_color"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -179,7 +188,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/feedback"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:foreground="?selectableItemBackground"
@@ -187,8 +196,8 @@
 
         <ImageView
             android:id="@+id/ivfeedback"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
             android:src="@drawable/ic_feedback"
@@ -200,9 +209,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
             android:text="@string/feedback"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivfeedback"
             app:layout_constraintTop_toTopOf="parent" />
@@ -214,6 +225,7 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -222,7 +234,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/natural_color"
+            android:background="@color/view_color"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,7 +243,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/howToWork"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:foreground="?selectableItemBackground"
@@ -239,8 +251,8 @@
 
         <ImageView
             android:id="@+id/ivhowToWork"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
             android:src="@drawable/ic_how_work"
@@ -252,9 +264,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
             android:text="@string/how_to_word"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivhowToWork"
             app:layout_constraintTop_toTopOf="parent" />
@@ -266,6 +280,7 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:contentDescription="@string/settings"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -274,7 +289,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/natural_color"
+            android:background="@color/view_color"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

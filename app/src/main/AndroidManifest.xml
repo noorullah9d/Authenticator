@@ -21,6 +21,15 @@
         android:theme="@style/Theme.Authenticator"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.ImportScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ExportScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ImportExportScreen"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.FeedbackScreen"
             android:exported="false" />
         <activity

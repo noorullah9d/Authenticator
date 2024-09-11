@@ -1,8 +1,10 @@
 package com.example.my.project.authenticator.otp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
 import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import com.example.my.project.authenticator.otp.domain.crypto.TotpCodeGenerator
 import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
@@ -12,6 +14,7 @@ import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
 import com.example.my.project.authenticator.utils.EditTotpState
 import com.example.my.project.authenticator.utils.HomeState
+import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.example.my.project.authenticator.utils.TotpCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -32,9 +35,11 @@ private const val defaultUpdateStepMs = 30_000L
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val saveFirebase: SaveFirebase,
     private val totpKeyRepo: TotpKeyRepository,
     private val secretEncryptor: SecretEncryptor,
-    totpCodeGenerator: TotpCodeGenerator
+    totpCodeGenerator: TotpCodeGenerator,
+    private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
 
 
@@ -61,9 +66,27 @@ class HomeViewModel @Inject constructor(
     }
 
 
+    fun fetchAndSave() {
+        saveFirebase.retrieveDataFromDB(sharedPreferencesHelper.userEmail) { accounts, errorMessage ->
+            accounts?.forEach {
+
+                val secret = Base32().decode(it.passcode)
+
+                viewModelScope.launch {
+                    addTotpUseCase(secret, it.accountName)
+                }
+
+            }
+
+
+        }
+    }
+
+
     private suspend fun autoUpdate() {
         startTimer()
         totpKeyFlow.collect { keyList ->
+            Log.d(TAG, "autoUpdate: ${homeState.value?.totpList?.size}")
             updateStateList(keyList)
         }
     }
@@ -87,7 +110,6 @@ class HomeViewModel @Inject constructor(
 
         val currentSecondsLeft = countSecondsLeft()
 
-        // Check if update is needed
         if (currentSecondsLeft == (defaultUpdateStepMs / 1000).toInt()) {
             updateStateList()
         } else {
@@ -119,7 +141,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
 
-            // Update state on the main thread
             withContext(Dispatchers.Main) {
                 homeState.value = homeState.value?.copy(totpList = list)
             }
@@ -127,13 +148,14 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun countSecondsLeft(currentTime: Long = System.currentTimeMillis(),timeStep: Long = defaultUpdateStepMs): Int {
+    private fun countSecondsLeft(currentTime: Long = System.currentTimeMillis(), timeStep: Long = defaultUpdateStepMs): Int {
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
 
     fun addTotp(name: String, base32Secret: String): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
+        saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name)
         val secret = Base32().decode(base32Secret)
         try {
             viewModelScope.launch {
@@ -148,8 +170,10 @@ class HomeViewModel @Inject constructor(
 
     fun removeTotpById(id: Int) {
         viewModelScope.launch {
-            val toDelete = totpKeyFlow.value.find { key -> key.id == id }!!
-            totpKeyRepo.removeKey(toDelete)
+            val toDelete = totpKeyFlow.value.find { key -> key.id == id }
+            toDelete?.let {
+                totpKeyRepo.removeKey(it)
+            }
         }
     }
 
@@ -178,7 +202,7 @@ class HomeViewModel @Inject constructor(
 
 
     private val base32Regex = Regex("[A-Za-z2-7]+=*")
-    fun isSecretCorrect(secret: String): Boolean {
+    private fun isSecretCorrect(secret: String): Boolean {
         return base32Regex.matchEntire(secret) != null
     }
 }

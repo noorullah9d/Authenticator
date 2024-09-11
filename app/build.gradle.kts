@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -104,7 +105,8 @@ dependencies {
 
     // Guava library to resolve ListenableFuture
     implementation("com.google.guava:guava:31.0.1-jre")
-
+    //serialization
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
 }
 

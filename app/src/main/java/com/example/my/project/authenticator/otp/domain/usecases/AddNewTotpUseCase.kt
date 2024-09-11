@@ -10,8 +10,6 @@ class AddNewTotpUseCase(
     private val encryptor: SecretEncryptor,
 ) {
     suspend operator fun invoke(plainSecret: ByteArray, name: String) {
-        if (plainSecret.isEmpty())
-            throw IllegalArgumentException("Secret cannot be empty")
         val random = SecureRandom()
         val iv = ByteArray(encryptor.ivSize)
         random.nextBytes(iv)

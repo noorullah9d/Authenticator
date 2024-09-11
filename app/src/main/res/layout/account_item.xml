@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_15sdp"
     android:foreground="?selectableItemBackground">
 
 
     <TextView
         android:id="@+id/ivProfileImage"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:background="@drawable/circle_background"
         android:gravity="center"
         android:text="G"
@@ -32,18 +32,18 @@
         android:textColor="@color/primary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
 
     <TextView
         android:id="@+id/tvPassCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_7sdp"
         android:fontFamily="@font/lato_regular"
         android:text="999 754"
         android:textColor="@color/secondary_color"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -66,5 +66,12 @@
         app:trackColor="@color/light_gray"
         app:trackWidth="@dimen/_1sdp" />
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@color/view_color"
+        app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

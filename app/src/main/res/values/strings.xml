@@ -51,5 +51,20 @@
     <string name="performance">Performance</string>
     <string name="user_support">User Support</string>
     <string name="data_privacy">Data Privacy</string>
+    <string name="import_amp_export"><![CDATA[Import & export]]></string>
+    <string name="import_file">Import file</string>
+    <string name="import_a_compatible_vault_file">Import a compatible vault file here to access \nyour stored data</string>
+    <string name="export_file">Export file</string>
+    <string name="import_a_compatible_vault">Import a compatible vault file here to access \nyour stored data</string>
+    <string name="password">Password</string>
+    <string name="enter_export_password">Enter export password</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="import_screen">Import</string>
+    <string name="tell_us_how_can_we_improve">Tell us how can we improve…</string>
+    <string name="imported_key_name">Imported Key Name</string>
+    <string name="similarity_information">Similarity information</string>
+    <string name="error_text">Error Text</string>
+    <string name="add_selected">ADD SELECTED</string>
 
 </resources>
