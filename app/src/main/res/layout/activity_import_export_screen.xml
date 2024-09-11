@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.ImportExportScreen">
+
+
+    <ImageView
+        android:id="@+id/backPress"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:contentDescription="@string/app_name"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/import_amp_export"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backPress"
+        app:layout_constraintStart_toEndOf="@+id/backPress"
+        app:layout_constraintTop_toTopOf="@+id/backPress" />
+
+
+    <TextView
+        android:id="@+id/tvImportFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/import_file"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backPress" />
+
+
+    <TextView
+        android:id="@+id/tvAccessFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:text="@string/import_a_compatible_vault_file"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvImportFile" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/importFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:backgroundTint="@color/secondary_color"
+        android:text="@string/import_file"
+        android:textSize="@dimen/_9ssp"
+        app:cornerRadius="@dimen/_7sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAccessFile" />
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="@color/view_color"
+        app:layout_constraintTop_toBottomOf="@+id/importFile" />
+
+
+    <TextView
+        android:id="@+id/tvExportFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/export_file"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider" />
+
+
+    <TextView
+        android:id="@+id/tvAccessExpFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:text="@string/import_a_compatible_vault"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvExportFile" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/exportFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:backgroundTint="@color/secondary_color"
+        android:text="@string/export_file"
+        android:textSize="@dimen/_9ssp"
+        app:cornerRadius="@dimen/_7sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAccessExpFile" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
