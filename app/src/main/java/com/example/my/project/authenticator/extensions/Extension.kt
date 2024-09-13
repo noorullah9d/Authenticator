@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Bundle
 import android.os.SystemClock
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.model.LanguagesModel
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.analytics.FirebaseAnalytics
 
 
 inline fun <reified A : Activity> Activity.startActivityWithAnimation() {
@@ -224,6 +226,17 @@ fun Context.showAskPasswordDialog(
 
     // Show the dialog
     alertDialog.show()
+}
+
+
+fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = emptyMap()) {
+    val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    val bundle = Bundle().apply {
+        params.forEach { (key, value) ->
+            putString(key, value)
+        }
+    }
+    firebaseAnalytics.logEvent(eventName, bundle)
 }
 
 

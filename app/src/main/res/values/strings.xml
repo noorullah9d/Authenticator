@@ -4,6 +4,7 @@
     <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="secure_auth">SecureAuth</string>
     <string name="welcome_secure_access">Welcome to secure access</string>
     <string name="scan_get_start">Scan to get started</string>
     <string name="account_name">Account name</string>
@@ -66,5 +67,12 @@
     <string name="similarity_information">Similarity information</string>
     <string name="error_text">Error Text</string>
     <string name="add_selected">ADD SELECTED</string>
+    <string name="not_logged_in">Not Logged-In</string>
+    <string name="camera_permission_denied">Camera permission denied</string>
+    <string name="simple_security_easy_access">Simple Security, Easy Access.</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="terms_amp_condition"><![CDATA[Terms & condition]]></string>
+    <string name="import_in_progress">Import in progress</string>
+    <string name="export">Export</string>
 
 </resources>

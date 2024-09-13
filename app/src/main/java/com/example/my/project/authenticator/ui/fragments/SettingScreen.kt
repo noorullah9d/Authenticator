@@ -35,10 +35,6 @@ class SettingScreen : Fragment() {
                 requireActivity().startActivityWithAnimation<SelectLanguageActivity>()
             }
 
-            recentlyDeleted.setOnClickListener {
-
-            }
-
             importExport.setOnClickListener {
                 requireActivity().startActivityWithAnimation<ImportExportScreen>()
             }
@@ -48,6 +44,15 @@ class SettingScreen : Fragment() {
             }
 
             howToWork.setOnClickListener {
+
+            }
+
+            privacyPolicy.setOnClickListener {
+
+            }
+
+
+            termsConditions.setOnClickListener {
 
             }
 

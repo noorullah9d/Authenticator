@@ -22,7 +22,7 @@ object DatabaseModule {
             context.applicationContext,
             TotpDatabase::class.java,
             TotpDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

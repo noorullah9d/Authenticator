@@ -8,6 +8,7 @@ import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
 import com.example.my.project.authenticator.otp.domain.usecases.ExportKeysUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
+import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.stateIn
 import java.io.OutputStream
@@ -19,8 +20,9 @@ import javax.inject.Inject
 class ExportViewModel @Inject constructor(
     private val repository: TotpKeyRepository,
     private val repositoryEncryptor: SecretEncryptor,
-    private val passwordHasher: PasswordHasher
-)  : ViewModel() {
+    private val passwordHasher: PasswordHasher,
+    private val sharedPreferencesHelper: SharedPreferencesHelper
+) : ViewModel() {
 
     suspend fun export(savingMode: SavingMode, plainPassword: String, outputStream: OutputStream) {
         val salt = ByteArray(16)
@@ -32,7 +34,7 @@ class ExportViewModel @Inject constructor(
         } else null
 
         ExportKeysUseCase(
-            repository.getAllKeys().stateIn(viewModelScope).value,
+            repository.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope).value,
             outputStream,
             repositoryEncryptor,
             exportEncryptor,

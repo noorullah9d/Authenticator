@@ -18,33 +18,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/export_type_spinner"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fontFamily="@font/lato_bold"
+        android:text="@string/export"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/backPress"
+        app:layout_constraintStart_toEndOf="@+id/backPress"
+        app:layout_constraintTop_toTopOf="@+id/backPress" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_export_type_spinner"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backPress" />
+        app:layout_constraintTop_toBottomOf="@id/backPress">
+
+        <Spinner
+            android:id="@+id/export_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/_15sdp"
         android:autofillHints="Password"
+        android:backgroundTint="@color/view_color"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/export_type_spinner" />
+        app:layout_constraintTop_toBottomOf="@id/card_export_type_spinner" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/exportButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/_15sdp"
         android:backgroundTint="@color/secondary_color"
         android:text="@string/export_file"
         app:cornerRadius="@dimen/_5sdp"

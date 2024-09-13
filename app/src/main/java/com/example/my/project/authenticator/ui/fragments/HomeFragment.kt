@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
@@ -19,7 +20,6 @@ import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.model.Account
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
@@ -31,12 +31,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -50,6 +49,10 @@ class HomeFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private var prefsHelper: SharedPreferencesHelper? = null
+
+    @Inject
+    lateinit var sharedPreferencesHelper: SharedPreferencesHelper
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -79,21 +82,25 @@ class HomeFragment : Fragment() {
             }
         }
 
+        if (sharedPreferencesHelper.userEmail != "") {
+            setFromRemote()
+        }
 
-//        retrieveDataFromDB(prefsHelper?.userEmail!!)
+
 
 
         homeViewModel.homeState.observe(viewLifecycleOwner) {
             if (it.totpList.isEmpty()) {
                 binding.llPlaceHolderLayout.beVisible()
                 binding.oneTimePassword.beGone()
+                binding.accountData.beGone()
+                Log.d(TAG, "onViewCreated: ")
             } else {
                 binding.llPlaceHolderLayout.beGone()
                 binding.oneTimePassword.beVisible()
+                binding.accountData.beVisible()
                 setupRecyclerView(it.totpList)
             }
-
-
         }
 
 
@@ -121,6 +128,15 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun setFromRemote() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            delay(2000)
+            if (homeViewModel.setRemote() == 0) {
+                homeViewModel.fetchAndSave()
+            }
+        }
+    }
+
 
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
@@ -130,44 +146,26 @@ class HomeFragment : Fragment() {
     private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)!!
-            Log.d(TAG, "firebaseAuthWithGoogle: " + account.id)
-            firebaseAuthWithGoogle(account.idToken!!)
+            Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
+            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
         } catch (e: ApiException) {
             Log.d(TAG, "Google sign-in failed", e)
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
+    private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
-            if (task.isSuccessful) {
-                val user = auth.currentUser
-                Log.d(TAG, "signInWithCredential:success $user")
-            } else {
-                Log.d(TAG, "signInWithCredential:failure", task.exception)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    prefsHelper?.userEmail = email
+                    val user = auth.currentUser
+                    setFromRemote()
+                } else {
+                    toast(getString(R.string.not_logged_in))
+                }
             }
-        }
     }
-
-
-    private fun retrieveDataFromDB(email: String) {
-        val fireStore = FirebaseFirestore.getInstance()
-        fireStore.collection("users").document(email).get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val accountsList = document.get("accounts") as? List<Map<String, String>>
-                val accountObjects = accountsList?.map {
-                    Account(it["accountName"].toString(), it["passcode"].toString())
-                } ?: listOf()
-                // Pass the accountObjects to the RecyclerView adapter
-//                    setupRecyclerView(accountObjects)
-            } else {
-                toast("No data found for this email")
-            }
-        }.addOnFailureListener { e ->
-            toast("Failed to retrieve data: ${e.message}")
-        }
-    }
-
 
     private fun setupRecyclerView(accounts: List<TotpCardState>) {
         binding.accountData.layoutManager = LinearLayoutManager(requireActivity())

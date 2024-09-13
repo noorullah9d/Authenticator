@@ -7,8 +7,8 @@
         android:fillColor="#00000000"
         android:pathData="M8,8m-7.5,0a7.5,7.5 0,1 1,15 0a7.5,7.5 0,1 1,-15 0"
         android:strokeWidth="1"
-        android:strokeColor="#0ABA69" />
+        android:strokeColor="@color/secondary_color" />
     <path
-        android:fillColor="#0ABA69"
+        android:fillColor="@color/secondary_color"
         android:pathData="M8,8m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
 </vector>

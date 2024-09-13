@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityMainBinding
+import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
 
             btnStartOpt.setOnClickListener {
+                logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
                 btnStartOpt.setImageResource(R.drawable.ic_cross)
                 showCustomDialog { result ->
 

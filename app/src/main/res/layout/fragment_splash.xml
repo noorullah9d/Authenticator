@@ -8,38 +8,47 @@
 
 
     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_splash" />
+
+    <ImageView
         android:id="@+id/ivLockMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_90sdp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/lock_mode"
+        app:layout_constraintBottom_toTopOf="@+id/tvSecure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
+        android:id="@+id/tvSecure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="@string/app_name"
-        android:textColor="@color/primary"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/lato_light"
+        android:text="@string/secure_auth"
+        android:textColor="@color/white"
         android:textSize="@dimen/_18ssp"
-        app:layout_constraintEnd_toEndOf="@+id/ivLockMode"
-        app:layout_constraintStart_toStartOf="@+id/ivLockMode"
-        app:layout_constraintTop_toBottomOf="@+id/ivLockMode" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvSimpleSecurity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_5sdp"
+    <TextView
+        android:id="@+id/tvSimpleSecurity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_30sdp"
-        android:max="100"
-        android:progressDrawable="@drawable/progress_blue"
+        android:text="@string/simple_security_easy_access"
+        android:textColor="@color/off_white"
+        android:textSize="@dimen/_9ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

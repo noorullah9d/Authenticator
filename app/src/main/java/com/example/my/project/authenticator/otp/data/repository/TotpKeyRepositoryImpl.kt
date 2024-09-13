@@ -12,8 +12,10 @@ class TotpKeyRepositoryImpl(
     private val dao: TotpDao,
 ) : TotpKeyRepository {
 
-    override fun getAllKeys(): Flow<List<EncryptedTotpKey>> {
-        return dao.queryAll().map { it.map(TotpDbMapper::toTotpKey) }
+    override fun getAllKeys(email:String): Flow<List<EncryptedTotpKey>> {
+        return dao.queryAll(email).map {
+            it.map(TotpDbMapper::toTotpKey)
+        }
     }
 
     override suspend fun addKey(key: EncryptedTotpKey) {
@@ -28,6 +30,11 @@ class TotpKeyRepositoryImpl(
     override suspend fun editKey(key: EncryptedTotpKey) {
         dao.update(TotpDbMapper.fromTotpKey(key))
     }
+
+    override suspend fun getAllData(): List<EncryptedTotpKey> {
+        return dao.queryAllData().map (TotpDbMapper::toTotpKey)
+    }
+
 }
 
 private const val TAG = "TotpKeyRepositoryImpl"

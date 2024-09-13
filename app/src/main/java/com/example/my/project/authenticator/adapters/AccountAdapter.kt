@@ -12,7 +12,7 @@ import com.example.my.project.authenticator.utils.TotpCardState
 import com.owl93.dpb.CircularProgressView
 
 
-class AccountAdapter(private val accounts: List<TotpCardState>,private val onItemLongClick: (Int) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter(private val accounts: List<TotpCardState>,private val onItemLongClick: (TotpCardState) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     class AccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val accountNameTextView: TextView = itemView.findViewById(R.id.tvName)
@@ -66,7 +66,7 @@ class AccountAdapter(private val accounts: List<TotpCardState>,private val onIte
 //                }
 
                 R.id.menu_delete -> {
-                    onItemLongClick.invoke(account.id)
+                    onItemLongClick.invoke(account)
                     true
                 }
 

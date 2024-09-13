@@ -16,6 +16,9 @@ interface TotpDao {
     @Delete
     suspend fun delete(totp: TotpDbEntity)
 
+    @Query("SELECT * FROM $totpTableName WHERE email = :email")
+    fun queryAll(email: String): Flow<List<TotpDbEntity>>
+
     @Query("SELECT * FROM $totpTableName")
-    fun queryAll(): Flow<List<TotpDbEntity>>
+    fun queryAllData(): List<TotpDbEntity>
 }

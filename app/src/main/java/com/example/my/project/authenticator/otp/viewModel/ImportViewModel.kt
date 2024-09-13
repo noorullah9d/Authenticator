@@ -56,7 +56,7 @@ class ImportViewModel @Inject constructor(
                     AesGcmSecretEncryptor(secretKey)
                 }
             }
-            val storedKeys = repository.getAllKeys().stateIn(viewModelScope).value
+            val storedKeys = repository.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope).value
             val updatedState = _importScreenState.value?.copy(
                 importedKeys = importedKeys.map { unencryptedKey ->
                     ImportedItemState(
@@ -80,8 +80,8 @@ class ImportViewModel @Inject constructor(
 
     suspend fun addSelected() {
         _importScreenState.value?.importedKeys?.filter { it.checked }?.forEach {
-            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail ?: "", it.secretKey, it.name)
-            addNewTotpUseCase(Base32().decode(it.secretKey), it.name)
+            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
+            addNewTotpUseCase(sharedPreferencesHelper.userEmail, Base32().decode(it.secretKey), it.name)
         }
     }
 

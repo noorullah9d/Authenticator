@@ -64,6 +64,37 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
     }
 
 
+    override fun deleteAccount(email: String, accountName: String) {
+        val documentRef = firestore.collection("Authenticator").document(email)
+
+        documentRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val accountsList = document.get("accounts") as? MutableList<Map<String, String>> ?: mutableListOf()
+
+                // Find the account by accountName and remove it
+                val updatedAccountsList = accountsList.filterNot { it["accountName"] == accountName }
+
+                // If the updated list has fewer items, proceed to update the document
+                if (updatedAccountsList.size != accountsList.size) {
+                    documentRef.update("accounts", updatedAccountsList)
+                        .addOnSuccessListener {
+                            Log.d("SaveFirebase", "Account successfully deleted: $accountName")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("SaveFirebase", "Failed to delete account: ${e.message}")
+                        }
+                } else {
+                    Log.d("SaveFirebase", "No account found with the name: $accountName")
+                }
+            } else {
+                Log.e("SaveFirebase", "No document found for email: $email")
+            }
+        }.addOnFailureListener { e ->
+            Log.e("SaveFirebase", "Failed to retrieve document: ${e.message}")
+        }
+    }
+
+
 }
 
 private const val TAG = "SaveFirebaseImpl"

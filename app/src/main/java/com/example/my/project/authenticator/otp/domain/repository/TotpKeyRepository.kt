@@ -1,10 +1,10 @@
 package com.example.my.project.authenticator.otp.domain.repository
 
-import kotlinx.coroutines.flow.Flow
 import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
+import kotlinx.coroutines.flow.Flow
 
 interface TotpKeyRepository {
-    fun getAllKeys(): Flow<List<EncryptedTotpKey>>
+    fun getAllKeys(email: String): Flow<List<EncryptedTotpKey>>
 
     suspend fun addKey(key: EncryptedTotpKey)
 
@@ -12,4 +12,5 @@ interface TotpKeyRepository {
 
     /** Edit a key by its id */
     suspend fun editKey(key: EncryptedTotpKey)
+    suspend fun getAllData(): List<EncryptedTotpKey>
 }

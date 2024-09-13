@@ -7,34 +7,26 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
-import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
+import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.BarcodeAnalyzer
-import com.google.android.gms.vision.CameraSource
-import com.google.android.gms.vision.Detector
-import com.google.android.gms.vision.barcode.Barcode
-import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.IOException
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
@@ -58,44 +50,51 @@ class QRScannerScreen : Fragment() {
             findNavController().popBackStack()
         }
 
+        checkAndRequestCameraPermission()
+
+    }
+
+
+    private val requestCameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startCamera()
+        } else {
+            toast(getString(R.string.camera_permission_denied))
+            requireActivity().finish()
+        }
+    }
+
+
+    private fun checkAndRequestCameraPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), 1001)
+            requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
+
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1001 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startCamera()
-        }
-    }
 
     private fun startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
-            // Unbind all previous use cases before rebinding
             cameraProvider.unbindAll()
 
-            // Define the preview use case
             val preview = Preview.Builder()
-                .setTargetResolution(Size(640, 480)) // Set a compatible resolution
+                .setTargetResolution(Size(640, 480))
                 .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-            // ImageAnalyzer for detecting barcodes
             val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setTargetResolution(Size(640, 480)) // Ensure matching resolution with Preview
+                .setTargetResolution(Size(640, 480))
                 .build()
                 .also {
                     it.setAnalyzer(Executors.newSingleThreadExecutor(), BarcodeAnalyzer { barcode ->
@@ -106,6 +105,7 @@ class QRScannerScreen : Fragment() {
 
                             val addResult = homeViewModel.addTotp(infoData?.second ?: "", infoData?.first ?: "")
                             if (addResult) {
+                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
                                 requireActivity().finish()
                             } else {
                                 toast(requireActivity().getString(R.string.error_occurs))
@@ -115,7 +115,6 @@ class QRScannerScreen : Fragment() {
                 }
 
             try {
-                // Bind the lifecycle of the camera to the fragment with the preview and imageAnalyzer
                 cameraProvider.bindToLifecycle(
                     this as LifecycleOwner,
                     cameraSelector,
@@ -123,7 +122,6 @@ class QRScannerScreen : Fragment() {
                     imageAnalyzer
                 )
 
-                // Set the preview surface
                 preview.setSurfaceProvider(binding.previewView.surfaceProvider)
 
             } catch (exc: Exception) {

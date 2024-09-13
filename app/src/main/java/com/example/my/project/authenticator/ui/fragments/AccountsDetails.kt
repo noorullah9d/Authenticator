@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
+import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
@@ -38,6 +39,7 @@ class AccountsDetails : Fragment() {
 
 
 
+
             btnAdd.setOnClickListener {
                 if (etPasscode.text.toString().isEmpty() && etPasscode.text.toString().isEmpty()) {
                     toast(requireActivity().getString(R.string.field_should_not_empty))
@@ -48,6 +50,7 @@ class AccountsDetails : Fragment() {
                 } else {
                     val result = homeViewModel.addTotp(etPasscode.text.toString(), etAccountKey.text.toString())
                     if (result){
+                        requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
                         requireActivity().finish()
                     }else{
                         toast(requireActivity().getString(R.string.error_occurs))

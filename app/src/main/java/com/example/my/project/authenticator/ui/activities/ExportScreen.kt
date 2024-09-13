@@ -79,7 +79,7 @@ class ExportScreen : AppCompatActivity() {
                 return@registerForActivityResult
             }
 
-            // Perform export operation in a coroutine
+
             lifecycleScope.launch {
                 this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
 

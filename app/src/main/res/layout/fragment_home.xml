@@ -12,7 +12,7 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/_10sdp" />
+        app:layout_constraintGuide_begin="@dimen/_15sdp" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -20,7 +20,7 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/_10sdp" />
+        app:layout_constraintGuide_end="@dimen/_15sdp" />
 
 
     <androidx.constraintlayout.widget.Guideline

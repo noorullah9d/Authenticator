@@ -2,6 +2,7 @@ package com.example.my.project.authenticator.otp.domain.entities
 
 data class EncryptedTotpKey(
     val id: Int,
+    val email: String,
     val name: String,
     val secret: ByteArray,
     val iv: ByteArray,
