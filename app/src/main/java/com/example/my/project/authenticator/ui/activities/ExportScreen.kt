@@ -3,13 +3,15 @@ package com.example.my.project.authenticator.ui.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.ActivityExportScreenBinding
+import com.example.my.project.authenticator.extensions.beGone
+import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
 import com.example.my.project.authenticator.otp.viewModel.ExportViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +25,6 @@ class ExportScreen : AppCompatActivity() {
         "Encrypt only keys" to SavingMode.KeyEncryption,
         "Encrypt everything" to SavingMode.FullEncryption
     )
-    private lateinit var exportOptionsAdapter: ArrayAdapter<String>
 
     private lateinit var binding: ActivityExportScreenBinding
     private val viewModel: ExportViewModel by viewModels()
@@ -36,9 +37,16 @@ class ExportScreen : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        setupExportOptionsSpinner()
-        setupOutputStreamLauncher()
-        setupExportButton()
+         setupExportOptionsSpinner()
+         setupOutputStreamLauncher()
+         setupExportButton()
+
+
+        binding.dropdownIcon.setOnClickListener {
+            binding.exportTypeSpinner.performClick()
+        }
+
+
 
 
         binding.backPress.setOnClickListener { finish() }
@@ -48,18 +56,23 @@ class ExportScreen : AppCompatActivity() {
 
 
     private fun setupExportOptionsSpinner() {
-        val options = exportOptions.map { it.first }
-        exportOptionsAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, options)
-        exportOptionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.exportTypeSpinner.adapter = exportOptionsAdapter
+        val options = exportOptions.map { it.first } // Assuming exportOptions is a list of pairs
 
+        // Create an instance of the custom adapter using the options
+        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
+            this,
+            options,
+            false // Adjust this based on your requirement if you want to show 'recommended' text or not
+        )
+
+        binding.exportTypeSpinner.adapter = exportOptionsAdapter
 
         binding.exportTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position != 0) {
-                    binding.passwordEditText.visibility = View.VISIBLE
+                    binding.passwordEditText.beVisible()
                 } else {
-                    binding.passwordEditText.visibility = View.GONE
+                    binding.passwordEditText.beGone()
                 }
             }
 
@@ -70,36 +83,35 @@ class ExportScreen : AppCompatActivity() {
     }
 
 
-    private fun setupOutputStreamLauncher() {
-        getOutputStreamLauncher = registerForActivityResult(
-            ActivityResultContracts.CreateDocument("application/json")
-        ) { contentUri ->
-            if (contentUri == null) {
-                finish()  // Handle back press on cancel
-                return@registerForActivityResult
-            }
-
-
-            lifecycleScope.launch {
-                this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
-
-//
-                    val selectedMode = exportOptions[binding.exportTypeSpinner.selectedItemPosition].second
-                    val password = binding.passwordEditText.text.toString()
-
-                    viewModel.export(selectedMode, password, outputStream)
+        private fun setupOutputStreamLauncher() {
+            getOutputStreamLauncher = registerForActivityResult(
+                ActivityResultContracts.CreateDocument("application/json")
+            ) { contentUri ->
+                if (contentUri == null) {
+                    finish()  // Handle back press on cancel
+                    return@registerForActivityResult
                 }
 
-                finish()
+
+                lifecycleScope.launch {
+                    this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
+
+                        val selectedMode = exportOptions[binding.exportTypeSpinner.selectedItemPosition].second
+                        val password = binding.passwordEditText.text.toString()
+
+                        viewModel.export(selectedMode, password, outputStream)
+                    }
+
+                    finish()
+                }
             }
         }
-    }
 
 
-    private fun setupExportButton() {
-        binding.exportButton.setOnClickListener {
-            getOutputStreamLauncher.launch("export.json")
+        private fun setupExportButton() {
+            binding.exportButton.setOnClickListener {
+                getOutputStreamLauncher.launch("export.json")
+            }
         }
-    }
 
 }
