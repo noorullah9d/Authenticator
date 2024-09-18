@@ -21,4 +21,12 @@ interface TotpDao {
 
     @Query("SELECT * FROM $totpTableName")
     fun queryAllData(): List<TotpDbEntity>
+
+    @Query("SELECT COUNT(*) FROM $totpTableName WHERE name = :name AND secret = :secret")
+    suspend fun countByNameAndSecret(name: String, secret: ByteArray): Int
+
+    @Query("SELECT * FROM $totpTableName WHERE name = :name AND secret = :secret LIMIT 1")
+    fun getByNameAndSecret(name: String, secret: ByteArray): TotpDbEntity?
+
+
 }

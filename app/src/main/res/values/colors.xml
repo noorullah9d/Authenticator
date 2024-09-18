@@ -4,14 +4,15 @@
     <color name="scan_black">#1A000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="off_white">#B3FFFFFF</color>
+    <color name="of_white">#F5F4FB</color>
     <color name="scan_white">#1AFFFFFF</color>
     <color name="light_blue">#F0EFFE</color>
     <color name="primary">#333333</color>
     <color name="secondary_color">#685FF3</color>
     <color name="light_gray">#999999</color>
-    <color name="view_color">#E6E6E5</color>
+    <color name="view_color">#E6E6E6</color>
     <color name="black_light">#666E83</color>
-    <color name="natural_color">#7F7F7F</color>
+    <color name="natural_color">#666666</color>
     <color name="md_theme_light_primary">#FF9F0A</color>
     <color name="card_bg">@android:color/white</color>
     <color name="view_line_color">#F1F1F1</color>

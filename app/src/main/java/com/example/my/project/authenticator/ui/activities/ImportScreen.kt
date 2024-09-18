@@ -90,7 +90,6 @@ class ImportScreen : AppCompatActivity() {
                 binding.importProgressMessage.visibility = if (importedKeys.isNullOrEmpty() && state.errorText.isNullOrEmpty()) View.VISIBLE else View.GONE
                 binding.addSelectedButton.visibility = if (!importedKeys.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-                // Safely update adapter with the list of imported keys, if it's not null
                 importedKeys?.let {
                     importedKeysAdapter.submitList(it)
                 }

@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.OnboardingAdapter
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
+import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,6 +91,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val privacyPolicySpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 Toast.makeText(this@OnBoardingActivity, "Privacy Policy Clicked", Toast.LENGTH_SHORT).show()
+                privacyPolicy("https://www.google.com")
             }
         }
         spannableString.setSpan(privacyPolicySpan, privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -101,6 +103,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val termsOfServiceSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 Toast.makeText(this@OnBoardingActivity, "Terms of Service Clicked", Toast.LENGTH_SHORT).show()
+               privacyPolicy("https://www.google.com")
             }
         }
         spannableString.setSpan(termsOfServiceSpan, termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

@@ -43,7 +43,7 @@
     <string name="safe_and_easy">Your gateway to safe and easy access.</string>
     <string name="tier_app_text">Protect your data with our top-tier security. Your information stays safe and private.</string>
     <string name="easy_authenticator">Easily set up your authenticator by\n scanning a QR code.</string>
-    <string name="easy_info">Rest easy—your information is secured with the best protection</string>
+    <string name="easy_info">Rest easy—your information is secured\nwith the best protection</string>
     <string name="logs_policy">We enforce a no-logs policy, collecting only anonymous country and language data. All settings are saved on your device. See our Privacy Policy and Terms of Service.</string>
     <string name="delete">Delete</string>
     <string name="overall_service">Overall Service</string>
@@ -74,5 +74,11 @@
     <string name="terms_amp_condition"><![CDATA[Terms & condition]]></string>
     <string name="import_in_progress">Import in progress</string>
     <string name="export">Export</string>
+    <string name="signed_in_successfully">Signed-in successfully</string>
+    <string name="copy">Copy</string>
+    <string name="condition">Condition</string>
+    <string name="this_account_already_exists_do_you_want_to_replace">This account already exists, do you want to replace?</string>
+    <string name="replace">Replace</string>
+    <string name="keep">Keep</string>
 
 </resources>

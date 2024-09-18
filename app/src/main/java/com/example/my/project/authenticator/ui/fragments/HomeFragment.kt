@@ -18,6 +18,7 @@ import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
@@ -94,6 +95,8 @@ class HomeFragment : Fragment() {
                 binding.llPlaceHolderLayout.beVisible()
                 binding.oneTimePassword.beGone()
                 binding.accountData.beGone()
+                if (prefsHelper?.userEmail != "")
+                    binding.signIn.beGone()
                 Log.d(TAG, "onViewCreated: ")
             } else {
                 binding.llPlaceHolderLayout.beGone()
@@ -108,8 +111,9 @@ class HomeFragment : Fragment() {
         binding.apply {
 
 
-            icProfile.setOnClickListener {
-
+            icProfile.setOnDebouncedClickListener {
+//                signInWithGoogle()
+                changeGoogleAccount()
             }
 
 
@@ -118,7 +122,7 @@ class HomeFragment : Fragment() {
             }
 
 
-            signIn.setOnClickListener {
+            signIn.setOnDebouncedClickListener {
                 signInWithGoogle()
             }
 
@@ -126,6 +130,13 @@ class HomeFragment : Fragment() {
         }
 
 
+    }
+
+
+    private fun changeGoogleAccount() {
+        googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
+            signInWithGoogle()
+        }
     }
 
     private fun setFromRemote() {
@@ -159,9 +170,12 @@ class HomeFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
+                    Log.d(TAG, "firebaseAuthWithGoogle: ${email}")
                     val user = auth.currentUser
+                    homeViewModel.refreshTotpKeyFlow()
                     setFromRemote()
                 } else {
+                    Log.d(TAG, "failed")
                     toast(getString(R.string.not_logged_in))
                 }
             }

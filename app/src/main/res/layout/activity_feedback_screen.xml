@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/of_white"
     tools:context=".ui.activities.FeedbackScreen">
 
     <ImageView
@@ -328,6 +329,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:maxWidth="@dimen/_60sdp"
+        app:cardBackgroundColor="@color/of_white"
         app:layout_constraintBottom_toTopOf="@+id/submitProblem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -346,7 +348,8 @@
                 android:hint="@string/tell_us_how_can_we_improve"
                 android:inputType="text"
                 android:textAlignment="textStart"
-                android:textColor="@color/natural_color"
+                android:textColor="@color/light_gray"
+                android:textColorHint="@color/light_gray"
                 android:textSize="@dimen/_11ssp"
                 tools:ignore="LabelFor" />
 
@@ -365,6 +368,7 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:backgroundTint="@color/secondary_color"
         android:text="@string/submit"
+        android:textColor="@color/white"
         app:cornerRadius="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

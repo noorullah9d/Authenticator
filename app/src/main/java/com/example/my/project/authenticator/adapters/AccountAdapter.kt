@@ -1,5 +1,8 @@
 package com.example.my.project.authenticator.adapters
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +11,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.extensions.setProfileImage
+import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.owl93.dpb.CircularProgressView
 
 
-class AccountAdapter(private val accounts: List<TotpCardState>,private val onItemLongClick: (TotpCardState) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter(private val accounts: List<TotpCardState>, private val onItemLongClick: (TotpCardState) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     class AccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val accountNameTextView: TextView = itemView.findViewById(R.id.tvName)
@@ -61,9 +65,10 @@ class AccountAdapter(private val accounts: List<TotpCardState>,private val onIte
 
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-//                R.id.menu_edit -> {
-//                    true
-//                }
+                R.id.menu_copy -> {
+                    copyTextToClipboard(view.context, account.oneTimeCode.toString())
+                    true
+                }
 
                 R.id.menu_delete -> {
                     onItemLongClick.invoke(account)
@@ -74,6 +79,14 @@ class AccountAdapter(private val accounts: List<TotpCardState>,private val onIte
             }
         }
         popupMenu.show()
+    }
+
+
+    fun copyTextToClipboard(context: Context, text: String) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Copied Text", text)
+        clipboard.setPrimaryClip(clip)
+        context.toast("Copied")
     }
 
 

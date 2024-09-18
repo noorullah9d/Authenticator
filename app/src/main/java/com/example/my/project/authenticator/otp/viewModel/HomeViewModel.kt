@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.commons.codec.binary.Base32
+import java.security.SecureRandom
 import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
@@ -47,7 +48,7 @@ class HomeViewModel @Inject constructor(
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
 
-    private val totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    private var totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
     val homeState = MutableLiveData(HomeState())
     private lateinit var oneSecondTimer: Timer
 
@@ -59,13 +60,31 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun refreshTotpKeyFlow() {
+        totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail)
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            totpKeyFlow.collect { keyList ->
+                updateStateList(keyList)
+            }
+
+        }
+    }
+
     suspend fun setRemote(): Int {
         return totpKeyRepo.getAllData().size
     }
 
 
+    fun isKeyExists(name: String, Key: String) = viewModelScope.launch(Dispatchers.IO) {
+        totpKeyRepo.isKeyExists(name, Key)
+    }.isActive
+
+
     fun fetchAndSave() {
-        saveFirebase.retrieveDataFromDB(sharedPreferencesHelper.userEmail) { accounts, errorMessage ->
+        saveFirebase.retrieveDataFromDB(sharedPreferencesHelper.userEmail) { accounts, _ ->
             accounts?.forEach { account ->
                 val secret = Base32().decode(account.passcode)
 

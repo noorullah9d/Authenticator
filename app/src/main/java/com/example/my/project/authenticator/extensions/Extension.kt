@@ -3,11 +3,13 @@ package com.example.my.project.authenticator.extensions
 import android.app.Activity
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.Gravity
@@ -192,12 +194,7 @@ fun TextView.setProfileImage(accountName: String) {
 }
 
 
-
-
-fun Context.showAskPasswordDialog(
-    onDismiss: () -> Unit,
-    onSuccess: (String) -> Unit
-) {
+fun Context.showAskPasswordDialog(onDismiss: () -> Unit, onSuccess: (String) -> Unit) {
     // Inflate the custom dialog layout
     val dialogView = LayoutInflater.from(this).inflate(R.layout.ask_password_dialog, null)
     val dialogBuilder = AlertDialog.Builder(this)
@@ -240,4 +237,55 @@ fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = em
 }
 
 
-private const val TAG = "Extension"
+fun View.setOnDebouncedClickListener(debounceTime: Long = 2000L, action: (View) -> Unit) {
+    var lastClickTime = 0L
+
+    setOnClickListener { view ->
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastClickTime > debounceTime) {
+            lastClickTime = currentTime
+            action(view)
+        }
+    }
+}
+
+
+
+fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit) {
+    // Inflate the custom layout
+    val inflater = LayoutInflater.from(requireContext())
+    val view = inflater.inflate(R.layout.dialog_replace_account, null)
+
+    val builder = AlertDialog.Builder(requireContext())
+    builder.setView(view)
+        .setCancelable(false)
+
+    val alert = builder.create()
+    alert.show()
+
+    view.findViewById<Button>(R.id.button_replace).setOnClickListener {
+        alert.dismiss()
+        onReplace()
+    }
+
+    view.findViewById<Button>(R.id.button_keep).setOnClickListener {
+        alert.dismiss()
+        onKeep()
+    }
+}
+
+
+fun Context.privacyPolicy(url: String, newTask: Boolean = false): Boolean {
+    return try {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        if (newTask) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
+        true
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+        false
+    }
+}

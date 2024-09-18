@@ -8,7 +8,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityWelcomeScreenBinding
+import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
+import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -28,7 +30,7 @@ class WelcomeScreen : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
 
-    private var prefsHelper : SharedPreferencesHelper? = null
+    private var prefsHelper: SharedPreferencesHelper? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +68,7 @@ class WelcomeScreen : AppCompatActivity() {
             finish()
         }
 
-        binding.btnStartAccount.setOnClickListener {
+        binding.btnStartAccount.setOnDebouncedClickListener {
             signInWithGoogle()
         }
 
@@ -82,7 +84,7 @@ class WelcomeScreen : AppCompatActivity() {
         try {
             val account = task.getResult(ApiException::class.java)!!
             Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
-            firebaseAuthWithGoogle(account.idToken!!,account.email!!)
+            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
         } catch (e: ApiException) {
             Log.d(TAG, "Google sign-in failed", e)
         }
@@ -95,10 +97,12 @@ class WelcomeScreen : AppCompatActivity() {
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
                     val user = auth.currentUser
+                    toast(getString(R.string.signed_in_successfully))
                     startActivityWithAnimation<MainActivity>()
                     finish()
                     Log.d(TAG, "signInWithCredential:success $user")
                 } else {
+                    toast(getString(R.string.error_occurs))
                     Log.d(TAG, "signInWithCredential:failure", task.exception)
                 }
             }

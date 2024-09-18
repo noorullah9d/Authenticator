@@ -41,6 +41,7 @@ class FeedbackScreen : AppCompatActivity() {
             submitProblem.setOnClickListener {
                 val selectedCardIndex = viewModel.getSelectedCardIndex()
                 if (selectedCardIndex != null) {
+                    finish()
                     Log.d(TAG, "Selected card index: $selectedCardIndex")
                 } else {
                     Log.d(TAG, "No card is selected")

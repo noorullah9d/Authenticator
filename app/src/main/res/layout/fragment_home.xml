@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/of_white"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HomeFragment">
 
@@ -137,6 +138,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@color/secondary_color"
             android:text="@string/add_code"
+            android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:cornerRadius="@dimen/_10sdp" />
 

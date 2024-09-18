@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
+import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.BarcodeAnalyzer
@@ -103,13 +104,20 @@ class QRScannerScreen : Fragment() {
                             val infoData = barcode.displayValue?.let { it1 -> parseTotpUri(it1) }
                             Log.d(TAG, "Scanned TOTP: Secret = ${infoData?.first}, Name = ${infoData?.second}")
 
-                            val addResult = homeViewModel.addTotp(infoData?.second ?: "", infoData?.first ?: "")
-                            if (addResult) {
-                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
-                                requireActivity().finish()
+                            val isExists = homeViewModel.isKeyExists(infoData?.second ?: "", infoData?.first ?: "")
+                            if (isExists) {
+                                showReplace(infoData?.second ?: "", infoData?.first ?: "")
                             } else {
-                                toast(requireActivity().getString(R.string.error_occurs))
+                                val addResult = homeViewModel.addTotp(infoData?.second ?: "", infoData?.first ?: "")
+                                if (addResult) {
+                                    requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                                    requireActivity().finish()
+                                } else {
+                                    toast(requireActivity().getString(R.string.error_occurs))
+                                }
                             }
+
+
                         }
                     })
                 }
@@ -146,6 +154,18 @@ class QRScannerScreen : Fragment() {
             Log.e(TAG, "Failed to parse TOTP URI: ${e.message}")
             null
         }
+    }
+
+
+    private fun showReplace(accountName: String, passKey: String) {
+        showReplaceAccountDialog(
+            onReplace = {
+                findNavController().popBackStack()
+            },
+            onKeep = {
+                val result = homeViewModel.addTotp(accountName, passKey)
+            }
+        )
     }
 
     companion object {

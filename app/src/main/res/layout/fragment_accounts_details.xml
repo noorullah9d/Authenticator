@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/of_white"
     tools:context=".ui.fragments.AccountsDetails">
 
     <ImageView
@@ -33,15 +34,16 @@
 
 
     <EditText
-        android:id="@+id/etPasscode"
+        android:id="@+id/etAccountName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_40sdp"
-        android:autofillHints="Account Name"
         android:layout_marginEnd="@dimen/_15sdp"
+        android:autofillHints="Account Name"
         android:background="@null"
         android:hint="@string/account_name"
+        android:textColor="@color/light_gray"
         android:inputType="text"
         android:textColorHint="@color/light_gray"
         android:textSize="@dimen/_11ssp"
@@ -53,21 +55,22 @@
         android:id="@+id/simple_view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_13sdp"
         android:background="@color/light_gray"
-        app:layout_constraintTop_toBottomOf="@+id/etPasscode" />
+        app:layout_constraintTop_toBottomOf="@+id/etAccountName" />
 
 
     <EditText
         android:id="@+id/etAccountKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:autofillHints="Your Key"
         android:background="@null"
+        android:textColor="@color/light_gray"
         android:hint="@string/account_key"
-        android:layout_marginEnd="@dimen/_15sdp"
         android:inputType="text"
         android:textColorHint="@color/light_gray"
         android:textSize="@dimen/_11ssp"
@@ -79,7 +82,7 @@
         android:id="@+id/keyView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_margin="@dimen/_13sdp"
         android:background="@color/light_gray"
         app:layout_constraintTop_toBottomOf="@+id/etAccountKey" />
 
@@ -88,10 +91,10 @@
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
         android:text="@string/add"
+        android:textColor="@color/white"
         app:backgroundTint="@color/secondary_color"
         app:cornerRadius="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@+id/keyView" />

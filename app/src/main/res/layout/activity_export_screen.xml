@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/of_white"
     tools:context=".ui.activities.ExportScreen">
 
 
@@ -33,6 +34,20 @@
         app:layout_constraintTop_toTopOf="@+id/backPress" />
 
 
+    <TextView
+        android:id="@+id/tvConditon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/condition"
+        android:textColor="@color/natural_color"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backPress" />
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_export_type_spinner"
         android:layout_width="0dp"
@@ -40,12 +55,13 @@
         android:layout_margin="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backPress">
+        app:layout_constraintTop_toBottomOf="@id/tvConditon">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@android:color/transparent"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -67,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="@dimen/_30sdp"
+                android:dropDownVerticalOffset="@dimen/_35sdp"
                 android:popupBackground="@drawable/custom_spinner_background"
                 android:popupElevation="5dp"
                 app:layout_constraintEnd_toStartOf="@+id/dropdownIcon"
@@ -121,6 +137,7 @@
         android:layout_margin="@dimen/_15sdp"
         android:backgroundTint="@color/secondary_color"
         android:text="@string/export_file"
+        android:textColor="@color/white"
         app:cornerRadius="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
+import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
@@ -48,12 +49,12 @@ class SettingScreen : Fragment() {
             }
 
             privacyPolicy.setOnClickListener {
-
+                requireActivity().privacyPolicy("https://www.google.com")
             }
 
 
             termsConditions.setOnClickListener {
-
+                requireActivity().privacyPolicy("https://www.google.com")
             }
 
         }

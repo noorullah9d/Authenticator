@@ -59,16 +59,20 @@ class MainActivity : AppCompatActivity() {
                 ivSettings.setImageResource(R.drawable.ic_home_settings)
                 ivHome.setImageResource(R.drawable.ic_home)
 
-                findNavController(R.id.nav_fragment).navigate(R.id.homeFragment)
-
+                val navController = findNavController(R.id.nav_fragment)
+                if (navController.currentDestination?.id != R.id.homeFragment) {
+                    navController.navigate(R.id.homeFragment)
+                }
             }
 
             ivSettings.setOnClickListener {
                 ivSettings.setImageResource(R.drawable.ic_selected_settings)
                 ivHome.setImageResource(R.drawable.ic_unselect_home)
 
-                findNavController(R.id.nav_fragment).navigate(R.id.settingScreen)
-
+                val navController = findNavController(R.id.nav_fragment)
+                if (navController.currentDestination?.id != R.id.settingScreen) {
+                    navController.navigate(R.id.settingScreen)
+                }
             }
 
         }
@@ -79,8 +83,8 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION    // Hides the navigation bar
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY // Ensures it stays hidden after user interaction
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
