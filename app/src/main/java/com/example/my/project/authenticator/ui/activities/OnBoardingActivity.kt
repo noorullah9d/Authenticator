@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class OnBoardingActivity : AppCompatActivity() {
+class OnBoardingActivity : BaseActivity() {
 
     private lateinit var binding: ActivityOnBoardingBinding
 

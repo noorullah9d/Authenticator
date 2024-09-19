@@ -81,13 +81,13 @@ class LanguagesAdapterNew(
                     if (isSelected) {
 
                         selectorIcon.setImageResource(R.drawable.selector_icon)
-                        root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
-                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
+//                        root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
+//                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
 
                     } else {
 
-                        root.changeCardStorkColor(R.color.card_bg, itemView.context.theme)
-                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
+//                        root.changeCardStorkColor(R.color.card_bg, itemView.context.theme)
+//                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
                         selectorIcon.setImageResource(R.drawable.ic_unchecked)
 
                     }

@@ -11,7 +11,7 @@ import com.example.my.project.authenticator.model.CardSelectionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FeedbackScreen : AppCompatActivity() {
+class FeedbackScreen : BaseActivity() {
 
     val viewModel by viewModels<CardSelectionViewModel>()
     private lateinit var binding: ActivityFeedbackScreenBinding

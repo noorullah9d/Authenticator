@@ -22,7 +22,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WelcomeScreen : AppCompatActivity() {
+class WelcomeScreen : BaseActivity() {
 
     private lateinit var binding: ActivityWelcomeScreenBinding
 

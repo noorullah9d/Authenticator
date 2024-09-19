@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ImportExportScreen : AppCompatActivity() {
+class ImportExportScreen : BaseActivity() {
 
     private lateinit var binding: ActivityImportExportScreenBinding
     private val viewModel by viewModels<ImportViewModel>()

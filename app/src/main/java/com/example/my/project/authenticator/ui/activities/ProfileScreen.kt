@@ -9,7 +9,7 @@ import com.example.my.project.authenticator.databinding.ActivityProfileScreenBin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileScreen : AppCompatActivity() {
+class ProfileScreen : BaseActivity() {
 
     private lateinit var binding: ActivityProfileScreenBinding
     private lateinit var navController: NavController

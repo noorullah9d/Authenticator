@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SplashScreen : AppCompatActivity() {
+class SplashScreen : BaseActivity() {
 
     private lateinit var binding: FragmentSplashBinding
 

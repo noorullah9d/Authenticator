@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ExportScreen : AppCompatActivity() {
+class ExportScreen : BaseActivity() {
 
     private val exportOptions = listOf(
         "No encryption" to SavingMode.NoEncryption,

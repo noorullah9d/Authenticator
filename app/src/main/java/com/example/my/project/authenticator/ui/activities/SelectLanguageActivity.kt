@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,7 @@ import com.example.my.project.authenticator.model.LanguageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SelectLanguageActivity : AppCompatActivity() {
+class SelectLanguageActivity : BaseActivity() {
     private lateinit var binding: ActivitySelectLanguageBinding
     private lateinit var languagesAdapter: LanguagesAdapterNew
 
@@ -52,11 +53,10 @@ class SelectLanguageActivity : AppCompatActivity() {
 
     private fun navigateToMainScreen() {
         startActivityWithAnimation<MainActivity>()
-//        viewModel.setLanguage(selectedLanguage)
-//        viewModel.setLanguageFirstTime("true")
-//        TinyDB.getInstance(this).putBoolean(Constants.IS_FIRST_TIME, true)
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
+        viewModel.setLanguage(selectedLanguage)
+        viewModel.setLanguageFirstTime("true")
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
         finishAffinity()
     }
 }
