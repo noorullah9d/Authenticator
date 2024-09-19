@@ -21,7 +21,7 @@
         android:contentDescription="@string/app_name"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/splash_logo"
+        app:lottie_rawRes="@raw/splash_logo_1"
         app:layout_constraintBottom_toTopOf="@+id/tvSecure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

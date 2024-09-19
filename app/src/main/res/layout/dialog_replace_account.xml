@@ -1,28 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
-    <TextView
-        android:id="@+id/dialog_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/this_account_already_exists_do_you_want_to_replace"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:paddingBottom="16dp"/>
-
-    <Button
-        android:id="@+id/button_replace"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/replace" />
+        android:padding="16dp"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button_keep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/keep"
-        android:layout_marginTop="8dp"/>
-</LinearLayout>
+        <ImageView
+            android:id="@+id/dialog_image"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/objects"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dialog_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="@string/account_already_exsist"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_image" />
+
+
+        <TextView
+            android:id="@+id/dialog_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/lato_regular"
+            android:text="@string/do_you_want_replace"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_message" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_description">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_replace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/replace"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:backgroundTint="@color/secondary_color"
+                app:cornerRadius="@dimen/_5sdp"
+                app:layout_constraintTop_toBottomOf="@+id/dialog_message" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_keep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:backgroundTint="@color/white"
+                android:text="@string/keep"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                app:cornerRadius="@dimen/_5sdp"
+                app:strokeColor="@color/view_color"
+                app:strokeWidth="1dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

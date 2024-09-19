@@ -10,10 +10,12 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
     private val firestore = FirebaseFirestore.getInstance()
 
-    override fun saveDataToDB(email: String, passcode: String, accountName: String) {
+    override fun saveDataToDB(email: String, passcode: String, accountName: String, tool: String) {
+        // Include 'tool' in the new account map
         val newAccount = mapOf(
             "accountName" to accountName,
-            "passcode" to passcode
+            "passcode" to passcode,
+            "tool" to tool
         )
 
         val documentRef = firestore.collection("Authenticator").document(email)
@@ -43,6 +45,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
             Log.e("SaveFirebase", "Failed to retrieve document: ${e.message}")
         }
     }
+
 
 
     override fun retrieveDataFromDB(email: String, callback: (List<Account>?, String?) -> Unit) {

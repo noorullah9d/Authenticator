@@ -56,13 +56,12 @@ class ExportScreen : AppCompatActivity() {
 
 
     private fun setupExportOptionsSpinner() {
-        val options = exportOptions.map { it.first } // Assuming exportOptions is a list of pairs
+        val options = exportOptions.map { it.first }
 
-        // Create an instance of the custom adapter using the options
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             this,
             options,
-            false // Adjust this based on your requirement if you want to show 'recommended' text or not
+            false
         )
 
         binding.exportTypeSpinner.adapter = exportOptionsAdapter

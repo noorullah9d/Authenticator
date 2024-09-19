@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.commons.codec.binary.Base32
-import java.security.SecureRandom
 import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
@@ -78,8 +77,8 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun isKeyExists(name: String, Key: String) = viewModelScope.launch(Dispatchers.IO) {
-        totpKeyRepo.isKeyExists(name, Key)
+    fun isKeyExists(name: String, key: String) = viewModelScope.launch(Dispatchers.IO) {
+        totpKeyRepo.isKeyExists(name, key)
     }.isActive
 
 
@@ -161,10 +160,10 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    fun addTotp(name: String, base32Secret: String): Boolean {
+    fun addTotp(name: String, base32Secret: String, tool: String = ""): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
         if (sharedPreferencesHelper.userEmail != "")
-            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name)
+            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name,tool)
         val secret = Base32().decode(base32Secret)
         try {
             viewModelScope.launch {

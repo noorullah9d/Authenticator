@@ -41,20 +41,27 @@ class AccountsDetails : Fragment() {
 
 
             btnAdd.setOnClickListener {
-                if (etAccountName.text.toString().isEmpty() && etAccountKey.text.toString().isEmpty()) {
+                val accountName = etAccountName.text.toString()
+                val accountKey = etAccountKey.text.toString()
+
+                if (accountName.isEmpty() && accountKey.isEmpty()) {
                     toast(requireActivity().getString(R.string.field_should_not_empty))
-                } else if (etAccountName.text.toString().isEmpty()) {
+                } else if (accountName.isEmpty()) {
                     toast(requireActivity().getString(R.string.account_should_not_empty))
-                } else if (etAccountName.text.toString().isEmpty()) {
+                } else if (accountKey.isEmpty()) {
                     toast(requireActivity().getString(R.string.key_should_not_empty))
                 } else {
-
-                    val result = homeViewModel.addTotp(etAccountName.text.toString(), etAccountKey.text.toString())
-                    if (result) {
-                        requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
-                        requireActivity().finish()
+                    val isExists = homeViewModel.isKeyExists(accountName, accountKey)
+                    if (isExists) {
+                        showReplace(accountName, accountKey)
                     } else {
-                        toast(requireActivity().getString(R.string.error_occurs))
+                        val result = homeViewModel.addTotp(accountName, accountKey,"")
+                        if (result) {
+                            requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
+                            requireActivity().finish()
+                        } else {
+                            toast(requireActivity().getString(R.string.error_occurs))
+                        }
                     }
                 }
             }
@@ -86,6 +93,7 @@ class AccountsDetails : Fragment() {
             findNavController().popBackStack()
         }
     }
+
 
 
 }

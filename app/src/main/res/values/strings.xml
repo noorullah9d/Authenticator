@@ -77,8 +77,9 @@
     <string name="signed_in_successfully">Signed-in successfully</string>
     <string name="copy">Copy</string>
     <string name="condition">Condition</string>
-    <string name="this_account_already_exists_do_you_want_to_replace">This account already exists, do you want to replace?</string>
+    <string name="account_already_exsist">Account already exsist</string>
+    <string name="do_you_want_replace">An account with this name is already exists.</string>
     <string name="replace">Replace</string>
-    <string name="keep">Keep</string>
+    <string name="keep">Keep both</string>
 
 </resources>

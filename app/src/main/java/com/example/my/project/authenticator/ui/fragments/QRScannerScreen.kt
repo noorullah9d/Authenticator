@@ -101,23 +101,31 @@ class QRScannerScreen : Fragment() {
                     it.setAnalyzer(Executors.newSingleThreadExecutor(), BarcodeAnalyzer { barcode ->
                         result++
                         if (result < 2) {
-                            val infoData = barcode.displayValue?.let { it1 -> parseTotpUri(it1) }
-                            Log.d(TAG, "Scanned TOTP: Secret = ${infoData?.first}, Name = ${infoData?.second}")
+                            val displayValue = barcode.displayValue
+                            if (displayValue != null) {
+                                val infoData = parseTotpUri(displayValue)
+                                if (infoData != null) {
+                                    val (secret, name,tool) = infoData
+                                    Log.d(TAG, "Scanned TOTP: Secret = $secret, Name = $name tool $tool")
 
-                            val isExists = homeViewModel.isKeyExists(infoData?.second ?: "", infoData?.first ?: "")
-                            if (isExists) {
-                                showReplace(infoData?.second ?: "", infoData?.first ?: "")
-                            } else {
-                                val addResult = homeViewModel.addTotp(infoData?.second ?: "", infoData?.first ?: "")
-                                if (addResult) {
-                                    requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
-                                    requireActivity().finish()
+                                    val isExists = homeViewModel.isKeyExists(name, secret)
+                                    if (isExists) {
+                                        showReplace(name, secret,tool)
+                                    } else {
+                                        val addResult = homeViewModel.addTotp(name, secret,tool)
+                                        if (addResult) {
+                                            requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                                            requireActivity().finish()
+                                        } else {
+                                            toast(requireActivity().getString(R.string.error_occurs))
+                                        }
+                                    }
                                 } else {
-                                    toast(requireActivity().getString(R.string.error_occurs))
+                                    Log.e(TAG, "Failed to parse TOTP URI")
                                 }
+                            } else {
+                                Log.e(TAG, "Barcode display value is null")
                             }
-
-
                         }
                     })
                 }
@@ -139,14 +147,16 @@ class QRScannerScreen : Fragment() {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun parseTotpUri(totpUri: String): Pair<String, String>? {
+    private fun parseTotpUri(totpUri: String): Triple<String, String, String>? {
         return try {
             val uri = Uri.parse(totpUri)
             val secret = uri.getQueryParameter("secret")
             val label = uri.path?.substring(1)
+            val issuer = label?.substringBefore(':', "") ?: ""
             val name = label?.substringAfter(':', "") ?: ""
             if (secret != null && name.isNotEmpty()) {
-                Pair(secret, name)
+                Log.d(TAG, "parseTotpUri: $secret, $name, $issuer")
+                Triple(secret, name, issuer)
             } else {
                 null
             }
@@ -156,14 +166,16 @@ class QRScannerScreen : Fragment() {
         }
     }
 
-
-    private fun showReplace(accountName: String, passKey: String) {
+    private fun showReplace(accountName: String, passKey: String, tool: String) {
         showReplaceAccountDialog(
             onReplace = {
                 findNavController().popBackStack()
             },
             onKeep = {
-                val result = homeViewModel.addTotp(accountName, passKey)
+               val result = homeViewModel.addTotp(accountName, passKey,tool)
+                if (result){
+                    requireActivity().finish()
+                }
             }
         )
     }

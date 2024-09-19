@@ -24,6 +24,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
+import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.model.LanguagesModel
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -195,35 +196,41 @@ fun TextView.setProfileImage(accountName: String) {
 
 
 fun Context.showAskPasswordDialog(onDismiss: () -> Unit, onSuccess: (String) -> Unit) {
-    // Inflate the custom dialog layout
     val dialogView = LayoutInflater.from(this).inflate(R.layout.ask_password_dialog, null)
-    val dialogBuilder = AlertDialog.Builder(this)
+
+    val dialogBuilder = AlertDialog.Builder(this, R.style.TransparentDialog)
         .setView(dialogView)
-        .setCancelable(false) // Disallow closing dialog by clicking outside
+        .setCancelable(false)
 
     val alertDialog = dialogBuilder.create()
 
-    // Get references to dialog views
     val passwordEditText = dialogView.findViewById<EditText>(R.id.passwordEditText)
     val okButton = dialogView.findViewById<Button>(R.id.okButton)
     val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
 
-    // Set the "OK" button listener
     okButton.setOnClickListener {
         val password = passwordEditText.text.toString().trim()
         onSuccess(password)
         alertDialog.dismiss()
     }
 
-    // Set the "CANCEL" button listener
     cancelButton.setOnClickListener {
         onDismiss()
         alertDialog.dismiss()
     }
 
-    // Show the dialog
+    alertDialog.setOnShowListener {
+        val window = alertDialog.window
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val layoutParams = WindowManager.LayoutParams()
+        layoutParams.copyFrom(window?.attributes)
+        layoutParams.width = (resources.displayMetrics.widthPixels * 0.9).toInt()
+        window?.attributes = layoutParams
+    }
+
     alertDialog.show()
 }
+
 
 
 fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = emptyMap()) {
@@ -252,27 +259,37 @@ fun View.setOnDebouncedClickListener(debounceTime: Long = 2000L, action: (View) 
 
 
 fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit) {
-    // Inflate the custom layout
-    val inflater = LayoutInflater.from(requireContext())
-    val view = inflater.inflate(R.layout.dialog_replace_account, null)
+    val binding = DialogReplaceAccountBinding.inflate(layoutInflater)
 
-    val builder = AlertDialog.Builder(requireContext())
-    builder.setView(view)
+
+    val builder = AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
+    builder.setView(binding.root)
         .setCancelable(false)
 
     val alert = builder.create()
     alert.show()
 
-    view.findViewById<Button>(R.id.button_replace).setOnClickListener {
+
+    alert.setOnShowListener {
+        val window = alert.window
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val layoutParams = WindowManager.LayoutParams()
+        layoutParams.copyFrom(window?.attributes)
+        layoutParams.width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        window?.attributes = layoutParams
+    }
+
+    binding.buttonReplace.setOnClickListener {
         alert.dismiss()
         onReplace()
     }
 
-    view.findViewById<Button>(R.id.button_keep).setOnClickListener {
+    binding.buttonKeep.setOnClickListener {
         alert.dismiss()
         onKeep()
     }
 }
+
 
 
 fun Context.privacyPolicy(url: String, newTask: Boolean = false): Boolean {
