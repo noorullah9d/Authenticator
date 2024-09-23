@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">En konto med dette navn findes allerede.</string>
     <string name="replace">Erstat</string>
     <string name="keep">Behold begge</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

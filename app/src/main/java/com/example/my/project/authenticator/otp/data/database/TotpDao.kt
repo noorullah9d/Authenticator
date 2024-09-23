@@ -1,6 +1,12 @@
 package com.example.my.project.authenticator.otp.data.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 const val totpTableName = "totp"
@@ -19,14 +25,17 @@ interface TotpDao {
     @Query("SELECT * FROM $totpTableName WHERE email = :email")
     fun queryAll(email: String): Flow<List<TotpDbEntity>>
 
-    @Query("SELECT * FROM $totpTableName")
-    fun queryAllData(): List<TotpDbEntity>
+    @Query("SELECT * FROM $totpTableName WHERE email = :email")
+    fun queryAllData(email: String): List<TotpDbEntity>
 
-    @Query("SELECT COUNT(*) FROM $totpTableName WHERE name = :name AND secret = :secret")
-    suspend fun countByNameAndSecret(name: String, secret: ByteArray): Int
+    @Query("SELECT id FROM $totpTableName WHERE name = :name AND secretKey = :secret")
+    fun countByNameAndSecret(name: String, secret: String): Int
 
-    @Query("SELECT * FROM $totpTableName WHERE name = :name AND secret = :secret LIMIT 1")
-    fun getByNameAndSecret(name: String, secret: ByteArray): TotpDbEntity?
+    @Query("UPDATE $totpTableName SET name = :newName, secretKey = :newSecret WHERE id = :id")
+    fun updateNameAndSecretById(id: Int, newName: String, newSecret: String): Int
+
+
+
 
 
 }

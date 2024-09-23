@@ -8,6 +8,7 @@ data class TotpDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val email : String,
     val name: String,
+    val secretKey:  String,
     val secret: ByteArray,
     val iv: ByteArray,
 ) {

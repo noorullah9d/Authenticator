@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">具有此名称的账户已存在。</string>
     <string name="replace">替换</string>
     <string name="keep">保留两者</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

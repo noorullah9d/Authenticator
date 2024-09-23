@@ -5,14 +5,14 @@ import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
 import java.security.SecureRandom
 
-class AddNewTotpUseCase(
+class ReplaceTotpUseCase(
     private val repository: TotpKeyRepository,
     private val encryptor: SecretEncryptor,
 ) {
-    suspend operator fun invoke(email:String,plainSecret: ByteArray, name: String, secretKey: String) {
+    suspend operator fun invoke(id: Int, name: String, base32Secret: String) {
         val random = SecureRandom()
         val iv = ByteArray(encryptor.ivSize)
         random.nextBytes(iv)
-        repository.addKey(EncryptedTotpKey(0, email,name,secretKey, encryptor.encrypt(plainSecret, iv), iv))
+        repository.replaceEntity(id,name,base32Secret)
     }
 }

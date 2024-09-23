@@ -6,12 +6,13 @@ import android.widget.AdapterView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.ActivityExportScreenBinding
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
 import com.example.my.project.authenticator.otp.viewModel.ExportViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,9 +38,9 @@ class ExportScreen : BaseActivity() {
         setContentView(binding.root)
 
 
-         setupExportOptionsSpinner()
-         setupOutputStreamLauncher()
-         setupExportButton()
+        setupExportOptionsSpinner()
+        setupOutputStreamLauncher()
+        setupExportButton()
 
 
         binding.dropdownIcon.setOnClickListener {
@@ -82,35 +83,42 @@ class ExportScreen : BaseActivity() {
     }
 
 
-        private fun setupOutputStreamLauncher() {
-            getOutputStreamLauncher = registerForActivityResult(
-                ActivityResultContracts.CreateDocument("application/json")
-            ) { contentUri ->
-                if (contentUri == null) {
-                    finish()  // Handle back press on cancel
-                    return@registerForActivityResult
+    private fun setupOutputStreamLauncher() {
+        getOutputStreamLauncher = registerForActivityResult(
+            ActivityResultContracts.CreateDocument("application/json")
+        ) { contentUri ->
+            if (contentUri == null) {
+                finish()  // Handle back press on cancel
+                return@registerForActivityResult
+            }
+
+
+            lifecycleScope.launch {
+                this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
+
+                    val selectedMode = exportOptions[binding.exportTypeSpinner.selectedItemPosition].second
+                    val password = binding.passwordEditText.text.toString()
+
+                    viewModel.export(selectedMode, password, outputStream)
                 }
 
+                finish()
+            }
+        }
+    }
 
-                lifecycleScope.launch {
-                    this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
 
-                        val selectedMode = exportOptions[binding.exportTypeSpinner.selectedItemPosition].second
-                        val password = binding.passwordEditText.text.toString()
+    private fun setupExportButton() {
+        binding.apply {
 
-                        viewModel.export(selectedMode, password, outputStream)
-                    }
-
-                    finish()
+            exportButton.setOnClickListener {
+                if (passwordEditText.text.isNotEmpty()) {
+                    getOutputStreamLauncher.launch("export.json")
+                }else{
+                    toast(getString(R.string.enter_password))
                 }
             }
         }
-
-
-        private fun setupExportButton() {
-            binding.exportButton.setOnClickListener {
-                getOutputStreamLauncher.launch("export.json")
-            }
-        }
+    }
 
 }

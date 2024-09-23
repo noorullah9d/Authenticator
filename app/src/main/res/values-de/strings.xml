@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Ein Konto mit diesem Namen existiert bereits.</string>
     <string name="replace">Ersetzen</string>
     <string name="keep">Behalte beide</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

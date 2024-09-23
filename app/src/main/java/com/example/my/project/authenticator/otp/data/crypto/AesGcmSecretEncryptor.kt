@@ -1,6 +1,5 @@
 package com.example.my.project.authenticator.otp.data.crypto
 
-import android.util.Log
 import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import javax.crypto.Cipher
 import javax.crypto.SecretKey

@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Bu adla bir hesap zaten mevcut.</string>
     <string name="replace">Değiştir</string>
     <string name="keep">Her ikisini de tut</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

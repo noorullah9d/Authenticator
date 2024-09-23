@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Účet s tímto názvem již existuje.</string>
     <string name="replace">Nahradit</string>
     <string name="keep">Ponechat oba</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

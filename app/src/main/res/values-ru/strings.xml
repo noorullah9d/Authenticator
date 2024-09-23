@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Аккаунт с этим именем уже существует.</string>
     <string name="replace">Заменить</string>
     <string name="keep">Сохранить оба</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

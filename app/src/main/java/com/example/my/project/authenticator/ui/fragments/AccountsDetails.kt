@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
@@ -15,8 +16,9 @@ import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AccountsDetails : Fragment() {
@@ -52,16 +54,34 @@ class AccountsDetails : Fragment() {
                     toast(requireActivity().getString(R.string.key_should_not_empty))
                 } else {
                     val isExists = homeViewModel.isKeyExists(accountName, accountKey)
-                    if (isExists) {
-                        showReplace(accountName, accountKey)
+                    Log.d(TAG, "onViewCreated: $isExists")
+                    if (isExists > 0) {
+                        showReplace(isExists, accountName, accountKey)
                     } else {
-                        val result = homeViewModel.addTotp(accountName, accountKey,"")
-                        if (result) {
-                            requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
-                            requireActivity().finish()
-                        } else {
-                            toast(requireActivity().getString(R.string.error_occurs))
+//                        val result = homeViewModel.addTotp(accountName, accountKey, "")
+//                        if (result) {
+//                            requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
+//                            requireActivity().finish()
+//                        } else {
+//                            toast(requireActivity().getString(R.string.error_occurs))
+//                        }
+
+
+                        var result = false
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            val addResult = homeViewModel.addTotp(accountName, accountKey, "")
+                            result = addResult
+
+                        }.invokeOnCompletion {
+                            if (result) {
+                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                                requireActivity().finish()
+                            } else {
+                                toast(requireActivity().getString(R.string.error_occurs))
+                            }
                         }
+
+
                     }
                 }
             }
@@ -76,13 +96,38 @@ class AccountsDetails : Fragment() {
     }
 
 
-    private fun showReplace(accountName: String, passKey: String) {
+    private fun showReplace(id: Int, accountName: String, passKey: String, tool: String = "") {
         showReplaceAccountDialog(
             onReplace = {
-                findNavController().popBackStack()
+                val result = homeViewModel.replaceTotp(id, accountName, passKey, tool)
+                if (result) {
+                    requireActivity().finish()
+                    findNavController().popBackStack()
+                }
+
             },
             onKeep = {
-                homeViewModel.addTotp(accountName, passKey)
+//                val result = homeViewModel.addTotp(accountName, passKey, tool)
+//                if (result) {
+//                    requireActivity().finish()
+//                }
+
+
+                var result = false
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val addResult = homeViewModel.addTotp(accountName, passKey, tool)
+                    result = addResult
+
+                }.invokeOnCompletion {
+                    if (result) {
+                        requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                        requireActivity().finish()
+                    } else {
+                        toast(requireActivity().getString(R.string.error_occurs))
+                    }
+                }
+
+
             }
         )
     }
@@ -95,6 +140,6 @@ class AccountsDetails : Fragment() {
     }
 
 
-
 }
 
+private const val TAG = "AccountsDetails"

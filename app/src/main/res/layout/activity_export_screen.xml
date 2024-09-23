@@ -52,6 +52,7 @@
         android:id="@+id/card_export_type_spinner"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
+        app:cardBackgroundColor="@color/white"
         android:layout_margin="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

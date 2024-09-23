@@ -12,8 +12,9 @@ interface TotpKeyRepository {
 
     /** Edit a key by its id */
     suspend fun editKey(key: EncryptedTotpKey)
-    suspend fun getAllData(): List<EncryptedTotpKey>
+    fun getAllData(email: String): List<EncryptedTotpKey>
 
-    suspend fun isKeyExists(name: String, secret: String): Boolean
+    fun isKeyExists(name: String, secret: String): Int
+    suspend fun replaceEntity(id: Int, name: String, base32Secret: String)
 
 }

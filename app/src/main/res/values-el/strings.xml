@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Ένας λογαριασμός με αυτό το όνομα υπάρχει ήδη.</string>
     <string name="replace">Αντικατάσταση</string>
     <string name="keep">Κρατήστε και τα δύο</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

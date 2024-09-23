@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">یک حساب با این نام قبلاً وجود دارد.</string>
     <string name="replace">جایگزین کردن</string>
     <string name="keep">نگه داشتن هر دو</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

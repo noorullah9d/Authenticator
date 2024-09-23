@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
-    private val firestore = FirebaseFirestore.getInstance()
+    private val fireStore = FirebaseFirestore.getInstance()
 
     override fun saveDataToDB(email: String, passcode: String, accountName: String, tool: String) {
         // Include 'tool' in the new account map
@@ -18,7 +18,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
             "tool" to tool
         )
 
-        val documentRef = firestore.collection("Authenticator").document(email)
+        val documentRef = fireStore.collection("Authenticator").document(email)
 
         documentRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
@@ -47,9 +47,8 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
     }
 
 
-
     override fun retrieveDataFromDB(email: String, callback: (List<Account>?, String?) -> Unit) {
-        val documentRef = firestore.collection("Authenticator").document(email)
+        val documentRef = fireStore.collection("Authenticator").document(email)
 
         documentRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
@@ -68,7 +67,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
 
     override fun deleteAccount(email: String, accountName: String) {
-        val documentRef = firestore.collection("Authenticator").document(email)
+        val documentRef = fireStore.collection("Authenticator").document(email)
 
         documentRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
@@ -100,4 +99,3 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
 }
 
-private const val TAG = "SaveFirebaseImpl"

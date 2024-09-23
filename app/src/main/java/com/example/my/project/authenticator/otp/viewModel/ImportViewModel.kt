@@ -31,7 +31,7 @@ class ImportViewModel @Inject constructor(
 ) : ViewModel() {
     private val addNewTotpUseCase = AddNewTotpUseCase(repository, repositoryEncryptor)
     private val importUseCase = ImportKeysUseCase()
-    private lateinit var exportEntity: ExportEntity
+    private var exportEntity: ExportEntity? = null
 
     var count = 0
 
@@ -43,22 +43,24 @@ class ImportViewModel @Inject constructor(
     }
 
     suspend fun prepareAndCheckPassword(inputStream: InputStream): Boolean {
-        exportEntity = importUseCase.prepare(inputStream)
+        exportEntity = importUseCase.prepare(inputStream)!!
         return exportEntity !is NoEncryptionExport
     }
 
     suspend fun import(password: String? = null) {
         try {
             _importScreenState.postValue(_importScreenState.value?.copy(errorText = null))
-            val importedKeys = importUseCase(exportEntity) { salt ->
-                password?.let {
-                    val secretKey = SecretKeySpec(passwordHasher.hash(password.toByteArray(), salt), "AES")
-                    AesGcmSecretEncryptor(secretKey)
+            val importedKeys = exportEntity?.let {
+                importUseCase(it) { salt ->
+                    password?.let {
+                        val secretKey = SecretKeySpec(passwordHasher.hash(password.toByteArray(), salt), "AES")
+                        AesGcmSecretEncryptor(secretKey)
+                    }
                 }
             }
             val storedKeys = repository.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope).value
             val updatedState = _importScreenState.value?.copy(
-                importedKeys = importedKeys.map { unencryptedKey ->
+                importedKeys = importedKeys?.map { unencryptedKey ->
                     ImportedItemState(
                         unencryptedKey.name,
                         unencryptedKey.base32Secret,
@@ -81,7 +83,7 @@ class ImportViewModel @Inject constructor(
     suspend fun addSelected() {
         _importScreenState.value?.importedKeys?.filter { it.checked }?.forEach {
             saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
-            addNewTotpUseCase(sharedPreferencesHelper.userEmail, Base32().decode(it.secretKey), it.name)
+            addNewTotpUseCase(sharedPreferencesHelper.userEmail, Base32().decode(it.secretKey), it.name, it.secretKey)
         }
     }
 

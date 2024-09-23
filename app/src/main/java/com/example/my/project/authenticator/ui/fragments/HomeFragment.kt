@@ -24,7 +24,6 @@ import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import com.example.my.project.authenticator.utils.TotpCardState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -50,6 +49,7 @@ class HomeFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private var prefsHelper: SharedPreferencesHelper? = null
+    private lateinit var accountAdapter: AccountAdapter
 
     @Inject
     lateinit var sharedPreferencesHelper: SharedPreferencesHelper
@@ -88,31 +88,13 @@ class HomeFragment : Fragment() {
         }
 
 
-
-
-        homeViewModel.homeState.observe(viewLifecycleOwner) {
-            if (it.totpList.isEmpty()) {
-                binding.llPlaceHolderLayout.beVisible()
-                binding.oneTimePassword.beGone()
-                binding.accountData.beGone()
-                if (prefsHelper?.userEmail != "")
-                    binding.signIn.beGone()
-                Log.d(TAG, "onViewCreated: ")
-            } else {
-                binding.llPlaceHolderLayout.beGone()
-                binding.oneTimePassword.beVisible()
-                binding.accountData.beVisible()
-                setupRecyclerView(it.totpList)
-            }
-        }
-
+        observerData()
 
 
         binding.apply {
 
 
             icProfile.setOnDebouncedClickListener {
-//                signInWithGoogle()
                 changeGoogleAccount()
             }
 
@@ -132,6 +114,87 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun observerData() {
+
+
+        homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
+            if (homeState.totpList.isEmpty()) {
+
+
+                binding.llPlaceHolderLayout.beVisible()
+                binding.oneTimePassword.beGone()
+                binding.accountData.beGone()
+                if (prefsHelper?.userEmail != "")
+                    binding.signIn.beGone()
+
+
+
+            } else {
+
+
+                binding.llPlaceHolderLayout.beGone()
+                binding.oneTimePassword.beVisible()
+                binding.accountData.beVisible()
+
+
+
+                if (!::accountAdapter.isInitialized) {
+                    accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+
+                            homeViewModel.removeTotpById(totpCardState)
+
+
+                        }.invokeOnCompletion {
+
+                            if (homeState.totpList.size < accountAdapter.accounts.size) {
+                                val removedItems = accountAdapter.accounts.filter { it !in homeState.totpList }
+                                accountAdapter.removeAccounts(removedItems)
+                            }
+
+
+                        }
+                    }
+
+
+                    binding.accountData.adapter = accountAdapter
+                    binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
+
+
+                } else {
+
+                    accountAdapter.accounts.clear()
+                    accountAdapter.notifyDataSetChanged()
+
+                    if (homeState.totpList.size > accountAdapter.accounts.size) {
+
+
+                        val newItems = homeState.totpList.subList(accountAdapter.accounts.size, homeState.totpList.size)
+                        accountAdapter.addAccounts(newItems)
+
+
+                    } else {
+
+                        homeState.totpList.forEachIndexed { index, updatedAccount ->
+                            accountAdapter.updateSecondsLeftAtPosition(index, updatedAccount.secondsLeft)
+                            if (updatedAccount.secondsLeft == 30) {
+                                accountAdapter.updateOneTimeCodeAtPosition(index, updatedAccount.oneTimeCode)
+                            }
+                        }
+
+
+
+                    }
+
+
+                }
+            }
+        }
+
+
+    }
+
 
     private fun changeGoogleAccount() {
         googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
@@ -140,10 +203,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setFromRemote() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            delay(2000)
-            if (homeViewModel.setRemote() == 0) {
-                homeViewModel.fetchAndSave()
+        lifecycleScope.launch {
+//            delay(2000)
+            Log.d(TAG, "setFromRemote: ${homeViewModel.setRemote(sharedPreferencesHelper.userEmail)}")
+            if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+                homeViewModel.fetchFromRemoteAndSave()
             }
         }
     }
@@ -169,23 +233,19 @@ class HomeFragment : Fragment() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+                    homeViewModel.clearTotpData()
                     prefsHelper?.userEmail = email
-                    Log.d(TAG, "firebaseAuthWithGoogle: ${email}")
-                    val user = auth.currentUser
-                    homeViewModel.refreshTotpKeyFlow()
+                    Log.d(TAG, "firebaseAuthWithGoogle: $email")
+                    lifecycleScope.launch {
+                        homeViewModel.refreshTotpKeyFlow()
+                    }
+
                     setFromRemote()
                 } else {
                     Log.d(TAG, "failed")
                     toast(getString(R.string.not_logged_in))
                 }
             }
-    }
-
-    private fun setupRecyclerView(accounts: List<TotpCardState>) {
-        binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
-        binding.accountData.adapter = AccountAdapter(accounts) { id ->
-            homeViewModel.removeTotpById(id)
-        }
     }
 
 

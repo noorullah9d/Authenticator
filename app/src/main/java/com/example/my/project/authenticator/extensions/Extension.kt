@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -65,13 +67,11 @@ fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
     }
 
 
-
     dialog.setOnDismissListener {
         callback.invoke("dismiss")
     }
 
     dialog.show()
-
 
     val window = dialog.window
     window?.setGravity(Gravity.BOTTOM)
@@ -97,9 +97,7 @@ fun View.beInVisible() {
 
 
 fun MaterialCardView.changeCardStorkColor(color: Int, theme: Resources.Theme) {
-
     strokeColor = ResourcesCompat.getColor(resources, color, theme)
-
 }
 
 fun getLanguageList(): ArrayList<LanguagesModel> {
@@ -152,44 +150,40 @@ fun Fragment.toast(message: String) {
 }
 
 fun TextView.setProfileImage(accountName: String) {
-    // Predefined colors for letters A-Z
     val letterColors = mapOf(
-        'A' to Color.parseColor("#F44336"),  // Red
-        'B' to Color.parseColor("#E91E63"),  // Pink
-        'C' to Color.parseColor("#9C27B0"),  // Purple
-        'D' to Color.parseColor("#673AB7"),  // Deep Purple
-        'E' to Color.parseColor("#3F51B5"),  // Indigo
-        'F' to Color.parseColor("#2196F3"),  // Blue
-        'G' to Color.parseColor("#03A9F4"),  // Light Blue
-        'H' to Color.parseColor("#00BCD4"),  // Cyan
-        'I' to Color.parseColor("#009688"),  // Teal
-        'J' to Color.parseColor("#4CAF50"),  // Green
-        'K' to Color.parseColor("#8BC34A"),  // Light Green
-        'L' to Color.parseColor("#CDDC39"),  // Lime
-        'M' to Color.parseColor("#FFEB3B"),  // Yellow
-        'N' to Color.parseColor("#FFC107"),  // Amber
-        'O' to Color.parseColor("#FF9800"),  // Orange
-        'P' to Color.parseColor("#FF5722"),  // Deep Orange
-        'Q' to Color.parseColor("#795548"),  // Brown
-        'R' to Color.parseColor("#9E9E9E"),  // Gray
-        'S' to Color.parseColor("#607D8B"),  // Blue Gray
-        'T' to Color.parseColor("#FF5722"),  // Deep Orange
-        'U' to Color.parseColor("#9C27B0"),  // Purple
-        'V' to Color.parseColor("#673AB7"),  // Deep Purple
-        'W' to Color.parseColor("#3F51B5"),  // Indigo
-        'X' to Color.parseColor("#2196F3"),  // Blue
-        'Y' to Color.parseColor("#03A9F4"),  // Light Blue
-        'Z' to Color.parseColor("#00BCD4")   // Cyan
+        'A' to Color.parseColor("#F44336"),
+        'B' to Color.parseColor("#E91E63"),
+        'C' to Color.parseColor("#9C27B0"),
+        'D' to Color.parseColor("#673AB7"),
+        'E' to Color.parseColor("#3F51B5"),
+        'F' to Color.parseColor("#2196F3"),
+        'G' to Color.parseColor("#03A9F4"),
+        'H' to Color.parseColor("#00BCD4"),
+        'I' to Color.parseColor("#009688"),
+        'J' to Color.parseColor("#4CAF50"),
+        'K' to Color.parseColor("#8BC34A"),
+        'L' to Color.parseColor("#CDDC39"),
+        'M' to Color.parseColor("#FFEB3B"),
+        'N' to Color.parseColor("#FFC107"),
+        'O' to Color.parseColor("#FF9800"),
+        'P' to Color.parseColor("#FF5722"),
+        'Q' to Color.parseColor("#795548"),
+        'R' to Color.parseColor("#9E9E9E"),
+        'S' to Color.parseColor("#607D8B"),
+        'T' to Color.parseColor("#FF5722"),
+        'U' to Color.parseColor("#9C27B0"),
+        'V' to Color.parseColor("#673AB7"),
+        'W' to Color.parseColor("#3F51B5"),
+        'X' to Color.parseColor("#2196F3"),
+        'Y' to Color.parseColor("#03A9F4"),
+        'Z' to Color.parseColor("#00BCD4")
     )
 
-    // Extract the first letter of the account name
     val firstLetter = accountName.firstOrNull()?.uppercaseChar() ?: 'A'
     this.text = firstLetter.toString()
 
-    // Get the color for the first letter from the letterColors map, fallback to a default color
     val color = letterColors[firstLetter] ?: Color.GRAY
 
-    // Set the circular background with the retrieved color
     val background = this.background as? GradientDrawable
     background?.setColor(color)
 }
@@ -305,4 +299,10 @@ fun Context.privacyPolicy(url: String, newTask: Boolean = false): Boolean {
         e.printStackTrace()
         false
     }
+}
+
+fun Context.copyTextToClipboard(text: String) {
+    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("Copied Text", text)
+    clipboard.setPrimaryClip(clip)
 }

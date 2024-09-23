@@ -8,8 +8,8 @@ data class HomeState(
 data class TotpCardState(
     val id: Int,
     val name: String,
-    val oneTimeCode: Int,
-    val secondsLeft: Int,
+    var oneTimeCode: Int,
+    var secondsLeft: Int,
 )
 
 data class EditTotpState(

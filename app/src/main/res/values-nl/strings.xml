@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Er bestaat al een account met deze naam.</string>
     <string name="replace">Vervangen</string>
     <string name="keep">Beide behouden</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

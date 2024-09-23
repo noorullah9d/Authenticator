@@ -1,6 +1,5 @@
 package com.example.my.project.authenticator.otp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,12 +11,12 @@ import com.example.my.project.authenticator.otp.domain.repository.TotpKeyReposit
 import com.example.my.project.authenticator.otp.domain.usecases.AddNewTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
+import com.example.my.project.authenticator.otp.domain.usecases.ReplaceTotpUseCase
 import com.example.my.project.authenticator.utils.EditTotpState
 import com.example.my.project.authenticator.utils.HomeState
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.example.my.project.authenticator.utils.TotpCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -44,17 +43,21 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
+    private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
 
     private var totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
     val homeState = MutableLiveData(HomeState())
+
+
     private lateinit var oneSecondTimer: Timer
 
     private var isDataFetched = false
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             autoUpdate()
         }
     }
@@ -64,36 +67,31 @@ class HomeViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
         viewModelScope.launch(Dispatchers.IO) {
-
             totpKeyFlow.collect { keyList ->
                 updateStateList(keyList)
             }
-
         }
     }
 
-    suspend fun setRemote(): Int {
-        return totpKeyRepo.getAllData().size
+
+    fun setRemote(email: String): Int {
+        return totpKeyRepo.getAllData(email).size
     }
 
 
-    fun isKeyExists(name: String, key: String) = viewModelScope.launch(Dispatchers.IO) {
-        totpKeyRepo.isKeyExists(name, key)
-    }.isActive
+    fun isKeyExists(name: String, key: String) = totpKeyRepo.isKeyExists(name, key)
 
 
-    fun fetchAndSave() {
+    fun fetchFromRemoteAndSave() {
         saveFirebase.retrieveDataFromDB(sharedPreferencesHelper.userEmail) { accounts, _ ->
             accounts?.forEach { account ->
                 val secret = Base32().decode(account.passcode)
 
-                Log.d(TAG, "fetchAndSave: ")
                 if (!isDataFetched) {
-                    Log.d(TAG, "isDataFetched: ")
                     viewModelScope.launch {
-                        Log.d(TAG, "viewModelScope: ")
-                        addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName)
+                        addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName, account.passcode)
                     }
+
                 }
             }
             isDataFetched = true
@@ -108,6 +106,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun startTimer() {
+
         if (!::oneSecondTimer.isInitialized) {
             oneSecondTimer = fixedRateTimer(
                 null, true,
@@ -116,23 +115,36 @@ class HomeViewModel @Inject constructor(
             ) {
                 timerUpdates()
             }
+
         }
+
     }
 
     private fun timerUpdates() {
         if (totpKeyFlow.value.isEmpty()) return
 
         val currentSecondsLeft = countSecondsLeft()
+        val updatedTotpList = homeState.value?.totpList?.toMutableList() ?: mutableListOf()
 
-        if (currentSecondsLeft == (defaultUpdateStepMs / 1000).toInt()) {
-            updateStateList()
-        } else {
-            CoroutineScope(Dispatchers.Main).launch {
-                homeState.value = homeState.value?.totpList?.map { it.copy(secondsLeft = currentSecondsLeft) }?.let {
-                    homeState.value?.copy(totpList = it)
+        updatedTotpList.forEachIndexed { index, totpCardState ->
+
+            if (currentSecondsLeft.toLong() == defaultUpdateStepMs / 1000) {
+                val updatedTotpCode = try {
+                    generateTotpCodeUseCase(totpKeyFlow.value[index])
+                } catch (e: IllegalArgumentException) {
+                    -999999
+                }catch (e:IndexOutOfBoundsException){
+                    -999999
                 }
+
+                updatedTotpList[index] = totpCardState.copy(oneTimeCode = updatedTotpCode)
+
             }
+
+            updatedTotpList[index] = updatedTotpList[index].copy(secondsLeft = currentSecondsLeft)
         }
+
+        homeState.postValue(homeState.value?.copy(totpList = updatedTotpList))
     }
 
     private fun updateStateList(keyList: List<EncryptedTotpKey> = totpKeyFlow.value) {
@@ -160,23 +172,43 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    fun addTotp(name: String, base32Secret: String, tool: String = ""): Boolean {
+    suspend fun addTotp(name: String, base32Secret: String, tool: String = ""): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
-        if (sharedPreferencesHelper.userEmail != "")
-            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name,tool)
-        val secret = Base32().decode(base32Secret)
-        try {
-            viewModelScope.launch {
-                addTotpUseCase(sharedPreferencesHelper.userEmail, secret, name)
-            }
-        } catch (e: IllegalArgumentException) {
-            return false
+
+        if (sharedPreferencesHelper.userEmail != "") {
+            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name, tool)
         }
-        return true
+
+        val secret = Base32().decode(base32Secret)
+        return try {
+            viewModelScope.launch {
+                addTotpUseCase(sharedPreferencesHelper.userEmail, secret, name, base32Secret)
+
+                refreshTotpKeyFlow()
+
+            }
+            true
+        } catch (e: IllegalArgumentException) {
+            false
+        }
     }
 
-    fun removeTotpById(totpCard: TotpCardState) {
-        viewModelScope.launch {
+    fun replaceTotp(id: Int, name: String, base32Secret: String, tool: String): Boolean {
+        if (!isSecretCorrect(base32Secret)) return false
+
+        return try {
+            viewModelScope.launch {
+                replaceTotpUseCase(id, name, base32Secret)
+                refreshTotpKeyFlow()
+            }
+            true
+        } catch (e: IllegalArgumentException) {
+            false
+        }
+    }
+
+    suspend fun removeTotpById(totpCard: TotpCardState) {
+
 
             if (sharedPreferencesHelper.userEmail != "") {
                 saveFirebase.deleteAccount(sharedPreferencesHelper.userEmail, totpCard.name)
@@ -186,7 +218,7 @@ class HomeViewModel @Inject constructor(
             toDelete?.let {
                 totpKeyRepo.removeKey(it)
             }
-        }
+
     }
 
     fun requestEdit(id: Int) {
@@ -204,8 +236,12 @@ class HomeViewModel @Inject constructor(
         if (!isSecretCorrect(edited.base32Secret)) return
         val secret = Base32().decode(edited.base32Secret)
         viewModelScope.launch {
-            editTotpUseCase(sharedPreferencesHelper.userEmail, edited.id, edited.name, secret)
+            editTotpUseCase(sharedPreferencesHelper.userEmail, edited.id, edited.name, secret, edited.base32Secret)
         }
+    }
+
+    fun clearTotpData() {
+        homeState.value = homeState.value?.copy(totpList = emptyList())
     }
 
     private val base32Regex = Regex("[A-Za-z2-7]+=*")

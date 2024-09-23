@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">इस नाम का एक खाता पहले से मौजूद है।</string>
     <string name="replace">प्रतिस्थापित करें</string>
     <string name="keep">दोनों रखें</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

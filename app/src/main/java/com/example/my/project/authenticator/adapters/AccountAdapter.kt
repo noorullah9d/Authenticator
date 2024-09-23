@@ -1,96 +1,113 @@
 package com.example.my.project.authenticator.adapters
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.databinding.AccountItemBinding
+import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.setProfileImage
-import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.TotpCardState
-import com.owl93.dpb.CircularProgressView
 
+class AccountAdapter(
+    val accounts: MutableList<TotpCardState>,
+    private val onItemLongClick: (Int,TotpCardState) -> Unit
+) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
-class AccountAdapter(private val accounts: List<TotpCardState>, private val onItemLongClick: (TotpCardState) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+    fun addAccounts(newAccounts: List<TotpCardState>) {
+        val initialSize = accounts.size
+        accounts.addAll(newAccounts)
+        notifyItemRangeInserted(initialSize, newAccounts.size)
+    }
 
-    class AccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val accountNameTextView: TextView = itemView.findViewById(R.id.tvName)
-        val passcodeTextView: TextView = itemView.findViewById(R.id.tvPassCode)
-        val ivProfileImage: TextView = itemView.findViewById(R.id.ivProfileImage)
-        val circularProgress: CircularProgressView = itemView.findViewById(R.id.circularProgress)
+    fun removeAccounts(removedAccounts: List<TotpCardState>) {
+        // Iterate through the list of items to remove
+        removedAccounts.forEach { removedAccount ->
+            val indexToRemove = accounts.indexOfFirst { it.id == removedAccount.id }
+            if (indexToRemove != -1) {
+                accounts.removeAt(indexToRemove)
+                notifyItemRemoved(indexToRemove)
+            }
+        }
+    }
+
+    class AccountViewHolder(private val binding: AccountItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(account: TotpCardState) {
+            binding.tvName.text = account.name
+            binding.tvPassCode.text = account.oneTimeCode.toString()
+            binding.circularProgress.progress = account.secondsLeft.toFloat()
+            binding.circularProgress.text = account.secondsLeft.toString()
+            binding.ivProfileImage.setProfileImage(account.name)
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.account_item, parent, false)
-        return AccountViewHolder(itemView)
+        val binding = AccountItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AccountViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = accounts[position]
 
+        holder.itemView.setOnLongClickListener { view ->
+            (view.parent as? RecyclerView)?.suppressLayout(true)
 
-
-        holder.apply {
-
-            accountNameTextView.text = account.name
-            passcodeTextView.text = account.oneTimeCode.toString()
-
-            circularProgress.progress = account.secondsLeft.toFloat()
-            circularProgress.text = account.secondsLeft.toString()
-
-
-            holder.ivProfileImage.setProfileImage(account.name)
-
-
-
-            itemView.setOnLongClickListener {
-                showPopupMenu(it, account)
-                true
+            showPopupMenu(position,view, account) {
+                (view.parent as? RecyclerView)?.suppressLayout(false)
             }
-
+            true
         }
 
 
+        holder.bind(account)
     }
 
-    private fun showPopupMenu(view: View, account: TotpCardState) {
+    override fun getItemCount(): Int {
+        return accounts.size
+    }
+
+    private fun showPopupMenu(position: Int,view: View, account: TotpCardState, onDismiss: () -> Unit) {
         val popupMenu = PopupMenu(view.context, view)
         popupMenu.inflate(R.menu.account_options_menu)
-
 
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_copy -> {
-                    copyTextToClipboard(view.context, account.oneTimeCode.toString())
+                    view.context.copyTextToClipboard(account.oneTimeCode.toString())
                     true
                 }
 
                 R.id.menu_delete -> {
-                    onItemLongClick.invoke(account)
+                    onItemLongClick.invoke(position,account)
                     true
                 }
 
                 else -> false
             }
         }
+
+        popupMenu.setOnDismissListener {
+            onDismiss()
+        }
+
         popupMenu.show()
     }
 
+    fun updateSecondsLeftAtPosition(position: Int, secondsLeft: Int) {
+        accounts[position].secondsLeft = secondsLeft
+        notifyItemChanged(position, secondsLeft)
+    }
 
-    fun copyTextToClipboard(context: Context, text: String) {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Copied Text", text)
-        clipboard.setPrimaryClip(clip)
-        context.toast("Copied")
+    fun updateOneTimeCodeAtPosition(position: Int, oneTimeCode: Int) {
+        accounts[position].oneTimeCode = oneTimeCode
+        notifyItemChanged(position, oneTimeCode)
     }
 
 
-    override fun getItemCount() = accounts.size
 }
 
-
+private const val TAG = "AccountAdapter"

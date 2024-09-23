@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">يوجد حساب بهذا الاسم بالفعل.</string>
     <string name="replace">استبدال</string>
     <string name="keep">احتفظ بالاثنين</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

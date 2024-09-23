@@ -44,7 +44,7 @@ class ExportKeysUseCase(
             SavingMode.KeyEncryption -> {
                 val base64 = Base64()
                 KeyEncryptionExport(keys.map {
-                    val newIv = ByteArray(exportEncryptor!!.ivSize)
+                    val newIv = ByteArray(exportEncryptor?.ivSize!!)
                     SecureRandom().nextBytes(newIv)
                     val newEncryptedSecret = exportEncryptor.encrypt(
                         repositoryEncryptor.decrypt(it.secret, it.iv),
@@ -68,7 +68,7 @@ class ExportKeysUseCase(
                         Base32().encode(repositoryEncryptor.decrypt(it.secret, it.iv)).decodeToString()
                     )
                 }
-                val newIv = ByteArray(exportEncryptor!!.ivSize)
+                val newIv = ByteArray(exportEncryptor?.ivSize!!)
                 SecureRandom().nextBytes(newIv)
                 val encryptedKeysList = exportEncryptor.encrypt(
                     Json.encodeToString(unencryptedKeysList).encodeToByteArray(), newIv

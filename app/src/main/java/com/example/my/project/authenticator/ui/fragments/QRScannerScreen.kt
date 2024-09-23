@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
@@ -28,6 +29,8 @@ import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.BarcodeAnalyzer
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
@@ -105,19 +108,31 @@ class QRScannerScreen : Fragment() {
                             if (displayValue != null) {
                                 val infoData = parseTotpUri(displayValue)
                                 if (infoData != null) {
-                                    val (secret, name,tool) = infoData
+                                    val (secret, name, tool) = infoData
                                     Log.d(TAG, "Scanned TOTP: Secret = $secret, Name = $name tool $tool")
 
                                     val isExists = homeViewModel.isKeyExists(name, secret)
-                                    if (isExists) {
-                                        showReplace(name, secret,tool)
+                                    Log.d(TAG, "startCamera: $isExists")
+                                    if (isExists > 0) {
+                                        showReplace(isExists, name, secret, tool)
                                     } else {
-                                        val addResult = homeViewModel.addTotp(name, secret,tool)
-                                        if (addResult) {
-                                            requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
-                                            requireActivity().finish()
-                                        } else {
-                                            toast(requireActivity().getString(R.string.error_occurs))
+                                        var result = false
+                                        lifecycleScope.launch(Dispatchers.IO) {
+                                            val addResult = homeViewModel.addTotp(name, secret, tool)
+                                            result = addResult
+//                                            if (addResult) {
+//                                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+//                                                requireActivity().finish()
+//                                            } else {
+//                                                toast(requireActivity().getString(R.string.error_occurs))
+//                                            }
+                                        }.invokeOnCompletion {
+                                            if (result) {
+                                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                                                requireActivity().finish()
+                                            } else {
+                                                toast(requireActivity().getString(R.string.error_occurs))
+                                            }
                                         }
                                     }
                                 } else {
@@ -166,16 +181,38 @@ class QRScannerScreen : Fragment() {
         }
     }
 
-    private fun showReplace(accountName: String, passKey: String, tool: String) {
+    private fun showReplace(id: Int, accountName: String, passKey: String, tool: String) {
         showReplaceAccountDialog(
             onReplace = {
-                findNavController().popBackStack()
-            },
-            onKeep = {
-               val result = homeViewModel.addTotp(accountName, passKey,tool)
-                if (result){
+
+                val result = homeViewModel.replaceTotp(id, accountName, passKey, tool)
+                if (result) {
                     requireActivity().finish()
                 }
+
+            },
+            onKeep = {
+//                val result = homeViewModel.addTotp(accountName, passKey, tool)
+//                if (result) {
+//                    requireActivity().finish()
+//                }
+
+
+                var result = false
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val addResult = homeViewModel.addTotp(accountName, passKey, tool)
+                    result = addResult
+
+                }.invokeOnCompletion {
+                    if (result) {
+                        requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
+                        requireActivity().finish()
+                    } else {
+                        toast(requireActivity().getString(R.string.error_occurs))
+                    }
+                }
+
+
             }
         )
     }

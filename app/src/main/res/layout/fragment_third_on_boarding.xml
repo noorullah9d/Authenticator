@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="center"
         android:text="@string/easy_info"
         android:textAlignment="center"
         android:textColor="@color/light_gray"

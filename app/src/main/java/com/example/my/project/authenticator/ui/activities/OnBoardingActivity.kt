@@ -10,7 +10,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.OnboardingAdapter
@@ -46,13 +45,8 @@ class OnBoardingActivity : BaseActivity() {
             val prefsHelper = SharedPreferencesHelper(this)
 
             prefsHelper.isUserFirstTime = false
+            startActivityWithAnimation<WelcomeScreen>()
 
-            if (binding.viewPager.currentItem == 2) {
-                startActivityWithAnimation<WelcomeScreen>()
-                finish()
-            } else {
-                binding.viewPager.currentItem++
-            }
         }
     }
 

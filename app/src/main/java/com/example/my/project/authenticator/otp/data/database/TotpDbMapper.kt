@@ -8,6 +8,7 @@ object TotpDbMapper {
         email = totpKey.email,
         name = totpKey.name,
         secret = totpKey.secret,
+        secretKey = totpKey.secretKey,
         iv = totpKey.iv,
     )
 
@@ -16,6 +17,7 @@ object TotpDbMapper {
         email = totpEntity.email,
         name = totpEntity.name,
         secret = totpEntity.secret,
+        secretKey = totpEntity.secretKey,
         iv = totpEntity.iv,
     )
 }

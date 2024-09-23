@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">이 이름의 계정이 이미 존재합니다.</string>
     <string name="replace">교체</string>
     <string name="keep">둘 다 유지</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

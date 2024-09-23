@@ -44,7 +44,7 @@
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@+id/scanningText"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"

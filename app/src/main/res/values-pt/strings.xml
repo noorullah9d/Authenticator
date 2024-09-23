@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Uma conta com este nome já existe.</string>
     <string name="replace">Substituir</string>
     <string name="keep">Manter ambos</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

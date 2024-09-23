@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Akun dengan nama ini sudah ada.</string>
     <string name="replace">Ganti</string>
     <string name="keep">Simpan Keduanya</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

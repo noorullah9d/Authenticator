@@ -6,6 +6,8 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -67,6 +69,7 @@ dependencies {
 
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation(libs.firebase.analytics)
 
 

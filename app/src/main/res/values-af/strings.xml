@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">‘n Rekening met hierdie naam bestaan reeds.</string>
     <string name="replace">Vervang</string>
     <string name="keep">Hou albei</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

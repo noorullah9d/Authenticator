@@ -80,4 +80,5 @@
     <string name="do_you_want_replace">Đã tồn tại một tài khoản với tên này.</string>
     <string name="replace">Thay thế</string>
     <string name="keep">Giữ cả hai</string>
+    <string name="enter_password">Enter Password</string>
 </resources>
