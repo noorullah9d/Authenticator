@@ -246,8 +246,10 @@ class HomeViewModel @Inject constructor(
 
     private val base32Regex = Regex("[A-Za-z2-7]+=*")
     private fun isSecretCorrect(secret: String): Boolean {
-        return base32Regex.matchEntire(secret) != null
+        val sanitizedSecret = secret.replace(" ", "")
+        return base32Regex.matchEntire(sanitizedSecret) != null
     }
+
 }
 
 private const val TAG = "HomeViewModel"

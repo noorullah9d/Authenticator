@@ -81,4 +81,6 @@
     <string name="replace">प्रतिस्थापित करें</string>
     <string name="keep">दोनों रखें</string>
     <string name="enter_password">Enter Password</string>
+    <string name="home">Home</string>
+    <string name="no_internet_connection">No Internet Connection</string>
 </resources>

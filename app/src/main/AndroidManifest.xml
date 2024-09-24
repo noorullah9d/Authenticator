@@ -15,46 +15,56 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="false"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
         android:theme="@style/Theme.Authenticator"
         tools:targetApi="31">
         <activity
             android:name=".ui.activities.ImportScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.ExportScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.ImportExportScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.FeedbackScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.ProfileScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.WelcomeScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.SelectLanguageActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.OnBoardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.BaseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.SplashScreen"
             android:exported="true"
-            android:theme="@style/SplashTheme"
-            >
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

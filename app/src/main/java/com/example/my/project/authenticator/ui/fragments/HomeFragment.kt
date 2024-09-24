@@ -18,7 +18,10 @@ import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.getFirstCharacter
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
+import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
@@ -33,7 +36,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -83,10 +85,19 @@ class HomeFragment : Fragment() {
             }
         }
 
-        if (sharedPreferencesHelper.userEmail != "") {
-            setFromRemote()
-        }
 
+
+
+        if (sharedPreferencesHelper.userEmail != "") {
+            sharedPreferencesHelper.userEmail.getFirstCharacter()
+            binding.icProfile.beGone()
+            binding.icProfileText.beVisible()
+            binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+            setFromRemote()
+        } else {
+            binding.icProfile.beVisible()
+            binding.icProfileText.beGone()
+        }
 
         observerData()
 
@@ -95,7 +106,20 @@ class HomeFragment : Fragment() {
 
 
             icProfile.setOnDebouncedClickListener {
-                changeGoogleAccount()
+                if (requireActivity().isInternetAvailable()) {
+                    changeGoogleAccount()
+                }else{
+                    toast(getString(R.string.no_internet_connection))
+                }
+            }
+
+
+            icProfileText.setOnDebouncedClickListener {
+                if (requireActivity().isInternetAvailable()) {
+                    changeGoogleAccount()
+                }else{
+                    toast(getString(R.string.no_internet_connection))
+                }
             }
 
 
@@ -118,20 +142,19 @@ class HomeFragment : Fragment() {
 
 
         homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
+            Log.d(TAG, "observerData: ")
             if (homeState.totpList.isEmpty()) {
 
-
-                binding.llPlaceHolderLayout.beVisible()
+                binding.llPlaceHolderLayout.beGone()
                 binding.oneTimePassword.beGone()
                 binding.accountData.beGone()
                 if (prefsHelper?.userEmail != "")
                     binding.signIn.beGone()
 
 
-
             } else {
 
-
+                binding.progressBar.beGone()
                 binding.llPlaceHolderLayout.beGone()
                 binding.oneTimePassword.beVisible()
                 binding.accountData.beVisible()
@@ -182,7 +205,6 @@ class HomeFragment : Fragment() {
                                 accountAdapter.updateOneTimeCodeAtPosition(index, updatedAccount.oneTimeCode)
                             }
                         }
-
 
 
                     }
@@ -236,6 +258,12 @@ class HomeFragment : Fragment() {
                     homeViewModel.clearTotpData()
                     prefsHelper?.userEmail = email
                     Log.d(TAG, "firebaseAuthWithGoogle: $email")
+
+                    sharedPreferencesHelper.userEmail.getFirstCharacter()
+                    binding.icProfile.beGone()
+                    binding.icProfileText.beVisible()
+                    binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+
                     lifecycleScope.launch {
                         homeViewModel.refreshTotpKeyFlow()
                     }

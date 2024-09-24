@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityWelcomeScreenBinding
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
@@ -69,7 +69,12 @@ class WelcomeScreen : BaseActivity() {
         }
 
         binding.btnStartAccount.setOnDebouncedClickListener {
-            signInWithGoogle()
+
+            if (isInternetAvailable()) {
+                signInWithGoogle()
+            } else {
+                toast(getString(R.string.no_internet_connection))
+            }
         }
 
     }

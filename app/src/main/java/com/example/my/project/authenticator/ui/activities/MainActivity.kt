@@ -2,9 +2,9 @@ package com.example.my.project.authenticator.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityMainBinding
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
@@ -15,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val navHostFragment by lazy { supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment }
+    private val navController by lazy { navHostFragment.navController }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,11 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.i(TAG, "onCreate: controller: $controller")
+            Log.i(TAG, "onCreate: destination: $destination")
+
+        }
 
 
 
@@ -58,10 +65,9 @@ class MainActivity : BaseActivity() {
             ivHome.setOnClickListener {
                 ivSettings.setImageResource(R.drawable.ic_home_settings)
                 ivHome.setImageResource(R.drawable.ic_home)
-
-                val navController = findNavController(R.id.nav_fragment)
                 if (navController.currentDestination?.id != R.id.homeFragment) {
-                    navController.navigate(R.id.homeFragment)
+                        navController.navigate(R.id.action_settingScreen_to_homeFragment)
+
                 }
             }
 
@@ -71,7 +77,7 @@ class MainActivity : BaseActivity() {
 
                 val navController = findNavController(R.id.nav_fragment)
                 if (navController.currentDestination?.id != R.id.settingScreen) {
-                    navController.navigate(R.id.settingScreen)
+                        navController.navigate(R.id.action_homeFragment_to_settingScreen)
                 }
             }
 
@@ -79,6 +85,7 @@ class MainActivity : BaseActivity() {
 
 
     }
+/*
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -90,7 +97,7 @@ class MainActivity : BaseActivity() {
                             or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     )
         }
-    }
-
-
+    }*/
 }
+
+private const val TAG = "MainActivityLogs"

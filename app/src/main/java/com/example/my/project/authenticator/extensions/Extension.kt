@@ -11,7 +11,10 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.Gravity
@@ -163,7 +166,7 @@ fun TextView.setProfileImage(accountName: String) {
         'J' to Color.parseColor("#4CAF50"),
         'K' to Color.parseColor("#8BC34A"),
         'L' to Color.parseColor("#CDDC39"),
-        'M' to Color.parseColor("#FFEB3B"),
+        'M' to Color.parseColor("#AA4627"),
         'N' to Color.parseColor("#FFC107"),
         'O' to Color.parseColor("#FF9800"),
         'P' to Color.parseColor("#FF5722"),
@@ -305,4 +308,26 @@ fun Context.copyTextToClipboard(text: String) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("Copied Text", text)
     clipboard.setPrimaryClip(clip)
+}
+
+
+fun String.getFirstCharacter(): Char? {
+    return if (this.isNotEmpty()) {
+        this[0]
+    } else {
+        null
+    }
+}
+
+
+fun Context.isInternetAvailable(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = connectivityManager.activeNetworkInfo
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    } else {
+        networkInfo != null && networkInfo.isConnected
+    }
 }

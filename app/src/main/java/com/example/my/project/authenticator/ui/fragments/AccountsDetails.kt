@@ -77,7 +77,9 @@ class AccountsDetails : Fragment() {
                                 requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
                                 requireActivity().finish()
                             } else {
-                                toast(requireActivity().getString(R.string.error_occurs))
+                                lifecycleScope.launch(Dispatchers.Main) {
+                                    toast(requireActivity().getString(R.string.error_occurs))
+                                }
                             }
                         }
 

@@ -82,5 +82,7 @@
     <string name="replace">Replace</string>
     <string name="keep">Keep both</string>
     <string name="enter_password">Enter Password</string>
+    <string name="home">Home</string>
+    <string name="no_internet_connection">No Internet Connection</string>
 
 </resources>

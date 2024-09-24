@@ -3,10 +3,10 @@ package com.example.my.project.authenticator.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import android.widget.PopupWindow
 import androidx.recyclerview.widget.RecyclerView
-import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.AccountItemBinding
+import com.example.my.project.authenticator.databinding.PopupMenuCustomBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.utils.TotpCardState
@@ -70,32 +70,30 @@ class AccountAdapter(
         return accounts.size
     }
 
-    private fun showPopupMenu(position: Int,view: View, account: TotpCardState, onDismiss: () -> Unit) {
-        val popupMenu = PopupMenu(view.context, view)
-        popupMenu.inflate(R.menu.account_options_menu)
+    private fun showPopupMenu(position: Int, view: View, account: TotpCardState, onDismiss: () -> Unit) {
+        val binding = PopupMenuCustomBinding.inflate(LayoutInflater.from(view.context))
+        val popupWindow = PopupWindow(binding.root, 370, 200, true)
 
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_copy -> {
-                    view.context.copyTextToClipboard(account.oneTimeCode.toString())
-                    true
-                }
 
-                R.id.menu_delete -> {
-                    onItemLongClick.invoke(position,account)
-                    true
-                }
 
-                else -> false
-            }
+        binding.menuCopy.setOnClickListener {
+            view.context.copyTextToClipboard(account.oneTimeCode.toString())
+            popupWindow.dismiss()
         }
 
-        popupMenu.setOnDismissListener {
+        binding.menuDelete.setOnClickListener {
+            onItemLongClick.invoke(position, account)
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(view)
+
+        popupWindow.setOnDismissListener {
             onDismiss()
         }
-
-        popupMenu.show()
     }
+
+
 
     fun updateSecondsLeftAtPosition(position: Int, secondsLeft: Int) {
         accounts[position].secondsLeft = secondsLeft
