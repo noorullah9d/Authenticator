@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Приложение Аутентификатор</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Привет, пустой фрагмент</string>
     <string name="secure_auth">Безопасная Аутентификация</string>
     <string name="welcome_secure_access">Добро пожаловать в безопасный доступ</string>
@@ -80,7 +79,21 @@
     <string name="do_you_want_replace">Аккаунт с этим именем уже существует.</string>
     <string name="replace">Заменить</string>
     <string name="keep">Сохранить оба</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+
+
+    <string name="enter_password">Введите пароль</string>
+    <string name="home">Главная</string>
+    <string name="no_internet_connection">Нет подключения к Интернету</string>
+    <string name="quick_setup_with_qr_code_scan">Быстрая настройка с помощью сканирования QR-кода</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">Просто отсканируйте QR-код с помощью камеры, и ваш аккаунт будет мгновенно добавлен. Просто и безопасно!</string>
+    <string name="one_time_code_for_secure_sign_in">Одноразовый код для безопасного входа</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">Получайте новый код каждый раз, когда входите в систему, для дополнительной безопасности. Просто введите код из приложения, чтобы безопасно войти.</string>
+    <string name="sync_across_devices">Синхронизация между устройствами</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">Легко создавайте резервные копии и синхронизируйте свои аккаунты в облаке. Меняете устройство? Просто войдите, чтобы вернуть все свои коды!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">Повышайте защиту своего аккаунта с SecureAuth. Наслаждайтесь простой двухфакторной аутентификацией для дополнительной безопасности.</string>
+    <string name="stronger_security_with_secureauth">Более сильная защита с SecureAuth</string>
+    <string name="exit">Выход</string>
+
+
+
 </resources>

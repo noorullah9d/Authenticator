@@ -1,19 +1,22 @@
 package com.example.my.project.authenticator.adapters
 
+import android.app.Dialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupWindow
+import android.view.WindowManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.databinding.AccountItemBinding
 import com.example.my.project.authenticator.databinding.PopupMenuCustomBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.setProfileImage
+import com.example.my.project.authenticator.utils.SwipeToDeleteCallback
 import com.example.my.project.authenticator.utils.TotpCardState
 
 class AccountAdapter(
     val accounts: MutableList<TotpCardState>,
-    private val onItemLongClick: (Int,TotpCardState) -> Unit
+    private val onItemLongClick: (Int, TotpCardState) -> Unit
 ) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     fun addAccounts(newAccounts: List<TotpCardState>) {
@@ -53,10 +56,14 @@ class AccountAdapter(
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = accounts[position]
 
+        holder.itemView.setOnClickListener {
+            it.context.copyTextToClipboard(account.oneTimeCode.toString())
+        }
+
         holder.itemView.setOnLongClickListener { view ->
             (view.parent as? RecyclerView)?.suppressLayout(true)
 
-            showPopupMenu(position,view, account) {
+            showPopupMenu(position, view, account) {
                 (view.parent as? RecyclerView)?.suppressLayout(false)
             }
             true
@@ -71,28 +78,39 @@ class AccountAdapter(
     }
 
     private fun showPopupMenu(position: Int, view: View, account: TotpCardState, onDismiss: () -> Unit) {
+        val dialog = Dialog(view.context)
         val binding = PopupMenuCustomBinding.inflate(LayoutInflater.from(view.context))
-        val popupWindow = PopupWindow(binding.root, 370, 200, true)
+        dialog.setContentView(binding.root)
+        dialog.setCancelable(true)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-
+        dialog.window?.setLayout(370, WindowManager.LayoutParams.WRAP_CONTENT)
 
         binding.menuCopy.setOnClickListener {
             view.context.copyTextToClipboard(account.oneTimeCode.toString())
-            popupWindow.dismiss()
+            dialog.dismiss()
         }
 
         binding.menuDelete.setOnClickListener {
             onItemLongClick.invoke(position, account)
-            popupWindow.dismiss()
+            dialog.dismiss()
         }
 
-        popupWindow.showAsDropDown(view)
-
-        popupWindow.setOnDismissListener {
+        dialog.setOnDismissListener {
             onDismiss()
         }
+
+        dialog.show()
     }
 
+    fun getSwipeToDeleteCallback(context: Context): SwipeToDeleteCallback {
+        return object : SwipeToDeleteCallback(context) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                onItemLongClick.invoke(position, accounts[position])
+            }
+        }
+    }
 
 
     fun updateSecondsLeftAtPosition(position: Int, secondsLeft: Int) {

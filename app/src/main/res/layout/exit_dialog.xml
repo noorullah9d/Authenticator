@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/of_white"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvSubHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:fontFamily="@font/lato_regular"
+            android:gravity="center"
+            android:text="@string/rate_experience"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/satisfied_service"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />
+
+        <com.example.my.project.authenticator.appclass.DragRatingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="gone"
+            app:initial_rating="0"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestions" />
+
+
+        <per.wsj.library.AndRatingBar
+            android:id="@+id/rating_stars"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:rating="2"
+            app:bgColor="@color/card_light_color"
+            app:bgDrawable="@drawable/ic_rate_us_filled"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestions"
+            app:starColor="@color/md_theme_light_primary"
+            app:starDrawable="@drawable/ic_rate_us_unfilled" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@+id/rating_stars">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/exit"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/secondary_color"
+                android:text="@string/exit"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/_5sdp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:text="@string/cancel"
+                android:textColor="@color/primary"
+                app:cornerRadius="@dimen/_5sdp"
+                app:strokeColor="@color/light_gray"
+                app:strokeWidth="@dimen/_1sdp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

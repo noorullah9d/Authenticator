@@ -13,8 +13,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_settingScreen"
-            app:destination="@id/settingScreen"
-            app:popUpToInclusive="true" />
+            app:destination="@id/settingScreen" />
     </fragment>
     <fragment
         android:id="@+id/settingScreen"

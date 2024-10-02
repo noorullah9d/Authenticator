@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.UsageFragment2">
+
+
+    <ImageView
+        android:id="@+id/ivIntroImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/secure_lock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvQuickStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:text="@string/one_time_code_for_secure_sign_in"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintTop_toBottomOf="@+id/ivIntroImg" />
+
+
+    <TextView
+        android:id="@+id/tvQuickDescrpt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="center"
+        android:text="@string/get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickStart" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

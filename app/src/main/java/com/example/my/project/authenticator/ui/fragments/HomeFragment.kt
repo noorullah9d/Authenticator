@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
@@ -22,7 +24,7 @@ import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.setProfileImage
-import com.example.my.project.authenticator.extensions.startActivityWithAnimation
+import com.example.my.project.authenticator.extensions.showBottomSheetDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
@@ -35,6 +37,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,9 +45,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-
     private lateinit var binding: FragmentHomeBinding
-
     private val homeViewModel by viewModels<HomeViewModel>()
 
     private lateinit var auth: FirebaseAuth
@@ -64,7 +65,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         prefsHelper = SharedPreferencesHelper(requireActivity())
 
         auth = FirebaseAuth.getInstance()
@@ -76,16 +76,15 @@ class HomeFragment : Fragment() {
         googleSignInLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
+            Log.d(TAG, "onViewCreated: ${result.resultCode}")
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val data = result.data
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
             } else {
-                Log.d(TAG, "Google sign-in canceled or failed")
+                Log.d(TAG, "Google sign-in canceled or failed $result")
             }
         }
-
-
 
 
         if (sharedPreferencesHelper.userEmail != "") {
@@ -97,9 +96,24 @@ class HomeFragment : Fragment() {
         } else {
             binding.icProfile.beVisible()
             binding.icProfileText.beGone()
+            if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+                placeHolder()
+            }
         }
 
         observerData()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showBottomSheetDialog(
+                    onExitClicked = {
+                        requireActivity().finishAffinity()
+                    },
+                    onCancelClicked = {
+                    }
+                )
+            }
+        })
 
 
         binding.apply {
@@ -108,7 +122,7 @@ class HomeFragment : Fragment() {
             icProfile.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
                     changeGoogleAccount()
-                }else{
+                } else {
                     toast(getString(R.string.no_internet_connection))
                 }
             }
@@ -117,19 +131,27 @@ class HomeFragment : Fragment() {
             icProfileText.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
                     changeGoogleAccount()
-                }else{
+                } else {
                     toast(getString(R.string.no_internet_connection))
                 }
             }
 
 
             btnAddCode.setOnClickListener {
-                requireActivity().startActivityWithAnimation<ProfileScreen>()
+                val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                intent.putExtra("backStack", 1)
+                startActivity(intent)
             }
 
 
             signIn.setOnDebouncedClickListener {
-                signInWithGoogle()
+                if (requireActivity().isInternetAvailable()) {
+                    signInWithGoogle()
+                } else {
+                    toast(getString(R.string.no_internet_connection))
+
+
+                }
             }
 
 
@@ -138,16 +160,28 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun placeHolder() {
+        count++
+        if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
+            binding.llPlaceHolderLayout.beVisible()
+            binding.oneTimePassword.beGone()
+            binding.progressBar.beGone()
+            binding.accountData.beGone()
+        } else if (sharedPreferencesHelper.userEmail == "") {
+            binding.llPlaceHolderLayout.beVisible()
+            binding.oneTimePassword.beGone()
+            binding.progressBar.beGone()
+            binding.accountData.beGone()
+        }
+    }
+
+    private var count = 0
     private fun observerData() {
 
 
         homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
-            Log.d(TAG, "observerData: ")
             if (homeState.totpList.isEmpty()) {
-
-                binding.llPlaceHolderLayout.beGone()
-                binding.oneTimePassword.beGone()
-                binding.accountData.beGone()
+                placeHolder()
                 if (prefsHelper?.userEmail != "")
                     binding.signIn.beGone()
 
@@ -170,10 +204,12 @@ class HomeFragment : Fragment() {
 
 
                         }.invokeOnCompletion {
+                            CoroutineScope(Dispatchers.Main).launch {
 
-                            if (homeState.totpList.size < accountAdapter.accounts.size) {
-                                val removedItems = accountAdapter.accounts.filter { it !in homeState.totpList }
-                                accountAdapter.removeAccounts(removedItems)
+                                if (homeState.totpList.size < accountAdapter.accounts.size) {
+                                    val removedItems = accountAdapter.accounts.filter { it !in homeState.totpList }
+                                    accountAdapter.removeAccounts(removedItems)
+                                }
                             }
 
 
@@ -183,6 +219,11 @@ class HomeFragment : Fragment() {
 
                     binding.accountData.adapter = accountAdapter
                     binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
+
+
+                    val swipeToDeleteCallback = accountAdapter.getSwipeToDeleteCallback(requireActivity())
+                    val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+                    itemTouchHelper.attachToRecyclerView(binding.accountData)
 
 
                 } else {
@@ -226,10 +267,19 @@ class HomeFragment : Fragment() {
 
     private fun setFromRemote() {
         lifecycleScope.launch {
-//            delay(2000)
-            Log.d(TAG, "setFromRemote: ${homeViewModel.setRemote(sharedPreferencesHelper.userEmail)}")
+            Log.d(TAG, "setFromRemote: $homeViewModel.setRemote(sharedPreferencesHelper.userEmail)")
             if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
                 homeViewModel.fetchFromRemoteAndSave()
+
+                Log.d(TAG, "fetchFromRemoteAndSave: ")
+
+            }
+        }.invokeOnCompletion {
+            Log.d(TAG, "invokeOnCompletion: ")
+            val data = homeViewModel.setRemote(sharedPreferencesHelper.userEmail)
+            Log.d(TAG, "setFromRemote: $data")
+            if (data == 0) {
+                placeHolder()
             }
         }
     }
@@ -278,5 +328,6 @@ class HomeFragment : Fragment() {
 
 
 }
+
 
 private const val TAG = "HomeFragment"

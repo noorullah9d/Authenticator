@@ -28,6 +28,11 @@ class SelectLanguageActivity : BaseActivity() {
         binding = ActivitySelectLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.ivBackPress.setOnClickListener {
+            finish()
+        }
+
+
         initLanguagesRecyclerView()
         binding.confirm.clickWithExtraDebounce {
             navigateToMainScreen()

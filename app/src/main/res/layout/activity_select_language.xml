@@ -31,18 +31,28 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar"
         app:srcCompat="@drawable/icon_done" />
 
+    <ImageView
+        android:id="@+id/ivBackPress"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:contentDescription="@string/app_name"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/tool_bar_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="@string/select_language"
         android:textColor="@color/black"
-        android:textSize="@dimen/_17ssp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="@id/ivBackPress"
         app:layout_constraintEnd_toStartOf="@+id/confirm"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintStart_toEndOf="@+id/ivBackPress"
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <View

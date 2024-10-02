@@ -9,6 +9,7 @@ import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -50,9 +51,29 @@ class QRScannerScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        accountId = arguments?.getInt("accountId") ?: 0
+
         binding.cancelScanning.setOnClickListener {
-            findNavController().popBackStack()
+
+            if (accountId == 3) {
+                findNavController().popBackStack()
+            } else {
+                requireActivity().finish()
+            }
         }
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (accountId == 3) {
+                    findNavController().popBackStack()
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        })
+
 
         checkAndRequestCameraPermission()
 
@@ -70,7 +91,7 @@ class QRScannerScreen : Fragment() {
         }
     }
 
-
+    var accountId = 0
     private fun checkAndRequestCameraPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED

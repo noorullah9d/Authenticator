@@ -34,51 +34,6 @@
 
 
     <TextView
-        android:id="@+id/tvSubHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_35sdp"
-        android:fontFamily="@font/lato_regular"
-        android:text="@string/rate_experience"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_11ssp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-
-    <TextView
-        android:id="@+id/tvQuestions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="@string/satisfied_service"
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />
-
-
-    <com.example.my.project.authenticator.appclass.DragRatingView
-        android:id="@+id/rating_stars"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestions" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/_15sdp"
-        android:background="@color/view_color"
-        app:layout_constraintTop_toBottomOf="@+id/rating_stars" />
-
-
-    <TextView
         android:id="@+id/improveQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +45,7 @@
         android:textSize="@dimen/_11ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -324,13 +279,12 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/responseLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/_140sdp"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:maxWidth="@dimen/_60sdp"
         app:cardBackgroundColor="@color/of_white"
-        app:layout_constraintBottom_toTopOf="@+id/submitProblem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allQuestionLayout">
@@ -340,6 +294,7 @@
             android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/etFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
@@ -348,7 +303,7 @@
                 android:hint="@string/tell_us_how_can_we_improve"
                 android:inputType="text"
                 android:textAlignment="textStart"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/primary"
                 android:textColorHint="@color/light_gray"
                 android:textSize="@dimen/_11ssp"
                 tools:ignore="LabelFor" />

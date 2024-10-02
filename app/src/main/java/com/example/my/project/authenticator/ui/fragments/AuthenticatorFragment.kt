@@ -34,13 +34,22 @@ class AuthenticatorFragment : Fragment() {
             }
 
             manually.setOnClickListener {
-                findNavController().navigate(R.id.accountsDetails)
+
+                val bundle = Bundle().apply {
+                    putInt("accountId", 3)
+                }
+
+                findNavController().navigate(R.id.accountsDetails,bundle)
             }
 
 
 
             rlCode.setOnClickListener {
-                findNavController().navigate(R.id.QRScannerScreen)
+                val bundle = Bundle().apply {
+                    putInt("accountId", 3)
+                }
+
+                findNavController().navigate(R.id.QRScannerScreen,bundle)
             }
 
         }

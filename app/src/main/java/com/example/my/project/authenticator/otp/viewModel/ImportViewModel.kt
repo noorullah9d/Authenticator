@@ -1,6 +1,6 @@
 package com.example.my.project.authenticator.otp.viewModel
 
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
@@ -29,28 +29,24 @@ class ImportViewModel @Inject constructor(
     private val sharedPreferencesHelper: SharedPreferencesHelper,
     private val passwordHasher: PasswordHasher
 ) : ViewModel() {
+
     private val addNewTotpUseCase = AddNewTotpUseCase(repository, repositoryEncryptor)
     private val importUseCase = ImportKeysUseCase()
     private var exportEntity: ExportEntity? = null
 
     var count = 0
-
-    private val _importScreenState = MutableLiveData<ImportScreenState?>()
-    val importScreenState: MutableLiveData<ImportScreenState?> = _importScreenState
-
-    init {
-        _importScreenState.value = ImportScreenState()
-    }
+    var importedKeys: ArrayList<ImportedItemState> = ArrayList()
+    var errorText: String? = null
 
     suspend fun prepareAndCheckPassword(inputStream: InputStream): Boolean {
-        exportEntity = importUseCase.prepare(inputStream)!!
+        exportEntity = importUseCase.prepare(inputStream)
         return exportEntity !is NoEncryptionExport
     }
 
     suspend fun import(password: String? = null) {
         try {
-            _importScreenState.postValue(_importScreenState.value?.copy(errorText = null))
-            val importedKeys = exportEntity?.let {
+            errorText = null
+            val importedKeyList = exportEntity?.let {
                 importUseCase(it) { salt ->
                     password?.let {
                         val secretKey = SecretKeySpec(passwordHasher.hash(password.toByteArray(), salt), "AES")
@@ -58,43 +54,49 @@ class ImportViewModel @Inject constructor(
                     }
                 }
             }
+
             val storedKeys = repository.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope).value
-            val updatedState = _importScreenState.value?.copy(
-                importedKeys = importedKeys?.map { unencryptedKey ->
-                    ImportedItemState(
-                        unencryptedKey.name,
-                        unencryptedKey.base32Secret,
-                        nameSimilarity = storedKeys.find { it.name == unencryptedKey.name }?.name,
-                        secretSimilarity = storedKeys.find {
-                            repositoryEncryptor.decrypt(it.secret, it.iv)
-                                .contentEquals(Base32().decode(unencryptedKey.base32Secret.toByteArray()))
-                        }?.name
-                    )
-                }
-            )
-            _importScreenState.postValue(updatedState)
+            importedKeys = importedKeyList?.map { unencryptedKey ->
+                ImportedItemState(
+                    unencryptedKey.name,
+                    unencryptedKey.base32Secret,
+                    nameSimilarity = storedKeys.find { it.name == unencryptedKey.name }?.name,
+                    secretSimilarity = storedKeys.find {
+                        repositoryEncryptor.decrypt(it.secret, it.iv)
+                            .contentEquals(Base32().decode(unencryptedKey.base32Secret.toByteArray()))
+                    }?.name
+                )
+            }?.toCollection(ArrayList()) ?: arrayListOf()
+
         } catch (e: AEADBadTagException) {
-            _importScreenState.postValue(_importScreenState.value?.copy(errorText = "Error: wrong key or broken file"))
+            errorText = "Error: wrong key or broken file"
         } catch (e: Exception) {
-            _importScreenState.postValue(_importScreenState.value?.copy(errorText = "Unexpected ${e.message}, while importing file"))
+            errorText = "Unexpected ${e.message}, while importing file"
         }
     }
 
     suspend fun addSelected() {
-        _importScreenState.value?.importedKeys?.filter { it.checked }?.forEach {
+        Log.d(TAG, "addSelected: $importedKeys")
+
+        importedKeys.filter { it.checked }.forEach {
+            Log.d(TAG, "addSelected: $it")
             saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
             addNewTotpUseCase(sharedPreferencesHelper.userEmail, Base32().decode(it.secretKey), it.name, it.secretKey)
         }
     }
 
-    fun changeCheck(index: Int) {
-        val currentList = _importScreenState.value?.importedKeys?.toMutableList()
-        currentList?.let {
-            it[index] = it[index].copy(checked = !it[index].checked)
-            _importScreenState.postValue(_importScreenState.value?.copy(importedKeys = it))
-        }
-    }
+    fun changeCheck(importedList: ArrayList<ImportedItemState>, index: Int) {
+        importedKeys= importedList
 
+
+        /* val currentList = importedKeys
+        Log.i(TAG, "changeCheck: importedKeys: ${importedKeys.map { it.checked }}")
+        currentList[index].checked = !currentList[index].checked
+        Log.i(TAG, "changeCheck: currentList: ${currentList.map { it.checked }}")
+//        importedKeys = currentList.filter { it.checked } as ArrayList<ImportedItemState>
+        Log.d(TAG, "changeCheck: $importedKeys")*/
+
+    }
 }
 
 private const val TAG = "ImportViewModel"

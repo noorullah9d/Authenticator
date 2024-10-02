@@ -3,76 +3,106 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/of_white"
     android:layout_marginTop="@dimen/_15sdp"
+    android:animateLayoutChanges="true"
+    android:background="@color/of_white"
     android:foreground="?selectableItemBackground">
 
-
-    <TextView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:background="@drawable/circle_background"
-        android:gravity="center"
-        android:text="G"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_12ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/foregroundLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/of_white"
+        app:layout_constraintEnd_toStartOf="@+id/backgroundLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:text="G"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Tik-Tok"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+            app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
+
+        <TextView
+            android:id="@+id/tvPassCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:fontFamily="@font/lato_regular"
+            android:text="999 754"
+            android:textColor="@color/secondary_color"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <com.owl93.dpb.CircularProgressView
+            android:id="@+id/circularProgress"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxValue="30"
+            app:progress="10"
+            app:progressAnimationDuration="30"
+            app:strokeColor="@color/secondary_color"
+            app:strokeWidth="@dimen/_2sdp"
+            app:text="30"
+            app:textColor="@color/secondary_color"
+            app:textSize="@dimen/_9ssp"
+            app:trackColor="@color/light_gray"
+            app:trackWidth="@dimen/_1sdp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@color/view_color"
+            app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="Tik-Tok"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
-
-    <TextView
-        android:id="@+id/tvPassCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:fontFamily="@font/lato_regular"
-        android:text="999 754"
-        android:textColor="@color/secondary_color"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-    <com.owl93.dpb.CircularProgressView
-        android:id="@+id/circularProgress"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
+    <FrameLayout
+        android:id="@+id/backgroundLayout"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="0dp"
+        android:background="@color/md_theme_light_primary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:maxValue="30"
-        app:progress="10"
-        app:progressAnimationDuration="30"
-        app:strokeColor="@color/secondary_color"
-        app:strokeWidth="@dimen/_2sdp"
-        app:text="30"
-        app:textColor="@color/secondary_color"
-        app:textSize="@dimen/_9ssp"
-        app:trackColor="@color/light_gray"
-        app:trackWidth="@dimen/_1sdp" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="end|center_vertical"
+            android:padding="8dp"
+            android:src="@drawable/delete_otp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:background="@color/view_color"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

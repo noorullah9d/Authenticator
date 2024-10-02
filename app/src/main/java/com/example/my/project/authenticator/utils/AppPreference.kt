@@ -2,7 +2,6 @@ package com.example.my.project.authenticator.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.android.datatransport.BuildConfig
 
 class AppPreference(context: Context) {
     private val sharedPreferences: SharedPreferences =
@@ -19,7 +18,7 @@ class AppPreference(context: Context) {
 
 
     companion object{
-        private const val SHARED_PREF = BuildConfig.APPLICATION_ID
+        private const val SHARED_PREF = "com.example.my.project.authenticator.BuildConfig"
         const val LANGUAGES = "phone_languages"
         const val LANGUAGES_FIRST_TIME = "languages_first_time"
     }

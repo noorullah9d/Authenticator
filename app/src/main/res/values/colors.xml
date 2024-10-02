@@ -9,6 +9,7 @@
     <color name="light_blue">#F0EFFE</color>
     <color name="primary">#333333</color>
     <color name="secondary_color">#685FF3</color>
+    <color name="card_light_color">#DDDBEE</color>
     <color name="light_gray">#999999</color>
     <color name="view_color">#E6E6E6</color>
     <color name="black_light">#666E83</color>

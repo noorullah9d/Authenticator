@@ -31,13 +31,31 @@ class AccountsDetails : Fragment() {
         return binding.root
     }
 
+    var accountId = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
 
+            accountId = arguments?.getInt("accountId") ?: 0
+
             ivBackIcon.setOnClickListener {
-                findNavController().popBackStack()
+                if (accountId == 3) {
+                    findNavController().popBackStack()
+                } else {
+                    requireActivity().finish()
+                }
             }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (accountId == 3) {
+                        findNavController().popBackStack()
+                    } else {
+                        requireActivity().finish()
+                    }
+                }
+            })
 
 
 
@@ -90,7 +108,6 @@ class AccountsDetails : Fragment() {
 
 
 
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
 
         }

@@ -1,11 +1,13 @@
 package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
@@ -17,6 +19,7 @@ import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
 import com.example.my.project.authenticator.otp.viewModel.ExportViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.OutputStream
 
 @AndroidEntryPoint
 class ExportScreen : BaseActivity() {
@@ -88,18 +91,28 @@ class ExportScreen : BaseActivity() {
             ActivityResultContracts.CreateDocument("application/json")
         ) { contentUri ->
             if (contentUri == null) {
-                finish()  // Handle back press on cancel
+                finish()
                 return@registerForActivityResult
             }
 
 
             lifecycleScope.launch {
                 this@ExportScreen.contentResolver?.openOutputStream(contentUri)?.use { outputStream ->
+                    Log.d(TAG, "setupOutputStreamLauncher: ${binding.exportTypeSpinner.selectedItemPosition}")
+                    when (binding.exportTypeSpinner.selectedItemPosition) {
+                        0 -> {
+                            exportFun(0, outputStream)
+                        }
 
-                    val selectedMode = exportOptions[binding.exportTypeSpinner.selectedItemPosition].second
-                    val password = binding.passwordEditText.text.toString()
+                        1 -> {
+                            exportFun(2, outputStream)
+                        }
 
-                    viewModel.export(selectedMode, password, outputStream)
+                        2 -> {
+                            exportFun(2, outputStream)
+                        }
+                    }
+
                 }
 
                 finish()
@@ -112,13 +125,28 @@ class ExportScreen : BaseActivity() {
         binding.apply {
 
             exportButton.setOnClickListener {
-                if (passwordEditText.text.isNotEmpty()) {
+                if (passwordEditText.isVisible) {
+                    if (passwordEditText.text.isNotEmpty()) {
+                        getOutputStreamLauncher.launch("export.json")
+                    } else {
+                        toast(getString(R.string.enter_password))
+                    }
+                } else {
                     getOutputStreamLauncher.launch("export.json")
-                }else{
-                    toast(getString(R.string.enter_password))
                 }
             }
         }
     }
 
+    private suspend fun exportFun(position: Int, outputStream: OutputStream) {
+        val selectedMode = exportOptions[position].second
+        val password = binding.passwordEditText.text.toString()
+
+        viewModel.export(selectedMode, password, outputStream)
+    }
+
+
 }
+
+
+private const val TAG = "ExportScreen"

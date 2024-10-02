@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Aplikace pro autentizaci</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Ahoj prázdný fragment</string>
     <string name="secure_auth">Zabezpečená autentizace</string>
     <string name="welcome_secure_access">Vítejte v zabezpečeném přístupu</string>
@@ -80,7 +79,20 @@
     <string name="do_you_want_replace">Účet s tímto názvem již existuje.</string>
     <string name="replace">Nahradit</string>
     <string name="keep">Ponechat oba</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+
+
+
+    <string name="enter_password">Zadejte heslo</string>
+    <string name="home">Domů</string>
+    <string name="no_internet_connection">Žádné internetové připojení</string>
+    <string name="quick_setup_with_qr_code_scan">Rychlé nastavení pomocí skenování QR kódu</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">Stačí naskenovat QR kód fotoaparátem a váš účet bude okamžitě přidán. Jednoduché a bezpečné!</string>
+    <string name="one_time_code_for_secure_sign_in">Jednorázový kód pro bezpečné přihlášení</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">Získejte nový kód pokaždé, když se přihlásíte, pro vyšší bezpečnost. Stačí zadat kód z aplikace pro bezpečné přihlášení.</string>
+    <string name="sync_across_devices">Synchronizace mezi zařízeními</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">Snadno zálohujte a synchronizujte své účty v cloudu. Měníte zařízení? Stačí se přihlásit a obnovit všechny své kódy!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">Zvyšte ochranu svého účtu pomocí SecureAuth. Užijte si snadné dvoufaktorové ověření pro vyšší bezpečnost.</string>
+    <string name="stronger_security_with_secureauth">Silnější zabezpečení se SecureAuth</string>
+    <string name="exit">Ukončit</string>
+
 </resources>

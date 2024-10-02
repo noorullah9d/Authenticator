@@ -21,6 +21,12 @@
         android:theme="@style/Theme.Authenticator"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.HowToWorkScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.HowItsWorkScreen"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.ImportScreen"
             android:exported="false"
             android:screenOrientation="locked" />

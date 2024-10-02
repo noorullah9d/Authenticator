@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">แอปยืนยันตัวตน</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">สวัสดี ส่วนที่ว่างเปล่า</string>
     <string name="secure_auth">การยืนยันตัวตนที่ปลอดภัย</string>
     <string name="welcome_secure_access">ยินดีต้อนรับสู่การเข้าถึงที่ปลอดภัย</string>
@@ -80,7 +79,23 @@
     <string name="do_you_want_replace">มีบัญชีที่มีชื่อนี้อยู่แล้ว</string>
     <string name="replace">แทนที่</string>
     <string name="keep">เก็บทั้งสอง</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+
+
+
+    <string name="enter_password">กรอกรหัสผ่าน</string>
+    <string name="home">หน้าแรก</string>
+    <string name="no_internet_connection">ไม่มีการเชื่อมต่ออินเทอร์เน็ต</string>
+    <string name="quick_setup_with_qr_code_scan">ตั้งค่าอย่างรวดเร็วด้วยการสแกน QR โค้ด</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">เพียงสแกน QR โค้ดด้วยกล้องของคุณ บัญชีของคุณจะถูกเพิ่มทันที เรียบง่ายและปลอดภัย!</string>
+    <string name="one_time_code_for_secure_sign_in">รหัสใช้ครั้งเดียวสำหรับการเข้าสู่ระบบอย่างปลอดภัย</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">รับรหัสใหม่ทุกครั้งที่คุณเข้าสู่ระบบเพื่อความปลอดภัยเพิ่มเติม เพียงกรอกรหัสจากแอปเพื่อเข้าสู่ระบบอย่างปลอดภัย</string>
+    <string name="sync_across_devices">ซิงค์ข้ามอุปกรณ์</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">สำรองข้อมูลและซิงค์บัญชีของคุณในคลาวด์ได้อย่างง่ายดาย เปลี่ยนอุปกรณ์? เพียงเข้าสู่ระบบเพื่อรับรหัสทั้งหมดของคุณคืน!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">เพิ่มการป้องกันบัญชีของคุณด้วย SecureAuth สนุกกับการยืนยันตัวตนแบบสองขั้นตอนที่ง่ายและปลอดภัยยิ่งขึ้น</string>
+    <string name="stronger_security_with_secureauth">ความปลอดภัยที่แข็งแกร่งขึ้นด้วย SecureAuth</string>
+    <string name="exit">ออก</string>
+
+
+
+
 </resources>

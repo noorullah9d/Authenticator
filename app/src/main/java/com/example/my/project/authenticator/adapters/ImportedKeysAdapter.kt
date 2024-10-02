@@ -1,49 +1,60 @@
 package com.example.my.project.authenticator.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.databinding.ItemImportedKeyBinding
 import com.example.my.project.authenticator.otp.viewModel.ImportedItemState
 
 class ImportedKeysAdapter(
-    private var items: List<ImportedItemState>,
-    private val onCheckedChange: (Int) -> Unit
-) : RecyclerView.Adapter<ImportedKeysAdapter.ImportedKeyViewHolder>() {
+    private val onCheckedChange: (ArrayList<ImportedItemState>, Int) -> Unit
+) : ListAdapter<ImportedItemState, ImportedKeysAdapter.ImportedKeyViewHolder>(DiffCallback) {
 
-    // ViewHolder class
-    class ImportedKeyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val checkBox: CheckBox = itemView.findViewById(R.id.checkbox)
-        val nameText: TextView = itemView.findViewById(R.id.nameText)
-        val similarityText: TextView = itemView.findViewById(R.id.similarityText)
-    }
+    class ImportedKeyViewHolder(val binding: ItemImportedKeyBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImportedKeyViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_imported_key, parent, false)
-        return ImportedKeyViewHolder(view)
+        val binding = ItemImportedKeyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ImportedKeyViewHolder(binding)
     }
+
 
     override fun onBindViewHolder(holder: ImportedKeyViewHolder, position: Int) {
-        val item = items[position]
-        holder.nameText.text = item.name
-        holder.similarityText.text = when {
-            !item.secretSimilarity.isNullOrEmpty() -> "Secret value is similar to ${item.secretSimilarity}"
-            !item.nameSimilarity.isNullOrEmpty() -> "Name is similar to ${item.nameSimilarity}"
-            else -> "Not similar to any of the existing"
+        val item = getItem(position)
+        holder.binding.apply {
+            nameText.text = item.name
+            similarityText.text = when {
+                !item.secretSimilarity.isNullOrEmpty() -> "Secret value is similar to ${item.secretSimilarity}"
+                !item.nameSimilarity.isNullOrEmpty() -> "Name is similar to ${item.nameSimilarity}"
+                else -> "Not similar to any of the existing"
+            }
+
+            checkBox.setOnCheckedChangeListener(null)
+            checkBox.isChecked = item.checked
+
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+
+                if (isChecked){
+                    checkBox.setButtonIconDrawableResource(R.drawable.checked_drawable)
+                }else{
+                    checkBox.setButtonIconDrawableResource(R.drawable.unchecked_drawable)
+                }
+
+                item.checked = isChecked
+                onCheckedChange(ArrayList(currentList), position)
+            }
         }
-        holder.checkBox.isChecked = item.checked
-        holder.checkBox.setOnCheckedChangeListener { _, _ -> onCheckedChange(position) }
     }
 
-    override fun getItemCount(): Int = items.size
+    companion object DiffCallback : DiffUtil.ItemCallback<ImportedItemState>() {
+        override fun areItemsTheSame(oldItem: ImportedItemState, newItem: ImportedItemState): Boolean {
+            return oldItem.name == newItem.name
+        }
 
-    // Helper method to update the list
-    fun submitList(newItems: List<ImportedItemState>) {
-        items = newItems
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: ImportedItemState, newItem: ImportedItemState): Boolean {
+            return oldItem == newItem
+        }
     }
 }

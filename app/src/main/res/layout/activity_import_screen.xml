@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/of_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/of_white"
     tools:context=".ui.activities.ImportScreen">
 
 
@@ -74,10 +74,11 @@
         android:id="@+id/addSelectedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_20sdp"
+        android:backgroundTint="@color/secondary_color"
         android:text="@string/add_selected"
+        android:textColor="@color/white"
         android:visibility="visible"
         app:cornerRadius="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"

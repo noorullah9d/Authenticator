@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">App Autenticatore</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Ciao frammento vuoto</string>
     <string name="secure_auth">Autenticazione Sicura</string>
     <string name="welcome_secure_access">Benvenuto nell\'accesso sicuro</string>
@@ -81,7 +80,22 @@
     <string name="do_you_want_replace">Un account con questo nome esiste già.</string>
     <string name="replace">Sostituisci</string>
     <string name="keep">Mantieni Entrambi</string>
-    <string name="enter_password">Enter Password</string>
+
+
+
+    <string name="enter_password">Inserisci la password</string>
     <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_internet_connection">Nessuna connessione Internet</string>
+    <string name="quick_setup_with_qr_code_scan">Configurazione rapida con scansione del codice QR</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">Scansiona semplicemente il codice QR con la tua fotocamera e il tuo account sarà aggiunto istantaneamente. Semplice e sicuro!</string>
+    <string name="one_time_code_for_secure_sign_in">Codice monouso per un accesso sicuro</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">Ottieni un nuovo codice ogni volta che accedi per una maggiore sicurezza. Inserisci semplicemente il codice dall\'app per accedere in modo sicuro.</string>
+    <string name="sync_across_devices">Sincronizzazione tra dispositivi</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">Effettua facilmente il backup e sincronizza i tuoi account nel cloud. Cambi dispositivo? Accedi semplicemente per recuperare tutti i tuoi codici!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">Aumenta la protezione del tuo account con SecureAuth. Goditi l\'autenticazione a due fattori facile per una maggiore sicurezza.</string>
+    <string name="stronger_security_with_secureauth">Maggiore sicurezza con SecureAuth</string>
+    <string name="exit">Esci</string>
+
+
+
 </resources>

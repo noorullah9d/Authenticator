@@ -30,7 +30,9 @@ import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
+import com.example.my.project.authenticator.databinding.ExitDialogBinding
 import com.example.my.project.authenticator.model.LanguagesModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -49,6 +51,11 @@ inline fun <reified A : Activity> Activity.startActivityWithAnimationAndClearSta
     this.startActivity(intent, options.toBundle())
 }
 
+
+fun Activity.finishWithAnimation() {
+    finish()
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+}
 
 fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
     val dialog = AlertDialog.Builder(this, R.style.TransparentDialog).create()
@@ -79,12 +86,11 @@ fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
     val window = dialog.window
     window?.setGravity(Gravity.BOTTOM)
     val params = window?.attributes
-    params?.y = 200
+    params?.y = 300
     window?.attributes = params
     window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
 }
-
 
 fun View.beVisible() {
     visibility = View.VISIBLE
@@ -97,7 +103,6 @@ fun View.beGone() {
 fun View.beInVisible() {
     visibility = View.INVISIBLE
 }
-
 
 fun MaterialCardView.changeCardStorkColor(color: Int, theme: Resources.Theme) {
     strokeColor = ResourcesCompat.getColor(resources, color, theme)
@@ -154,41 +159,46 @@ fun Fragment.toast(message: String) {
 
 fun TextView.setProfileImage(accountName: String) {
     val letterColors = mapOf(
-        'A' to Color.parseColor("#F44336"),
-        'B' to Color.parseColor("#E91E63"),
-        'C' to Color.parseColor("#9C27B0"),
-        'D' to Color.parseColor("#673AB7"),
-        'E' to Color.parseColor("#3F51B5"),
-        'F' to Color.parseColor("#2196F3"),
-        'G' to Color.parseColor("#03A9F4"),
-        'H' to Color.parseColor("#00BCD4"),
-        'I' to Color.parseColor("#009688"),
-        'J' to Color.parseColor("#4CAF50"),
-        'K' to Color.parseColor("#8BC34A"),
-        'L' to Color.parseColor("#CDDC39"),
-        'M' to Color.parseColor("#AA4627"),
-        'N' to Color.parseColor("#FFC107"),
-        'O' to Color.parseColor("#FF9800"),
-        'P' to Color.parseColor("#FF5722"),
-        'Q' to Color.parseColor("#795548"),
-        'R' to Color.parseColor("#9E9E9E"),
-        'S' to Color.parseColor("#607D8B"),
-        'T' to Color.parseColor("#FF5722"),
-        'U' to Color.parseColor("#9C27B0"),
-        'V' to Color.parseColor("#673AB7"),
-        'W' to Color.parseColor("#3F51B5"),
-        'X' to Color.parseColor("#2196F3"),
-        'Y' to Color.parseColor("#03A9F4"),
-        'Z' to Color.parseColor("#00BCD4")
+        'A' to Color.parseColor("#4285F4"),
+        'B' to Color.parseColor("#DB4437"),
+        'C' to Color.parseColor("#0F9D58"),
+        'D' to Color.parseColor("#F4B400"),
+        'E' to Color.parseColor("#AB47BC"),
+        'F' to Color.parseColor("#FB8C00"),
+        'G' to Color.parseColor("#00ACC1"),
+        'H' to Color.parseColor("#039BE5"),
+        'I' to Color.parseColor("#1E88E5"),
+        'J' to Color.parseColor("#E91E63"),
+        'K' to Color.parseColor("#FFC107"),
+        'L' to Color.parseColor("#795548"),
+        'M' to Color.parseColor("#4285F4"),
+        'N' to Color.parseColor("#DB4437"),
+        'O' to Color.parseColor("#0F9D58"),
+        'P' to Color.parseColor("#F4B400"),
+        'Q' to Color.parseColor("#AB47BC"),
+        'R' to Color.parseColor("#FB8C00"),
+        'S' to Color.parseColor("#00ACC1"),
+        'T' to Color.parseColor("#039BE5"),
+        'U' to Color.parseColor("#1E88E5"),
+        'V' to Color.parseColor("#E91E63"),
+        'W' to Color.parseColor("#FFC107"),
+        'X' to Color.parseColor("#795548"),
+        'Y' to Color.parseColor("#4285F4"),
+        'Z' to Color.parseColor("#DB4437")
     )
 
     val firstLetter = accountName.firstOrNull()?.uppercaseChar() ?: 'A'
     this.text = firstLetter.toString()
-
     val color = letterColors[firstLetter] ?: Color.GRAY
 
-    val background = this.background as? GradientDrawable
-    background?.setColor(color)
+    val background = this.background as? GradientDrawable ?: GradientDrawable().apply {
+        shape = GradientDrawable.OVAL
+        setColor(color)
+    }
+
+    background.setColor(color)
+
+    this.background = background
 }
 
 
@@ -228,8 +238,6 @@ fun Context.showAskPasswordDialog(onDismiss: () -> Unit, onSuccess: (String) -> 
     alertDialog.show()
 }
 
-
-
 fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = emptyMap()) {
     val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     val bundle = Bundle().apply {
@@ -239,7 +247,6 @@ fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = em
     }
     firebaseAnalytics.logEvent(eventName, bundle)
 }
-
 
 fun View.setOnDebouncedClickListener(debounceTime: Long = 2000L, action: (View) -> Unit) {
     var lastClickTime = 0L
@@ -252,8 +259,6 @@ fun View.setOnDebouncedClickListener(debounceTime: Long = 2000L, action: (View) 
         }
     }
 }
-
-
 
 fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit) {
     val binding = DialogReplaceAccountBinding.inflate(layoutInflater)
@@ -287,8 +292,6 @@ fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit)
     }
 }
 
-
-
 fun Context.privacyPolicy(url: String, newTask: Boolean = false): Boolean {
     return try {
         val intent = Intent(Intent.ACTION_VIEW)
@@ -308,8 +311,8 @@ fun Context.copyTextToClipboard(text: String) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("Copied Text", text)
     clipboard.setPrimaryClip(clip)
+    toast("Text Copied")
 }
-
 
 fun String.getFirstCharacter(): Char? {
     return if (this.isNotEmpty()) {
@@ -318,7 +321,6 @@ fun String.getFirstCharacter(): Char? {
         null
     }
 }
-
 
 fun Context.isInternetAvailable(): Boolean {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -331,3 +333,95 @@ fun Context.isInternetAvailable(): Boolean {
         networkInfo != null && networkInfo.isConnected
     }
 }
+
+
+fun Context.sendEmail(recipient: String, subject: String, body: String) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:")
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
+    }
+    startActivity(intent)
+}
+
+
+fun Fragment.sendEmail(recipient: String, subject: String, body: String) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:")
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, body)
+    }
+    startActivity(intent)
+
+}
+
+
+fun Context.openAppInPlayStore() {
+    val appPackageName = this.packageName
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+}
+
+
+fun Fragment.showBottomSheetDialog(onExitClicked: () -> Unit, onCancelClicked: () -> Unit) {
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
+    val binding = ExitDialogBinding.inflate(LayoutInflater.from(requireContext()))
+    bottomSheetDialog.setContentView(binding.root)
+    binding.exit.setOnClickListener {
+        onExitClicked()
+        bottomSheetDialog.dismiss()
+    }
+
+
+    /*binding.ratingStars.callback = object : DragRatingView.RatingChangeCallback {
+        override fun onRatingChange(previous: Float, current: Float) {
+            Log.d(TAG, "onRatingChange: $current")
+            if (current > 3) {
+                openAppInPlayStore()
+            } else {
+                sendEmail("apps@galixo.ai", "", "")
+            }
+        }
+    }*/
+    binding.ratingStars.setOnRatingChangeListener { ratingBar, rating, fromUser ->
+        if (ratingBar.rating > 3) {
+            openAppInPlayStore()
+            bottomSheetDialog.dismiss()
+        } else {
+            sendEmail("apps@galixo.ai", "", "")
+            bottomSheetDialog.dismiss()
+        }
+    }
+
+
+    binding.cancel.setOnClickListener {
+        onCancelClicked()
+        bottomSheetDialog.dismiss()
+    }
+
+    bottomSheetDialog.show()
+}
+
+fun Fragment.openAppInPlayStore() {
+    val appPackageName = requireContext().packageName
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+}
+
+private const val TAG = "Extension"

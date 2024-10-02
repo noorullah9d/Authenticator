@@ -178,8 +178,6 @@ class DragRatingView @JvmOverloads constructor(
 
                     callback?.onRatingChange(previousRating, _currentRating)
                 } else {
-                    // Touch up when we never crossed the touch slop threshold should
-                    // be interpreted as a tap-seek to that location.
                     onStartTrackingTouch()
                     trackTouchEvent(event)
                     onStopTrackingTouch()

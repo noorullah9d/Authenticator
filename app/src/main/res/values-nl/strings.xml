@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Authenticator-app</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hallo, leeg fragment</string>
     <string name="secure_auth">Veilige Authenticatie</string>
     <string name="welcome_secure_access">Welkom bij veilige toegang</string>
@@ -80,7 +79,22 @@
     <string name="do_you_want_replace">Er bestaat al een account met deze naam.</string>
     <string name="replace">Vervangen</string>
     <string name="keep">Beide behouden</string>
-    <string name="enter_password">Enter Password</string>
+
+
+    <string name="enter_password">Voer wachtwoord in</string>
     <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_internet_connection">Geen internetverbinding</string>
+    <string name="quick_setup_with_qr_code_scan">Snelle installatie met QR-code scan</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">Scan eenvoudig de QR-code met je camera en je account wordt direct toegevoegd. Simpel en veilig!</string>
+    <string name="one_time_code_for_secure_sign_in">Eenmalige code voor veilige aanmelding</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">Krijg een nieuwe code elke keer dat je inlogt voor extra veiligheid. Voer de code uit de app in om veilig in te loggen.</string>
+    <string name="sync_across_devices">Synchroniseer tussen apparaten</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">Maak eenvoudig een back-up en synchroniseer je accounts in de cloud. Wisselen van apparaat? Log gewoon in om al je codes terug te krijgen!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">Verhoog de bescherming van je account met SecureAuth. Geniet van eenvoudige tweefactorauthenticatie voor extra veiligheid.</string>
+    <string name="stronger_security_with_secureauth">Sterkere beveiliging met SecureAuth</string>
+    <string name="exit">Afsluiten</string>
+
+
+
+
 </resources>

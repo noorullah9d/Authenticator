@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">인증 앱</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">안녕하세요, 빈 프래그먼트</string>
     <string name="secure_auth">보안 인증</string>
     <string name="welcome_secure_access">보안 액세스에 오신 것을 환영합니다</string>
@@ -80,7 +79,22 @@
     <string name="do_you_want_replace">이 이름의 계정이 이미 존재합니다.</string>
     <string name="replace">교체</string>
     <string name="keep">둘 다 유지</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+
+
+    <string name="enter_password">비밀번호 입력</string>
+    <string name="home">홈</string>
+    <string name="no_internet_connection">인터넷 연결 없음</string>
+    <string name="quick_setup_with_qr_code_scan">QR 코드 스캔으로 빠른 설정</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">카메라로 QR 코드를 스캔하면 계정이 즉시 추가됩니다. 간단하고 안전해요!</string>
+    <string name="one_time_code_for_secure_sign_in">안전한 로그인용 일회용 코드</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">추가 보안을 위해 로그인할 때마다 새로운 코드를 받으세요. 앱에서 코드를 입력하여 안전하게 로그인하세요.</string>
+    <string name="sync_across_devices">기기 간 동기화</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">클라우드에 계정을 쉽게 백업하고 동기화하세요. 기기를 변경하셨나요? 로그인만 하면 모든 코드를 복구할 수 있습니다!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">SecureAuth로 계정 보호를 강화하세요. 추가 안전을 위한 간편한 이중 인증을 즐기세요.</string>
+    <string name="stronger_security_with_secureauth">SecureAuth로 더 강력한 보안</string>
+    <string name="exit">종료</string>
+
+
+
+
 </resources>

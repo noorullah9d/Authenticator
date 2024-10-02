@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.otp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -41,7 +42,6 @@ class HomeViewModel @Inject constructor(
     totpCodeGenerator: TotpCodeGenerator,
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
-
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
     private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
@@ -54,7 +54,6 @@ class HomeViewModel @Inject constructor(
 
     private lateinit var oneSecondTimer: Timer
 
-    private var isDataFetched = false
 
     init {
         viewModelScope.launch(Dispatchers.Main) {
@@ -87,14 +86,10 @@ class HomeViewModel @Inject constructor(
             accounts?.forEach { account ->
                 val secret = Base32().decode(account.passcode)
 
-                if (!isDataFetched) {
-                    viewModelScope.launch {
-                        addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName, account.passcode)
-                    }
-
+                viewModelScope.launch {
+                    addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName, account.passcode)
                 }
             }
-            isDataFetched = true
         }
     }
 
@@ -132,9 +127,9 @@ class HomeViewModel @Inject constructor(
                 val updatedTotpCode = try {
                     generateTotpCodeUseCase(totpKeyFlow.value[index])
                 } catch (e: IllegalArgumentException) {
-                    -999999
-                }catch (e:IndexOutOfBoundsException){
-                    -999999
+                    110958
+                } catch (e: IndexOutOfBoundsException) {
+                    342233
                 }
 
                 updatedTotpList[index] = totpCardState.copy(oneTimeCode = updatedTotpCode)
@@ -154,7 +149,8 @@ class HomeViewModel @Inject constructor(
                     val currentTotp = try {
                         generateTotpCodeUseCase(it)
                     } catch (e: IllegalArgumentException) {
-                        -999999
+                        Log.d(TAG, "updateStateList: ${e.message}")
+                        325786
                     }
                     TotpCardState(
                         it.id, it.name, currentTotp, countSecondsLeft()
@@ -210,14 +206,14 @@ class HomeViewModel @Inject constructor(
     suspend fun removeTotpById(totpCard: TotpCardState) {
 
 
-            if (sharedPreferencesHelper.userEmail != "") {
-                saveFirebase.deleteAccount(sharedPreferencesHelper.userEmail, totpCard.name)
-            }
+        if (sharedPreferencesHelper.userEmail != "") {
+            saveFirebase.deleteAccount(sharedPreferencesHelper.userEmail, totpCard.name)
+        }
 
-            val toDelete = totpKeyFlow.value.find { key -> key.id == totpCard.id }
-            toDelete?.let {
-                totpKeyRepo.removeKey(it)
-            }
+        val toDelete = totpKeyFlow.value.find { key -> key.id == totpCard.id }
+        toDelete?.let {
+            totpKeyRepo.removeKey(it)
+        }
 
     }
 

@@ -6,8 +6,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
-//    id("com.google.firebase.crashlytics")
-
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -15,17 +14,25 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.my.project.authenticator"
+        applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -55,6 +62,8 @@ dependencies {
     implementation(libs.play.services.vision)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,8 +78,8 @@ dependencies {
 
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
-//    implementation("com.google.firebase:firebase-crashlytics")
     implementation(libs.firebase.analytics)
+    implementation("com.google.firebase:firebase-crashlytics:19.1.0")
 
 
     implementation(libs.barcode.scanning)
@@ -83,9 +92,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
 
-    // Apache Base32 and Hmac
     implementation("commons-codec:commons-codec:1.15")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("com.lambdapioneer.argon2kt:argon2kt:1.4.0")
 
 
@@ -107,10 +114,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.3.4")
     implementation("androidx.camera:camera-view:1.3.4")
 
-    // Guava library to resolve ListenableFuture
-    implementation("com.google.guava:guava:31.0.1-jre")
     //serialization
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("com.github.wdsqjq:AndRatingBar:1.0.6")
 
 }
 

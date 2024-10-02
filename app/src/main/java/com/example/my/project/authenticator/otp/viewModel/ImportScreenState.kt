@@ -10,5 +10,5 @@ data class ImportedItemState(
     val secretKey: String,
     val nameSimilarity: String? = null,
     val secretSimilarity: String? = null,
-    val checked: Boolean = nameSimilarity == null && secretSimilarity == null
+    var checked: Boolean = false
 )

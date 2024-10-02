@@ -46,6 +46,7 @@ class OnBoardingActivity : BaseActivity() {
 
             prefsHelper.isUserFirstTime = false
             startActivityWithAnimation<WelcomeScreen>()
+            finish()
 
         }
     }
@@ -84,8 +85,7 @@ class OnBoardingActivity : BaseActivity() {
         val privacyPolicyEnd = privacyPolicyStart + "Privacy Policy".length
         val privacyPolicySpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                Toast.makeText(this@OnBoardingActivity, "Privacy Policy Clicked", Toast.LENGTH_SHORT).show()
-                privacyPolicy("https://www.google.com")
+                privacyPolicy("https://galixo.ai/authenticator/privacy-policy")
             }
         }
         spannableString.setSpan(privacyPolicySpan, privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -96,8 +96,7 @@ class OnBoardingActivity : BaseActivity() {
         val termsOfServiceEnd = termsOfServiceStart + "Terms of Service".length
         val termsOfServiceSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                Toast.makeText(this@OnBoardingActivity, "Terms of Service Clicked", Toast.LENGTH_SHORT).show()
-               privacyPolicy("https://www.google.com")
+               privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
             }
         }
         spannableString.setSpan(termsOfServiceSpan, termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

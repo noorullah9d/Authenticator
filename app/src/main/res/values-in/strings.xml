@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Aplikasi Autentikator</string>
-    <string name="default_web_client_id">539442972075-idff9nuio45k0vp6jaebst4bptp0rt0g.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Halo fragmen kosong</string>
     <string name="secure_auth">Autentikasi Aman</string>
     <string name="welcome_secure_access">Selamat datang di akses aman</string>
@@ -80,7 +79,23 @@
     <string name="do_you_want_replace">Akun dengan nama ini sudah ada.</string>
     <string name="replace">Ganti</string>
     <string name="keep">Simpan Keduanya</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="home">Home</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+
+
+
+    <string name="enter_password">Masukkan Kata Sandi</string>
+    <string name="home">Beranda</string>
+    <string name="no_internet_connection">Tidak Ada Koneksi Internet</string>
+    <string name="quick_setup_with_qr_code_scan">Pengaturan Cepat dengan Pindai Kode QR</string>
+    <string name="just_scan_the_qr_code_with_your_camera_and_your_account_is_instantly_added_simple_and_secure">Cukup pindai kode QR dengan kamera Anda, dan akun Anda akan ditambahkan secara instan. Sederhana dan aman!</string>
+    <string name="one_time_code_for_secure_sign_in">Kode Sekali Pakai untuk Masuk yang Aman</string>
+    <string name="get_a_new_code_every_time_you_log_in_for_extra_security_just_enter_the_code_from_the_app_to_sign_in_safely">Dapatkan kode baru setiap kali Anda masuk untuk keamanan ekstra. Cukup masukkan kode dari aplikasi untuk masuk dengan aman.</string>
+    <string name="sync_across_devices">Sinkronkan di Semua Perangkat</string>
+    <string name="easily_back_up_and_sync_your_accounts_in_the_cloud_switch_devices_just_sign_in_to_get_all_your_codes_back">Dengan mudah cadangkan dan sinkronkan akun Anda di cloud. Ganti perangkat? Cukup masuk untuk mendapatkan semua kode Anda kembali!</string>
+    <string name="boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety">Tingkatkan perlindungan akun Anda dengan SecureAuth. Nikmati autentikasi dua faktor yang mudah untuk keamanan tambahan.</string>
+    <string name="stronger_security_with_secureauth">Keamanan Lebih Kuat dengan SecureAuth</string>
+    <string name="exit">Keluar</string>
+
+
+
+
 </resources>
