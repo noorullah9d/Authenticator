@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.fragments.ThemesFragment">
+
+
+    <ImageView
+        android:id="@+id/backPress"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:contentDescription="@string/app_name"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/themes"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backPress"
+        app:layout_constraintStart_toEndOf="@+id/backPress"
+        app:layout_constraintTop_toTopOf="@+id/backPress" />
+
+
+    <TextView
+        android:id="@+id/tvSelectTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/select_your_desired_theme"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backPress" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clThemes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectTheme">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/themesGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/ivLightMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/light_mobile"
+            app:layout_constraintEnd_toEndOf="@+id/themesGuide"
+            app:layout_constraintStart_toEndOf="@+id/themesGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/lightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:text="@string/light"
+            app:layout_constraintEnd_toEndOf="@+id/ivLightMobile"
+            app:layout_constraintStart_toStartOf="@+id/ivLightMobile"
+            app:layout_constraintTop_toBottomOf="@+id/ivLightMobile" />
+
+        <RadioButton
+            android:id="@+id/lightRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:checked="true"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/lightText"
+            app:layout_constraintStart_toStartOf="@+id/lightText"
+            app:layout_constraintTop_toBottomOf="@+id/lightText" />
+
+
+        <ImageView
+            android:id="@+id/darkMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/dark_mobile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/themesGuide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/darkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:text="@string/dark"
+            app:layout_constraintEnd_toEndOf="@+id/darkMobile"
+            app:layout_constraintStart_toStartOf="@+id/darkMobile"
+            app:layout_constraintTop_toBottomOf="@+id/darkMobile" />
+
+
+        <RadioButton
+            android:id="@+id/darkRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/darkText"
+            app:layout_constraintStart_toStartOf="@+id/darkText"
+            app:layout_constraintTop_toBottomOf="@+id/darkText" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/simpleView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/_20sdp"
+        android:background="@color/view_color"
+        app:layout_constraintTop_toBottomOf="@+id/clThemes" />
+
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/use_system_default"
+        android:textColor="@color/n_dark_grey"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/systemSelection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/systemSelection" />
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/systemSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:checked="true"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:enabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simpleView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

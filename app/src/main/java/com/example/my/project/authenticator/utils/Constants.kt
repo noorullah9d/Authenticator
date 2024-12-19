@@ -4,4 +4,8 @@ object Constants {
 
     const val isFirstTime = "FirstTime"
     const val userEmail = "userEmail"
+    const val userPassword = "userPassword"
+    const val userThemes = "userThemes"
+    const val light = "Light"
+    const val dark = "Dark"
 }

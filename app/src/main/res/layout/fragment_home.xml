@@ -211,18 +211,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivBlock"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_15sdp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/icon_stopable"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:lottie_rawRes="@raw/add_one"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
         <TextView
             android:id="@+id/tv_backed_up"
@@ -311,9 +313,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_27sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_regular"
             android:gravity="center"
-            android:text="Looks like you haven't added any codes yet." />
+            android:text="@string/looks_like_you_haven"
+            android:textSize="@dimen/_13sdp" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -377,6 +382,7 @@
         app:layout_constraintStart_toEndOf="@+id/startGuide">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/backup"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginEnd="@dimen/_3sdp"
@@ -390,6 +396,7 @@
             app:iconTint="@null" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/howAppWorks"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_3sdp"
@@ -405,19 +412,19 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/faButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:backgroundTint="@color/n_sky_blue"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/add"
-        app:elevation="0dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:lottie_rawRes="@raw/add_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/endGuide"
-        app:shapeAppearance="@style/Widget.MaterialComponents.CircularProgressIndicator"
-        app:tint="@android:color/white" />
+        app:layout_constraintEnd_toStartOf="@+id/endGuide" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

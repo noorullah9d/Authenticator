@@ -124,5 +124,25 @@
     <string name="export_a_compatible_vault">Export a compatible vault file here to export your codes</string>
     <string name="not_now">Not now</string>
     <string name="sign_in_to_back_codes">Sign in to back up your codes and secure your data for future use.</string>
+    <string name="looks_like_you_haven">Looks like you haven\'t added any codes yet.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="use_system_default">Use system default</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="select_your_desired_theme">Select your desired theme</string>
+    <string name="themes">Themes</string>
+    <string name="system">System</string>
+    <string name="use_fingerprint">Use fingerprint</string>
+    <string name="set_password">Set Password</string>
+    <string name="backup_settings">Backup settings</string>
+    <string name="logout">Logout</string>
+    <string name="warning">Warning: If you forgot your password, you will permanently lose access to your codes. There is no way to recover them without the password.</string>
+    <string name="enter_your_current_password">Enter your current password</string>
+    <string name="your_current_password">Your current password is not correct! Try again.</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="save_password">Save Password</string>
+    <string name="change_password">Change password</string>
 
 </resources>

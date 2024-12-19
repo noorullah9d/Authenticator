@@ -23,5 +23,29 @@
         <action
             android:id="@+id/action_settingScreen_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_settingScreen_to_themesFragment"
+            app:destination="@id/themesFragment" />
+        <action
+            android:id="@+id/action_settingScreen_to_backupFragment"
+            app:destination="@id/backupFragment" />
+        <action
+            android:id="@+id/action_settingScreen_to_setPasswordFragment"
+            app:destination="@id/setPasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/themesFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.ThemesFragment"
+        android:label="fragment_themes"
+        tools:layout="@layout/fragment_themes" />
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.BackupFragment"
+        android:label="fragment_backup"
+        tools:layout="@layout/fragment_backup" />
+    <fragment
+        android:id="@+id/setPasswordFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.SetPasswordFragment"
+        android:label="fragment_set_password"
+        tools:layout="@layout/fragment_set_password" />
 </navigation>

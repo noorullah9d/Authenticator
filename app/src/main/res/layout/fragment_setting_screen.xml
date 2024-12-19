@@ -220,6 +220,18 @@
                         app:layout_constraintStart_toEndOf="@+id/ivSettings"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/tvLanguageCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans_semi_bold"
+                        android:text="English"
+                        android:textColor="@color/n_sky_blue"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivNextLanguage"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/ivNextLanguage"
@@ -269,12 +281,25 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans_semi_bold"
-                        android:text="Themes"
+                        android:text="@string/themes"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivThemes"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans_semi_bold"
+                        android:text="English"
+                        android:textColor="@color/n_sky_blue"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivNextThemes"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -326,8 +351,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans_semi_bold"
-                        android:text="Set Password"
+                        android:text="@string/set_password"
                         android:textColor="@color/primary"
+                        android:id="@+id/tvSetPassword"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -383,7 +409,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans_semi_bold"
-                        android:text="Use fingerprint"
+                        android:text="@string/use_fingerprint"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
@@ -491,20 +517,19 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/privacyPolicy"
+                    android:id="@+id/howToWork"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:foreground="?selectableItemBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/feedback">
+                    app:layout_constraintTop_toBottomOf="@+id/termsConditions">
 
                     <ImageView
-                        android:id="@+id/ivPrivacy"
+                        android:id="@+id/ivhowToWork"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:contentDescription="@string/settings"
-                        android:src="@drawable/ic_privacy_policy"
+                        android:src="@drawable/ic_how_work"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -514,13 +539,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:background="?selectableItemBackgroundBorderless"
                         android:fontFamily="@font/lato_regular"
-                        android:text="@string/privacy_policy"
+                        android:text="@string/how_to_word"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivPrivacy"
+                        app:layout_constraintStart_toEndOf="@+id/ivhowToWork"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -599,22 +625,21 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/howToWork"
+                    android:id="@+id/privacyPolicy"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     android:foreground="?selectableItemBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/termsConditions">
+                    app:layout_constraintTop_toBottomOf="@+id/feedback">
 
                     <ImageView
-                        android:id="@+id/ivhowToWork"
+                        android:id="@+id/ivPrivacy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:contentDescription="@string/settings"
-                        android:src="@drawable/ic_how_work"
+                        android:src="@drawable/ic_privacy_policy"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -624,14 +649,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:background="?selectableItemBackgroundBorderless"
                         android:fontFamily="@font/lato_regular"
-                        android:text="@string/how_to_word"
+                        android:text="@string/privacy_policy"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivhowToWork"
+                        app:layout_constraintStart_toEndOf="@+id/ivPrivacy"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -646,6 +670,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
 
                     <View
                         android:layout_width="match_parent"

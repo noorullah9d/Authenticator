@@ -8,16 +8,19 @@
     tools:context=".ui.fragments.UsageFragment2">
 
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivIntroImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_90sdp"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_marginTop="@dimen/_100sdp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/secure_lock"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/scan_qr_final"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 

@@ -29,8 +29,10 @@ import com.example.my.project.authenticator.extensions.setOnDebouncedClickListen
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.showBottomSheetDialog
 import com.example.my.project.authenticator.extensions.showCustomDialog
+import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
+import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -136,8 +138,20 @@ class HomeFragment : Fragment() {
 
         binding.apply {
 
-            ivCross.setOnClickListener {
+            ivCross.setOnDebouncedClickListener {
                 rlNotBackUp.beGone()
+            }
+
+            backup.setOnDebouncedClickListener {
+                if (requireActivity().isInternetAvailable()) {
+                    changeGoogleAccount()
+                } else {
+                    toast(getString(R.string.no_internet_connection))
+                }
+            }
+
+            howAppWorks.setOnClickListener {
+                requireActivity().startActivityWithAnimation<HowToWorkScreen>()
             }
 
 
@@ -413,9 +427,9 @@ class HomeFragment : Fragment() {
                     Log.d(TAG, "firebaseAuthWithGoogle: $email")
 
                     sharedPreferencesHelper.userEmail.getFirstCharacter()
-                    binding.icProfile.beGone()
-                    binding.icProfileText.beVisible()
-                    binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+//                    binding.icProfile.beGone()
+//                    binding.icProfileText.beVisible()
+//                    binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
 
                     lifecycleScope.launch {
                         homeViewModel.refreshTotpKeyFlow()

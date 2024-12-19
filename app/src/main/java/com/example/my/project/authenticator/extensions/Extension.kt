@@ -421,4 +421,65 @@ fun Fragment.openAppInPlayStore() {
     }
 }
 
-private const val TAG = "Extension"
+
+fun String.getLanguageName(): String {
+    return when (this) {
+        "en" -> "English"
+        "af" -> "Afrikaans"
+        "ar" -> "Arabic"
+        "zh" -> "Chinese"
+        "cs" -> "Czech"
+        "da" -> "Danish"
+        "nl" -> "Dutch"
+        "de" -> "German"
+        "el" -> "Greek"
+        "hi" -> "Hindi"
+        "in" -> "Indonesian"
+        "it" -> "Italian"
+        "ja" -> "Japanese"
+        "ms" -> "Malay"
+        "ko" -> "Korean"
+        "no" -> "Norwegian"
+        "fa" -> "Persian"
+        "pt" -> "Portuguese"
+        "ru" -> "Russian"
+        "es" -> "Spanish"
+        "th" -> "Thai"
+        "tr" -> "Turkish"
+        "vi" -> "Vietnamese"
+        else -> "Unknown Language"
+    }
+}
+
+fun String.validatePassword(confirmPassword: String): String {
+    val minPasswordLength = 4
+
+    return when {
+        this.isEmpty() -> "Password cannot be empty"
+        this.length < minPasswordLength -> "Password must be at least $minPasswordLength characters long"
+        this != confirmPassword -> "Password and confirm password do not match"
+        else -> "Password is valid"
+    }
+}
+
+
+fun String?.validatePasswordChange(currentPassword: String,  newPassword: String, confirmPassword: String): String {
+    if (currentPassword != this) {
+        return "not"
+    }
+
+    if (newPassword.isEmpty()) {
+        return "not"
+    }
+
+    if (newPassword != confirmPassword) {
+        return "not"
+    }
+
+    if (newPassword.length < 4) {
+        return "not"
+    }
+
+    return "ok"
+}
+

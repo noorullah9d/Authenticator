@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,22 +12,26 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
+import com.example.my.project.authenticator.extensions.getLanguageName
 import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
+import com.example.my.project.authenticator.model.LanguageViewModel
 import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
+import com.example.my.project.authenticator.utils.Constants
+import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.ra.fingerprint_auth.FingerprintCallback
 import com.ra.fingerprint_auth.FingerprintManager
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class SettingScreen : Fragment() {
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val languageViewModel by viewModels<LanguageViewModel>()
     private lateinit var binding: FragmentSettingScreenBinding
-    private var lastBackPressedTime: Long = 0
+    private var prefsHelper: SharedPreferencesHelper? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,25 +42,46 @@ class SettingScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        prefsHelper = SharedPreferencesHelper(requireActivity())
         binding.apply {
 
-            ivUseFingerprintNext.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
-                override fun onCheckedChanged(compoundButton: CompoundButton?, isEnabled: Boolean) {
-                    if (isEnabled){
-                        fingerprint()
-                    }
+            when (prefsHelper?.userTheme) {
+                "" -> {
+                    tvTheme.text = getString(R.string.system)
                 }
 
-            })
+                Constants.dark -> {
+                    tvTheme.text = Constants.dark
+                }
+
+                Constants.light -> {
+                    tvTheme.text = Constants.light
+                }
+            }
+
+
+            ivUseFingerprintNext.setOnCheckedChangeListener { _, isEnabled ->
+                if (isEnabled) {
+                    fingerprint()
+                }
+            }
+
+            tvLanguageCode.text = languageViewModel.getLanguage().getLanguageName()
 
 
             languageSelection.setOnClickListener {
                 requireActivity().startActivityWithAnimation<SelectLanguageActivity>()
             }
+            if (prefsHelper?.userPassword?.isNotEmpty()==true){
+                tvSetPassword.text = getString(R.string.change_password)
+            }
 
-            ivBackup.setOnClickListener {
+            setPassword.setOnClickListener {
+                findNavController().navigate(R.id.action_settingScreen_to_setPasswordFragment)
+            }
 
+            appThemes.setOnClickListener {
+                findNavController().navigate(R.id.action_settingScreen_to_themesFragment)
             }
 
             importExport.setOnClickListener {
@@ -79,6 +103,10 @@ class SettingScreen : Fragment() {
 
             privacyPolicy.setOnClickListener {
                 requireActivity().privacyPolicy("https://galixo.ai/authenticator/privacy-policy")
+            }
+
+            ivBackup.setOnClickListener {
+                findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
             }
 
 
@@ -105,11 +133,11 @@ class SettingScreen : Fragment() {
     }
 
     private fun fingerprint() {
-        FingerprintManager.FingerprintBuilder(requireActivity()) .setTitle("Add your title")
+        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Add your title")
             .setSubtitle("Add your subtitle")
             .setDescription("Add your description")
             .setNegativeButtonText("Add button text")
-            .build().authenticate(object : FingerprintCallback{
+            .build().authenticate(object : FingerprintCallback {
                 override fun onAuthenticationCancelled() {
                     Log.d(TAG, "onAuthenticationCancelled: ")
                 }

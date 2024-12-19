@@ -22,4 +22,12 @@ class SharedPreferencesHelper(context: Context) {
         get() = sharedPreferences.getString(Constants.userEmail, "") ?: ""
         set(value) = sharedPreferences.edit().putString(Constants.userEmail, value).apply()
 
+    var userPassword: String
+        get() = sharedPreferences.getString(Constants.userPassword, "") ?: ""
+        set(value) = sharedPreferences.edit().putString(Constants.userPassword, value).apply()
+
+    var userTheme: String
+        get() = sharedPreferences.getString(Constants.userThemes, "") ?: ""
+        set(value) = sharedPreferences.edit().putString(Constants.userThemes, value).apply()
+
 }
