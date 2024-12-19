@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">प्रमाणक ऐप</string>
-    <string name="hello_blank_fragment">नमस्ते, खाली खंड</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">सुरक्षित प्रमाणीकरण</string>
     <string name="welcome_secure_access">सुरक्षित पहुंच में आपका स्वागत है</string>
     <string name="scan_get_start">शुरू करने के लिए स्कैन करें</string>

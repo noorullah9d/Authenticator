@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/of_white"
+    android:background="@color/white"
     tools:context=".ui.fragments.HomeFragment">
 
 
@@ -32,16 +32,91 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/_15sdp" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/lato_bold"
-        android:text="@string/app_name"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_18ssp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLayout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/topGuide" />
+        app:layout_constraintTop_toBottomOf="@+id/topGuide">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTopLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:text="@string/app_name"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_5sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/app_line"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <ImageView
+                android:id="@+id/ivSearchView"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_search_n"
+                app:layout_constraintEnd_toStartOf="@+id/settings"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+            <ImageView
+                android:id="@+id/settings"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_settings_n"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toStartOf="@+id/tvCancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageView
         android:id="@+id/icProfile"
@@ -49,6 +124,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_profile"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintTop_toBottomOf="@+id/topGuide" />
 
@@ -62,6 +138,7 @@
         android:text="p"
         android:textColor="@color/white"
         android:textSize="@dimen/_9ssp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintTop_toBottomOf="@+id/topGuide" />
 
@@ -71,9 +148,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_25sdp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+        app:layout_constraintTop_toBottomOf="@+id/topLayout">
 
         <ImageView
             android:id="@+id/ivLockImage"
@@ -113,6 +191,82 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlNotBackUp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toEndOf="@+id/startGuide"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout">
+
+        <ImageView
+            android:id="@+id/bg_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_back_up_frame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/ivBlock"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icon_stopable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_backed_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/data_is_not_backed_up_yet"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivBlock"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivNext"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_next_backup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivCross"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cross"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/accountData"
@@ -122,7 +276,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/oneTimePassword" />
+        app:layout_constraintTop_toBottomOf="@+id/rlNotBackUp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -141,11 +295,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartOpt"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/topLayout">
 
 
         <ImageView
@@ -153,6 +307,13 @@
             android:layout_height="@dimen/_140sdp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/empty_placeholder" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="Looks like you haven't added any codes yet." />
 
 
         <com.google.android.material.button.MaterialButton
@@ -164,6 +325,7 @@
             android:text="@string/add_code"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
             app:cornerRadius="@dimen/_10sdp" />
 
         <TextView
@@ -172,9 +334,90 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/sign_in"
-            android:textColor="@color/secondary_color" />
+            android:textColor="@color/secondary_color"
+            android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartOpt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:backgroundTint="@color/n_sky_blue"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/add"
+        android:text="@string/add_account"
+        android:textSize="@dimen/_13sdp"
+        android:visibility="gone"
+        app:cornerRadius="@dimen/_20sdp"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_plus"
+        app:iconGravity="textStart"
+        app:iconPadding="@dimen/_8sdp"
+        app:iconSize="@dimen/_12sdp"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/llBackUphoworks"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toEndOf="@+id/startGuide"
+        app:shapeAppearance="@style/Widget.MaterialComponents.CircularProgressIndicator"
+        app:tint="@android:color/white" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llBackUphoworks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toEndOf="@+id/startGuide">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/n_off_white"
+            android:text="@string/backup_data"
+            android:textColor="@color/n_dark_grey"
+            app:icon="@drawable/ic_cloud_backup"
+            app:iconGravity="textStart"
+            app:iconSize="@dimen/_12sdp"
+            app:iconTint="@null" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/n_off_white"
+            android:text="@string/how_it_works"
+            android:textColor="@color/n_dark_grey"
+            app:icon="@drawable/ic_how"
+            app:iconGravity="textStart"
+            app:iconTint="@null" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/faButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:backgroundTint="@color/n_sky_blue"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/add"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:shapeAppearance="@style/Widget.MaterialComponents.CircularProgressIndicator"
+        app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

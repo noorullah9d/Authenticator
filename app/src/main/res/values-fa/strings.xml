@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">برنامه احراز هویت</string>
-    <string name="hello_blank_fragment">سلام، بخش خالی</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">احراز هویت امن</string>
     <string name="welcome_secure_access">به دسترسی امن خوش آمدید</string>
     <string name="scan_get_start">اسکن کنید تا شروع کنید</string>

@@ -9,11 +9,12 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.View
-import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.OnboardingAdapter
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
+import com.example.my.project.authenticator.extensions.beGone
+import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
@@ -22,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OnBoardingActivity : BaseActivity() {
-
     private lateinit var binding: ActivityOnBoardingBinding
 
 
@@ -41,14 +41,21 @@ class OnBoardingActivity : BaseActivity() {
     private fun onClickView() {
 
         binding.btnStart.setOnClickListener {
+            val prefsHelper = SharedPreferencesHelper(this)
+            prefsHelper.isUserFirstTime = false
+            startActivityWithAnimation<MainActivity>()
+            finish()
+        }
 
+
+        binding.skip.setOnClickListener {
             val prefsHelper = SharedPreferencesHelper(this)
 
             prefsHelper.isUserFirstTime = false
-            startActivityWithAnimation<WelcomeScreen>()
+            startActivityWithAnimation<MainActivity>()
             finish()
-
         }
+
     }
 
     private fun viewPager() {
@@ -59,15 +66,20 @@ class OnBoardingActivity : BaseActivity() {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
+                        binding.skip.beVisible()
+                        binding.btnStart.text = getString(R.string.get_started)
                         binding.icons.setImageResource(R.drawable.ic_first_start)
-
                     }
 
                     1 -> {
+                        binding.skip.beVisible()
+                        binding.btnStart.text = getString(R.string.next)
                         binding.icons.setImageResource(R.drawable.ic_second_start)
                     }
 
                     2 -> {
+                        binding.skip.beGone()
+                        binding.btnStart.text = getString(R.string.let_s_go)
                         binding.icons.setImageResource(R.drawable.ic_third_start)
                     }
                 }
@@ -96,7 +108,7 @@ class OnBoardingActivity : BaseActivity() {
         val termsOfServiceEnd = termsOfServiceStart + "Terms of Service".length
         val termsOfServiceSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-               privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
+                privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
             }
         }
         spannableString.setSpan(termsOfServiceSpan, termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

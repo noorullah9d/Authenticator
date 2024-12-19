@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context=".ui.activities.OnBoardingActivity">
 
@@ -14,6 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/icons"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="@string/skip"
+        android:textColor="@color/n_dark_gray"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -34,11 +47,11 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:backgroundTint="@color/secondary_color"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/n_sky_blue"
         android:text="@string/let_start"
+        android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
-        app:cornerRadius="@dimen/_10sdp"
+        app:cornerRadius="@dimen/_30sdp"
         app:layout_constraintBottom_toTopOf="@+id/privacyPolicyTextView" />
 
 
@@ -51,6 +64,7 @@
         android:textAlignment="textStart"
         android:textColor="@color/black_light"
         android:textSize="@dimen/_10ssp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

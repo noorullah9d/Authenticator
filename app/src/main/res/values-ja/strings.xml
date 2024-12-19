@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">認証アプリ</string>
-    <string name="hello_blank_fragment">こんにちは、空のフラグメント</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">セキュア認証</string>
     <string name="welcome_secure_access">セキュアアクセスへようこそ</string>
     <string name="scan_get_start">スキャンして開始</string>

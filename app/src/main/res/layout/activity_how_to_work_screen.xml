@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
+    android:background="@color/white"
     tools:context=".ui.activities.HowToWorkScreen">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -67,7 +67,7 @@
         android:contentDescription="@string/app_name"
         android:foreground="?selectableItemBackground"
         android:padding="@dimen/_15sdp"
-        android:src="@drawable/icon_back"
+        android:src="@drawable/right_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,11 +75,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/lato_regular"
+        android:fontFamily="@font/open_sans_semi_bold"
         android:text="@string/how_to_word"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/backPress"
         app:layout_constraintStart_toEndOf="@+id/backPress"
@@ -100,23 +99,25 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_15sdp"
         android:contentDescription="@string/how_to_word"
+        android:visibility="gone"
         android:src="@drawable/first_intro"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:backgroundTint="@color/secondary_color"
+        android:backgroundTint="@color/n_sky_blue"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/next"
         android:textColor="@color/white"
-        app:cornerRadius="@dimen/_5sdp"
+        android:textSize="@dimen/_14sdp"
+        app:cornerRadius="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

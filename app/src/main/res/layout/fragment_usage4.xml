@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.fragments.UsageFragment4">
+
 
     <ImageView
         android:id="@+id/ivIntroImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_90sdp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/img_isolation_lock"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,12 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:fontFamily="@font/lato_bold"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
-        android:text="@string/stronger_security_with_secureauth"
+        android:text="@string/one_time_code_for_extra_security"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_18sdp"
         app:layout_constraintTop_toBottomOf="@+id/ivIntroImg" />
 
 
@@ -39,9 +41,10 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:gravity="center"
-        android:text="@string/boost_your_account_protection_with_secureauth_enjoy_easy_two_factor_authentication_for_added_safety"
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/_12ssp"
+        android:text="@string/protect_your_account_with"
+        android:textColor="@color/n_dark_grey"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvQuickStart" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import android.os.SystemClock
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
@@ -58,12 +59,12 @@ fun Activity.finishWithAnimation() {
 }
 
 fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
-    val dialog = AlertDialog.Builder(this, R.style.TransparentDialog).create()
+    val dialog = BottomSheetDialog(this)
     val binding = DialogCustomBinding.inflate(LayoutInflater.from(this))
-    dialog.setView(binding.root)
+
+    dialog.setContentView(binding.root)
 
     binding.apply {
-
         ivScanQR.setOnClickListener {
             callback.invoke("ivScanQR")
             dialog.dismiss()
@@ -73,9 +74,7 @@ fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
             callback.invoke("ivEnterKey")
             dialog.dismiss()
         }
-
     }
-
 
     dialog.setOnDismissListener {
         callback.invoke("dismiss")
@@ -83,13 +82,11 @@ fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
 
     dialog.show()
 
-    val window = dialog.window
-    window?.setGravity(Gravity.BOTTOM)
-    val params = window?.attributes
-    params?.y = 300
-    window?.attributes = params
-    window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
+    dialog.window?.setLayout(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    dialog.window?.setGravity(Gravity.BOTTOM)
 }
 
 fun View.beVisible() {

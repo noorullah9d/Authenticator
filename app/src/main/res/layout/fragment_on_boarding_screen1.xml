@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
     tools:context=".ui.fragments.FirstOnBoarding">
 
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivWelcomeAccess"
-        android:layout_width="@dimen/_210sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_marginTop="@dimen/_100sdp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/img_welcome_acess"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/onboarding_01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,13 +24,16 @@
 
     <TextView
         android:id="@+id/tvWelcomeAcc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="@string/welcome_secure_access"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/privacy_protected_even_offline"
+        android:textAlignment="center"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_22ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivWelcomeAccess" />
@@ -39,10 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="@string/tier_app_text"
-        android:textAlignment="center"
+        android:fontFamily="@font/open_sans_regular"
         android:gravity="center"
-        android:textColor="@color/light_gray"
+        android:text="@string/we_don_t_store_your"
+        android:textAlignment="center"
+        android:textColor="@color/n_dark_gray"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

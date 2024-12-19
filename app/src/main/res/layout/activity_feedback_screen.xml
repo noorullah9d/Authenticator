@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
+    android:background="@color/white"
     tools:context=".ui.activities.FeedbackScreen">
 
     <ImageView
@@ -39,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_25sdp"
-        android:fontFamily="@font/lato_regular"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/tell_us_how_to_improve"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -62,8 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
             android:padding="@dimen/_10sdp"
-            app:cardBackgroundColor="@color/secondary_color"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/n_sky_blue"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeWidth="0dp">
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
-                    android:padding="@dimen/_12ssp"
+                    android:padding="@dimen/_12sdp"
                     android:text="@string/overall_service"
                     android:textAlignment="center"
                     android:textColor="@color/white"
@@ -99,7 +99,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/light_blue"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@+id/overAllServices"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeWidth="0dp">
@@ -115,10 +115,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
-                    android:padding="@dimen/_12ssp"
+                    android:padding="@dimen/_12sdp"
                     android:text="@string/in_app_purchases"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
+                    android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/light_blue"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/overAllServices"
             app:strokeWidth="0dp">
@@ -151,11 +151,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
-                    android:padding="@dimen/_12ssp"
+                    android:padding="@dimen/_12sdp"
                     android:text="@string/additional_security"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
-                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/n_sky_blue"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -172,7 +172,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/light_blue"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@+id/overAditionalSecurity"
             app:layout_constraintTop_toBottomOf="@+id/overAllServices"
             app:strokeWidth="0dp">
@@ -188,11 +188,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
-                    android:padding="@dimen/_12ssp"
+                    android:padding="@dimen/_12sdp"
                     android:text="@string/performance"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
-                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/n_sky_blue"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -208,7 +208,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/light_blue"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/overAditionalSecurity"
             app:strokeWidth="0dp">
@@ -224,11 +224,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
-                    android:padding="@dimen/_12ssp"
+                    android:padding="@dimen/_12sdp"
                     android:text="@string/user_support"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
-                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/n_sky_blue"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -244,7 +244,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/light_blue"
-            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintStart_toEndOf="@+id/userSupport"
             app:layout_constraintTop_toBottomOf="@+id/overPerformance"
             app:strokeWidth="0dp">
@@ -263,8 +263,8 @@
                     android:padding="@dimen/_12ssp"
                     android:text="@string/data_privacy"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
-                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/n_sky_blue"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -281,10 +281,10 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_140sdp"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:maxWidth="@dimen/_60sdp"
-        app:cardBackgroundColor="@color/of_white"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allQuestionLayout">
@@ -296,16 +296,20 @@
             <EditText
                 android:id="@+id/etFeedback"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_10sdp"
                 android:autofillHints="How can we improve"
+                android:gravity="start"
                 android:background="@null"
                 android:hint="@string/tell_us_how_can_we_improve"
                 android:inputType="text"
+                android:maxLength="500"
+                android:maxLines="5"
+                android:scrollbars="horizontal"
                 android:textAlignment="textStart"
                 android:textColor="@color/primary"
                 android:textColorHint="@color/light_gray"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="@dimen/_12sdp"
                 tools:ignore="LabelFor" />
 
 
@@ -314,6 +318,17 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <TextView
+        android:id="@+id/countChars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="@color/n_dark_grey"
+        app:layout_constraintEnd_toEndOf="@+id/responseLayout"
+        app:layout_constraintTop_toBottomOf="@+id/responseLayout" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submitProblem"
@@ -321,10 +336,12 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:backgroundTint="@color/secondary_color"
+        android:backgroundTint="@color/n_sky_blue"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/submit"
         android:textColor="@color/white"
-        app:cornerRadius="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        app:cornerRadius="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

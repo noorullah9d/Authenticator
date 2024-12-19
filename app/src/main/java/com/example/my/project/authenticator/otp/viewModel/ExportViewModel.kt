@@ -40,7 +40,7 @@ class ExportViewModel @Inject constructor(
             exportEncryptor,
             salt,
             savingMode
-        )()
+        )
     }
 
 }

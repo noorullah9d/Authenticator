@@ -12,17 +12,23 @@ class AesGcmSecretEncryptor(
     override val ivSize: Int
         get() = 12
 
+
+    @Synchronized
     override fun encrypt(plainSecret: ByteArray, iv: ByteArray?): ByteArray {
         if (iv == null) throw IllegalArgumentException("IV must not be null")
         init(Cipher.ENCRYPT_MODE, iv)
-        return cipher.doFinal(plainSecret)
+        return try {
+            cipher.doFinal(plainSecret)
+        } catch (e: Exception) {
+            ByteArray(0)
+        }
     }
 
     override fun decrypt(encryptedSecret: ByteArray, iv: ByteArray?): ByteArray {
         init(Cipher.DECRYPT_MODE, iv!!)
         return try {
             cipher.doFinal(encryptedSecret)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             ByteArray(0)
         }
 
@@ -32,6 +38,3 @@ class AesGcmSecretEncryptor(
         cipher.init(mode, secretKey, GCMParameterSpec(128, iv))
     }
 }
-
-
-private const val TAG = "AesGcmSecretEncryptor"

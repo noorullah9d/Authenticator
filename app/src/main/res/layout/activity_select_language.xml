@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/of_white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activities.SelectLanguageActivity">
 
 
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tool_bar_title"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@drawable/icon_done" />
+        app:srcCompat="@drawable/icons_tick" />
 
     <ImageView
         android:id="@+id/ivBackPress"

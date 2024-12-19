@@ -13,12 +13,24 @@ android {
     namespace = "com.example.my.project.authenticator"
     compileSdk = 34
 
+
+    signingConfigs {
+        create("release") {
+            keyAlias = "galixoai"
+            keyPassword = "galixoai"
+            storeFile = file("C:/Users/HP/Desktop/authenticator.jks")
+            storePassword = "galixoai"
+        }
+    }
+
+
     defaultConfig {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.0.2"
+        setProperty("archivesBaseName", "MF_Authenticator_App" + "_vc_" + versionCode + "_vn_" + versionName + "_")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
     }
@@ -39,6 +51,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+//            signingConfig signingConfigs.release
+                    signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -117,6 +131,8 @@ dependencies {
     //serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("com.github.wdsqjq:AndRatingBar:1.0.6")
+
+    implementation ("com.github.rahulabrol:Android-Fingerprint:1.0.4")
 
 }
 

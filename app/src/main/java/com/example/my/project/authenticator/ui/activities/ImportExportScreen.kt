@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.databinding.ActivityImportExportScreenBinding
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Authenticator-app</string>
-    <string name="hello_blank_fragment">Hallo, leeg fragment</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">Veilige Authenticatie</string>
     <string name="welcome_secure_access">Welkom bij veilige toegang</string>
     <string name="scan_get_start">Scan om te beginnen</string>

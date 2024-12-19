@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">身份验证器应用</string>
-    <string name="hello_blank_fragment">你好，空白片段</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">安全认证</string>
     <string name="welcome_secure_access">欢迎使用安全访问</string>
     <string name="scan_get_start">扫描开始</string>

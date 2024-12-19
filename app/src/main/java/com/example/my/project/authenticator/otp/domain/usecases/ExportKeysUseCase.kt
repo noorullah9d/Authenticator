@@ -27,7 +27,7 @@ class ExportKeysUseCase(
     private val repositoryEncryptor: SecretEncryptor,
     private val exportEncryptor: SecretEncryptor? = null,
     private val encryptionKeySalt: ByteArray? = null,
-    var savingMode: SavingMode,
+    private var savingMode: SavingMode,
 ) {
     @OptIn(ExperimentalSerializationApi::class)
     suspend operator fun invoke() {

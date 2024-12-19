@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvTop"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardBackgroundColor="#BDBDBD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ivLockMode"
+            android:layout_width="@dimen/_210sdp"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mcvTop"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/welcome" />
+
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/welcome_to_authenticator"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintEnd_toEndOf="@+id/ivLockMode"
+            app:layout_constraintStart_toStartOf="@+id/ivLockMode"
+            app:layout_constraintTop_toBottomOf="@+id/ivLockMode" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/sign_in_to_back_codes"
+            android:textColor="@color/n_dark_grey"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:fontFamily="@font/open_sans_regular"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="@+id/ivLockMode"
+            app:layout_constraintStart_toStartOf="@+id/ivLockMode"
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartAccount"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/n_sky_blue"
+            android:text="@string/signin_google"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:cornerRadius="@dimen/_20sdp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconPadding="6dp"
+            app:iconSize="24dp"
+            app:iconTint="@null"
+            app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tvContinueWithoutAccount"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/n_off_white"
+            android:text="@string/not_now"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12ssp"
+            app:cornerRadius="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

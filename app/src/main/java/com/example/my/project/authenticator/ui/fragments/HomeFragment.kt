@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
@@ -22,9 +24,11 @@ import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.showBottomSheetDialog
+import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
@@ -86,18 +90,32 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.apply {
 
-        if (sharedPreferencesHelper.userEmail != "") {
-            sharedPreferencesHelper.userEmail.getFirstCharacter()
-            binding.icProfile.beGone()
-            binding.icProfileText.beVisible()
-            binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
-            setFromRemote()
-        } else {
-            binding.icProfile.beVisible()
-            binding.icProfileText.beGone()
-            if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
-                placeHolder()
+            if (sharedPreferencesHelper.userEmail != "") {
+                sharedPreferencesHelper.userEmail.getFirstCharacter()
+                icProfile.beGone()
+                icProfileText.beGone()
+                icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+                bgRectangle.setImageResource(R.drawable.ic_backed_up)
+                tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
+                ivBlock.setImageResource(R.drawable.ic_confirmed)
+                ivCross.beVisible()
+                ivNext.beGone()
+                setFromRemote()
+            } else {
+                icProfile.beGone()
+                icProfileText.beGone()
+
+                bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
+                tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
+                ivBlock.setImageResource(R.drawable.icon_stopable)
+                ivCross.beGone()
+                ivNext.beVisible()
+
+                if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+                    placeHolder()
+                }
             }
         }
 
@@ -117,6 +135,10 @@ class HomeFragment : Fragment() {
 
 
         binding.apply {
+
+            ivCross.setOnClickListener {
+                rlNotBackUp.beGone()
+            }
 
 
             icProfile.setOnDebouncedClickListener {
@@ -154,6 +176,74 @@ class HomeFragment : Fragment() {
                 }
             }
 
+            settings.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_settingScreen)
+            }
+
+            ivSearchView.setOnClickListener {
+                clTopLayout.beGone()
+                searchView.beVisible()
+            }
+
+
+            tvCancel.setOnClickListener {
+                clTopLayout.beVisible()
+                searchView.beGone()
+            }
+
+
+            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    return true
+                }
+            })
+
+            btnStartOpt.setOnClickListener {
+                clickAddAccount()
+            }
+
+
+            faButton.setOnClickListener {
+                clickAddAccount()
+            }
+
+
+        }
+
+
+    }
+
+    private fun clickAddAccount() {
+
+
+        requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
+        requireActivity().showCustomDialog { result ->
+
+            when (result) {
+                "ivScanQR" -> {
+                    val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                    intent.putExtra("bundle", "ivScanQR")
+                    intent.putExtra("backStack", 1)
+                    startActivity(intent)
+                }
+
+                "ivEnterKey" -> {
+                    val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                    intent.putExtra("bundle", "ivEnterKey")
+                    intent.putExtra("backStack", 1)
+                    startActivity(intent)
+                }
+
+                "dismiss" -> {
+//                            btnStartOpt.setImageResource(R.drawable.add)
+                }
+            }
 
         }
 
@@ -161,17 +251,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun placeHolder() {
-        count++
-        if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
-            binding.llPlaceHolderLayout.beVisible()
-            binding.oneTimePassword.beGone()
-            binding.progressBar.beGone()
-            binding.accountData.beGone()
-        } else if (sharedPreferencesHelper.userEmail == "") {
-            binding.llPlaceHolderLayout.beVisible()
-            binding.oneTimePassword.beGone()
-            binding.progressBar.beGone()
-            binding.accountData.beGone()
+        binding.apply {
+            count++
+            if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
+                llPlaceHolderLayout.beVisible()
+                faButton.beGone()
+                oneTimePassword.beGone()
+                progressBar.beGone()
+                accountData.beGone()
+                llBackUphoworks.beVisible()
+                btnStartOpt.beVisible()
+            } else if (sharedPreferencesHelper.userEmail == "") {
+                llPlaceHolderLayout.beVisible()
+                oneTimePassword.beGone()
+                faButton.beGone()
+                progressBar.beGone()
+                accountData.beGone()
+                llBackUphoworks.beVisible()
+                btnStartOpt.beVisible()
+
+            }
         }
     }
 
@@ -187,13 +286,17 @@ class HomeFragment : Fragment() {
 
 
             } else {
+                binding.apply {
 
-                binding.progressBar.beGone()
-                binding.llPlaceHolderLayout.beGone()
-                binding.oneTimePassword.beVisible()
-                binding.accountData.beVisible()
+                    progressBar.beGone()
+                    llPlaceHolderLayout.beGone()
+                    faButton.beVisible()
+                    oneTimePassword.beGone()
+                    accountData.beVisible()
 
-
+                    llBackUphoworks.beGone()
+                    btnStartOpt.beGone()
+                }
 
                 if (!::accountAdapter.isInitialized) {
                     accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->

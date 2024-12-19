@@ -64,11 +64,11 @@ class LanguagesAdapterNew(
                         if (isSelected) {
                             selectorIcon.setImageResource(R.drawable.selector_icon)
                             root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
-                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
+//                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
 
                         } else {
                             root.changeCardStorkColor(R.color.white, itemView.context.theme)
-                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
+//                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
 
                             selectorIcon.setImageResource(R.drawable.ic_unchecked)
                         }

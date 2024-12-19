@@ -11,10 +11,15 @@ import com.example.my.project.authenticator.databinding.ActivityMainBinding
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
+import com.example.my.project.authenticator.ui.fragments.GoogleSignIn
+import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+    @Inject
+    lateinit var sharedPreferencesHelper: SharedPreferencesHelper
     private val homeViewModel by viewModels<HomeViewModel>()
     private lateinit var binding: ActivityMainBinding
     private val navHostFragment by lazy { supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment }
@@ -27,6 +32,10 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
 
+        if (sharedPreferencesHelper.userEmail == "") {
+            val bottomSheetFragment = GoogleSignIn()
+            bottomSheetFragment.show(supportFragmentManager, "StaticBottomSheet")
+        }
 
 
         binding.apply {
@@ -45,33 +54,7 @@ class MainActivity : BaseActivity() {
 
             }
 
-            btnStartOpt.setOnClickListener {
-                logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
-                btnStartOpt.setImageResource(R.drawable.ic_cross)
-                showCustomDialog { result ->
 
-                    when (result) {
-                        "ivScanQR" -> {
-                            val intent = Intent(this@MainActivity, ProfileScreen::class.java)
-                            intent.putExtra("bundle", "ivScanQR")
-                            intent.putExtra("backStack", 1)
-                            startActivity(intent)
-                        }
-
-                        "ivEnterKey" -> {
-                            val intent = Intent(this@MainActivity, ProfileScreen::class.java)
-                            intent.putExtra("bundle", "ivEnterKey")
-                            intent.putExtra("backStack", 1)
-                            startActivity(intent)
-                        }
-
-                        "dismiss" -> {
-                            btnStartOpt.setImageResource(R.drawable.add)
-                        }
-                    }
-
-                }
-            }
 
 
 
@@ -99,19 +82,7 @@ class MainActivity : BaseActivity() {
 
 
     }
-    /*
-        override fun onWindowFocusChanged(hasFocus: Boolean) {
-            super.onWindowFocusChanged(hasFocus)
-            if (hasFocus) {
-                window.decorView.systemUiVisibility = (
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                        )
-            }
-        }*/
+
 }
 
 private const val TAG = "MainActivityLogs"

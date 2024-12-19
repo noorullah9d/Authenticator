@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.databinding.FragmentUsage1Binding
 
-
 class UsageFragment1 : Fragment() {
 
     private lateinit var binding: FragmentUsage1Binding
@@ -16,6 +15,4 @@ class UsageFragment1 : Fragment() {
         binding = FragmentUsage1Binding.inflate(inflater, container, false)
         return binding.root
     }
-
-
 }

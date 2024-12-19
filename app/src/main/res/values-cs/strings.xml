@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aplikace pro autentizaci</string>
-    <string name="hello_blank_fragment">Ahoj prázdný fragment</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">Zabezpečená autentizace</string>
     <string name="welcome_secure_access">Vítejte v zabezpečeném přístupu</string>
     <string name="scan_get_start">Naskenujte pro zahájení</string>

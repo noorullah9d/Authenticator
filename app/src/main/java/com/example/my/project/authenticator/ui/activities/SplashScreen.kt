@@ -1,15 +1,11 @@
 package com.example.my.project.authenticator.ui.activities
 
+import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentSplashBinding
-import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,23 +24,9 @@ class SplashScreen : BaseActivity() {
         setContentView(binding.root)
 
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.secondary_color)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.secondary_color)
-        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-
-
-
         val prefsHelper = SharedPreferencesHelper(applicationContext)
 
 
-
-        lifecycleScope.launch {
-            delay(1200)
-        }.invokeOnCompletion {
-            binding.ivTextSplash.beVisible()
-            binding.ivTextSplash.setAnimation(R.raw.text_splash)
-        }
 
 
         lifecycleScope.launch {
@@ -59,6 +41,10 @@ class SplashScreen : BaseActivity() {
             }
 
         }
+
+        val animator = ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100)
+        animator.setDuration(4000)
+        animator.start()
 
 
     }

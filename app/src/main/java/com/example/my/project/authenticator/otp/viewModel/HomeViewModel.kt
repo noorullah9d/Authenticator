@@ -30,9 +30,7 @@ import kotlin.concurrent.fixedRateTimer
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 
-
 private const val defaultUpdateStepMs = 30_000L
-
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -86,7 +84,7 @@ class HomeViewModel @Inject constructor(
             accounts?.forEach { account ->
                 val secret = Base32().decode(account.passcode)
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName, account.passcode)
                 }
             }
@@ -177,12 +175,10 @@ class HomeViewModel @Inject constructor(
 
         val secret = Base32().decode(base32Secret)
         return try {
-            viewModelScope.launch {
-                addTotpUseCase(sharedPreferencesHelper.userEmail, secret, name, base32Secret)
+            addTotpUseCase(sharedPreferencesHelper.userEmail, secret, name, base32Secret)
 
-                refreshTotpKeyFlow()
+            refreshTotpKeyFlow()
 
-            }
             true
         } catch (e: IllegalArgumentException) {
             false

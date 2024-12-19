@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
     tools:context=".ui.fragments.SecondOnBoarding">
 
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivWelcomeAccess"
-        android:layout_width="@dimen/_210sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_marginTop="@dimen/_100sdp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/onboarding_02"
         android:contentDescription="@string/app_name"
         android:src="@drawable/img_onboard_second"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,18 +22,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
     <TextView
         android:id="@+id/tvWelcomeAcc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="@string/scan_get_start"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/add_accounts_easily"
+        android:textAlignment="center"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_22ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivWelcomeAccess" />
+
 
 
     <TextView
@@ -39,10 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="@string/easy_authenticator"
+        android:gravity="center"
+        android:text="@string/adding_an_account_is_super"
         android:textAlignment="center"
         android:textColor="@color/light_gray"
-        android:gravity="center"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

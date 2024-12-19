@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">تطبيق المصادقة</string>
-    <string name="hello_blank_fragment">مرحبًا، جزء فارغ</string>
+    <string name="app_name">MF Authenticator App</string>
     <string name="secure_auth">المصادقة الآمنة</string>
     <string name="welcome_secure_access">مرحبًا بك في الوصول الآمن</string>
     <string name="scan_get_start">امسح للبدء</string>

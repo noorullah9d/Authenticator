@@ -1,13 +1,13 @@
 package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.appclass.DragRatingView
 import com.example.my.project.authenticator.databinding.ActivityFeedbackScreenBinding
-import com.example.my.project.authenticator.extensions.openAppInPlayStore
 import com.example.my.project.authenticator.extensions.sendEmail
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.CardSelectionViewModel
@@ -53,10 +53,10 @@ class FeedbackScreen : BaseActivity() {
                     val (cardView, textView) = pair
                     val isSelected = index == selectedIndex
 
-                    val cardColor = if (isSelected) R.color.secondary_color else R.color.light_blue
+                    val cardColor = if (isSelected) R.color.n_sky_blue else R.color.light_blue
                     cardView.setCardBackgroundColor(ContextCompat.getColor(this@FeedbackScreen, cardColor))
 
-                    val textColor = if (isSelected) R.color.white else R.color.secondary_color
+                    val textColor = if (isSelected) R.color.white else R.color.n_sky_blue
                     textView.setTextColor(ContextCompat.getColor(this@FeedbackScreen, textColor))
                 }
             }
@@ -67,6 +67,21 @@ class FeedbackScreen : BaseActivity() {
                     viewModel.toggleCardSelection(index)
                 }
             }
+
+
+            etFeedback.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    Log.d(TAG, "onTextChanged: $count")
+                    countChars.text = "$count/500"
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+
 
         }
 
