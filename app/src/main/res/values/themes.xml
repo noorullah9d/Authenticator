@@ -1,15 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Authenticator" parent="Theme.Material3.DayNight.NoActionBar">
 
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
 
         <item name="colorSurface">#FFFFFF</item>
 
     </style>
+
     <style name="SplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
@@ -31,7 +32,6 @@
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
 
 
 </resources>

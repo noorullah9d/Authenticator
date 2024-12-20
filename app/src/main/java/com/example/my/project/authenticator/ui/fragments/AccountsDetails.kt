@@ -153,14 +153,14 @@ class AccountsDetails : Fragment() {
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             requireActivity(),
             options,
-            false
+            true
         )
 
         binding.spSelectGroup.adapter = exportOptionsAdapter
 
         binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-
+                // Handle selection
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -168,6 +168,7 @@ class AccountsDetails : Fragment() {
             }
         }
     }
+
 
     private fun totpOptionsSpinner() {
         val options = totp

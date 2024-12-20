@@ -80,10 +80,10 @@
                 android:id="@+id/settings"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_settings_n"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvTitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -193,6 +193,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:id="@+id/categories_account"
+        android:layout_height="@dimen/_45sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:layout_constraintStart_toEndOf="@id/startGuide"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rlNotBackUp"
         android:layout_width="0dp"
@@ -200,7 +209,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
-        app:layout_constraintTop_toBottomOf="@+id/topLayout">
+        app:layout_constraintTop_toBottomOf="@+id/categories_account">
 
         <ImageView
             android:id="@+id/bg_rectangle"
@@ -217,15 +226,14 @@
             android:id="@+id/ivBlock"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:contentDescription="@string/app_name"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
             android:layout_marginStart="@dimen/_10sdp"
-            app:lottie_rawRes="@raw/add_one"
+            android:contentDescription="@string/app_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/add_one" />
 
 
         <TextView
@@ -418,15 +426,15 @@
         android:id="@+id/faButton"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"
-        android:contentDescription="@string/app_name"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:layout_marginBottom="@dimen/_15sdp"
         android:layout_marginStart="@dimen/_10sdp"
-        app:lottie_rawRes="@raw/add_button"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/endGuide" />
+        app:layout_constraintEnd_toStartOf="@+id/endGuide"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/add_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

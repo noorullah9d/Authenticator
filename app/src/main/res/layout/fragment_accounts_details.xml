@@ -64,6 +64,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_40sdp"
         android:padding="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_25sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle">
 
@@ -91,6 +92,7 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:padding="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_25sdp"
         app:layout_constraintTop_toBottomOf="@+id/mcvAccountName">
 
