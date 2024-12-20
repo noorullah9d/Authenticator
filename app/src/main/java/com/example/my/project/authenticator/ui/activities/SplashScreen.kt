@@ -17,7 +17,6 @@ class SplashScreen : BaseActivity() {
 
     private lateinit var binding: FragmentSplashBinding
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentSplashBinding.inflate(layoutInflater)
@@ -36,7 +35,8 @@ class SplashScreen : BaseActivity() {
                 startActivityWithAnimation<OnBoardingActivity>()
                 finish()
             } else {
-                startActivityWithAnimation<MainActivity>()
+                if (prefsHelper.userPassword != "") startActivityWithAnimation<PasswordScreen>()
+                else startActivityWithAnimation<MainActivity>()
                 finish()
             }
 
@@ -52,4 +52,3 @@ class SplashScreen : BaseActivity() {
 
 }
 
-private const val TAG = "SplashScreen"

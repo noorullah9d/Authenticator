@@ -1,17 +1,19 @@
 package com.example.my.project.authenticator.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
+import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
@@ -23,9 +25,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class AccountsDetails : Fragment() {
     private lateinit var binding: FragmentAccountsDetailsBinding
-
-
     private val homeViewModel by viewModels<HomeViewModel>()
+    private val exportOptions = listOf("No encryption", "Encrypt only keys", "Encrypt everything")
+    private val totp = listOf("TOTP", "HOTP")
+    private val sha = listOf("SHA1", "SHA256")
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAccountsDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -35,6 +39,10 @@ class AccountsDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupExportOptionsSpinner()
+        totpOptionsSpinner()
+        shaSpinner()
+
         binding.apply {
 
             accountId = arguments?.getInt("accountId") ?: 0
@@ -57,9 +65,6 @@ class AccountsDetails : Fragment() {
                 }
             })
 
-
-
-
             btnAdd.setOnClickListener {
                 val accountName = etAccountName.text.toString()
                 val accountKey = etAccountKey.text.toString()
@@ -72,7 +77,6 @@ class AccountsDetails : Fragment() {
                     toast(requireActivity().getString(R.string.key_should_not_empty))
                 } else {
                     val isExists = homeViewModel.isKeyExists(accountName, accountKey)
-                    Log.d(TAG, "onViewCreated: $isExists")
                     if (isExists > 0) {
                         showReplace(isExists, accountName, accountKey)
                     } else {
@@ -106,8 +110,8 @@ class AccountsDetails : Fragment() {
                 }
             }
 
-
-
+            ivTheme.setOnClickListener { llAdvLL.beVisible() }
+            tvTheme.setOnClickListener { llAdvLL.beVisible() }
 
 
         }
@@ -126,12 +130,6 @@ class AccountsDetails : Fragment() {
 
             },
             onKeep = {
-//                val result = homeViewModel.addTotp(accountName, passKey, tool)
-//                if (result) {
-//                    requireActivity().finish()
-//                }
-
-
                 var result = false
                 lifecycleScope.launch(Dispatchers.IO) {
                     val addResult = homeViewModel.addTotp(accountName, passKey, tool)
@@ -145,20 +143,67 @@ class AccountsDetails : Fragment() {
                         toast(requireActivity().getString(R.string.error_occurs))
                     }
                 }
-
-
             }
         )
     }
 
+    private fun setupExportOptionsSpinner() {
+        val options = exportOptions
 
-    private val callback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            findNavController().popBackStack()
+        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
+            requireActivity(),
+            options,
+            false
+        )
+
+        binding.spSelectGroup.adapter = exportOptionsAdapter
+
+        binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing
+            }
+        }
+    }
+
+    private fun totpOptionsSpinner() {
+        val options = totp
+
+        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
+            requireActivity(),
+            options,
+            false
+        )
+
+        binding.spCodeSelection.adapter = exportOptionsAdapter
+
+        binding.spCodeSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing
+            }
+        }
+    }
+
+    private fun shaSpinner() {
+
+        val options = sha
+
+        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(requireActivity(), options, false)
+
+        binding.spShaSelection.adapter = exportOptionsAdapter
+
+        binding.spShaSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
 
 }
-
-private const val TAG = "AccountsDetails"

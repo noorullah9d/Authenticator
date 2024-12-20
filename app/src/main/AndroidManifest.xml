@@ -21,33 +21,38 @@
         android:theme="@style/Theme.Authenticator"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.PasswordScreen"
+            android:theme="@style/SplashTheme"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.HowToWorkScreen"
             android:exported="false"
             android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.ImportScreen"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.ExportScreen"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.ImportExportScreen"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.FeedbackScreen"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.ProfileScreen"
             android:exported="false"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.WelcomeScreen"
             android:exported="false"
@@ -60,8 +65,8 @@
         <activity
             android:name=".ui.activities.SelectLanguageActivity"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:exported="false"

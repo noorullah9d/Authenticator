@@ -73,9 +73,9 @@ class ExportScreen : BaseActivity() {
         binding.exportTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position != 0) {
-                    binding.passwordEditText.beVisible()
+                    binding.passwordField.beVisible()
                 } else {
-                    binding.passwordEditText.beGone()
+                    binding.passwordField.beGone()
                 }
             }
 
@@ -125,7 +125,7 @@ class ExportScreen : BaseActivity() {
         binding.apply {
 
             exportButton.setOnClickListener {
-                if (passwordEditText.isVisible) {
+                if (passwordField.isVisible) {
                     if (passwordEditText.text.isNotEmpty()) {
                         getOutputStreamLauncher.launch("export.json")
                     } else {

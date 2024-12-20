@@ -30,4 +30,12 @@ class SharedPreferencesHelper(context: Context) {
         get() = sharedPreferences.getString(Constants.userThemes, "") ?: ""
         set(value) = sharedPreferences.edit().putString(Constants.userThemes, value).apply()
 
+    var isBackedUp: Boolean
+        get() = sharedPreferences.getBoolean(Constants.backUp, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constants.backUp, value).apply()
+
+    var isBackedGone: Boolean
+        get() = sharedPreferences.getBoolean(Constants.backUpGone, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constants.backUpGone, value).apply()
+
 }

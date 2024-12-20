@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ class SetPasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentSetPasswordBinding
     private var prefsHelper: SharedPreferencesHelper? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSetPasswordBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,6 +34,7 @@ class SetPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefsHelper = SharedPreferencesHelper(requireActivity())
+
         binding.apply {
 
             if (prefsHelper?.userPassword?.isNotEmpty() == true) {
@@ -74,9 +77,13 @@ class SetPasswordFragment : Fragment() {
 
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
 
     }
-
 
     private fun hidePassword(et: AppCompatEditText, image: ImageView) {
         if (et.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {

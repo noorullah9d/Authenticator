@@ -520,6 +520,7 @@
                     android:id="@+id/howToWork"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
+                    android:foreground="?selectableItemBackground"
                     android:layout_marginHorizontal="@dimen/_5sdp"
                     app:layout_constraintTop_toBottomOf="@+id/termsConditions">
 
@@ -539,7 +540,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:background="?selectableItemBackgroundBorderless"
                         android:fontFamily="@font/lato_regular"
                         android:text="@string/how_to_word"
                         android:textColor="@color/primary"

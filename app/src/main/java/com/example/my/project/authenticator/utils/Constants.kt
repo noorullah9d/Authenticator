@@ -8,4 +8,6 @@ object Constants {
     const val userThemes = "userThemes"
     const val light = "Light"
     const val dark = "Dark"
+    const val backUp = "backUp"
+    const val backUpGone = "backUpGone"
 }

@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
     tools:context=".ui.fragments.AccountsDetails">
 
     <ImageView
         android:id="@+id/ivBackIcon"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
-        android:foreground="?selectableItemBackground"
-        android:padding="@dimen/_15sdp"
-        android:src="@drawable/icon_back"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_cross"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,81 +25,221 @@
         android:id="@+id/tvScreenTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato_regular"
-        android:text="@string/provide_account_details"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/account_details"
         android:textColor="@color/primary"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/ivBackIcon"
         app:layout_constraintStart_toEndOf="@+id/ivBackIcon"
         app:layout_constraintTop_toTopOf="@id/ivBackIcon" />
 
+    <ImageView
+        android:id="@+id/btnAdd"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_15sdp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/new_icons_tick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etAccountName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:autofillHints="Account Name"
-        android:background="@null"
-        android:hint="@string/account_name"
-        android:textColor="@color/primary"
-        android:inputType="text"
-        android:textColorHint="@color/hint_color"
-        android:textSize="@dimen/_11ssp"
+
+    <ImageView
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle" />
 
 
-    <View
-        android:id="@+id/simple_view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/_13sdp"
-        android:background="@color/light_gray"
-        app:layout_constraintTop_toBottomOf="@+id/etAccountName" />
-
-
-    <EditText
-        android:id="@+id/etAccountKey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:autofillHints="Your Key"
-        android:background="@null"
-        android:textColor="@color/primary"
-        android:hint="@string/account_key"
-        android:inputType="text"
-        android:textColorHint="@color/hint_color"
-        android:textSize="@dimen/_11ssp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simple_view" />
-
-
-    <View
-        android:id="@+id/keyView"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="@dimen/_13sdp"
-        android:background="@color/light_gray"
-        app:layout_constraintTop_toBottomOf="@+id/etAccountKey" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAdd"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvAccountName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:text="@string/add"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/secondary_color"
-        app:cornerRadius="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/keyView" />
+        android:layout_marginTop="@dimen/_40sdp"
+        android:padding="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_25sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle">
+
+        <EditText
+            android:id="@+id/etAccountName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:autofillHints="Account Name"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/account_name"
+            android:inputType="text"
+            android:textColor="@color/n_dark_grey"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_key"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:padding="@dimen/_5sdp"
+        app:cardCornerRadius="@dimen/_25sdp"
+        app:layout_constraintTop_toBottomOf="@+id/mcvAccountName">
+
+        <EditText
+            android:id="@+id/etAccountKey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:autofillHints="Your Key"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/account_key"
+            android:inputType="text"
+            android:textColor="@color/n_dark_grey"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/select_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:padding="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_25sdp"
+        app:layout_constraintTop_toBottomOf="@+id/mcv_key">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_select_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:autofillHints="Your Key"
+            android:background="@android:color/transparent"
+            android:dropDownVerticalOffset="@dimen/_40sdp"
+            android:gravity="center_vertical"
+            android:hint="@string/account_key"
+            android:inputType="text"
+            android:popupBackground="@drawable/custom_spinner_background"
+            android:popupElevation="@dimen/_5sdp"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/hint_color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:text="@string/advanced"
+        android:textColor="@color/n_sky_blue"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_group" />
+
+    <ImageView
+        android:id="@+id/iv_theme"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:contentDescription="@string/set_password"
+        android:src="@drawable/down_arrow"
+        app:layout_constraintStart_toEndOf="@+id/tvTheme"
+        app:layout_constraintTop_toTopOf="@+id/tvTheme" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llAdvLL"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvTheme">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/code_selection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_key">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_code_selection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:autofillHints="Your Key"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="@dimen/_40sdp"
+                android:gravity="center_vertical"
+                android:hint="@string/account_key"
+                android:inputType="text"
+                android:popupBackground="@drawable/custom_spinner_background"
+                android:popupElevation="@dimen/_5sdp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/hint_color"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/sha_selection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_25sdp"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_key">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_sha_selection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:autofillHints="Your Key"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="@dimen/_40sdp"
+                android:gravity="center_vertical"
+                android:hint="@string/account_key"
+                android:inputType="text"
+                android:popupBackground="@drawable/custom_spinner_background"
+                android:popupElevation="@dimen/_5sdp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/hint_color"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

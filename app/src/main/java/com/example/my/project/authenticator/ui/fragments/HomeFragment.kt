@@ -93,17 +93,20 @@ class HomeFragment : Fragment() {
         }
 
         binding.apply {
-
+            Log.d(TAG, "onViewCreated: ${sharedPreferencesHelper.userEmail} and backUp ${sharedPreferencesHelper.isBackedUp}")
             if (sharedPreferencesHelper.userEmail != "") {
                 sharedPreferencesHelper.userEmail.getFirstCharacter()
                 icProfile.beGone()
                 icProfileText.beGone()
                 icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
-                bgRectangle.setImageResource(R.drawable.ic_backed_up)
-                tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
-                ivBlock.setImageResource(R.drawable.ic_confirmed)
-                ivCross.beVisible()
-                ivNext.beGone()
+                if (sharedPreferencesHelper.isBackedUp) {
+                    bgRectangle.setImageResource(R.drawable.ic_backed_up)
+                    tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
+                    ivBlock.setImageResource(R.drawable.ic_confirmed)
+                    ivCross.beVisible()
+                    ivNext.beGone()
+                }
+
                 setFromRemote()
             } else {
                 icProfile.beGone()
@@ -140,7 +143,14 @@ class HomeFragment : Fragment() {
 
             ivCross.setOnDebouncedClickListener {
                 rlNotBackUp.beGone()
+                sharedPreferencesHelper.isBackedGone = true
             }
+
+            if (sharedPreferencesHelper.isBackedGone) {
+                rlNotBackUp.beGone()
+            }
+
+
 
             backup.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
@@ -185,8 +195,6 @@ class HomeFragment : Fragment() {
                     signInWithGoogle()
                 } else {
                     toast(getString(R.string.no_internet_connection))
-
-
                 }
             }
 

@@ -54,6 +54,12 @@ class ThemesFragment : Fragment() {
                 }
             }
 
+            systemSelection.setOnCheckedChangeListener { _, isEnabled ->
+                if (isEnabled) {
+                    prefsHelper?.userTheme = ""
+                }
+            }
+
             darkRadio.setOnCheckedChangeListener { compoundButton, isEnabled ->
                 if (isEnabled) {
                     prefsHelper?.userTheme = Constants.dark
