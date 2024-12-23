@@ -141,6 +141,9 @@ class HomeFragment : Fragment() {
 
         binding.apply {
 
+//            categoriesAccount
+
+
             ivCross.setOnDebouncedClickListener {
                 rlNotBackUp.beGone()
                 sharedPreferencesHelper.isBackedGone = true

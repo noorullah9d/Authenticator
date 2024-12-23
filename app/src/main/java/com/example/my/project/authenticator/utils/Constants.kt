@@ -10,4 +10,5 @@ object Constants {
     const val dark = "Dark"
     const val backUp = "backUp"
     const val backUpGone = "backUpGone"
+    const val FingerprintEnabled = "isFingerprintEnabled"
 }

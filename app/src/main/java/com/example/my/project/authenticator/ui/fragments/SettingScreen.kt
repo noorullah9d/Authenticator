@@ -102,6 +102,9 @@ class SettingScreen : Fragment() {
                     fingerprint()
                 }
             }
+            if (prefsHelper?.isFingerprintEnabled!!) {
+                ivUseFingerprintNext.isChecked = true
+            }
 
             tvLanguageCode.text = languageViewModel.getLanguage().getLanguageName()
 
@@ -200,6 +203,7 @@ class SettingScreen : Fragment() {
 
                 override fun onAuthenticationSuccessful() {
                     Log.d(TAG, "onAuthenticationSuccessful: ")
+                    prefsHelper?.isFingerprintEnabled = true
                 }
 
                 override fun onBiometricAuthenticationInternalError(error: String?) {
