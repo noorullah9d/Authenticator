@@ -21,7 +21,12 @@ import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.example.my.project.authenticator.utils.TotpCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,7 +53,11 @@ class HomeViewModel @Inject constructor(
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
 
-    private var totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    private val _category = MutableStateFlow("")
+    val category: StateFlow<String> get() = _category
+
+//    private var totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail,"").stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val homeState = MutableLiveData(HomeState())
 
@@ -56,9 +65,26 @@ class HomeViewModel @Inject constructor(
     private lateinit var oneSecondTimer: Timer
 
 
+
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val totpKeyFlow = _category.flatMapLatest { categoryValue ->
+        if (categoryValue != null) {
+            totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue)
+        } else {
+            flowOf(emptyList())
+        }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    fun setCategory(newCategory: String) {
+        _category.value = newCategory
+    }
+
+
     init {
         viewModelScope.launch(Dispatchers.Main) {
             autoUpdate()
+            setCategory("")
         }
     }
 
@@ -67,8 +93,18 @@ class HomeViewModel @Inject constructor(
 
 
     fun refreshTotpKeyFlow() {
-        totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail)
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+//        totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail,"")
+//            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+
+        @OptIn(ExperimentalCoroutinesApi::class)
+        val totpKeyFlow = _category.flatMapLatest { categoryValue ->
+            if (categoryValue != null) {
+                totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue)
+            } else {
+                flowOf(emptyList())
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
         viewModelScope.launch(Dispatchers.IO) {
             totpKeyFlow.collect { keyList ->
@@ -92,7 +128,7 @@ class HomeViewModel @Inject constructor(
                 val secret = Base32().decode(account.passcode)
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    addTotpUseCase(sharedPreferencesHelper.userEmail, categories = "Default", secret, account.accountName, account.passcode)
+                    addTotpUseCase(sharedPreferencesHelper.userEmail, categories = "", secret, account.accountName, account.passcode)
                 }
             }
         }
@@ -178,7 +214,7 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = "Default"): Boolean {
+    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = ""): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
 
         if (sharedPreferencesHelper.userEmail != "") {

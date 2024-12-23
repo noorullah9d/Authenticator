@@ -23,32 +23,49 @@ import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AccountsDetails : Fragment() {
     private lateinit var binding: FragmentAccountsDetailsBinding
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val exportOptions = listOf("Office", "Family")
+    private var exportOptions: List<String>? = null
     private val totp = listOf("TOTP", "HOTP")
     private val sha = listOf("SHA1", "SHA256")
-
+    private var category: String = ""
+    var accountId = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAccountsDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    var accountId = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupExportOptionsSpinner()
+        accountId = arguments?.getInt("accountId") ?: 0
+
+        clickListeners()
+
+
+        lifecycleScope.launch {
+            homeViewModel.getAllGroups().collectLatest { groups ->
+                exportOptions = groups.map {
+                    it.categories
+                }
+                setupExportOptionsSpinner()
+            }
+        }
+
         totpOptionsSpinner()
         shaSpinner()
 
+
+    }
+
+    private fun clickListeners() {
         binding.apply {
 
-            accountId = arguments?.getInt("accountId") ?: 0
 
             ivBackIcon.setOnClickListener {
                 if (accountId == 3) {
@@ -83,18 +100,9 @@ class AccountsDetails : Fragment() {
                     if (isExists > 0) {
                         showReplace(isExists, accountName, accountKey)
                     } else {
-//                        val result = homeViewModel.addTotp(accountName, accountKey, "")
-//                        if (result) {
-//                            requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
-//                            requireActivity().finish()
-//                        } else {
-//                            toast(requireActivity().getString(R.string.error_occurs))
-//                        }
-
-
                         var result = false
                         lifecycleScope.launch(Dispatchers.IO) {
-                            val addResult = homeViewModel.addTotp(accountName, accountKey, "")
+                            val addResult = homeViewModel.addTotp(accountName, accountKey, "", categories = category)
                             result = addResult
 
                         }.invokeOnCompletion {
@@ -107,8 +115,6 @@ class AccountsDetails : Fragment() {
                                 }
                             }
                         }
-
-
                     }
                 }
             }
@@ -118,46 +124,39 @@ class AccountsDetails : Fragment() {
 
 
         }
-
     }
 
 
     private fun showReplace(id: Int, accountName: String, passKey: String, tool: String = "") {
-        showReplaceAccountDialog(
-            onReplace = {
-                val result = homeViewModel.replaceTotp(id, accountName, passKey, tool)
+        showReplaceAccountDialog(onReplace = {
+            val result = homeViewModel.replaceTotp(id, accountName, passKey, tool)
+            if (result) {
+                requireActivity().finish()
+                findNavController().popBackStack()
+            }
+
+        }, onKeep = {
+            var result = false
+            lifecycleScope.launch(Dispatchers.IO) {
+                val addResult = homeViewModel.addTotp(accountName, passKey, tool)
+                result = addResult
+
+            }.invokeOnCompletion {
                 if (result) {
+                    requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
                     requireActivity().finish()
-                    findNavController().popBackStack()
-                }
-
-            },
-            onKeep = {
-                var result = false
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val addResult = homeViewModel.addTotp(accountName, passKey, tool)
-                    result = addResult
-
-                }.invokeOnCompletion {
-                    if (result) {
-                        requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
-                        requireActivity().finish()
-                    } else {
-                        toast(requireActivity().getString(R.string.error_occurs))
-                    }
+                } else {
+                    toast(requireActivity().getString(R.string.error_occurs))
                 }
             }
-        )
+        })
     }
 
     private fun setupExportOptionsSpinner() {
         val options = exportOptions
-
+        Log.d(TAG, "setupExportOptionsSpinner: $options")
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
-            requireActivity(),
-            options,
-            true,
-            binding.spSelectGroup
+            requireActivity(), options ?: listOf(), true, binding.spSelectGroup
         ) {
             createNewGroupDialog { groupName ->
                 val category = Categories(0, groupName)
@@ -170,6 +169,7 @@ class AccountsDetails : Fragment() {
         binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 Log.d(TAG, "onItemSelected: $position")
+                category = exportOptions?.get(position) ?: ""
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -183,10 +183,7 @@ class AccountsDetails : Fragment() {
         val options = totp
 
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
-            requireActivity(),
-            options,
-            false,
-            binding.spCodeSelection
+            requireActivity(), options, false, binding.spCodeSelection
         ) {
 
         }

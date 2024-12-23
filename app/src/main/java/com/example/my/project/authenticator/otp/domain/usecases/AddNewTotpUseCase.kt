@@ -9,7 +9,7 @@ class AddNewTotpUseCase(
     private val repository: TotpKeyRepository,
     private val encryptor: SecretEncryptor,
 ) {
-    suspend operator fun invoke(email: String, categories: String = "Default", plainSecret: ByteArray, name: String, secretKey: String) {
+    suspend operator fun invoke(email: String, categories: String = "", plainSecret: ByteArray, name: String, secretKey: String) {
         val random = SecureRandom()
         val iv = ByteArray(encryptor.ivSize)
         random.nextBytes(iv)

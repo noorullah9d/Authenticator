@@ -108,8 +108,8 @@ class HomeFragment : Fragment() {
             lifecycleScope.launch {
                 homeViewModel.getAllGroups().collect {
 
-                    adapter = CategoryAdapter(it, selectionViewModel) {
-
+                    adapter = CategoryAdapter(it, selectionViewModel) { group ->
+                        homeViewModel.setCategory(group)
                     }
                     categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     categoriesAccount.adapter = adapter
