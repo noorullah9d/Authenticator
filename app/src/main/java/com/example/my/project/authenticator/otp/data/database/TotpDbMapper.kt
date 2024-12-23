@@ -6,6 +6,7 @@ object TotpDbMapper {
     fun fromTotpKey(totpKey: EncryptedTotpKey) = TotpDbEntity(
         id = totpKey.id,
         email = totpKey.email,
+        category = totpKey.category,
         name = totpKey.name,
         secret = totpKey.secret,
         secretKey = totpKey.secretKey,
@@ -16,6 +17,7 @@ object TotpDbMapper {
         id = totpEntity.id,
         email = totpEntity.email,
         name = totpEntity.name,
+        category = totpEntity.category,
         secret = totpEntity.secret,
         secretKey = totpEntity.secretKey,
         iv = totpEntity.iv,

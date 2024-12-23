@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.otp.data.repository
 
 import android.util.Log
+import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.otp.data.database.TotpDao
 import com.example.my.project.authenticator.otp.data.database.TotpDbMapper
 import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
@@ -24,6 +25,10 @@ class TotpKeyRepositoryImpl(
         dao.insert(TotpDbMapper.fromTotpKey(key))
     }
 
+    override suspend fun addCategories(cats: Categories) {
+        dao.insertCats(cats)
+    }
+
     override suspend fun removeKey(key: EncryptedTotpKey) {
         dao.delete(TotpDbMapper.fromTotpKey(key))
     }
@@ -35,6 +40,8 @@ class TotpKeyRepositoryImpl(
     override fun getAllData(email: String): List<EncryptedTotpKey> {
         return dao.queryAllData(email).map(TotpDbMapper::toTotpKey)
     }
+
+    override fun getAllGroups(): Flow<List<Categories>> = dao.getAllGroups()
 
 
     override fun isKeyExists(name: String, secret: String): Int {

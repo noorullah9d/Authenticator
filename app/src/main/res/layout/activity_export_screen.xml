@@ -15,7 +15,7 @@
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
         android:contentDescription="@string/app_name"
-        android:padding="@dimen/_15sdp"
+        android:padding="@dimen/_12sdp"
         android:src="@drawable/right_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +69,7 @@
             android:orientation="horizontal">
 
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <com.example.my.project.authenticator.appclass.CustomSpinner
                 android:id="@+id/export_type_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -86,6 +86,7 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:visibility="gone"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_encrypt_circle"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -103,8 +104,8 @@
 
             <ImageView
                 android:id="@+id/dropdownIcon"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_drop_down"

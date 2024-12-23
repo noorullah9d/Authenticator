@@ -2,33 +2,95 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="@dimen/_40sdp">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
-
-    <TextView
-        android:id="@+id/spinnerItemText"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLLC"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:fontFamily="@font/lato_bold"
-        android:background="@android:color/transparent"
-        android:padding="@dimen/_5sdp"
-        android:textColor="@color/primary"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/view"
+
+        <TextView
+            android:id="@+id/spinnerItemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/open_sans_regular"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="fill_vertical"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/view_color"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llAddNew"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/_5sdp"
-        android:background="@color/view_color"
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/spinnerItemText"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerItemText" />
+        app:layout_constraintTop_toBottomOf="@+id/topLLC">
+
+
+        <View
+            android:id="@+id/viewAddNew"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="fill_vertical"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:background="@color/view_color"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/ivAddIcon"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/add_new_cats"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewAddNew" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:contentDescription="@string/app_name"
+            android:fontFamily="@font/open_sans_bold"
+            android:src="@drawable/add_new_cats"
+            android:text="@string/add_new"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivAddIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

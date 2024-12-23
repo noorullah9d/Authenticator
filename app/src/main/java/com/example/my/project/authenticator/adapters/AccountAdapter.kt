@@ -14,10 +14,7 @@ import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.utils.SwipeToDeleteCallback
 import com.example.my.project.authenticator.utils.TotpCardState
 
-class AccountAdapter(
-    val accounts: MutableList<TotpCardState>,
-    private val onItemLongClick: (Int, TotpCardState) -> Unit
-) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
+class AccountAdapter(val accounts: MutableList<TotpCardState>, private val onItemLongClick: (Int, TotpCardState) -> Unit) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     fun addAccounts(newAccounts: List<TotpCardState>) {
         val initialSize = accounts.size
@@ -26,7 +23,6 @@ class AccountAdapter(
     }
 
     fun removeAccounts(removedAccounts: List<TotpCardState>) {
-        // Iterate through the list of items to remove
         removedAccounts.forEach { removedAccount ->
             val indexToRemove = accounts.indexOfFirst { it.id == removedAccount.id }
             if (indexToRemove != -1) {

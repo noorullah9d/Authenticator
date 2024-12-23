@@ -13,6 +13,6 @@ class EditTotpUseCase(
         val random = SecureRandom()
         val iv = ByteArray(encryptor.ivSize)
         random.nextBytes(iv)
-        repository.editKey(EncryptedTotpKey(id,email, name, secretKey,encryptor.encrypt(plainSecret, iv), iv))
+        repository.editKey(EncryptedTotpKey(id,email, name, "Default",secretKey,encryptor.encrypt(plainSecret, iv), iv))
     }
 }

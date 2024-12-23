@@ -152,5 +152,10 @@
     <string name="welcome_back">Welcome back!</string>
     <string name="or_open_app_with_your_fingerprint">Or open app with your fingerprint</string>
     <string name="n_continue">Continue</string>
+    <string name="add_new">Add new</string>
+    <string name="save">Save</string>
+    <string name="create_new_group">Create new group</string>
+    <string name="enter_group_name_and_tap_on_save">Enter group name and tap on save</string>
+    <string name="group_name">Group name</string>
 
 </resources>

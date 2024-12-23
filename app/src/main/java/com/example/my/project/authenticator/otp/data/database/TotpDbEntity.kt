@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = totpTableName)
 data class TotpDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val email : String,
+    val email: String,
+    val category: String,
     val name: String,
-    val secretKey:  String,
+    val secretKey: String,
     val secret: ByteArray,
     val iv: ByteArray,
 ) {

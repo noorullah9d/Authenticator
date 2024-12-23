@@ -23,6 +23,7 @@
 
 
     <color name="n_dark_gray">#434343</color>
+    <color name="n_stroke_color">#EAEAEA</color>
     <color name="n_sky_blue">#1E90FF</color>
     <color name="n_off_white">#F3F3F3</color>
     <color name="n_dark_grey">#2A2A2A</color>

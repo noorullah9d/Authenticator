@@ -30,9 +30,19 @@ class AddCategorySpinnerArrayAdapter(
         val view = convertView ?: LayoutInflater.from(context)
             .inflate(R.layout.spinner_dropdown_item, parent, false)
 
-        val textView = view.findViewById<TextView>(R.id.dropdownItemText)
+
+        val textView = view.findViewById<TextView>(R.id.spinnerItemText)
         textView.text = options[position]
+
+
+        if (position == options.size - 1) {
+            textView.beGone()
+        } else {
+            textView.beVisible()
+        }
 
         return view
     }
 }
+
+private const val TAG = "AddCategorySpinnerArray"

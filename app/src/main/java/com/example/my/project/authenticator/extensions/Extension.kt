@@ -29,6 +29,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.databinding.CreateNewGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
@@ -377,18 +378,6 @@ fun Fragment.showBottomSheetDialog(onExitClicked: () -> Unit, onCancelClicked: (
         onExitClicked()
         bottomSheetDialog.dismiss()
     }
-
-
-    /*binding.ratingStars.callback = object : DragRatingView.RatingChangeCallback {
-        override fun onRatingChange(previous: Float, current: Float) {
-            Log.d(TAG, "onRatingChange: $current")
-            if (current > 3) {
-                openAppInPlayStore()
-            } else {
-                sendEmail("apps@galixo.ai", "", "")
-            }
-        }
-    }*/
     binding.ratingStars.setOnRatingChangeListener { ratingBar, rating, fromUser ->
         if (ratingBar.rating > 3) {
             openAppInPlayStore()
@@ -403,6 +392,26 @@ fun Fragment.showBottomSheetDialog(onExitClicked: () -> Unit, onCancelClicked: (
     binding.cancel.setOnClickListener {
         onCancelClicked()
         bottomSheetDialog.dismiss()
+    }
+
+    bottomSheetDialog.show()
+}
+
+fun Fragment.createNewGroupDialog(newGroupName: (String) -> Unit) {
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
+    val binding = CreateNewGroupBinding.inflate(LayoutInflater.from(requireContext()))
+    bottomSheetDialog.setContentView(binding.root)
+    binding.apply {
+
+        ivEnterKey.setOnClickListener {
+            val groupName = groupName.text.toString()
+            if (groupName.isNotEmpty()) {
+                newGroupName.invoke(groupName)
+            } else {
+                toast("Group name should not be empty")
+            }
+
+        }
     }
 
     bottomSheetDialog.show()
@@ -463,7 +472,7 @@ fun String.validatePassword(confirmPassword: String): String {
 }
 
 
-fun String?.validatePasswordChange(currentPassword: String,  newPassword: String, confirmPassword: String): String {
+fun String?.validatePasswordChange(currentPassword: String, newPassword: String, confirmPassword: String): String {
     if (currentPassword != this) {
         return "not"
     }

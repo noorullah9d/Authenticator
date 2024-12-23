@@ -4,6 +4,7 @@ data class EncryptedTotpKey(
     val id: Int,
     val email: String,
     val name: String,
+    val category: String,
     val secretKey: String,
     val secret: ByteArray,
     val iv: ByteArray,

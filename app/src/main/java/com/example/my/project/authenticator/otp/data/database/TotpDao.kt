@@ -33,5 +33,11 @@ interface TotpDao {
     @Query("UPDATE $totpTableName SET name = :newName, secretKey = :newSecret WHERE id = :id")
     fun updateNameAndSecretById(id: Int, newName: String, newSecret: String): Int
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCats(cats: Categories)
+
+    @Query("Select * From Categories")
+    fun getAllGroups(): Flow<List<Categories>>
+
 
 }

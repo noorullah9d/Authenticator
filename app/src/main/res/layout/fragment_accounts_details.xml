@@ -10,13 +10,12 @@
 
     <ImageView
         android:id="@+id/ivBackIcon"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_margin="@dimen/_15sdp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_cross"
+        android:src="@drawable/end_add_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,12 +36,11 @@
 
     <ImageView
         android:id="@+id/btnAdd"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_margin="@dimen/_15sdp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
-        android:padding="@dimen/_5sdp"
         android:src="@drawable/new_icons_tick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +70,7 @@
             android:id="@+id/etAccountName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_13sdp"
             android:autofillHints="Account Name"
             android:background="@null"
             android:gravity="center_vertical"
@@ -100,7 +98,7 @@
             android:id="@+id/etAccountKey"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_13sdp"
             android:autofillHints="Your Key"
             android:background="@null"
             android:gravity="center_vertical"
@@ -124,11 +122,11 @@
         app:cardCornerRadius="@dimen/_25sdp"
         app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-        <androidx.appcompat.widget.AppCompatSpinner
+        <com.example.my.project.authenticator.appclass.CustomSpinner
             android:id="@+id/sp_select_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:autofillHints="Your Key"
             android:background="@android:color/transparent"
             android:dropDownVerticalOffset="@dimen/_40sdp"
@@ -191,7 +189,7 @@
             app:cardCornerRadius="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <com.example.my.project.authenticator.appclass.CustomSpinner
                 android:id="@+id/sp_code_selection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -221,7 +219,7 @@
             app:cardCornerRadius="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <com.example.my.project.authenticator.appclass.CustomSpinner
                 android:id="@+id/sp_sha_selection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

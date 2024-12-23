@@ -13,6 +13,15 @@ class CardSelectionViewModel @Inject constructor() : ViewModel() {
     private val _selectedCardIndex = MutableLiveData<Int?>()
     val selectedCardIndex: LiveData<Int?> = _selectedCardIndex
 
+
+    private val _selectedCategoryIndex = MutableLiveData<Int?>()
+    val selectedCategoryIndex: LiveData<Int?> get() = _selectedCategoryIndex
+
+    fun setSelectedCategory(index: Int) {
+        _selectedCategoryIndex.value = index
+    }
+
+
     fun toggleCardSelection(index: Int) {
         if (_selectedCardIndex.value == index) {
             _selectedCardIndex.value = null

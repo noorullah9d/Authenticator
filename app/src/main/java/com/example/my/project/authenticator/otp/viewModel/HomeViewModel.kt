@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
 import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import com.example.my.project.authenticator.otp.domain.crypto.TotpCodeGenerator
 import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
+import com.example.my.project.authenticator.otp.domain.usecases.AddCategories
 import com.example.my.project.authenticator.otp.domain.usecases.AddNewTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
@@ -41,6 +43,7 @@ class HomeViewModel @Inject constructor(
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
+    private val addCategoriesUseCase = AddCategories(totpKeyRepo)
     private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
@@ -58,6 +61,10 @@ class HomeViewModel @Inject constructor(
             autoUpdate()
         }
     }
+
+
+    fun getAllGroups() = totpKeyRepo.getAllGroups()
+
 
     fun refreshTotpKeyFlow() {
         totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail)
@@ -85,11 +92,16 @@ class HomeViewModel @Inject constructor(
                 val secret = Base32().decode(account.passcode)
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    addTotpUseCase(sharedPreferencesHelper.userEmail, secret, account.accountName, account.passcode)
+                    addTotpUseCase(sharedPreferencesHelper.userEmail, categories = "Default", secret, account.accountName, account.passcode)
                 }
             }
         }
     }
+
+    fun addCategories(cats: Categories) = viewModelScope.launch {
+        addCategoriesUseCase.invoke(cats)
+    }
+
 
     private suspend fun autoUpdate() {
         startTimer()
@@ -166,7 +178,7 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    suspend fun addTotp(name: String, base32Secret: String, tool: String = ""): Boolean {
+    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = "Default"): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
 
         if (sharedPreferencesHelper.userEmail != "") {
@@ -175,12 +187,13 @@ class HomeViewModel @Inject constructor(
 
         val secret = Base32().decode(base32Secret)
         return try {
-            addTotpUseCase(sharedPreferencesHelper.userEmail, secret, name, base32Secret)
+            addTotpUseCase(sharedPreferencesHelper.userEmail, categories, secret, name, base32Secret)
 
             refreshTotpKeyFlow()
 
             true
         } catch (e: IllegalArgumentException) {
+            Log.d(TAG, "addTotp: ${e.message}")
             false
         }
     }

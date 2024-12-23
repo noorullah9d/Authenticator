@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,11 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
 import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.createNewGroupDialog
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
+import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +29,7 @@ import kotlinx.coroutines.launch
 class AccountsDetails : Fragment() {
     private lateinit var binding: FragmentAccountsDetailsBinding
     private val homeViewModel by viewModels<HomeViewModel>()
-    private val exportOptions = listOf("No encryption", "Encrypt only keys", "Encrypt everything")
+    private val exportOptions = listOf("Office", "Family")
     private val totp = listOf("TOTP", "HOTP")
     private val sha = listOf("SHA1", "SHA256")
 
@@ -153,18 +156,24 @@ class AccountsDetails : Fragment() {
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             requireActivity(),
             options,
-            true
-        )
+            true,
+            binding.spSelectGroup
+        ) {
+            createNewGroupDialog { groupName ->
+                val category = Categories(0, groupName)
+                homeViewModel.addCategories(category)
+            }
+        }
 
         binding.spSelectGroup.adapter = exportOptionsAdapter
 
         binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                // Handle selection
+                Log.d(TAG, "onItemSelected: $position")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                // Do nothing
+                Log.d(TAG, "onNothingSelected: ")
             }
         }
     }
@@ -176,8 +185,11 @@ class AccountsDetails : Fragment() {
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             requireActivity(),
             options,
-            false
-        )
+            false,
+            binding.spCodeSelection
+        ) {
+
+        }
 
         binding.spCodeSelection.adapter = exportOptionsAdapter
 
@@ -196,7 +208,7 @@ class AccountsDetails : Fragment() {
 
         val options = sha
 
-        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(requireActivity(), options, false)
+        val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(requireActivity(), options, false, binding.spShaSelection) {}
 
         binding.spShaSelection.adapter = exportOptionsAdapter
 
@@ -208,3 +220,5 @@ class AccountsDetails : Fragment() {
 
 
 }
+
+private const val TAG = "AccountsDetails"

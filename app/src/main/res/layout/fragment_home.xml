@@ -58,7 +58,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_5sdp"
+                android:layout_height="@dimen/_10sdp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/app_line"
                 app:layout_constraintEnd_toEndOf="@+id/tvTitle"
@@ -137,7 +137,6 @@
         android:background="@drawable/circle_background"
         android:contentDescription="@string/app_name"
         android:gravity="center"
-        android:text="p"
         android:textColor="@color/white"
         android:textSize="@dimen/_9ssp"
         android:visibility="gone"
@@ -194,10 +193,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
         android:id="@+id/categories_account"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_45sdp"
-        android:visibility="gone"
+        android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/topLayout" />
@@ -206,7 +205,7 @@
         android:id="@+id/rlNotBackUp"
         android:layout_width="0dp"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/categories_account">
@@ -284,7 +283,7 @@
         android:id="@+id/accountData"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"

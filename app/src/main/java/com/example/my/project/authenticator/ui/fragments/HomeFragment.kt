@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
+import com.example.my.project.authenticator.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
@@ -31,6 +32,7 @@ import com.example.my.project.authenticator.extensions.showBottomSheetDialog
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
+import com.example.my.project.authenticator.model.CardSelectionViewModel
 import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
@@ -54,11 +56,14 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel by viewModels<HomeViewModel>()
 
+    private val selectionViewModel by viewModels<CardSelectionViewModel>()
+
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var accountAdapter: AccountAdapter
+    private lateinit var adapter: CategoryAdapter
 
     @Inject
     lateinit var sharedPreferencesHelper: SharedPreferencesHelper
@@ -92,8 +97,34 @@ class HomeFragment : Fragment() {
             }
         }
 
+
+
+
+
+
         binding.apply {
-            Log.d(TAG, "onViewCreated: ${sharedPreferencesHelper.userEmail} and backUp ${sharedPreferencesHelper.isBackedUp}")
+
+
+            lifecycleScope.launch {
+                homeViewModel.getAllGroups().collect {
+
+                    adapter = CategoryAdapter(it, selectionViewModel) {
+
+                    }
+                    categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                    categoriesAccount.adapter = adapter
+                }
+            }
+
+
+
+            selectionViewModel.selectedCategoryIndex.observe(viewLifecycleOwner) { selectedIndex ->
+                adapter.updateSelectedIndex(selectedIndex)
+            }
+
+
+
+
             if (sharedPreferencesHelper.userEmail != "") {
                 sharedPreferencesHelper.userEmail.getFirstCharacter()
                 icProfile.beGone()

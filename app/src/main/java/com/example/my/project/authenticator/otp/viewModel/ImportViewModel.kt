@@ -81,12 +81,12 @@ class ImportViewModel @Inject constructor(
         importedKeys.filter { it.checked }.forEach {
             Log.d(TAG, "addSelected: $it")
             saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
-            addNewTotpUseCase(sharedPreferencesHelper.userEmail, Base32().decode(it.secretKey), it.name, it.secretKey)
+            addNewTotpUseCase(sharedPreferencesHelper.userEmail, "Default", Base32().decode(it.secretKey), it.name, it.secretKey)
         }
     }
 
     fun changeCheck(importedList: ArrayList<ImportedItemState>, index: Int) {
-        importedKeys= importedList
+        importedKeys = importedList
 
 
         /* val currentList = importedKeys

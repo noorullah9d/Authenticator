@@ -65,9 +65,11 @@ class ExportScreen : BaseActivity() {
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             this,
             options,
-            false
-        )
+            false,
+            binding.exportTypeSpinner
+        ) {
 
+        }
         binding.exportTypeSpinner.adapter = exportOptionsAdapter
 
         binding.exportTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
