@@ -25,8 +25,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,6 +39,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 private const val defaultUpdateStepMs = 30_000L
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val saveFirebase: SaveFirebase,
@@ -47,6 +48,8 @@ class HomeViewModel @Inject constructor(
     totpCodeGenerator: TotpCodeGenerator,
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
+
+
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
     private val addCategoriesUseCase = AddCategories(totpKeyRepo)
     private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
@@ -57,6 +60,20 @@ class HomeViewModel @Inject constructor(
     private val _category = MutableStateFlow("")
     val category: StateFlow<String> get() = _category
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> get() = _searchQuery
+
+    fun setSearchQuery(newQuery: String) {
+        _searchQuery.value = newQuery
+    }
+
+    private val combinedFilter = combine(_category, _searchQuery) { category, query ->
+        Pair(category, query)
+    }
+
+    private var totpKeyFlow = combinedFilter.flatMapLatest { (categoryValue, searchQuery) ->
+        totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue, searchQuery)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 //    private var totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail,"").stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val homeState = MutableLiveData(HomeState())
@@ -65,19 +82,12 @@ class HomeViewModel @Inject constructor(
     private lateinit var oneSecondTimer: Timer
 
 
-
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val totpKeyFlow = _category.flatMapLatest { categoryValue ->
-        if (categoryValue != null) {
-            totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue)
-        } else {
-            flowOf(emptyList())
-        }
-    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
     fun setCategory(newCategory: String) {
-        _category.value = newCategory
+        if (newCategory == "") {
+            _category.value = "Default"
+        } else {
+            _category.value = newCategory
+        }
     }
 
 
@@ -97,13 +107,8 @@ class HomeViewModel @Inject constructor(
 //            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
 
-        @OptIn(ExperimentalCoroutinesApi::class)
-        val totpKeyFlow = _category.flatMapLatest { categoryValue ->
-            if (categoryValue != null) {
-                totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue)
-            } else {
-                flowOf(emptyList())
-            }
+        totpKeyFlow = combinedFilter.flatMapLatest { (categoryValue, searchQuery) ->
+            totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue, searchQuery)
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
         viewModelScope.launch(Dispatchers.IO) {

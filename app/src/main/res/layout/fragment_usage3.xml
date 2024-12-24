@@ -33,7 +33,7 @@
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
         android:text="@string/create_backup"
-        android:textColor="@color/primary"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintTop_toBottomOf="@+id/ivIntroImg" />
 

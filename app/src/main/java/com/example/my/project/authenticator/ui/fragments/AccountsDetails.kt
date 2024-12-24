@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,8 +36,13 @@ class AccountsDetails : Fragment() {
     private var exportOptions: List<String>? = null
     private val totp = listOf("TOTP", "HOTP")
     private val sha = listOf("SHA1", "SHA256")
-    private var category: String = ""
+    private var category: String? = null
     var accountId = 0
+
+
+    private lateinit var pickImageLauncher: ActivityResultLauncher<String>
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentAccountsDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,6 +52,16 @@ class AccountsDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountId = arguments?.getInt("accountId") ?: 0
+
+
+        val accountName = arguments?.getString("key_name") ?: ""
+        val secretKey = arguments?.getString("secret_key") ?: ""
+        val tool = arguments?.getString("tool")
+
+
+        binding.etAccountName.setText(accountName)
+        binding.etAccountKey.setText(secretKey)
+
 
         clickListeners()
 
@@ -102,7 +120,7 @@ class AccountsDetails : Fragment() {
                     } else {
                         var result = false
                         lifecycleScope.launch(Dispatchers.IO) {
-                            val addResult = homeViewModel.addTotp(accountName, accountKey, "", categories = category)
+                            val addResult = homeViewModel.addTotp(accountName, accountKey, "", categories = category ?: "Default")
                             result = addResult
 
                         }.invokeOnCompletion {
@@ -120,12 +138,31 @@ class AccountsDetails : Fragment() {
             }
 
             ivTheme.setOnClickListener { llAdvLL.beVisible() }
+
             tvTheme.setOnClickListener { llAdvLL.beVisible() }
 
 
+            profileImage.setOnClickListener {
+                pickImageLauncher.launch("image/*")
+            }
+
+
+            pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                if (uri != null) {
+                    handleImageUri(uri)
+                } else {
+                    toast("No image selected")
+                }
+            }
+
+
         }
+
     }
 
+    private fun handleImageUri(uri: Uri) {
+        binding.profileImage.setImageURI(uri)
+    }
 
     private fun showReplace(id: Int, accountName: String, passKey: String, tool: String = "") {
         showReplaceAccountDialog(onReplace = {
@@ -153,6 +190,11 @@ class AccountsDetails : Fragment() {
     }
 
     private fun setupExportOptionsSpinner() {
+
+        binding.dropdownIcon.setOnClickListener {
+            binding.spSelectGroup.performClick()
+        }
+
         val options = exportOptions
         Log.d(TAG, "setupExportOptionsSpinner: $options")
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
@@ -178,9 +220,13 @@ class AccountsDetails : Fragment() {
         }
     }
 
-
     private fun totpOptionsSpinner() {
         val options = totp
+
+
+        binding.totp.setOnClickListener {
+            binding.spCodeSelection.performClick()
+        }
 
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             requireActivity(), options, false, binding.spCodeSelection
@@ -192,7 +238,7 @@ class AccountsDetails : Fragment() {
 
         binding.spCodeSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-
+                category = exportOptions?.get(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -204,6 +250,10 @@ class AccountsDetails : Fragment() {
     private fun shaSpinner() {
 
         val options = sha
+
+        binding.sha1.setOnClickListener {
+            binding.spShaSelection.performClick()
+        }
 
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(requireActivity(), options, false, binding.spShaSelection) {}
 

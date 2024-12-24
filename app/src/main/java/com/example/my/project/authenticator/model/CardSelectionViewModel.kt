@@ -9,7 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CardSelectionViewModel @Inject constructor() : ViewModel() {
 
-
+    var selectedIndex: Int? = 0
     private val _selectedCardIndex = MutableLiveData<Int?>()
     val selectedCardIndex: LiveData<Int?> = _selectedCardIndex
 

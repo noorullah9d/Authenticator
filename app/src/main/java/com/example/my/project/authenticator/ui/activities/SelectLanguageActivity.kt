@@ -3,7 +3,6 @@ package com.example.my.project.authenticator.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.example.my.project.authenticator.adapters.LanguagesAdapterNew
 import com.example.my.project.authenticator.databinding.ActivitySelectLanguageBinding
 import com.example.my.project.authenticator.extensions.clickWithExtraDebounce
@@ -28,7 +27,7 @@ class SelectLanguageActivity : BaseActivity() {
         binding = ActivitySelectLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.ivBackPress.setOnClickListener {
+        binding.backPress.setOnClickListener {
             finish()
         }
 
@@ -48,13 +47,6 @@ class SelectLanguageActivity : BaseActivity() {
         languagesAdapter.setData(getLanguageList())
         binding.languagesRecycler.adapter = languagesAdapter
     }
-
-//
-//    @Deprecated("Deprecated in Java")
-//    override fun onBackPressed() {
-//        navigateToMainScreen()
-//    }
-
 
     private fun navigateToMainScreen() {
         startActivityWithAnimation<MainActivity>()

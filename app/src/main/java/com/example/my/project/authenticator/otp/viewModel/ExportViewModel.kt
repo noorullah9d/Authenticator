@@ -34,7 +34,7 @@ class ExportViewModel @Inject constructor(
         } else null
 
         ExportKeysUseCase(
-            repository.getAllKeys(sharedPreferencesHelper.userEmail,"").stateIn(viewModelScope).value,
+            repository.getAllKeys(sharedPreferencesHelper.userEmail, "").stateIn(viewModelScope).value,
             outputStream,
             repositoryEncryptor,
             exportEncryptor,

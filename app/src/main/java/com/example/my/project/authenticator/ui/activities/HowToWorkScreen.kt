@@ -76,6 +76,7 @@ class HowToWorkScreen : AppCompatActivity() {
                             mcvFourth.setBackgroundColor(darkColor)
                             ivProgress.setImageResource(R.drawable.fourth_ui)
                             lightColor(mcvSecond, mcvThird, mcvFirst, lightColor)
+                            next.text = getString(R.string.done)
                         }
                     }
                 }
@@ -83,8 +84,6 @@ class HowToWorkScreen : AppCompatActivity() {
 
 
             next.setOnClickListener {
-//                if (viewPager.currentItem == )
-
                 if (viewPager.currentItem == 3) {
                     finishWithAnimation()
                 } else {

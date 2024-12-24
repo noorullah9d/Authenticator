@@ -157,5 +157,7 @@
     <string name="create_new_group">Create new group</string>
     <string name="enter_group_name_and_tap_on_save">Enter group name and tap on save</string>
     <string name="group_name">Group name</string>
+    <string name="search_your_codes">Search your codes</string>
+    <string name="done">Done</string>
 
 </resources>

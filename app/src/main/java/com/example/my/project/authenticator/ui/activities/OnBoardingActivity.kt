@@ -9,6 +9,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.view.View
+import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.OnboardingAdapter
@@ -17,6 +18,8 @@ import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
+import com.example.my.project.authenticator.otp.data.database.Categories
+import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class OnBoardingActivity : BaseActivity() {
     private lateinit var binding: ActivityOnBoardingBinding
 
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,10 @@ class OnBoardingActivity : BaseActivity() {
     }
 
     private fun onClickView() {
+
+        homeViewModel.addCategories(Categories(0, "Default"))
+        homeViewModel.addCategories(Categories(0, "Office"))
+        homeViewModel.addCategories(Categories(0, "Family"))
 
         binding.btnStart.setOnClickListener {
             val prefsHelper = SharedPreferencesHelper(this)

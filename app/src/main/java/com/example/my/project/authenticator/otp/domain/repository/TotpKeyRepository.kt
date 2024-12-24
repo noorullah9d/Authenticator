@@ -5,7 +5,7 @@ import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
 import kotlinx.coroutines.flow.Flow
 
 interface TotpKeyRepository {
-    fun getAllKeys(email: String,cats:String): Flow<List<EncryptedTotpKey>>
+    fun getAllKeys(email: String="",cats:String, searchQuery: String = ""): Flow<List<EncryptedTotpKey>>
     suspend fun addCategories(cats: Categories)
     suspend fun addKey(key: EncryptedTotpKey)
 

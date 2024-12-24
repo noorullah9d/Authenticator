@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="black">#FFFFFF</color>
+    <color name="white">#262626</color>
     <color name="scan_black">#1A000000</color>
     <color name="off_white">#B3FFFFFF</color>
     <color name="scan_white">#1AFFFFFF</color>
@@ -22,13 +23,14 @@
 
 
 
-    <color name="n_stroke_color">#EAEAEA</color>
-    <color name="n_consis_white">#FFFFFF</color>
+    <color name="n_stroke_color">#585858</color>
     <color name="n_sky_blue">#1E90FF</color>
-    <color name="n_off_white">#F3F3F3</color>
-    <color name="n_dark_grey">#2A2A2A</color>
-    <color name="n_import_buttons">#E8F3FF</color>
+    <color name="n_consis_white">#FFFFFF</color>
+    <color name="n_off_white">#353535</color>
+    <color name="n_dark_grey">#DBDBDB</color>
+    <color name="n_import_buttons">#26323E</color>
     <color name="n_warning_red">#FF4F5A</color>
+
 
 
 </resources>

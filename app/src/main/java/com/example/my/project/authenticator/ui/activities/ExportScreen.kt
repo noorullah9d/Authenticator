@@ -51,8 +51,6 @@ class ExportScreen : BaseActivity() {
         }
 
 
-
-
         binding.backPress.setOnClickListener { finish() }
 
 

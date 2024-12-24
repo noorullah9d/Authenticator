@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLength="10"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Office"
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12sdp" />

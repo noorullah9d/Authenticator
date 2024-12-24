@@ -21,7 +21,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/open_sans_regular"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/primary"
+            android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:layout_gravity="fill_vertical"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_2sdp"
-            android:background="@color/view_color"
+            android:background="@color/n_stroke_color"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,6 +83,7 @@
             android:contentDescription="@string/app_name"
             android:fontFamily="@font/open_sans_bold"
             android:src="@drawable/add_new_cats"
+            android:textColor="@color/n_dark_grey"
             android:text="@string/add_new"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"

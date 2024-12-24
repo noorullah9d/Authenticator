@@ -69,7 +69,7 @@
                 android:gravity="center_vertical|start"
                 android:text="@string/scan_code"
                 android:textAlignment="viewStart"
-                android:textColor="@color/white"
+                android:textColor="@color/n_consis_white"
                 android:textSize="@dimen/_11sdp"
                 app:icon="@drawable/ic_camera"
                 app:iconGravity="textStart"

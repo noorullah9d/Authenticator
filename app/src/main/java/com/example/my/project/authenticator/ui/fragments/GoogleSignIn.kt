@@ -13,9 +13,7 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.GoogleSignInBinding
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
-import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.ui.activities.MainActivity
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -27,7 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
-class GoogleSignIn : BottomSheetDialogFragment() {
+class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFragment() {
 
     lateinit var binding: GoogleSignInBinding
 
@@ -122,9 +120,12 @@ class GoogleSignIn : BottomSheetDialogFragment() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+                    homeViewModel.invoke()
                     prefsHelper?.userEmail = email
                     val user = auth.currentUser
                     toast(getString(R.string.signed_in_successfully))
+
+
                     dismiss()
                     Log.d(TAG, "signInWithCredential:success $user")
                 } else {

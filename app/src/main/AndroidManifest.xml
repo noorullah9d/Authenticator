@@ -27,6 +27,7 @@
         <activity
             android:name=".ui.activities.HowToWorkScreen"
             android:exported="false"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="locked" />
         <activity
             android:name=".ui.activities.ImportScreen"
@@ -61,6 +62,7 @@
             android:name=".ui.activities.MainActivity"
             android:exported="false"
             android:screenOrientation="locked"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.SelectLanguageActivity"

@@ -27,7 +27,7 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/account_details"
-        android:textColor="@color/primary"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/ivBackIcon"
@@ -46,13 +46,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_image"
+        android:layout_width="@dimen/_90sdp"
+        android:scaleType="centerCrop"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:contentDescription="@string/app_name"
+        android:src="@drawable/profile_image_accounts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle"
+        app:shapeAppearanceOverlay="@style/CircularImageViewStyle" />
 
 
     <com.google.android.material.card.MaterialCardView
@@ -64,7 +69,7 @@
         android:padding="@dimen/_5sdp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_25sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle">
+        app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
         <EditText
             android:id="@+id/etAccountName"
@@ -122,23 +127,44 @@
         app:cardCornerRadius="@dimen/_25sdp"
         app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-        <com.example.my.project.authenticator.appclass.CustomSpinner
-            android:id="@+id/sp_select_group"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:autofillHints="Your Key"
-            android:background="@android:color/transparent"
-            android:dropDownVerticalOffset="@dimen/_40sdp"
-            android:gravity="center_vertical"
-            android:hint="@string/account_key"
-            android:inputType="text"
-            android:popupBackground="@drawable/custom_spinner_background"
-            android:popupElevation="@dimen/_5sdp"
-            android:textColor="@color/primary"
-            android:textColorHint="@color/hint_color"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="match_parent">
+
+
+            <com.example.my.project.authenticator.appclass.CustomSpinner
+                android:id="@+id/sp_select_group"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:autofillHints="Your Key"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="@dimen/_40sdp"
+                android:gravity="center_vertical"
+                android:hint="@string/account_key"
+                android:inputType="text"
+                android:popupBackground="@drawable/custom_spinner_background"
+                android:popupElevation="@dimen/_5sdp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/hint_color"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toStartOf="@+id/dropdownIcon"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/dropdownIcon"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_drop_down"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
@@ -189,23 +215,44 @@
             app:cardCornerRadius="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-            <com.example.my.project.authenticator.appclass.CustomSpinner
-                android:id="@+id/sp_code_selection"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:autofillHints="Your Key"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="@dimen/_40sdp"
-                android:gravity="center_vertical"
-                android:hint="@string/account_key"
-                android:inputType="text"
-                android:popupBackground="@drawable/custom_spinner_background"
-                android:popupElevation="@dimen/_5sdp"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/hint_color"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="match_parent">
+
+
+                <com.example.my.project.authenticator.appclass.CustomSpinner
+                    android:id="@+id/sp_code_selection"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:autofillHints="Your Key"
+                    android:background="@android:color/transparent"
+                    android:dropDownVerticalOffset="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/account_key"
+                    android:inputType="text"
+                    android:popupBackground="@drawable/custom_spinner_background"
+                    android:popupElevation="@dimen/_5sdp"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/totp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/totp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_drop_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -219,23 +266,44 @@
             app:cardCornerRadius="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/mcv_key">
 
-            <com.example.my.project.authenticator.appclass.CustomSpinner
-                android:id="@+id/sp_sha_selection"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:autofillHints="Your Key"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="@dimen/_40sdp"
-                android:gravity="center_vertical"
-                android:hint="@string/account_key"
-                android:inputType="text"
-                android:popupBackground="@drawable/custom_spinner_background"
-                android:popupElevation="@dimen/_5sdp"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/hint_color"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="match_parent">
+
+
+                <com.example.my.project.authenticator.appclass.CustomSpinner
+                    android:id="@+id/sp_sha_selection"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:autofillHints="Your Key"
+                    android:background="@android:color/transparent"
+                    android:dropDownVerticalOffset="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/account_key"
+                    android:inputType="text"
+                    android:popupBackground="@drawable/custom_spinner_background"
+                    android:popupElevation="@dimen/_5sdp"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/sha1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/sha1"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_drop_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
 

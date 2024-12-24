@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityPasswordScreenBinding
+import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
@@ -23,7 +24,15 @@ class PasswordScreen : AppCompatActivity() {
         binding = ActivityPasswordScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         prefsHelper = SharedPreferencesHelper(this)
+        thumbVisibility()
+        clicks()
+
+
+    }
+
+    private fun clicks() {
         binding.apply {
 
             hideNewPassword.setOnClickListener {
@@ -31,6 +40,10 @@ class PasswordScreen : AppCompatActivity() {
             }
 
             ivThumb.setOnClickListener { fingerprint() }
+
+
+
+
 
 
             mbContinue.setOnClickListener {
@@ -41,8 +54,18 @@ class PasswordScreen : AppCompatActivity() {
                 }
             }
         }
+    }
 
-
+    private fun thumbVisibility() {
+        binding.apply {
+            if (prefsHelper?.isFingerprintEnabled!!) {
+                ivThumb.beVisible()
+                tvOpenThumb.beVisible()
+            } else {
+                ivThumb.beGone()
+                tvOpenThumb.beGone()
+            }
+        }
     }
 
     private fun hidePassword(et: AppCompatEditText, image: ImageView) {

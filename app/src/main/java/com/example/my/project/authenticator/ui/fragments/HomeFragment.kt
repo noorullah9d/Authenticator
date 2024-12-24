@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,7 +63,8 @@ class HomeFragment : Fragment() {
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var accountAdapter: AccountAdapter
-    private lateinit var adapter: CategoryAdapter
+    private var adapter: CategoryAdapter? = null
+    private var count = 0
 
     @Inject
     lateinit var sharedPreferencesHelper: SharedPreferencesHelper
@@ -84,95 +85,34 @@ class HomeFragment : Fragment() {
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-        googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            Log.d(TAG, "onViewCreated: ${result.resultCode}")
+        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val data = result.data
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
             } else {
-                Log.d(TAG, "Google sign-in canceled or failed $result")
-            }
-        }
-
-
-
-
-
-
-        binding.apply {
-
-
-            lifecycleScope.launch {
-                homeViewModel.getAllGroups().collect {
-
-                    adapter = CategoryAdapter(it, selectionViewModel) { group ->
-                        homeViewModel.setCategory(group)
-                    }
-                    categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-                    categoriesAccount.adapter = adapter
-                }
-            }
-
-
-
-            selectionViewModel.selectedCategoryIndex.observe(viewLifecycleOwner) { selectedIndex ->
-                adapter.updateSelectedIndex(selectedIndex)
-            }
-
-
-
-
-            if (sharedPreferencesHelper.userEmail != "") {
-                sharedPreferencesHelper.userEmail.getFirstCharacter()
-                icProfile.beGone()
-                icProfileText.beGone()
-                icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
-                if (sharedPreferencesHelper.isBackedUp) {
-                    bgRectangle.setImageResource(R.drawable.ic_backed_up)
-                    tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
-                    ivBlock.setImageResource(R.drawable.ic_confirmed)
-                    ivCross.beVisible()
-                    ivNext.beGone()
-                }
-
-                setFromRemote()
-            } else {
-                icProfile.beGone()
-                icProfileText.beGone()
-
-                bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
-                tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
-                ivBlock.setImageResource(R.drawable.icon_stopable)
-                ivCross.beGone()
-                ivNext.beVisible()
-
-                if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
-                    placeHolder()
-                }
+                toast("Google sign-in canceled or failed $result")
             }
         }
 
         observerData()
+        backPress()
+        clickListeners()
 
+    }
+
+    private fun backPress() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showBottomSheetDialog(
-                    onExitClicked = {
-                        requireActivity().finishAffinity()
-                    },
-                    onCancelClicked = {
-                    }
-                )
+                showBottomSheetDialog(onExitClicked = {
+                    requireActivity().finishAffinity()
+                }, onCancelClicked = {})
             }
         })
+    }
 
-
+    private fun clickListeners() {
         binding.apply {
-
-//            categoriesAccount
 
 
             ivCross.setOnDebouncedClickListener {
@@ -183,7 +123,6 @@ class HomeFragment : Fragment() {
             if (sharedPreferencesHelper.isBackedGone) {
                 rlNotBackUp.beGone()
             }
-
 
 
             backup.setOnDebouncedClickListener {
@@ -198,7 +137,6 @@ class HomeFragment : Fragment() {
                 requireActivity().startActivityWithAnimation<HowToWorkScreen>()
             }
 
-
             icProfile.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
                     changeGoogleAccount()
@@ -206,7 +144,6 @@ class HomeFragment : Fragment() {
                     toast(getString(R.string.no_internet_connection))
                 }
             }
-
 
             icProfileText.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
@@ -216,13 +153,11 @@ class HomeFragment : Fragment() {
                 }
             }
 
-
             btnAddCode.setOnClickListener {
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
                 intent.putExtra("backStack", 1)
                 startActivity(intent)
             }
-
 
             signIn.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
@@ -241,29 +176,28 @@ class HomeFragment : Fragment() {
                 searchView.beVisible()
             }
 
-
             tvCancel.setOnClickListener {
                 clTopLayout.beVisible()
                 searchView.beGone()
             }
 
 
-            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-
+                    homeViewModel.setSearchQuery(newText ?: "")
                     return true
                 }
             })
 
+
             btnStartOpt.setOnClickListener {
                 clickAddAccount()
             }
-
 
             faButton.setOnClickListener {
                 clickAddAccount()
@@ -271,8 +205,6 @@ class HomeFragment : Fragment() {
 
 
         }
-
-
     }
 
     private fun clickAddAccount() {
@@ -330,15 +262,66 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private var count = 0
+
     private fun observerData() {
+
+        binding.apply {
+
+            lifecycleScope.launch {
+                homeViewModel.getAllGroups().collect {
+
+                    adapter = CategoryAdapter(it, selectionViewModel) { group ->
+                        if (group == "Default") homeViewModel.setCategory("Default")
+                        else homeViewModel.setCategory(group)
+                    }
+                    categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+                    categoriesAccount.adapter = adapter
+                }
+            }
+
+            selectionViewModel.selectedCategoryIndex.observe(viewLifecycleOwner) { selectedIndex ->
+                adapter?.updateSelectedIndex(selectedIndex)
+            }
+
+            if (sharedPreferencesHelper.userEmail != "") {
+                sharedPreferencesHelper.userEmail.getFirstCharacter()
+                icProfile.beGone()
+                icProfileText.beGone()
+                icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+                if (sharedPreferencesHelper.isBackedUp) {
+                    bgRectangle.setImageResource(R.drawable.ic_backed_up)
+                    tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
+                    ivBlock.setImageResource(R.drawable.ic_confirmed)
+                    ivCross.beVisible()
+                    ivNext.beGone()
+                }
+
+                setFromRemote()
+            } else {
+                icProfile.beGone()
+                icProfileText.beGone()
+
+                bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
+                tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
+                ivBlock.setImageResource(R.drawable.icon_stopable)
+                ivCross.beGone()
+                ivNext.beVisible()
+                if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+                    placeHolder()
+                }
+            }
+
+        }
+
+
+        if (prefsHelper?.userEmail != "") {
+            binding.signIn.beGone()
+        }
 
 
         homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
             if (homeState.totpList.isEmpty()) {
                 placeHolder()
-                if (prefsHelper?.userEmail != "")
-                    binding.signIn.beGone()
 
 
             } else {
@@ -353,6 +336,7 @@ class HomeFragment : Fragment() {
                     llBackUphoworks.beGone()
                     btnStartOpt.beGone()
                 }
+
 
                 if (!::accountAdapter.isInitialized) {
                     accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->
@@ -426,17 +410,11 @@ class HomeFragment : Fragment() {
 
     private fun setFromRemote() {
         lifecycleScope.launch {
-            Log.d(TAG, "setFromRemote: $homeViewModel.setRemote(sharedPreferencesHelper.userEmail)")
             if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
                 homeViewModel.fetchFromRemoteAndSave()
-
-                Log.d(TAG, "fetchFromRemoteAndSave: ")
-
             }
         }.invokeOnCompletion {
-            Log.d(TAG, "invokeOnCompletion: ")
             val data = homeViewModel.setRemote(sharedPreferencesHelper.userEmail)
-            Log.d(TAG, "setFromRemote: $data")
             if (data == 0) {
                 placeHolder()
             }
@@ -452,7 +430,6 @@ class HomeFragment : Fragment() {
     private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)!!
-            Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
             firebaseAuthWithGoogle(account.idToken!!, account.email!!)
         } catch (e: ApiException) {
             Log.d(TAG, "Google sign-in failed", e)
@@ -461,28 +438,23 @@ class HomeFragment : Fragment() {
 
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    homeViewModel.clearTotpData()
-                    prefsHelper?.userEmail = email
-                    Log.d(TAG, "firebaseAuthWithGoogle: $email")
+        auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
+                homeViewModel.clearTotpData()
+                prefsHelper?.userEmail = email
 
-                    sharedPreferencesHelper.userEmail.getFirstCharacter()
-//                    binding.icProfile.beGone()
-//                    binding.icProfileText.beVisible()
-//                    binding.icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
+                sharedPreferencesHelper.userEmail.getFirstCharacter()
 
-                    lifecycleScope.launch {
-                        homeViewModel.refreshTotpKeyFlow()
-                    }
-
-                    setFromRemote()
-                } else {
-                    Log.d(TAG, "failed")
-                    toast(getString(R.string.not_logged_in))
+                lifecycleScope.launch {
+                    homeViewModel.refreshTotpKeyFlow()
+                    homeViewModel.setCategory("")
                 }
+
+                setFromRemote()
+            } else {
+                toast(getString(R.string.not_logged_in))
             }
+        }
     }
 
 

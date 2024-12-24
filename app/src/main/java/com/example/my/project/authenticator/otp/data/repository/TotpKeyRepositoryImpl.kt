@@ -14,9 +14,24 @@ class TotpKeyRepositoryImpl(
 ) : TotpKeyRepository {
 
 
-    override fun getAllKeys(email: String,cats:String): Flow<List<EncryptedTotpKey>> {
-        return dao.queryAll(email,cats).map {
-            it.map(TotpDbMapper::toTotpKey)
+    override fun getAllKeys(email: String, cats: String, searchQuery: String): Flow<List<EncryptedTotpKey>> {
+        return if (email == "") {
+            if (cats == "") {
+                dao.queryAll("Default").map {
+
+                    it.map(TotpDbMapper::toTotpKey)
+                }
+            } else {
+
+                dao.queryAll(cats).map {
+
+                    it.map(TotpDbMapper::toTotpKey)
+                }
+            }
+        } else {
+            dao.queryAll(email, cats, searchQuery).map {
+                it.map(TotpDbMapper::toTotpKey)
+            }
         }
     }
 

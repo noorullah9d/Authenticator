@@ -28,5 +28,10 @@
         android:id="@+id/QRScannerScreen"
         android:name="com.example.my.project.authenticator.ui.fragments.QRScannerScreen"
         android:label="fragment_q_r_scanner_screen"
-        tools:layout="@layout/fragment_q_r_scanner_screen" />
+        tools:layout="@layout/fragment_q_r_scanner_screen" >
+        <action
+            android:id="@+id/action_QRScannerScreen_to_accountsDetails"
+            app:popUpToInclusive="true"
+            app:destination="@id/accountsDetails" />
+    </fragment>
 </navigation>

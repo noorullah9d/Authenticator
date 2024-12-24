@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.databinding.FragmentSplashBinding
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
+import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

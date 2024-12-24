@@ -32,7 +32,7 @@
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
         android:text="@string/one_time_code_for_extra_security"
-        android:textColor="@color/primary"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintTop_toBottomOf="@+id/ivIntroImg" />
 

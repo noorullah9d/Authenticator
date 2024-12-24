@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/_15sdp"
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/skip"
-        android:textColor="@color/n_dark_gray"
+        android:textColor="@color/n_dark_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +49,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/n_sky_blue"
         android:text="@string/let_start"
-        android:textColor="@color/white"
+        android:textColor="@color/n_consis_white"
         android:textSize="@dimen/_12ssp"
         app:cornerRadius="@dimen/_30sdp"
         app:layout_constraintBottom_toTopOf="@+id/privacyPolicyTextView" />

@@ -45,10 +45,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/open_sans_regular"
             android:text="Tik-Tok"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/n_dark_grey"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
             app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
 
@@ -58,10 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_7sdp"
-            android:fontFamily="@font/lato_regular"
+            android:fontFamily="@font/open_sans_bold"
             android:text="999 754"
-            android:textColor="@color/secondary_color"
-            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/n_dark_grey"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:background="@color/view_color"
+            android:background="@color/n_stroke_color"
             app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

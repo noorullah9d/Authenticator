@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
@@ -134,28 +135,40 @@ class QRScannerScreen : Fragment() {
 
                                     val isExists = homeViewModel.isKeyExists(name, secret)
                                     Log.d(TAG, "startCamera: $isExists")
-                                    if (isExists > 0) {
-                                        showReplace(isExists, name, secret, tool)
-                                    } else {
-                                        var result = false
+//                                    if (isExists > 0) {
+//                                        showReplace(isExists, name, secret, tool)
+//                                    } else {
+                                        /*var result = false
                                         lifecycleScope.launch(Dispatchers.IO) {
                                             val addResult = homeViewModel.addTotp(name, secret, tool)
-                                            result = addResult
-//                                            if (addResult) {
-//                                                requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
-//                                                requireActivity().finish()
-//                                            } else {
-//                                                toast(requireActivity().getString(R.string.error_occurs))
-//                                            }
-                                        }.invokeOnCompletion {
+                                            result = addResult*/
+
+
+                                            val bundle = Bundle().apply {
+                                                putString("key_name", name)
+                                                putString("secret_key", secret)
+                                                putString("tool", tool)
+
+
+                                            }
+
+                                            val navController = findNavController()
+                                            val navOptions = NavOptions.Builder()
+                                                .setPopUpTo(navController.graph.startDestinationId, true)
+                                                .build()
+
+                                            navController.navigate(R.id.accountsDetails, bundle, navOptions)
+
+
+                                        /*}.invokeOnCompletion {
                                             if (result) {
                                                 requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
                                                 requireActivity().finish()
                                             } else {
                                                 toast(requireActivity().getString(R.string.error_occurs))
                                             }
-                                        }
-                                    }
+                                        }*/
+//                                    }
                                 } else {
                                     Log.e(TAG, "Failed to parse TOTP URI")
                                 }

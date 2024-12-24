@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.fragments.FirstOnBoarding">
 
 
@@ -32,7 +33,7 @@
         android:gravity="center"
         android:text="@string/privacy_protected_even_offline"
         android:textAlignment="center"
-        android:textColor="@color/primary"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_22ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +49,7 @@
         android:gravity="center"
         android:text="@string/we_don_t_store_your"
         android:textAlignment="center"
-        android:textColor="@color/n_dark_gray"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
