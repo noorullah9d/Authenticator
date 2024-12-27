@@ -157,16 +157,18 @@
         app:layout_constraintTop_toTopOf="@+id/systemSelection" />
 
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/systemSelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:checked="true"
         android:layout_marginEnd="@dimen/_15sdp"
+        android:checked="true"
         android:enabled="true"
+        android:thumb="@drawable/thumb_selector"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleView" />
+        app:layout_constraintTop_toBottomOf="@+id/simpleView"
+        app:track="@drawable/track_selector" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

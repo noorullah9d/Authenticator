@@ -10,19 +10,21 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.beGone
+import com.example.my.project.authenticator.extensions.beInVisible
 import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
@@ -47,6 +49,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -104,9 +107,10 @@ class HomeFragment : Fragment() {
     private fun backPress() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showBottomSheetDialog(onExitClicked = {
+                requireActivity().finishAffinity()
+                /*showBottomSheetDialog(onExitClicked = {
                     requireActivity().finishAffinity()
-                }, onCancelClicked = {})
+                }, onCancelClicked = {})*/
             }
         })
     }
@@ -114,16 +118,22 @@ class HomeFragment : Fragment() {
     private fun clickListeners() {
         binding.apply {
 
-
             ivCross.setOnDebouncedClickListener {
                 rlNotBackUp.beGone()
                 sharedPreferencesHelper.isBackedGone = true
             }
 
+            ivBackIcon.setOnClickListener {
+                accountAdapter.deselectAll()
+                clDeleteSelection.beGone()
+                clTopLayout.beVisible()
+                binding.clEditing.beGone()
+                binding.faButton.beVisible()
+            }
+
             if (sharedPreferencesHelper.isBackedGone) {
                 rlNotBackUp.beGone()
             }
-
 
             backup.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
@@ -181,7 +191,6 @@ class HomeFragment : Fragment() {
                 searchView.beGone()
             }
 
-
             search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
@@ -194,7 +203,6 @@ class HomeFragment : Fragment() {
                 }
             })
 
-
             btnStartOpt.setOnClickListener {
                 clickAddAccount()
             }
@@ -203,7 +211,71 @@ class HomeFragment : Fragment() {
                 clickAddAccount()
             }
 
+            menuIcon.setOnClickListener {
+                popupMenu(it)
+            }
 
+            edit.setOnClickListener {
+                val selectedItems = accountAdapter.getSelectedAccounts()[0]
+
+                val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                intent.putExtra("bundle", selectedItems.name)
+                intent.putExtra("secret_key", selectedItems.secretKey)
+                intent.putExtra("tool", "")
+                startActivity(intent)
+
+
+            }
+
+            copy.setOnClickListener {
+                val selectedItems = accountAdapter.getSelectedAccounts()[0].oneTimeCode
+
+                requireActivity().copyTextToClipboard(selectedItems.toString())
+
+            }
+
+        }
+    }
+
+    private fun popupMenu(view: View) {
+        val popupMenu = PopupMenu(requireActivity(), view)
+        popupMenu.menuInflater.inflate(R.menu.account_options_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_delete -> {
+                    deleteAccounts()
+                    true
+                }
+
+                R.id.menu_copy -> {
+                    accountAdapter.selectAll()
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun deleteAccounts() {
+        val selectedItems = accountAdapter.getSelectedAccounts()
+        if (selectedItems.isNotEmpty()) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                selectedItems.forEach { account ->
+                    homeViewModel.removeTotpById(account)
+                }
+            }.invokeOnCompletion {
+                CoroutineScope(Dispatchers.Main).launch {
+                    accountAdapter.removeAccounts(selectedItems)
+                    binding.clDeleteSelection.beGone()
+                    binding.clTopLayout.beVisible()
+                    binding.faButton.beVisible()
+                    binding.clEditing.beGone()
+                }
+            }
         }
     }
 
@@ -244,15 +316,13 @@ class HomeFragment : Fragment() {
             if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
                 llPlaceHolderLayout.beVisible()
                 faButton.beGone()
-                oneTimePassword.beGone()
                 progressBar.beGone()
                 accountData.beGone()
                 llBackUphoworks.beVisible()
                 btnStartOpt.beVisible()
             } else if (sharedPreferencesHelper.userEmail == "") {
                 llPlaceHolderLayout.beVisible()
-                oneTimePassword.beGone()
-                faButton.beGone()
+                faButton.beInVisible()
                 progressBar.beGone()
                 accountData.beGone()
                 llBackUphoworks.beVisible()
@@ -268,12 +338,13 @@ class HomeFragment : Fragment() {
         binding.apply {
 
             lifecycleScope.launch {
-                homeViewModel.getAllGroups().collect {
+                homeViewModel.getAllGroups().collectLatest {
 
                     adapter = CategoryAdapter(it, selectionViewModel) { group ->
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
                     }
+
                     categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     categoriesAccount.adapter = adapter
                 }
@@ -283,6 +354,81 @@ class HomeFragment : Fragment() {
                 adapter?.updateSelectedIndex(selectedIndex)
             }
 
+            emailCondition()
+
+
+        }
+
+
+
+        homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
+
+            if (homeState.totpList.isNotEmpty()) {
+
+
+                binding.apply {
+                    faButton.beVisible()
+                    progressBar.beGone()
+                    llPlaceHolderLayout.beGone()
+                    accountData.beVisible()
+                    llBackUphoworks.beGone()
+                    btnStartOpt.beGone()
+
+
+                    if (!::accountAdapter.isInitialized) {
+
+                        accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->
+
+                            clDeleteSelection.beVisible()
+                            clTopLayout.beGone()
+
+
+                            when (totpCardState.size) {
+                                0 -> {
+                                    accountAdapter.deselectAll()
+                                    clDeleteSelection.beGone()
+                                    clTopLayout.beVisible()
+                                    clEditing.beGone()
+                                    faButton.beVisible()
+                                }
+
+                                1 -> {
+                                    clEditing.beVisible()
+                                    faButton.beInVisible()
+                                }
+
+                                else -> {
+                                    clEditing.beGone()
+                                }
+                            }
+
+                        }
+
+                        binding.accountData.adapter = accountAdapter
+                        binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
+
+                    } else {
+
+                        accountAdapter.updateAccounts(homeState.totpList)
+
+                    }
+
+
+                }
+
+
+            } else {
+
+                placeHolder()
+
+            }
+        }
+
+
+    }
+
+    private fun emailCondition() {
+        binding.apply {
             if (sharedPreferencesHelper.userEmail != "") {
                 sharedPreferencesHelper.userEmail.getFirstCharacter()
                 icProfile.beGone()
@@ -291,7 +437,6 @@ class HomeFragment : Fragment() {
                 if (sharedPreferencesHelper.isBackedUp) {
                     bgRectangle.setImageResource(R.drawable.ic_backed_up)
                     tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
-                    ivBlock.setImageResource(R.drawable.ic_confirmed)
                     ivCross.beVisible()
                     ivNext.beGone()
                 }
@@ -303,7 +448,6 @@ class HomeFragment : Fragment() {
 
                 bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
-                ivBlock.setImageResource(R.drawable.icon_stopable)
                 ivCross.beGone()
                 ivNext.beVisible()
                 if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
@@ -311,94 +455,8 @@ class HomeFragment : Fragment() {
                 }
             }
 
+
         }
-
-
-        if (prefsHelper?.userEmail != "") {
-            binding.signIn.beGone()
-        }
-
-
-        homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
-            if (homeState.totpList.isEmpty()) {
-                placeHolder()
-
-
-            } else {
-                binding.apply {
-
-                    progressBar.beGone()
-                    llPlaceHolderLayout.beGone()
-                    faButton.beVisible()
-                    oneTimePassword.beGone()
-                    accountData.beVisible()
-
-                    llBackUphoworks.beGone()
-                    btnStartOpt.beGone()
-                }
-
-
-                if (!::accountAdapter.isInitialized) {
-                    accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->
-
-                        lifecycleScope.launch(Dispatchers.IO) {
-
-                            homeViewModel.removeTotpById(totpCardState)
-
-
-                        }.invokeOnCompletion {
-                            CoroutineScope(Dispatchers.Main).launch {
-
-                                if (homeState.totpList.size < accountAdapter.accounts.size) {
-                                    val removedItems = accountAdapter.accounts.filter { it !in homeState.totpList }
-                                    accountAdapter.removeAccounts(removedItems)
-                                }
-                            }
-
-
-                        }
-                    }
-
-
-                    binding.accountData.adapter = accountAdapter
-                    binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
-
-
-                    val swipeToDeleteCallback = accountAdapter.getSwipeToDeleteCallback(requireActivity())
-                    val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-                    itemTouchHelper.attachToRecyclerView(binding.accountData)
-
-
-                } else {
-
-                    accountAdapter.accounts.clear()
-                    accountAdapter.notifyDataSetChanged()
-
-                    if (homeState.totpList.size > accountAdapter.accounts.size) {
-
-
-                        val newItems = homeState.totpList.subList(accountAdapter.accounts.size, homeState.totpList.size)
-                        accountAdapter.addAccounts(newItems)
-
-
-                    } else {
-
-                        homeState.totpList.forEachIndexed { index, updatedAccount ->
-                            accountAdapter.updateSecondsLeftAtPosition(index, updatedAccount.secondsLeft)
-                            if (updatedAccount.secondsLeft == 30) {
-                                accountAdapter.updateOneTimeCodeAtPosition(index, updatedAccount.oneTimeCode)
-                            }
-                        }
-
-
-                    }
-
-
-                }
-            }
-        }
-
-
     }
 
 

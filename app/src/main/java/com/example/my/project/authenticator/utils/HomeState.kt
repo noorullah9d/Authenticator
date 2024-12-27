@@ -7,6 +7,7 @@ data class HomeState(
 
 data class TotpCardState(
     val id: Int,
+    val secretKey: String,
     val name: String,
     var oneTimeCode: Int,
     var secondsLeft: Int,

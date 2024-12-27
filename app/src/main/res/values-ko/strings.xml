@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MF Authenticator App</string>
+    <string name="app_name">Authenticator</string>
     <string name="secure_auth">보안 인증</string>
     <string name="welcome_secure_access">보안 액세스에 오신 것을 환영합니다</string>
     <string name="scan_get_start">시작하려면 스캔하세요</string>

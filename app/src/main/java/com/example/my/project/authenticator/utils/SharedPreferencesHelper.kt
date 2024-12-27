@@ -13,6 +13,16 @@ class SharedPreferencesHelper(context: Context) {
         private const val PREFS_NAME = "my_prefs"
     }
 
+
+    fun setStringPreference(key: String, value: String) {
+        sharedPreferences.edit().putString(key, value).apply()
+    }
+
+    fun getStringPreference(key: String, def: String = ""): String {
+        return sharedPreferences.getString(key, def)!!
+    }
+
+
     var isUserFirstTime: Boolean
         get() = sharedPreferences.getBoolean(isFirstTime, true)
         set(value) = sharedPreferences.edit().putBoolean(isFirstTime, value).apply()

@@ -14,7 +14,9 @@ import com.example.my.project.authenticator.ui.fragments.UsageFragment2
 import com.example.my.project.authenticator.ui.fragments.UsageFragment3
 import com.example.my.project.authenticator.ui.fragments.UsageFragment4
 import com.google.android.material.card.MaterialCardView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HowToWorkScreen : AppCompatActivity() {
 
     private lateinit var binding: ActivityHowToWorkScreenBinding

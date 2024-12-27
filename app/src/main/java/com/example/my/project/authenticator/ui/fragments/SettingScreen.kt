@@ -88,12 +88,12 @@ class SettingScreen : Fragment() {
                     tvTheme.text = getString(R.string.system)
                 }
 
-                Constants.dark -> {
-                    tvTheme.text = Constants.dark
+                Constants.DARK -> {
+                    tvTheme.text = Constants.DARK
                 }
 
-                Constants.light -> {
-                    tvTheme.text = Constants.light
+                Constants.LIGHT -> {
+                    tvTheme.text = Constants.LIGHT
                 }
             }
 
@@ -180,10 +180,9 @@ class SettingScreen : Fragment() {
     }
 
     private fun fingerprint() {
-        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Add your title")
-            .setSubtitle("Add your subtitle")
-            .setDescription("Add your description")
-            .setNegativeButtonText("Add button text")
+        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Unlock to use Authenticator")
+            .setTitle("Touch the fingerprint sensor")
+            .setNegativeButtonText("Dismiss")
             .build().authenticate(object : FingerprintCallback {
                 override fun onAuthenticationCancelled() {
                     Log.d(TAG, "onAuthenticationCancelled: ")

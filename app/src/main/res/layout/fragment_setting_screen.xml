@@ -347,13 +347,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tvSetPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans_semi_bold"
                         android:text="@string/set_password"
                         android:textColor="@color/n_dark_grey"
-                        android:id="@+id/tvSetPassword"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -418,7 +418,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/ivUseFingerprintNext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -426,11 +426,11 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:thumb="@drawable/custom_switch_thumb"
-                        android:track="@drawable/custom_switch_track"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:thumb="@drawable/thumb_selector"
+                        app:track="@drawable/track_selector" />
 
 
                     <View
@@ -520,8 +520,8 @@
                     android:id="@+id/howToWork"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:foreground="?selectableItemBackground"
                     android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:foreground="?selectableItemBackground"
                     app:layout_constraintTop_toBottomOf="@+id/termsConditions">
 
                     <ImageView

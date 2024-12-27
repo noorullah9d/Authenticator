@@ -17,29 +17,18 @@
         android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/ivLockMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/tvSecure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="false"
-        app:lottie_rawRes="@raw/splash_logo_1" />
-
-    <ImageView
         android:id="@+id/ivLockImageMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_120sdp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/auth_splash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/splash_logo_anim" />
+
 
     <TextView
         android:id="@+id/tvAuthApp"
@@ -62,8 +51,6 @@
         android:src="@drawable/app_line"
         app:layout_constraintEnd_toEndOf="@+id/tvAuthApp"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthApp" />
-
-
 
 
     <TextView
@@ -95,18 +82,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="@dimen/_160sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_30sdp"
-        android:indeterminate="false"
-        android:progress="50"
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
-        android:progressTint="@color/blue"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:layout_marginBottom="@dimen/_35sdp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_splash_anim" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

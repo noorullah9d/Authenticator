@@ -56,7 +56,7 @@ class FeedbackScreen : BaseActivity() {
                     val cardColor = if (isSelected) R.color.n_sky_blue else R.color.light_blue
                     cardView.setCardBackgroundColor(ContextCompat.getColor(this@FeedbackScreen, cardColor))
 
-                    val textColor = if (isSelected) R.color.white else R.color.n_sky_blue
+                    val textColor = if (isSelected) R.color.n_consis_white else R.color.n_sky_blue
                     textView.setTextColor(ContextCompat.getColor(this@FeedbackScreen, textColor))
                 }
             }
@@ -75,7 +75,7 @@ class FeedbackScreen : BaseActivity() {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                     Log.d(TAG, "onTextChanged: $count")
-                    countChars.text = "$count/500"
+                    countChars.text = "${countChars.text.length}/500"
                 }
 
                 override fun afterTextChanged(s: Editable?) {

@@ -6,9 +6,11 @@ object Constants {
     const val userEmail = "userEmail"
     const val userPassword = "userPassword"
     const val userThemes = "userThemes"
-    const val light = "Light"
-    const val dark = "Dark"
+    const val LIGHT = "Light"
+    const val DARK = "Dark"
+    const val SYSTEM_DEFAULT = "SYSTEM_DEFAULT"
     const val backUp = "backUp"
     const val backUpGone = "backUpGone"
     const val FingerprintEnabled = "isFingerprintEnabled"
+    const val APP_THEME = "app_theme"
 }

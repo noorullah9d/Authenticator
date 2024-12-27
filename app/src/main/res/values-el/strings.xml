@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MF Authenticator App</string>
+    <string name="app_name">Authenticator</string>
     <string name="secure_auth">Ασφαλής Επαλήθευση</string>
     <string name="welcome_secure_access">Καλώς ήρθατε στην ασφαλή πρόσβαση</string>
     <string name="scan_get_start">Σαρώστε για να ξεκινήσετε</string>

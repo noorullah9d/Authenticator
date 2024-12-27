@@ -66,7 +66,7 @@ class ImportScreen : BaseActivity() {
                 viewModel.count++
             }
 
-            backPress.setOnClickListener {
+            ivBackPress.setOnClickListener {
                 finish()
             }
 

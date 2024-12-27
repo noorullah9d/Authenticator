@@ -5,33 +5,35 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activities.ImportScreen">
+
+
+    <ImageView
+        android:id="@+id/iv_back_press"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:contentDescription="@string/app_name"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/_12sdp"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/lato_bold"
+        android:fontFamily="@font/open_sans_semi_bold"
         android:text="@string/import_screen"
-        android:textColor="@color/primary"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/backPress"
-        app:layout_constraintStart_toEndOf="@+id/backPress"
-        app:layout_constraintTop_toTopOf="@+id/backPress" />
+        android:textColor="@color/n_dark_grey"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back_press"
+        app:layout_constraintStart_toEndOf="@+id/iv_back_press"
+        app:layout_constraintTop_toTopOf="@+id/iv_back_press" />
 
-    <ImageView
-        android:id="@+id/backPress"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
-        android:background="?selectableItemBackground"
-        android:contentDescription="@string/app_name"
-        android:padding="@dimen/_15sdp"
-        android:src="@drawable/icon_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/errorText"
@@ -43,7 +45,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backPress" />
+        app:layout_constraintTop_toBottomOf="@id/iv_back_press" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/importedKeysList"
@@ -72,14 +74,14 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addSelectedButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:backgroundTint="@color/secondary_color"
+        android:backgroundTint="@color/n_sky_blue"
         android:text="@string/add_selected"
-        android:textColor="@color/white"
+        android:textColor="@color/n_consis_white"
         android:visibility="visible"
-        app:cornerRadius="@dimen/_5sdp"
+        app:cornerRadius="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -95,7 +97,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backPress" />
+        app:layout_constraintTop_toBottomOf="@id/iv_back_press" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:animateLayoutChanges="true"
+    android:background="@color/white"
     tools:context=".ui.activities.FeedbackScreen">
 
     <ImageView
@@ -85,7 +85,6 @@
                     android:padding="@dimen/_12sdp"
                     android:text="@string/overall_service"
                     android:textAlignment="center"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
@@ -310,7 +309,7 @@
                 android:maxLines="5"
                 android:scrollbars="horizontal"
                 android:textAlignment="textStart"
-                android:textColor="@color/primary"
+                android:textColor="@color/n_dark_grey"
                 android:textColorHint="@color/light_gray"
                 android:textSize="@dimen/_12sdp"
                 tools:ignore="LabelFor" />

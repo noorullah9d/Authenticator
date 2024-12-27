@@ -203,8 +203,9 @@ class HomeViewModel @Inject constructor(
                         Log.d(TAG, "updateStateList: ${e.message}")
                         325786
                     }
+
                     TotpCardState(
-                        it.id, it.name, currentTotp, countSecondsLeft()
+                        it.id,it.secretKey, it.name, currentTotp, countSecondsLeft()
                     )
                 }
             }

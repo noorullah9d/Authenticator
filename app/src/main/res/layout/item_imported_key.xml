@@ -17,9 +17,9 @@
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:buttonTint="@color/secondary_color"
             android:button="@drawable/custom_checkbox"
+            android:buttonTint="@color/n_sky_blue"
+            android:checked="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,20 +38,21 @@
                 android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
+                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/imported_key_name"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/_14ssp" />
+                android:textColor="@color/n_dark_grey"
+                android:textSize="@dimen/_14sdp" />
 
             <TextView
                 android:id="@+id/similarityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_regular"
                 android:maxLines="2"
                 android:paddingTop="4dp"
                 android:text="@string/similarity_information"
-                android:textColor="@color/light_gray"
-                android:textSize="@dimen/_10ssp" />
+                android:textColor="@color/n_dark_grey"
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 

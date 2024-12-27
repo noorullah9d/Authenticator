@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MF Authenticator App</string>
+    <string name="app_name">Authenticator</string>
     <string name="secure_auth">Güvenli Kimlik Doğrulama</string>
     <string name="welcome_secure_access">Güvenli erişime hoş geldiniz</string>
     <string name="scan_get_start">Başlamak için tarayın</string>

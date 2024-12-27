@@ -49,10 +49,15 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 //            signingConfig signingConfigs.release
-                    signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+//            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -132,7 +137,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("com.github.wdsqjq:AndRatingBar:1.0.6")
 
-    implementation ("com.github.rahulabrol:Android-Fingerprint:1.0.4")
+    implementation("com.github.rahulabrol:Android-Fingerprint:1.0.4")
 
 }
 
