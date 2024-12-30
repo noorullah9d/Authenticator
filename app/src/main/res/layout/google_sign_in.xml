@@ -36,10 +36,12 @@
 
         <TextView
             android:id="@+id/tvWelcome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
             android:text="@string/welcome_to_authenticator"
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_18sdp"
@@ -48,6 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ivLockMode" />
 
         <TextView
+            android:id="@+id/tvSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_25sdp"
@@ -67,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:backgroundTint="@color/n_sky_blue"
             android:fontFamily="@font/open_sans_regular"
@@ -79,7 +83,8 @@
             app:iconPadding="6dp"
             app:iconSize="24dp"
             app:iconTint="@null"
-            app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount" />
+            app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount"
+            app:layout_constraintTop_toBottomOf="@+id/tvSignIn" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -95,8 +100,7 @@
             android:textSize="@dimen/_12ssp"
             app:cornerRadius="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btnStartAccount" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

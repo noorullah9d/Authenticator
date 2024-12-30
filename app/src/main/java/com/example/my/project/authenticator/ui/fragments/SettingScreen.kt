@@ -39,7 +39,6 @@ import com.ra.fingerprint_auth.FingerprintCallback
 import com.ra.fingerprint_auth.FingerprintManager
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class SettingScreen : Fragment() {
     private val languageViewModel by viewModels<LanguageViewModel>()
@@ -49,7 +48,6 @@ class SettingScreen : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingScreenBinding.inflate(inflater, container, false)
@@ -84,7 +82,7 @@ class SettingScreen : Fragment() {
         binding.apply {
 
             when (prefsHelper?.userTheme) {
-                "" -> {
+                getString(R.string.system) -> {
                     tvTheme.text = getString(R.string.system)
                 }
 
@@ -227,7 +225,6 @@ class SettingScreen : Fragment() {
 
             })
     }
-
 
     private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
         try {

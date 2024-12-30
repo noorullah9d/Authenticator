@@ -1,6 +1,5 @@
 package com.example.my.project.authenticator.ui.activities
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
@@ -54,7 +53,7 @@ class SplashScreen : BaseActivity() {
         val themeMode = when (getSelectedTheme()) {
             AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
             AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-            else -> AppCompatDelegate.MODE_NIGHT_NO
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
         AppCompatDelegate.setDefaultNightMode(themeMode)
     }

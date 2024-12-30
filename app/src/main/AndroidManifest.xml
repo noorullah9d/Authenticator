@@ -22,13 +22,13 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.activities.PasswordScreen"
-            android:theme="@style/SplashTheme"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.HowToWorkScreen"
             android:exported="false"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="locked" />
+            android:screenOrientation="locked"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".ui.activities.ImportScreen"
             android:exported="false"
@@ -62,8 +62,8 @@
             android:name=".ui.activities.MainActivity"
             android:exported="false"
             android:screenOrientation="locked"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/SplashTheme" />
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activities.SelectLanguageActivity"
             android:exported="false"
@@ -89,6 +89,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".utils.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
 
         <meta-data
             android:name="com.google.android.gms.version"

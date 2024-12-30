@@ -30,7 +30,6 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.setProfileImage
-import com.example.my.project.authenticator.extensions.showBottomSheetDialog
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
@@ -68,6 +67,7 @@ class HomeFragment : Fragment() {
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
     private var count = 0
+
 
     @Inject
     lateinit var sharedPreferencesHelper: SharedPreferencesHelper
@@ -274,9 +274,16 @@ class HomeFragment : Fragment() {
                     binding.clTopLayout.beVisible()
                     binding.faButton.beVisible()
                     binding.clEditing.beGone()
+                    refreshCurrentFragment()
                 }
             }
         }
+    }
+
+    private fun refreshCurrentFragment() {
+        val id = findNavController().currentDestination?.id
+        findNavController().popBackStack(id!!, true)
+        findNavController().navigate(id)
     }
 
     private fun clickAddAccount() {
@@ -331,7 +338,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 
     private fun observerData() {
 
@@ -459,7 +465,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun changeGoogleAccount() {
         googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
             signInWithGoogle()
@@ -478,7 +483,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent

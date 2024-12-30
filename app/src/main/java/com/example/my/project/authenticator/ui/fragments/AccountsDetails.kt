@@ -210,8 +210,8 @@ class AccountsDetails : Fragment() {
 
         binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                Log.d(TAG, "onItemSelected: $position")
                 category = exportOptions?.get(position) ?: ""
+                Log.d(TAG, "onItemSelected: $category")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

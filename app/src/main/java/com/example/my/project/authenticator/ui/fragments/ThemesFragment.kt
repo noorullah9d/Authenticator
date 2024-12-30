@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,7 +32,6 @@ class ThemesFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefsHelper = SharedPreferencesHelper(requireActivity())
@@ -51,11 +51,15 @@ class ThemesFragment : Fragment() {
             darkRadio.buttonTintList = colorStateList
             darkRadio.invalidate()
 
-
             backPress.setOnClickListener {
                 findNavController().popBackStack()
             }
 
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
 
             cardSelectionViewModel.selectedTheme.observe(viewLifecycleOwner) {
 
@@ -64,9 +68,7 @@ class ThemesFragment : Fragment() {
                 } else darkRadio.isChecked = it.name != AppTheme.LIGHT.name
             }
 
-
-
-            lightRadio.setOnCheckedChangeListener { compoundButton, isEnabled ->
+            lightRadio.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
                     if (systemSelection.isChecked) {
                         lightRadio.isChecked = false
@@ -83,17 +85,19 @@ class ThemesFragment : Fragment() {
 
             systemSelection.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
-                    prefsHelper?.userTheme = ""
+                    prefsHelper?.userTheme = getString(R.string.system)
                     darkRadio.isEnabled = false
                     lightRadio.isEnabled = false
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {
+                    prefsHelper?.userTheme = ""
                     darkRadio.isEnabled = true
                     lightRadio.isEnabled = true
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }
             }
 
-            darkRadio.setOnCheckedChangeListener { compoundButton, isEnabled ->
+            darkRadio.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
                     if (systemSelection.isChecked) {
                         darkRadio.isChecked = false
@@ -106,19 +110,21 @@ class ThemesFragment : Fragment() {
                 }
             }
 
-            when(prefsHelper?.userTheme){
-                Constants.DARK->{
+            when (prefsHelper?.userTheme) {
+                Constants.DARK -> {
                     darkRadio.isChecked = true
                     lightRadio.isChecked = false
                 }
-                Constants.LIGHT->{
+
+                Constants.LIGHT -> {
                     darkRadio.isChecked = false
                     lightRadio.isChecked = true
                 }
-                else->{
+
+                getString(R.string.system) -> {
                     darkRadio.isChecked = false
                     lightRadio.isChecked = false
-                    systemSelection.isChecked=  true
+                    systemSelection.isChecked = true
                 }
             }
 
@@ -128,3 +134,4 @@ class ThemesFragment : Fragment() {
 
 
 }
+

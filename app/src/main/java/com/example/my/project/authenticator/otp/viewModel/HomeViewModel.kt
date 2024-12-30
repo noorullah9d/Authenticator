@@ -103,9 +103,6 @@ class HomeViewModel @Inject constructor(
 
 
     fun refreshTotpKeyFlow() {
-//        totpKeyFlow = totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail,"")
-//            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
 
         totpKeyFlow = combinedFilter.flatMapLatest { (categoryValue, searchQuery) ->
             totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue, searchQuery)

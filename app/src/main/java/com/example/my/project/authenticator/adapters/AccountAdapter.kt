@@ -47,8 +47,14 @@ class AccountAdapter(
     inner class AccountViewHolder(private val binding: AccountItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(account: TotpCardState, isSelected: Boolean) {
+            val otp = account.oneTimeCode.toString().length
             binding.tvName.text = account.name
-            binding.tvPassCode.text = account.oneTimeCode.toString()
+            if (otp == 5) {
+                binding.tvPassCode.text = "0" + account.oneTimeCode.toString()
+            } else {
+                binding.tvPassCode.text = account.oneTimeCode.toString()
+            }
+
             binding.circularProgress.progress = account.secondsLeft.toFloat()
             binding.circularProgress.text = account.secondsLeft.toString()
             binding.ivProfileImage.setProfileImage(account.name)

@@ -27,3 +27,5 @@ class TotpCodeGeneratorImpl : TotpCodeGenerator {
         return code.toInt() % (10f.pow(digits).toInt())
     }
 }
+
+private const val TAG = "TotpCodeGeneratorImpl"
