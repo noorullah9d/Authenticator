@@ -65,9 +65,7 @@ class SettingScreen : Fragment() {
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-        googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
+        googleSignInLauncher = registerForActivityResult(  ActivityResultContracts.StartActivityForResult()) { result ->
             Log.d(TAG, "onViewCreated: ${result.resultCode}")
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val data = result.data
