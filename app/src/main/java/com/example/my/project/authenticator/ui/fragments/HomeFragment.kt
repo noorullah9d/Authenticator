@@ -21,10 +21,12 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
+import com.example.my.project.authenticator.extensions.EditGroupDialog
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beInVisible
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
+import com.example.my.project.authenticator.extensions.deleteGroupDialog
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
@@ -346,10 +348,31 @@ class HomeFragment : Fragment() {
             lifecycleScope.launch {
                 homeViewModel.getAllGroups().collectLatest {
 
-                    adapter = CategoryAdapter(it, selectionViewModel) { group ->
+                    adapter = CategoryAdapter(it, selectionViewModel, catsId = { categories ->
+                       /* clCatEditing.beVisible()
+                        belowLayout.beGone()
+                        editCat.setOnClickListener {
+                            clCatEditing.beGone()
+                            belowLayout.beVisible()
+                            EditGroupDialog(categories.categories) { groupName ->
+
+                            }
+                        }
+
+                        copyCat.setOnClickListener {
+                            clCatEditing.beGone()
+                            belowLayout.beVisible()
+                            deleteGroupDialog {
+                                categories.id
+                                homeViewModel.delete(categories.id)
+                            }
+                        }
+
+*/
+                    }, groupCallBack = { group ->
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
-                    }
+                    })
 
                     categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     categoriesAccount.adapter = adapter
@@ -451,7 +474,6 @@ class HomeFragment : Fragment() {
             } else {
                 icProfile.beGone()
                 icProfileText.beGone()
-
                 bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
                 ivCross.beGone()

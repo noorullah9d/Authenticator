@@ -8,7 +8,8 @@ import androidx.appcompat.widget.AppCompatSpinner
 class CustomSpinner(context: Context, attrs: AttributeSet?) : AppCompatSpinner(context, attrs) {
 
     var isDropdownShown: Boolean = false
-        private set
+
+
 
     override fun performClick(): Boolean {
         isDropdownShown = true

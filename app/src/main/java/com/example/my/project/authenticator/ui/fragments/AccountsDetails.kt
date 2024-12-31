@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,13 +30,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
 class AccountsDetails : Fragment() {
     private lateinit var binding: FragmentAccountsDetailsBinding
     private val homeViewModel by viewModels<HomeViewModel>()
     private var exportOptions: List<String>? = null
     private val totp = listOf("TOTP", "HOTP")
-    private val sha = listOf("SHA1", "SHA256")
+    private val sha = listOf("SHA256","SHA1" )
     private var category: String? = null
     var accountId = 0
 
@@ -62,9 +64,7 @@ class AccountsDetails : Fragment() {
         binding.etAccountName.setText(accountName)
         binding.etAccountKey.setText(secretKey)
 
-
         clickListeners()
-
 
         lifecycleScope.launch {
             homeViewModel.getAllGroups().collectLatest { groups ->
@@ -195,16 +195,20 @@ class AccountsDetails : Fragment() {
             binding.spSelectGroup.performClick()
         }
 
+
         val options = exportOptions
         Log.d(TAG, "setupExportOptionsSpinner: $options")
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
             requireActivity(), options ?: listOf(), true, binding.spSelectGroup
         ) {
+
             createNewGroupDialog { groupName ->
                 val category = Categories(0, groupName)
                 homeViewModel.addCategories(category)
+                binding.spSelectGroup.performClick()
             }
         }
+
 
         binding.spSelectGroup.adapter = exportOptionsAdapter
 

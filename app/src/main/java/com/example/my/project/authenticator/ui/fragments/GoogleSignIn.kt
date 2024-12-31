@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.ui.fragments
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,6 +46,18 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivLockMode.setAnimation(R.raw.welcome_dark)
+            }
+
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivLockMode.setAnimation(R.raw.welcome)
+
+            }
+        }
 
 
         val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

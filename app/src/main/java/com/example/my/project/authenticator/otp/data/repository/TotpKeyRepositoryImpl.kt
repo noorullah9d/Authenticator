@@ -26,10 +26,12 @@ class TotpKeyRepositoryImpl(
         } else {
             return if (cats == "") {
                 dao.queryAll(email, "Default", searchQuery).map {
+                    Log.d(TAG, "getAllKeys: ${it.size}")
                     it.map(TotpDbMapper::toTotpKey)
                 }
             } else {
                 dao.queryAll(email, cats, searchQuery).map {
+                    Log.d(TAG, "getAllCatsKeys: ${it.size}")
                     it.map(TotpDbMapper::toTotpKey)
                 }
             }
@@ -43,6 +45,10 @@ class TotpKeyRepositoryImpl(
 
     override suspend fun addCategories(cats: Categories) {
         dao.insertCats(cats)
+    }
+
+    override suspend fun deleteCategories(id: Int) {
+       dao.deleteCategoryById(id)
     }
 
     override suspend fun removeKey(key: EncryptedTotpKey) {

@@ -52,7 +52,7 @@ class BackupFragment : Fragment() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        Log.d(TAG, "backupFragment ")
+        Log.d(TAG, "backupFragment ${prefsHelper?.isBackedUp!!}")
 
 
         googleSignInLauncher = registerForActivityResult(
@@ -79,7 +79,7 @@ class BackupFragment : Fragment() {
             }
 
             if (prefsHelper?.isBackedUp!!) {
-                ivSystemSelection.isEnabled = true
+                ivSystemSelection.isChecked = true
             }
 
 

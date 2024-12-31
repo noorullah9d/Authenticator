@@ -100,6 +100,7 @@ class SettingScreen : Fragment() {
                     fingerprint()
                 }
             }
+
             if (prefsHelper?.isFingerprintEnabled!!) {
                 ivUseFingerprintNext.isChecked = true
             }
@@ -183,15 +184,18 @@ class SettingScreen : Fragment() {
             .setNegativeButtonText("Dismiss")
             .build().authenticate(object : FingerprintCallback {
                 override fun onAuthenticationCancelled() {
+                    binding.ivUseFingerprintNext.isChecked = false
                     Log.d(TAG, "onAuthenticationCancelled: ")
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
                     Log.d(TAG, "onAuthenticationError: ")
+                    binding.ivUseFingerprintNext.isChecked = false
                 }
 
                 override fun onAuthenticationFailed() {
                     Log.d(TAG, "onAuthenticationFailed: ")
+                    binding.ivUseFingerprintNext.isChecked = false
                 }
 
                 override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
@@ -205,10 +209,12 @@ class SettingScreen : Fragment() {
 
                 override fun onBiometricAuthenticationInternalError(error: String?) {
                     Log.d(TAG, "onBiometricAuthenticationInternalError: ")
+                    binding.ivUseFingerprintNext.isChecked = false
                 }
 
                 override fun onBiometricAuthenticationNotAvailable() {
                     Log.d(TAG, "onBiometricAuthenticationNotAvailable: ")
+                    toast("Device Not Supported")
                 }
 
                 override fun onBiometricAuthenticationNotSupported() {
@@ -217,10 +223,12 @@ class SettingScreen : Fragment() {
 
                 override fun onBiometricAuthenticationPermissionNotGranted() {
                     Log.d(TAG, "onBiometricAuthenticationPermissionNotGranted: ")
+                    binding.ivUseFingerprintNext.isChecked = false
                 }
 
                 override fun onSdkVersionNotSupported() {
                     Log.d(TAG, "onSdkVersionNotSupported: ")
+                    binding.ivUseFingerprintNext.isChecked = false
                 }
 
             })

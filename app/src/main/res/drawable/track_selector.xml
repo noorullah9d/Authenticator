@@ -7,8 +7,6 @@
             android:useLevel="false"
             android:visible="true">
 
-            <solid
-                android:color="#ca120f" />
 
             <corners
                 android:radius="25dp" />
@@ -25,7 +23,7 @@
             android:shape="rectangle"
             android:useLevel="false"
             android:visible="true">
-            <solid android:color="#27170432" />
+            <solid android:color="@color/n_sky_blue" />
             <corners android:radius="25dp" />
             <size android:width="2dp" android:height="18dp" />
         </shape>

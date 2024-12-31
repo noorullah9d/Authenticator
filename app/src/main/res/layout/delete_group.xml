@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/create_new_group"
+            android:text="Delete group"
             android:textSize="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_regular"
             android:gravity="center"
-            android:text="@string/enter_group_name_and_tap_on_save"
+            android:text="01 group will be deleted permenently"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,43 +54,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24sdp"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="@dimen/_10sdp"
+            android:weightSum="2"
             app:layout_constraintTop_toBottomOf="@+id/scan_ocr">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/ivScanQR"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                app:cardBackgroundColor="@color/white"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textColor="@color/n_dark_grey"
+                android:textSize="@dimen/_14sdp"
+                app:backgroundTint="@color/n_off_white"
                 app:cardCornerRadius="@dimen/_25sdp"
-                app:strokeColor="@color/n_stroke_color">
+                app:strokeColor="@color/n_stroke_color" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/group_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/_13sdp"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:hint="@string/group_name"
-                    android:maxLength="15"
-                    android:maxLines="1"
-                    android:textColor="@color/n_dark_grey"
-                    android:textSize="@dimen/_12sdp" />
-
-            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/ivEnterKey"
+                android:id="@+id/btn_delete"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
-                android:backgroundTint="@color/n_sky_blue"
+                android:layout_weight="1"
+                android:backgroundTint="@color/n_warning_red"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/save"
+                android:text="@string/delete"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
 

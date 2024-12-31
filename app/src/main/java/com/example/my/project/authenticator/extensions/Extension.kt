@@ -30,8 +30,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.CreateNewGroupBinding
+import com.example.my.project.authenticator.databinding.DeleteGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
+import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
 import com.example.my.project.authenticator.model.LanguagesModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -410,7 +412,45 @@ fun Fragment.createNewGroupDialog(newGroupName: (String) -> Unit) {
             } else {
                 toast("Group name should not be empty")
             }
+            bottomSheetDialog.dismiss()
+        }
+    }
 
+    bottomSheetDialog.show()
+}
+
+fun Fragment.EditGroupDialog(currentName: String, newGroupName: (String) -> Unit) {
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
+    val binding = EditGroupBinding.inflate(LayoutInflater.from(requireContext()))
+    bottomSheetDialog.setContentView(binding.root)
+    binding.apply {
+
+        groupName.setText(currentName)
+
+        ivEnterKey.setOnClickListener {
+            val groupName = groupName.text.toString()
+            if (groupName.isNotEmpty()) {
+                newGroupName.invoke(groupName)
+            } else {
+                toast("Group name should not be empty")
+            }
+            bottomSheetDialog.dismiss()
+        }
+    }
+
+    bottomSheetDialog.show()
+}
+
+fun Fragment.deleteGroupDialog(deleteGroup: () -> Unit) {
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
+    val binding = DeleteGroupBinding.inflate(LayoutInflater.from(requireContext()))
+    bottomSheetDialog.setContentView(binding.root)
+    binding.apply {
+
+        btnCancel.setOnClickListener { bottomSheetDialog.dismiss() }
+        btnDelete.setOnClickListener {
+            deleteGroup.invoke()
+            bottomSheetDialog.dismiss()
         }
     }
 

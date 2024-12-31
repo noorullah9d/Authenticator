@@ -24,7 +24,7 @@ interface TotpDao {
     @Query("SELECT * FROM $totpTableName WHERE category = :cats AND name LIKE '%' || :searchQuery || '%'")
     fun queryAll(cats: String, searchQuery: String): Flow<List<TotpDbEntity>>
 
-    @Query("SELECT * FROM $totpTableName WHERE email = :email AND category = :cats AND name LIKE '%' || :searchQuery || '%'")
+    @Query("SELECT * FROM $totpTableName WHERE (email = :email OR email='') AND category = :cats AND name LIKE '%' || :searchQuery || '%'")
     fun queryAll(email: String, cats: String = "Default", searchQuery: String): Flow<List<TotpDbEntity>>
 
     @Query("SELECT * FROM $totpTableName WHERE email = :email")
@@ -38,6 +38,10 @@ interface TotpDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCats(cats: Categories)
+
+    @Query("DELETE FROM Categories WHERE id = :categoryId")
+    suspend fun deleteCategoryById(categoryId: Int)
+
 
     @Query("Select * From Categories")
     fun getAllGroups(): Flow<List<Categories>>

@@ -10,11 +10,12 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
     private val fireStore = FirebaseFirestore.getInstance()
 
-    override fun saveDataToDB(email: String, passcode: String, accountName: String, tool: String) {
+    override fun saveDataToDB(email: String, passcode: String, accountName: String, tool: String, category: String) {
         // Include 'tool' in the new account map
         val newAccount = mapOf(
             "accountName" to accountName,
             "passcode" to passcode,
+            "category" to category,
             "tool" to tool
         )
 
@@ -54,7 +55,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
             if (document.exists()) {
                 val accountsList = document.get("accounts") as? List<Map<String, String>>
                 val accountObjects = accountsList?.map {
-                    Account(it["accountName"].toString(), it["passcode"].toString())
+                    Account(it["accountName"].toString(), it["passcode"].toString(),it["category"].toString())
                 } ?: listOf()
                 callback(accountObjects, null) // Pass data to the callback
             } else {

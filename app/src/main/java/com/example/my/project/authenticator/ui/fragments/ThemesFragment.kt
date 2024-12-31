@@ -88,6 +88,7 @@ class ThemesFragment : Fragment() {
                     prefsHelper?.userTheme = getString(R.string.system)
                     darkRadio.isEnabled = false
                     lightRadio.isEnabled = false
+                    cardSelectionViewModel.changeTheme(AppTheme.SYSTEM_DEFAULT)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {
                     prefsHelper?.userTheme = ""

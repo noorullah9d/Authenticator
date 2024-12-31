@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface TotpKeyRepository {
     fun getAllKeys(email: String="",cats:String, searchQuery: String = ""): Flow<List<EncryptedTotpKey>>
     suspend fun addCategories(cats: Categories)
+    suspend fun deleteCategories(id: Int)
     suspend fun addKey(key: EncryptedTotpKey)
 
     suspend fun removeKey(key: EncryptedTotpKey)

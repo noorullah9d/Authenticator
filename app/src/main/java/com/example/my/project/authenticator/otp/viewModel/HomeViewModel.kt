@@ -12,6 +12,7 @@ import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
 import com.example.my.project.authenticator.otp.domain.usecases.AddCategories
 import com.example.my.project.authenticator.otp.domain.usecases.AddNewTotpUseCase
+import com.example.my.project.authenticator.otp.domain.usecases.DeleteCategories
 import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.ReplaceTotpUseCase
@@ -52,6 +53,7 @@ class HomeViewModel @Inject constructor(
 
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
     private val addCategoriesUseCase = AddCategories(totpKeyRepo)
+    private val deleteCategoriesUseCase = DeleteCategories(totpKeyRepo)
     private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
@@ -140,6 +142,10 @@ class HomeViewModel @Inject constructor(
         addCategoriesUseCase.invoke(cats)
     }
 
+    fun delete(cats: Int) = viewModelScope.launch {
+        deleteCategoriesUseCase.invoke(cats)
+    }
+
 
     private suspend fun autoUpdate() {
         startTimer()
@@ -202,7 +208,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     TotpCardState(
-                        it.id,it.secretKey, it.name, currentTotp, countSecondsLeft()
+                        it.id, it.secretKey, it.name, currentTotp, countSecondsLeft()
                     )
                 }
             }
@@ -221,7 +227,7 @@ class HomeViewModel @Inject constructor(
         if (!isSecretCorrect(base32Secret)) return false
 
         if (sharedPreferencesHelper.userEmail != "") {
-            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name, tool)
+            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, base32Secret, name, tool, categories)
         }
 
         val secret = Base32().decode(base32Secret)
@@ -237,7 +243,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun replaceTotp(id: Int, name: String, base32Secret: String, tool: String): Boolean {
+    fun replaceTotp(id: Int, name: String, base32Secret: String, tool: String = "", category: String = "Default"): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
 
         return try {
