@@ -18,8 +18,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivLockImageMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_160sdp"
+        android:layout_height="@dimen/_160sdp"
         android:layout_marginTop="@dimen/_120sdp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/splash_logo_anim" />
+        app:lottie_rawRes="@raw/splash_screen_authenticator_logo" />
 
 
     <TextView

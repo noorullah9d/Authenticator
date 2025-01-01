@@ -65,7 +65,7 @@ class SettingScreen : Fragment() {
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-        googleSignInLauncher = registerForActivityResult(  ActivityResultContracts.StartActivityForResult()) { result ->
+        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             Log.d(TAG, "onViewCreated: ${result.resultCode}")
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val data = result.data
@@ -143,9 +143,11 @@ class SettingScreen : Fragment() {
             }
 
             ivBackup.setOnClickListener {
-                if (prefsHelper?.userEmail!! == "") {
+                if (prefsHelper?.userEmail == "") {
                     if (requireActivity().isInternetAvailable()) {
-                        signInWithGoogle()
+                        googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
+                            signInWithGoogle()
+                        }
                     } else {
                         toast(getString(R.string.no_internet_connection))
                     }

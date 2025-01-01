@@ -24,7 +24,6 @@ class SplashScreen : BaseActivity() {
         setContentView(binding.root)
 
 
-
         val prefsHelper = SharedPreferencesHelper(applicationContext)
 
         setAppTheme()
@@ -42,18 +41,22 @@ class SplashScreen : BaseActivity() {
             }
 
         }
-//        val animator = ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100)
-//        animator.setDuration(4000)
-//        animator.start()
-
 
     }
 
     private fun setAppTheme() {
         val themeMode = when (getSelectedTheme()) {
-            AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
-            AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            AppTheme.DARK -> {
+                AppCompatDelegate.MODE_NIGHT_YES
+            }
+
+            AppTheme.LIGHT -> {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+
+            else -> {
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
         }
         AppCompatDelegate.setDefaultNightMode(themeMode)
     }

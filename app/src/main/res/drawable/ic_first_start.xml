@@ -8,8 +8,8 @@
       android:fillColor="@color/n_sky_blue"/>
   <path
       android:pathData="M15,1L21,1A3,3 0,0 1,24 4L24,4A3,3 0,0 1,21 7L15,7A3,3 0,0 1,12 4L12,4A3,3 0,0 1,15 1z"
-      android:fillColor="#D0CDFB"/>
+      android:fillColor="@color/n_import_buttons"/>
   <path
       android:pathData="M31,1L37,1A3,3 0,0 1,40 4L40,4A3,3 0,0 1,37 7L31,7A3,3 0,0 1,28 4L28,4A3,3 0,0 1,31 1z"
-      android:fillColor="#D0CDFB"/>
+      android:fillColor="@color/n_import_buttons"/>
 </vector>

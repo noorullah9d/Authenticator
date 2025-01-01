@@ -30,7 +30,7 @@
     <color name="n_dark_grey">#DBDBDB</color>
     <color name="n_import_buttons">#26323E</color>
     <color name="n_warning_red">#FF4F5A</color>
-
+    <color name="n_switch_color">#3D3D3D</color>
 
 
 </resources>

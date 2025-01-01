@@ -54,6 +54,8 @@ class BackupFragment : Fragment() {
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         Log.d(TAG, "backupFragment ${prefsHelper?.isBackedUp!!}")
 
+        binding.tvEmail.text = prefsHelper?.userEmail!!
+
 
         googleSignInLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -85,6 +87,7 @@ class BackupFragment : Fragment() {
 
             logout.setOnClickListener {
                 prefsHelper?.userEmail = ""
+                Log.d(TAG, "onViewCreated: ${prefsHelper?.userEmail}")
                 prefsHelper?.isBackedUp = false
                 prefsHelper?.isBackedGone = false
                 findNavController().popBackStack()
@@ -144,7 +147,7 @@ class BackupFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
-                    Log.d(TAG, "firebaseAuthWithGoogle: $email")
+                    binding.tvEmail.text = prefsHelper?.userEmail!!
                 } else {
                     Log.d(TAG, "failed")
                     toast(getString(R.string.not_logged_in))

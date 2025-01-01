@@ -418,20 +418,18 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/ivUseFingerprintNext"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="@dimen/_25sdp"
+                        android:checked="false"
                         android:layout_marginEnd="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:trackDecorationTint="@color/n_switch_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:thumb="@drawable/thumb_selector"
-                        app:track="@drawable/track_selector" />
-
+                        app:thumbTint="@color/n_consis_white"
+                        app:trackTint="@color/material_switch_track_selector" />
 
                     <View
                         android:layout_width="match_parent"

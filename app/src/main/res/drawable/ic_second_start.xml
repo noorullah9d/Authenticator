@@ -5,11 +5,11 @@
     android:viewportHeight="8">
   <path
       android:pathData="M3,1L9,1A3,3 0,0 1,12 4L12,4A3,3 0,0 1,9 7L3,7A3,3 0,0 1,0 4L0,4A3,3 0,0 1,3 1z"
-      android:fillColor="#D0CDFB"/>
+      android:fillColor="@color/n_import_buttons"/>
   <path
       android:pathData="M20,4m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"
       android:fillColor="@color/n_sky_blue"/>
   <path
       android:pathData="M31,1L37,1A3,3 0,0 1,40 4L40,4A3,3 0,0 1,37 7L31,7A3,3 0,0 1,28 4L28,4A3,3 0,0 1,31 1z"
-      android:fillColor="#D0CDFB"/>
+      android:fillColor="@color/n_import_buttons"/>
 </vector>
