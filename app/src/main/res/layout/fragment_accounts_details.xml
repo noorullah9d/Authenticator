@@ -49,10 +49,10 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image"
         android:layout_width="@dimen/_90sdp"
-        android:scaleType="centerCrop"
         android:layout_height="@dimen/_90sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
         android:src="@drawable/profile_image_accounts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,28 +169,39 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/tvTheme"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llAdvanced"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
-        android:fontFamily="@font/open_sans_semi_bold"
-        android:text="@string/advanced"
-        android:textColor="@color/n_sky_blue"
-        android:textSize="@dimen/_12sdp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_group" />
+        app:layout_constraintTop_toBottomOf="@+id/select_group">
 
-    <ImageView
-        android:id="@+id/iv_theme"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:contentDescription="@string/set_password"
-        android:src="@drawable/down_arrow"
-        app:layout_constraintStart_toEndOf="@+id/tvTheme"
-        app:layout_constraintTop_toTopOf="@+id/tvTheme" />
+
+        <TextView
+            android:id="@+id/tvTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:text="@string/advanced"
+            android:textColor="@color/n_sky_blue"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_group" />
+
+        <ImageView
+            android:id="@+id/iv_theme"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:contentDescription="@string/set_password"
+            android:src="@drawable/down_arrow"
+            app:layout_constraintStart_toEndOf="@+id/tvTheme"
+            app:layout_constraintTop_toTopOf="@+id/tvTheme" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -201,7 +212,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/tvTheme">
+        app:layout_constraintTop_toBottomOf="@+id/llAdvanced">
 
 
         <com.google.android.material.card.MaterialCardView

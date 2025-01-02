@@ -52,14 +52,11 @@ class BackupFragment : Fragment() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        Log.d(TAG, "backupFragment ${prefsHelper?.isBackedUp!!}")
 
         binding.tvEmail.text = prefsHelper?.userEmail!!
 
 
-        googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
+        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             Log.d(TAG, "onViewCreated: ${result.resultCode}")
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val data = result.data
@@ -118,7 +115,6 @@ class BackupFragment : Fragment() {
 
 
     }
-
 
     private fun changeGoogleAccount() {
         googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {

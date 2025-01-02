@@ -4,6 +4,7 @@
 
     <item android:state_checked="true" android:color="@color/n_sky_blue">
         <shape android:shape="rectangle">
+            <stroke android:width="0dp" android:color="@color/n_sky_blue" />
             <solid android:color="@color/n_sky_blue" />
             <corners android:radius="100dp" />
             <size android:height="@dimen/_15sdp" />

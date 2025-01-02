@@ -57,18 +57,21 @@ class HowToWorkScreen : AppCompatActivity() {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     when (position) {
                         0 -> {
+                            next.text = getString(R.string.next)
                             mcvFirst.setBackgroundColor(darkColor)
                             ivProgress.setImageResource(R.drawable.first_ui)
                             lightColor(mcvSecond, mcvThird, mcvFourth, lightColor)
                         }
 
                         1 -> {
+                            next.text = getString(R.string.next)
                             mcvSecond.setBackgroundColor(darkColor)
                             ivProgress.setImageResource(R.drawable.second_ui)
                             lightColor(mcvFirst, mcvThird, mcvFourth, lightColor)
                         }
 
                         2 -> {
+                            next.text = getString(R.string.next)
                             mcvThird.setBackgroundColor(darkColor)
                             ivProgress.setImageResource(R.drawable.third_ui)
                             lightColor(mcvSecond, mcvFirst, mcvFourth, lightColor)

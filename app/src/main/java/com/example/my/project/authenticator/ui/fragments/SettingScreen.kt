@@ -19,6 +19,7 @@ import com.example.my.project.authenticator.databinding.FragmentSettingScreenBin
 import com.example.my.project.authenticator.extensions.getLanguageName
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.privacyPolicy
+import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.LanguageViewModel
@@ -93,14 +94,14 @@ class SettingScreen : Fragment() {
                 }
             }
 
+            ivUseFingerprintNext.setOnCheckedChangeListener(null)
+            ivUseFingerprintNext.isChecked = prefsHelper?.isFingerprintEnabled == true
             ivUseFingerprintNext.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
                     fingerprint()
+                } else {
+                    prefsHelper?.isFingerprintEnabled = false
                 }
-            }
-
-            if (prefsHelper?.isFingerprintEnabled!!) {
-                ivUseFingerprintNext.isChecked = true
             }
 
             tvLanguageCode.text = languageViewModel.getLanguage().getLanguageName()
@@ -143,17 +144,14 @@ class SettingScreen : Fragment() {
             }
 
             ivBackup.setOnClickListener {
-                if (prefsHelper?.userEmail == "") {
-                    if (requireActivity().isInternetAvailable()) {
-                        googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
-                            signInWithGoogle()
-                        }
-                    } else {
-                        toast(getString(R.string.no_internet_connection))
-                    }
-                } else
-                    findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+                backup()
             }
+
+
+            loginMail.setOnDebouncedClickListener {
+                backup()
+            }
+
 
             termsConditions.setOnClickListener {
                 requireActivity().privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
@@ -171,6 +169,19 @@ class SettingScreen : Fragment() {
 
 
         }
+    }
+
+    private fun backup() {
+        if (prefsHelper?.userEmail == "") {
+            if (requireActivity().isInternetAvailable()) {
+                googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
+                    signInWithGoogle()
+                }
+            } else {
+                toast(getString(R.string.no_internet_connection))
+            }
+        } else
+            findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
     }
 
     private fun signInWithGoogle() {

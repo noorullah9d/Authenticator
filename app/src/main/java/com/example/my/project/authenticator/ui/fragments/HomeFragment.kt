@@ -21,12 +21,10 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
-import com.example.my.project.authenticator.extensions.EditGroupDialog
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beInVisible
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
-import com.example.my.project.authenticator.extensions.deleteGroupDialog
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
@@ -349,26 +347,26 @@ class HomeFragment : Fragment() {
                 homeViewModel.getAllGroups().collectLatest {
 
                     adapter = CategoryAdapter(it, selectionViewModel, catsId = { categories ->
-                       /* clCatEditing.beVisible()
-                        belowLayout.beGone()
-                        editCat.setOnClickListener {
-                            clCatEditing.beGone()
-                            belowLayout.beVisible()
-                            EditGroupDialog(categories.categories) { groupName ->
+                        /* clCatEditing.beVisible()
+                         belowLayout.beGone()
+                         editCat.setOnClickListener {
+                             clCatEditing.beGone()
+                             belowLayout.beVisible()
+                             EditGroupDialog(categories.categories) { groupName ->
 
-                            }
-                        }
+                             }
+                         }
 
-                        copyCat.setOnClickListener {
-                            clCatEditing.beGone()
-                            belowLayout.beVisible()
-                            deleteGroupDialog {
-                                categories.id
-                                homeViewModel.delete(categories.id)
-                            }
-                        }
+                         copyCat.setOnClickListener {
+                             clCatEditing.beGone()
+                             belowLayout.beVisible()
+                             deleteGroupDialog {
+                                 categories.id
+                                 homeViewModel.delete(categories.id)
+                             }
+                         }
 
-*/
+ */
                     }, groupCallBack = { group ->
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
@@ -465,8 +463,10 @@ class HomeFragment : Fragment() {
                 icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
                 if (sharedPreferencesHelper.isBackedUp) {
                     bgRectangle.setImageResource(R.drawable.ic_backed_up)
+                    ivBlock.beGone()
                     tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
                     ivCross.beVisible()
+                    ivBackedUp.beVisible()
                     ivNext.beGone()
                 }
 
@@ -477,6 +477,7 @@ class HomeFragment : Fragment() {
                 bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
                 ivCross.beGone()
+                ivBackedUp.beGone()
                 ivNext.beVisible()
                 if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
                     placeHolder()

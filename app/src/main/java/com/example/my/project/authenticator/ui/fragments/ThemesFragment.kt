@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.ui.fragments
 
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,7 @@ class ThemesFragment : Fragment() {
                     ContextCompat.getColor(requireActivity(), R.color.n_sky_blue)
                 )
             )
+
 
             lightRadio.buttonTintList = colorStateList
             lightRadio.invalidate()
@@ -91,6 +93,7 @@ class ThemesFragment : Fragment() {
                     cardSelectionViewModel.changeTheme(AppTheme.SYSTEM_DEFAULT)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {
+                    themesAvailability()
                     prefsHelper?.userTheme = ""
                     darkRadio.isEnabled = true
                     lightRadio.isEnabled = true
@@ -134,5 +137,19 @@ class ThemesFragment : Fragment() {
     }
 
 
-}
+    private fun themesAvailability() {
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.darkRadio.isChecked = true
+                binding.lightRadio.isChecked = false
+            }
 
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.darkRadio.isChecked = false
+                binding.lightRadio.isChecked = true
+            }
+        }
+    }
+
+
+}

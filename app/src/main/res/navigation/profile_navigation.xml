@@ -3,20 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_navigation.xml"
-    app:startDestination="@id/authenticatorFragment">
+    app:startDestination="@id/accountsDetails">
 
-    <fragment
-        android:id="@+id/authenticatorFragment"
-        android:name="com.example.my.project.authenticator.ui.fragments.AuthenticatorFragment"
-        android:label="fragment_authenticator"
-        tools:layout="@layout/fragment_authenticator" >
-        <action
-            android:id="@+id/action_authenticatorFragment_to_accountsDetails"
-            app:destination="@id/accountsDetails" />
-        <action
-            android:id="@+id/action_authenticatorFragment_to_QRScannerScreen"
-            app:destination="@id/QRScannerScreen" />
-    </fragment>
 
     <fragment
         android:id="@+id/accountsDetails"

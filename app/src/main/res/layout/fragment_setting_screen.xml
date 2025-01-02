@@ -44,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-
             app:cardBackgroundColor="@color/n_sky_blue"
             app:cardCornerRadius="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
@@ -82,7 +81,6 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="@string/app_name"
                     android:padding="@dimen/_7sdp"
                     android:src="@drawable/ic_next_backup"
@@ -168,7 +166,6 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:background="?selectableItemBackgroundBorderless"
                         android:contentDescription="@string/settings"
                         android:padding="@dimen/_2sdp"
                         android:src="@drawable/ic_next"
@@ -366,7 +363,6 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:background="?selectableItemBackgroundBorderless"
                         android:contentDescription="@string/settings"
                         android:padding="@dimen/_2sdp"
                         android:src="@drawable/ic_next"
@@ -422,13 +418,13 @@
                         android:id="@+id/ivUseFingerprintNext"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
-                        android:checked="false"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:checked="false"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:trackDecorationTint="@color/n_switch_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:thumbTint="@color/n_consis_white"
+                        app:trackDecorationTint="@android:color/transparent"
                         app:trackTint="@color/material_switch_track_selector" />
 
                     <View
