@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentThemesBinding
-import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.CardSelectionViewModel
 import com.example.my.project.authenticator.utils.AppTheme
 import com.example.my.project.authenticator.utils.Constants
@@ -70,50 +68,6 @@ class ThemesFragment : Fragment() {
                 } else darkRadio.isChecked = it.name != AppTheme.LIGHT.name
             }
 
-            lightRadio.setOnCheckedChangeListener { _, isEnabled ->
-                if (isEnabled) {
-                    if (systemSelection.isChecked) {
-                        lightRadio.isChecked = false
-                        toast("Please Turn off system theme")
-                    } else {
-
-                        prefsHelper?.userTheme = Constants.LIGHT
-                        darkRadio.isChecked = false
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        cardSelectionViewModel.changeTheme(AppTheme.LIGHT)
-                    }
-                }
-            }
-
-            systemSelection.setOnCheckedChangeListener { _, isEnabled ->
-                if (isEnabled) {
-                    prefsHelper?.userTheme = getString(R.string.system)
-                    darkRadio.isEnabled = false
-                    lightRadio.isEnabled = false
-                    cardSelectionViewModel.changeTheme(AppTheme.SYSTEM_DEFAULT)
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                } else {
-                    themesAvailability()
-                    prefsHelper?.userTheme = ""
-                    darkRadio.isEnabled = true
-                    lightRadio.isEnabled = true
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                }
-            }
-
-            darkRadio.setOnCheckedChangeListener { _, isEnabled ->
-                if (isEnabled) {
-                    if (systemSelection.isChecked) {
-                        darkRadio.isChecked = false
-                        toast("Please Turn off system theme")
-                    } else {
-                        prefsHelper?.userTheme = Constants.DARK
-                        lightRadio.isChecked = false
-                        cardSelectionViewModel.changeTheme(AppTheme.DARK)
-                    }
-                }
-            }
-
             when (prefsHelper?.userTheme) {
                 Constants.DARK -> {
                     darkRadio.isChecked = true
@@ -128,9 +82,63 @@ class ThemesFragment : Fragment() {
                 getString(R.string.system) -> {
                     darkRadio.isChecked = false
                     lightRadio.isChecked = false
+                    darkRadio.isEnabled = false
+                    lightRadio.isEnabled = false
                     systemSelection.isChecked = true
                 }
+
+                else -> {
+                    systemSelection.isChecked = false
+                }
             }
+
+
+            lightRadio.setOnCheckedChangeListener { _, isEnabled ->
+                if (isEnabled) {
+                    if (systemSelection.isChecked) {
+                        lightRadio.isEnabled = false
+                        darkRadio.isEnabled = false
+                    } else {
+
+                        darkRadio.isChecked = false
+                        prefsHelper?.userTheme = Constants.LIGHT
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        cardSelectionViewModel.changeTheme(AppTheme.LIGHT)
+                    }
+
+                }
+            }
+
+            systemSelection.setOnCheckedChangeListener { _, isEnabled ->
+                if (isEnabled) {
+                    prefsHelper?.userTheme = getString(R.string.system)
+                    darkRadio.isEnabled = false
+                    lightRadio.isEnabled = false
+                    cardSelectionViewModel.changeTheme(AppTheme.SYSTEM_DEFAULT)
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                } else {
+                    prefsHelper?.userTheme = ""
+                    themesAvailability()
+                    darkRadio.isEnabled = true
+                    lightRadio.isEnabled = true
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
+
+            darkRadio.setOnCheckedChangeListener { _, isEnabled ->
+                if (isEnabled) {
+                    if (systemSelection.isChecked) {
+                        lightRadio.isEnabled = false
+                        darkRadio.isEnabled = false
+                    } else {
+
+                        prefsHelper?.userTheme = Constants.DARK
+                        lightRadio.isChecked = false
+                        cardSelectionViewModel.changeTheme(AppTheme.DARK)
+                    }
+                }
+            }
+
 
         }
 

@@ -26,9 +26,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
-class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFragment() {
+class GoogleSignInDialog : BottomSheetDialogFragment() {
 
-    lateinit var binding: GoogleSignInBinding
+    private lateinit var homeViewModel: () -> Unit
+    private lateinit var binding: GoogleSignInBinding
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -36,10 +37,15 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
 
     private var prefsHelper: SharedPreferencesHelper? = null
 
-
+    companion object {
+        fun newInstance(homeViewModel: () -> Unit): GoogleSignInDialog {
+            val fragment = GoogleSignInDialog()
+            fragment.homeViewModel = homeViewModel // Assign the lambda to the instance variable
+            return fragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        return inflater.inflate(R.layout.google_sign_in, container, false)
         binding = GoogleSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,18 +53,10 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                binding.ivLockMode.setAnimation(R.raw.welcome_dark)
-            }
-
-            Configuration.UI_MODE_NIGHT_NO -> {
-                binding.ivLockMode.setAnimation(R.raw.welcome)
-
-            }
+            Configuration.UI_MODE_NIGHT_YES -> binding.ivLockMode.setAnimation(R.raw.welcome_dark)
+            Configuration.UI_MODE_NIGHT_NO -> binding.ivLockMode.setAnimation(R.raw.welcome)
         }
-
 
         val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let {
@@ -71,9 +69,7 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
             it.layoutParams = layoutParams
         }
 
-
         auth = FirebaseAuth.getInstance()
-
         prefsHelper = SharedPreferencesHelper(requireActivity())
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -95,23 +91,15 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
             }
         }
 
-
-        binding.tvContinueWithoutAccount.setOnClickListener {
-            dismiss()
-        }
-
+        binding.tvContinueWithoutAccount.setOnClickListener { dismiss() }
         binding.btnStartAccount.setOnDebouncedClickListener {
-
             if (requireActivity().isInternetAvailable()) {
                 signInWithGoogle()
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
         }
-
     }
-
-
 
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
@@ -137,8 +125,6 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
                     prefsHelper?.userEmail = email
                     val user = auth.currentUser
                     toast(getString(R.string.signed_in_successfully))
-
-
                     dismiss()
                     Log.d(TAG, "signInWithCredential:success $user")
                 } else {
@@ -147,10 +133,7 @@ class GoogleSignIn(private val homeViewModel: () -> Unit) : BottomSheetDialogFra
                 }
             }
     }
-
-
-
-
 }
+
 
 private const val TAG = "GoogleSignIn"

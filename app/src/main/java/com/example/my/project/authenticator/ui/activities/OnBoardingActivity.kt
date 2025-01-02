@@ -49,10 +49,23 @@ class OnBoardingActivity : BaseActivity() {
         homeViewModel.addCategories(Categories(0, "Family"))
 
         binding.btnStart.setOnClickListener {
-            val prefsHelper = SharedPreferencesHelper(this)
-            prefsHelper.isUserFirstTime = false
-            startActivityWithAnimation<MainActivity>()
-            finish()
+            when (binding.viewPager.currentItem) {
+                0 -> {
+                    binding.viewPager.currentItem++
+                }
+
+                1 -> {
+                    binding.viewPager.currentItem++
+                }
+
+                2 -> {
+                    val prefsHelper = SharedPreferencesHelper(this)
+                    prefsHelper.isUserFirstTime = false
+                    startActivityWithAnimation<MainActivity>()
+                    finish()
+                }
+            }
+
         }
 
 

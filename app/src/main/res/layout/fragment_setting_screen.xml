@@ -305,7 +305,6 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:background="?selectableItemBackgroundBorderless"
                         android:contentDescription="@string/settings"
                         android:padding="@dimen/_2sdp"
                         android:src="@drawable/ic_next"

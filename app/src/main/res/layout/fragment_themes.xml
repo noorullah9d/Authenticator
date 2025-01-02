@@ -164,7 +164,6 @@
         android:layout_height="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:checked="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:trackDecorationTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"

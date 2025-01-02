@@ -1,12 +1,10 @@
 package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
-import android.util.Log
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityMainBinding
-import com.example.my.project.authenticator.ui.fragments.GoogleSignIn
+import com.example.my.project.authenticator.ui.fragments.GoogleSignInDialog
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,7 +25,7 @@ class MainActivity : BaseActivity() {
 
 
         if (sharedPreferencesHelper.userEmail == "") {
-            val bottomSheetFragment = GoogleSignIn {
+            val bottomSheetFragment = GoogleSignInDialog.newInstance {
                 val currentDestinationId = navController.currentDestination?.id
                 currentDestinationId?.let { id ->
                     navController.popBackStack(id, true)
