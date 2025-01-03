@@ -96,5 +96,73 @@
     <string name="exit">Esci</string>
 
 
+    <string name="skip">Salta</string>
+    <string name="privacy_protected_even_offline">Privacy protetta anche offline</string>
+    <string name="we_don_t_store_your">Non memorizziamo le tue informazioni personali. La tua privacy è sempre protetta, con supporto offline</string>
+    <string name="add_accounts_easily">Aggiungi facilmente account con QR</string>
+    <string name="adding_an_account_is_super">Aggiungere un account è semplicissimo! Basta scansionare il codice QR e il gioco è fatto</string>
+    <string name="backup_and_sync">Backup e sincronizzazione su tutti i dispositivi</string>
+    <string name="your_accounts_are_backed_up">I tuoi account sono salvati e sincronizzati su tutti i tuoi dispositivi, quindi sei sempre al sicuro.</string>
+    <string name="get_started">Inizia</string>
+    <string name="let_s_go">Andiamo</string>
+    <string name="add_account">Aggiungi account</string>
+    <string name="backup_data">Esegui backup dei dati</string>
+    <string name="how_it_works">Come funziona</string>
+    <string name="data_is_not_backed_up_yet">I dati non sono ancora stati salvati</string>
+    <string name="enter_a_manual_key">Inserisci una chiave manuale</string>
+    <string name="scan_code">Scansiona codice</string>
+    <string name="authenticator_code">Codice autenticatore</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Scansiona il codice QR o inserisci manualmente la chiave di configurazione</string>
+    <string name="your_data_is_backed_up_successfully">I tuoi dati sono stati salvati con successo</string>
+    <string name="respective_platform">Genera un codice QR o una chiave sulla piattaforma corrispondente</string>
+    <string name="authentication_security_section">Nella sezione sicurezza dell\'autenticazione, genera un codice QR o crea una chiave di sicurezza</string>
+    <string name="enter_key_manually">Scansiona un codice QR o inserisci una chiave manualmente</string>
+    <string name="create_backup">Crea un backup per proteggere i codici per il futuro</string>
+    <string name="sign_in_to_create_backup">Accedi per creare codici di backup utilizzabili su più dispositivi</string>
+    <string name="one_time_code_for_extra_security">Codice unico per maggiore sicurezza</string>
+    <string name="protect_your_account_with">Proteggi il tuo account con un\'autenticazione a due fattori semplice per maggiore sicurezza</string>
+    <string name="transfer_codes">Trasferisci codici</string>
+    <string name="backup_your_codes">Salva i tuoi codici</string>
+    <string name="import_a_compatible">Importa un file compatibile qui per aggiungere nuovi codici</string>
+    <string name="export_a_compatible_vault">Esporta un file compatibile qui per esportare i tuoi codici</string>
+    <string name="not_now">Non ora</string>
+    <string name="sign_in_to_back_codes">Accedi per salvare i tuoi codici e proteggere i tuoi dati per usi futuri.</string>
+    <string name="looks_like_you_haven">Sembra che tu non abbia ancora aggiunto codici.</string>
+    <string name="use_system_default">Usa impostazioni di sistema predefinite</string>
+    <string name="dark">Scuro</string>
+    <string name="light">Chiaro</string>
+    <string name="select_your_desired_theme">Seleziona il tema desiderato</string>
+    <string name="themes">Temi</string>
+    <string name="system">Sistema</string>
+    <string name="use_fingerprint">Usa impronta digitale</string>
+    <string name="set_password">Imposta password</string>
+    <string name="backup_settings">Impostazioni di backup</string>
+    <string name="logout">Esci</string>
+    <string name="warning">Attenzione: se dimentichi la password perderai definitivamente l\'accesso ai tuoi codici. Non c\'è modo di recuperarli senza la password.</string>
+    <string name="enter_your_current_password">Inserisci la password attuale</string>
+    <string name="your_current_password">La password attuale non è corretta! Riprova.</string>
+    <string name="new_password">Nuova password</string>
+    <string name="n_password">Password</string>
+    <string name="confirm_password">Conferma password</string>
+    <string name="save_password">Salva password</string>
+    <string name="change_password">Cambia password</string>
+    <string name="advanced">Avanzate</string>
+    <string name="account_details">Dettagli account</string>
+    <string name="your_entered_wrong">Hai inserito una password errata! Riprova.</string>
+    <string name="enter_your_password_to_continue">Inserisci la tua password per continuare</string>
+    <string name="welcome_back">Bentornato!</string>
+    <string name="or_open_app_with_your_fingerprint">Oppure apri l\'app con la tua impronta digitale</string>
+    <string name="n_continue">Continua</string>
+    <string name="add_new">Aggiungi nuovo</string>
+    <string name="save">Salva</string>
+    <string name="create_new_group">Crea nuovo gruppo</string>
+    <string name="enter_group_name_and_tap_on_save">Inserisci il nome del gruppo e premi su Salva</string>
+    <string name="group_name">Nome del gruppo</string>
+    <string name="search_your_codes">Cerca i tuoi codici</string>
+    <string name="done">Fatto</string>
+    <string name="select_all">Seleziona tutto</string>
+    <string name="edit">Modifica</string>
+
+
 
 </resources>

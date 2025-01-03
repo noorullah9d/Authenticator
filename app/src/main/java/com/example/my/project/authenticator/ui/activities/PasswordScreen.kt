@@ -11,6 +11,7 @@ import com.example.my.project.authenticator.databinding.ActivityPasswordScreenBi
 import com.example.my.project.authenticator.extensions.beGone
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
+import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.ra.fingerprint_auth.FingerprintCallback
 import com.ra.fingerprint_auth.FingerprintManager
@@ -47,10 +48,15 @@ class PasswordScreen : AppCompatActivity() {
 
 
             mbContinue.setOnClickListener {
-                if (prefsHelper?.userPassword == etNewPassword.text.toString()) {
-                    startActivityWithAnimation<MainActivity>()
-                } else {
-                    passwordWrong.beVisible()
+                if (etNewPassword.text!!.isEmpty()) {
+                    toast("Please Enter Password")
+                } else{
+
+                    if (prefsHelper?.userPassword == etNewPassword.text.toString()) {
+                        startActivityWithAnimation<MainActivity>()
+                    } else {
+                        passwordWrong.beVisible()
+                    }
                 }
             }
         }

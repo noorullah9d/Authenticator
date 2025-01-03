@@ -96,4 +96,73 @@
 
 
 
+    <string name="skip">Überspringen</string>
+    <string name="privacy_protected_even_offline">Datenschutz geschützt, auch offline</string>
+    <string name="we_don_t_store_your">Wir speichern Ihre persönlichen Daten nicht. Ihre Privatsphäre ist immer geschützt, auch im Offline-Modus</string>
+    <string name="add_accounts_easily">Konten einfach mit QR hinzufügen</string>
+    <string name="adding_an_account_is_super">Ein Konto hinzuzufügen ist super einfach! Scannen Sie einfach den QR-Code, und schon sind Sie fertig</string>
+    <string name="backup_and_sync">Backup und Synchronisierung auf allen Geräten</string>
+    <string name="your_accounts_are_backed_up">Ihre Konten werden gesichert und auf all Ihren Geräten synchronisiert, sodass Sie immer abgesichert sind.</string>
+    <string name="get_started">Loslegen</string>
+    <string name="let_s_go">Los geht\'s</string>
+    <string name="add_account">Konto hinzufügen</string>
+    <string name="backup_data">Daten sichern</string>
+    <string name="how_it_works">Wie es funktioniert</string>
+    <string name="data_is_not_backed_up_yet">Daten wurden noch nicht gesichert</string>
+    <string name="enter_a_manual_key">Einen manuellen Schlüssel eingeben</string>
+    <string name="scan_code">Code scannen</string>
+    <string name="authenticator_code">Authentifizierungscode</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Scannen Sie den QR-Code oder geben Sie den Setup-Schlüssel manuell ein</string>
+    <string name="your_data_is_backed_up_successfully">Ihre Daten wurden erfolgreich gesichert</string>
+    <string name="respective_platform">QR oder Schlüssel auf der entsprechenden Plattform generieren</string>
+    <string name="authentication_security_section">Im Abschnitt Authentifizierungssicherheit einen QR-Code generieren oder einen Sicherheitsschlüssel erstellen</string>
+    <string name="enter_key_manually">QR-Code scannen oder Schlüssel manuell eingeben</string>
+    <string name="create_backup">Backup erstellen, um Codes für die Zukunft zu sichern</string>
+    <string name="sign_in_to_create_backup">Melden Sie sich an, um Backup-Codes zu erstellen, die Sie auf mehreren Geräten verwenden können</string>
+    <string name="one_time_code_for_extra_security">Einmalcode für zusätzliche Sicherheit</string>
+    <string name="protect_your_account_with">Schützen Sie Ihr Konto mit einfacher Zwei-Faktor-Authentifizierung für zusätzliche Sicherheit</string>
+    <string name="transfer_codes">Codes übertragen</string>
+    <string name="backup_your_codes">Ihre Codes sichern</string>
+    <string name="import_a_compatible">Importieren Sie hier eine kompatible Datei, um neue Codes hinzuzufügen</string>
+    <string name="export_a_compatible_vault">Exportieren Sie hier eine kompatible Datei, um Ihre Codes zu exportieren</string>
+    <string name="not_now">Nicht jetzt</string>
+    <string name="sign_in_to_back_codes">Melden Sie sich an, um Ihre Codes zu sichern und Ihre Daten für die zukünftige Nutzung zu schützen.</string>
+    <string name="looks_like_you_haven">Es sieht so aus, als hätten Sie noch keine Codes hinzugefügt.</string>
+    <string name="use_system_default">Systemstandard verwenden</string>
+    <string name="dark">Dunkel</string>
+    <string name="light">Hell</string>
+    <string name="select_your_desired_theme">Wählen Sie Ihr gewünschtes Thema</string>
+    <string name="themes">Themen</string>
+    <string name="system">System</string>
+    <string name="use_fingerprint">Fingerabdruck verwenden</string>
+    <string name="set_password">Passwort festlegen</string>
+    <string name="backup_settings">Backup-Einstellungen</string>
+    <string name="logout">Abmelden</string>
+    <string name="warning">Warnung: Wenn Sie Ihr Passwort vergessen, verlieren Sie dauerhaft den Zugriff auf Ihre Codes. Es gibt keine Möglichkeit, diese ohne Passwort wiederherzustellen.</string>
+    <string name="enter_your_current_password">Geben Sie Ihr aktuelles Passwort ein</string>
+    <string name="your_current_password">Ihr aktuelles Passwort ist nicht korrekt! Versuchen Sie es erneut.</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="n_password">Passwort</string>
+    <string name="confirm_password">Passwort bestätigen</string>
+    <string name="save_password">Passwort speichern</string>
+    <string name="change_password">Passwort ändern</string>
+    <string name="advanced">Erweitert</string>
+    <string name="account_details">Kontodetails</string>
+    <string name="your_entered_wrong">Sie haben ein falsches Passwort eingegeben! Versuchen Sie es erneut.</string>
+    <string name="enter_your_password_to_continue">Geben Sie Ihr Passwort ein, um fortzufahren</string>
+    <string name="welcome_back">Willkommen zurück!</string>
+    <string name="or_open_app_with_your_fingerprint">Oder öffnen Sie die App mit Ihrem Fingerabdruck</string>
+    <string name="n_continue">Weiter</string>
+    <string name="add_new">Neu hinzufügen</string>
+    <string name="save">Speichern</string>
+    <string name="create_new_group">Neue Gruppe erstellen</string>
+    <string name="enter_group_name_and_tap_on_save">Geben Sie den Gruppennamen ein und tippen Sie auf Speichern</string>
+    <string name="group_name">Gruppenname</string>
+    <string name="search_your_codes">Suchen Sie Ihre Codes</string>
+    <string name="done">Fertig</string>
+    <string name="select_all">Alles auswählen</string>
+    <string name="edit">Bearbeiten</string>
+
+
+
 </resources>

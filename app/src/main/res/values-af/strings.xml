@@ -92,4 +92,76 @@
     <string name="stronger_security_with_secureauth">Sterker Sekuriteit met SecureAuth</string>
     <string name="exit">Verlaat</string>
 
+
+
+    <string name="skip">Slaan oor</string>
+    <string name="privacy_protected_even_offline">Privaatheid beskerm, selfs vanlyn</string>
+    <string name="we_don_t_store_your">Ons stoor nie jou persoonlike inligting nie. Jou privaatheid is altyd beskerm met vanlyn ondersteuning</string>
+    <string name="add_accounts_easily">Voeg maklik rekeninge by met QR</string>
+    <string name="adding_an_account_is_super">Om \'n rekening by te voeg is baie eenvoudig! Skandeer net die QR-kode, en jy is klaar</string>
+    <string name="backup_and_sync">Rugsteun en sinkroniseer op alle toestelle</string>
+    <string name="your_accounts_are_backed_up">Jou rekeninge word gerugsteun en gesinkroniseer oor al jou toestelle, sodat jy altyd gedek is.</string>
+    <string name="get_started">Begin</string>
+    <string name="let_s_go">Kom ons gaan</string>
+    <string name="add_account">Voeg rekening by</string>
+    <string name="backup_data">Rugsteun data</string>
+    <string name="how_it_works">Hoe dit werk</string>
+    <string name="data_is_not_backed_up_yet">Data is nog nie gerugsteun nie</string>
+    <string name="enter_a_manual_key">Voer \'n handmatige sleutel in</string>
+    <string name="scan_code">Skandeer kode</string>
+    <string name="authenticator_code">Verifikasiekode</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Skandeer QR-kode of voer die opstelling-sleutel handmatig in</string>
+    <string name="your_data_is_backed_up_successfully">Jou data is suksesvol gerugsteun</string>
+    <string name="respective_platform">Genereer QR of sleutel op toepaslike platform</string>
+    <string name="authentication_security_section">In die verifikasie-sekuriteit afdeling, genereer \'n QR-kode of skep \'n sekuriteitssleutel</string>
+    <string name="enter_key_manually">Skandeer QR-kode of voer sleutel handmatig in</string>
+    <string name="create_backup">Skep rugsteun om kodes vir die toekoms te beveilig</string>
+    <string name="sign_in_to_create_backup">Teken aan om rugsteunkodes te skep wat jy op meerdere toestelle kan gebruik</string>
+    <string name="one_time_code_for_extra_security">Eenmalige kode vir ekstra sekuriteit</string>
+    <string name="protect_your_account_with">Beskerm jou rekening met maklike tweefaktor-verifikasie vir ekstra veiligheid</string>
+    <string name="transfer_codes">Oordrag kodes</string>
+    <string name="backup_your_codes">Rugsteun jou kodes</string>
+    <string name="import_a_compatible">Laai \'n versoenbare lêer hier in om nuwe kodes te bring</string>
+    <string name="export_a_compatible_vault">Eksporteer \'n versoenbare lêer hier om jou kodes uit te voer</string>
+    <string name="not_now">Nie nou nie</string>
+    <string name="sign_in_to_back_codes">Teken aan om jou kodes te rugsteun en jou data vir toekomstige gebruik te beveilig.</string>
+    <string name="looks_like_you_haven">Dit lyk of jy nog geen kodes bygevoeg het nie.</string>
+    <string name="use_system_default">Gebruik stelsel standaard</string>
+    <string name="dark">Donker</string>
+    <string name="light">Lig</string>
+    <string name="select_your_desired_theme">Kies jou gewenste tema</string>
+    <string name="themes">Temas</string>
+    <string name="system">Stelsel</string>
+    <string name="use_fingerprint">Gebruik vingerafdruk</string>
+    <string name="set_password">Stel wagwoord</string>
+    <string name="backup_settings">Rugsteun instellings</string>
+    <string name="logout">Teken uit</string>
+    <string name="warning">Waarskuwing: As jy jou wagwoord vergeet, sal jy permanent toegang tot jou kodes verloor. Daar is geen manier om dit sonder die wagwoord te herwin nie.</string>
+    <string name="enter_your_current_password">Voer jou huidige wagwoord in</string>
+    <string name="your_current_password">Jou huidige wagwoord is nie korrek nie! Probeer weer.</string>
+    <string name="new_password">Nuwe wagwoord</string>
+    <string name="n_password">Wagwoord</string>
+    <string name="confirm_password">Bevestig wagwoord</string>
+    <string name="save_password">Stoor wagwoord</string>
+    <string name="change_password">Verander wagwoord</string>
+    <string name="advanced">Gevorderd</string>
+    <string name="account_details">Rekeningbesonderhede</string>
+    <string name="your_entered_wrong">Jy het die verkeerde wagwoord ingevoer! Probeer weer.</string>
+    <string name="enter_your_password_to_continue">Voer jou wagwoord in om voort te gaan</string>
+    <string name="welcome_back">Welkom terug!</string>
+    <string name="or_open_app_with_your_fingerprint">Of maak app oop met jou vingerafdruk</string>
+    <string name="n_continue">Gaan voort</string>
+    <string name="add_new">Voeg nuut by</string>
+    <string name="save">Stoor</string>
+    <string name="create_new_group">Skep nuwe groep</string>
+    <string name="enter_group_name_and_tap_on_save">Voer groepnaam in en tik op stoor</string>
+    <string name="group_name">Groepnaam</string>
+    <string name="search_your_codes">Soek jou kodes</string>
+    <string name="done">Klaar</string>
+    <string name="select_all">Kies alles</string>
+    <string name="edit">Wysig</string>
+
+
+
+
 </resources>

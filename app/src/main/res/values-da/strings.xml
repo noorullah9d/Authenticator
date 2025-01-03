@@ -96,4 +96,75 @@
 
 
 
+    <string name="skip">Spring over</string>
+    <string name="privacy_protected_even_offline">Privatliv beskyttet, selv offline</string>
+    <string name="we_don_t_store_your">Vi gemmer ikke dine personlige oplysninger. Dit privatliv er altid beskyttet med offline support</string>
+    <string name="add_accounts_easily">Tilføj nemt konti med QR</string>
+    <string name="adding_an_account_is_super">Det er supernemt at tilføje en konto! Scan bare QR-koden, og så er du færdig</string>
+    <string name="backup_and_sync">Backup og synkronisering på alle enheder</string>
+    <string name="your_accounts_are_backed_up">Dine konti er sikkerhedskopieret og synkroniseret på alle dine enheder, så du altid er dækket.</string>
+    <string name="get_started">Kom i gang</string>
+    <string name="let_s_go">Lad os komme i gang</string>
+    <string name="add_account">Tilføj konto</string>
+    <string name="backup_data">Sikkerhedskopier data</string>
+    <string name="how_it_works">Sådan fungerer det</string>
+    <string name="data_is_not_backed_up_yet">Data er endnu ikke sikkerhedskopieret</string>
+    <string name="enter_a_manual_key">Indtast en manuel nøgle</string>
+    <string name="scan_code">Scan kode</string>
+    <string name="authenticator_code">Authenticator-kode</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Scan QR-koden, eller indtast opsætningsnøglen manuelt</string>
+    <string name="your_data_is_backed_up_successfully">Dine data er blevet sikkerhedskopieret med succes</string>
+    <string name="respective_platform">Generer QR eller nøgle på den relevante platform</string>
+    <string name="authentication_security_section">I sikkerhedssektionen for autentifikation, generer en QR-kode eller opret en sikkerhedsnøgle</string>
+    <string name="enter_key_manually">Scan QR-kode eller indtast nøgle manuelt</string>
+    <string name="create_backup">Opret sikkerhedskopi for at sikre koder til fremtiden</string>
+    <string name="sign_in_to_create_backup">Log ind for at oprette sikkerhedskopikoder, som du kan bruge på flere enheder</string>
+    <string name="one_time_code_for_extra_security">Engangskode for ekstra sikkerhed</string>
+    <string name="protect_your_account_with">Beskyt din konto med nem to-faktor-autentifikation for ekstra sikkerhed</string>
+    <string name="transfer_codes">Overfør koder</string>
+    <string name="backup_your_codes">Sikkerhedskopier dine koder</string>
+    <string name="import_a_compatible">Importer en kompatibel fil her for at tilføje nye koder</string>
+    <string name="export_a_compatible_vault">Eksporter en kompatibel fil her for at eksportere dine koder</string>
+    <string name="not_now">Ikke nu</string>
+    <string name="sign_in_to_back_codes">Log ind for at sikkerhedskopiere dine koder og beskytte dine data til fremtidig brug.</string>
+    <string name="looks_like_you_haven">Det ser ud til, at du endnu ikke har tilføjet nogen koder.</string>
+    <string name="use_system_default">Brug systemstandard</string>
+    <string name="dark">Mørk</string>
+    <string name="light">Lys</string>
+    <string name="select_your_desired_theme">Vælg det ønskede tema</string>
+    <string name="themes">Temaer</string>
+    <string name="system">System</string>
+    <string name="use_fingerprint">Brug fingeraftryk</string>
+    <string name="set_password">Indstil adgangskode</string>
+    <string name="backup_settings">Backupindstillinger</string>
+    <string name="logout">Log ud</string>
+    <string name="warning">Advarsel: Hvis du glemmer din adgangskode, mister du permanent adgangen til dine koder. Der er ingen måde at gendanne dem uden adgangskoden.</string>
+    <string name="enter_your_current_password">Indtast din nuværende adgangskode</string>
+    <string name="your_current_password">Din nuværende adgangskode er ikke korrekt! Prøv igen.</string>
+    <string name="new_password">Ny adgangskode</string>
+    <string name="n_password">Adgangskode</string>
+    <string name="confirm_password">Bekræft adgangskode</string>
+    <string name="save_password">Gem adgangskode</string>
+    <string name="change_password">Skift adgangskode</string>
+    <string name="advanced">Avanceret</string>
+    <string name="account_details">Kontodetaljer</string>
+    <string name="your_entered_wrong">Du indtastede en forkert adgangskode! Prøv igen.</string>
+    <string name="enter_your_password_to_continue">Indtast din adgangskode for at fortsætte</string>
+    <string name="welcome_back">Velkommen tilbage!</string>
+    <string name="or_open_app_with_your_fingerprint">Eller åbn appen med dit fingeraftryk</string>
+    <string name="n_continue">Fortsæt</string>
+    <string name="add_new">Tilføj ny</string>
+    <string name="save">Gem</string>
+    <string name="create_new_group">Opret ny gruppe</string>
+    <string name="enter_group_name_and_tap_on_save">Indtast gruppenavn og tryk på gem</string>
+    <string name="group_name">Gruppenavn</string>
+    <string name="search_your_codes">Søg i dine koder</string>
+    <string name="done">Færdig</string>
+    <string name="select_all">Vælg alle</string>
+    <string name="edit">Rediger</string>
+
+
+
+
+
 </resources>

@@ -125,8 +125,6 @@
     <string name="not_now">Not now</string>
     <string name="sign_in_to_back_codes">Sign in to back up your codes and secure your data for future use.</string>
     <string name="looks_like_you_haven">Looks like you haven\'t added any codes yet.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="use_system_default">Use system default</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
@@ -147,7 +145,7 @@
     <string name="change_password">Change password</string>
     <string name="advanced">Advanced</string>
     <string name="account_details">Account details</string>
-    <string name="your_entered_wrong">Your entered wrong password! Try again.</string>
+    <string name="your_entered_wrong">You entered wrong password! Try again.</string>
     <string name="enter_your_password_to_continue">Enter your password to continue</string>
     <string name="welcome_back">Welcome back!</string>
     <string name="or_open_app_with_your_fingerprint">Or open app with your fingerprint</string>

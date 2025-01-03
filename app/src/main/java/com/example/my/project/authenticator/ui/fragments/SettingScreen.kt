@@ -80,6 +80,13 @@ class SettingScreen : Fragment() {
 
         binding.apply {
 
+
+            if (prefsHelper?.userEmail != "") {
+                emailText.text = prefsHelper?.userEmail
+            } else {
+                emailText.text = getText(R.string.backup_your_codes)
+            }
+
             when (prefsHelper?.userTheme) {
                 getString(R.string.system) -> {
                     tvTheme.text = getString(R.string.system)
@@ -132,9 +139,7 @@ class SettingScreen : Fragment() {
             }
 
             ivSettingsCancel.setOnClickListener {
-                val navOptions = NavOptions.Builder()
-                    .setPopUpTo(R.id.homeFragment, true)
-                    .build()
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
 
                 findNavController().navigate(R.id.homeFragment, null, navOptions)
             }
@@ -180,8 +185,7 @@ class SettingScreen : Fragment() {
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
-        } else
-            findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+        } else findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
     }
 
     private fun signInWithGoogle() {
@@ -190,10 +194,7 @@ class SettingScreen : Fragment() {
     }
 
     private fun fingerprint() {
-        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Unlock to use Authenticator")
-            .setTitle("Touch the fingerprint sensor")
-            .setNegativeButtonText("Dismiss")
-            .build().authenticate(object : FingerprintCallback {
+        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Unlock to use Authenticator").setTitle("Touch the fingerprint sensor").setNegativeButtonText("Dismiss").build().authenticate(object : FingerprintCallback {
                 override fun onAuthenticationCancelled() {
                     binding.ivUseFingerprintNext.isChecked = false
                     Log.d(TAG, "onAuthenticationCancelled: ")
@@ -257,8 +258,7 @@ class SettingScreen : Fragment() {
 
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
+        auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
                 } else {

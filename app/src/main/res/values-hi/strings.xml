@@ -95,5 +95,73 @@
     <string name="exit">बाहर निकलें</string>
 
 
+    <string name="skip">छोड़ें</string>
+    <string name="privacy_protected_even_offline">गोपनीयता सुरक्षित है, यहां तक कि ऑफ़लाइन भी</string>
+    <string name="we_don_t_store_your">हम आपकी व्यक्तिगत जानकारी संग्रहीत नहीं करते। आपकी गोपनीयता हमेशा सुरक्षित रहती है, ऑफ़लाइन समर्थन के साथ</string>
+    <string name="add_accounts_easily">QR कोड से आसानी से खाते जोड़ें</string>
+    <string name="adding_an_account_is_super">खाता जोड़ना बहुत आसान है! बस QR कोड स्कैन करें और आप तैयार हैं</string>
+    <string name="backup_and_sync">सभी डिवाइसों पर बैकअप और सिंक करें</string>
+    <string name="your_accounts_are_backed_up">आपके खाते बैकअप में हैं और आपके सभी उपकरणों पर सिंक किए गए हैं, ताकि आप हमेशा सुरक्षित रहें।</string>
+    <string name="get_started">शुरू करें</string>
+    <string name="let_s_go">चलिए शुरू करते हैं</string>
+    <string name="add_account">खाता जोड़ें</string>
+    <string name="backup_data">डेटा का बैकअप लें</string>
+    <string name="how_it_works">यह कैसे काम करता है</string>
+    <string name="data_is_not_backed_up_yet">डेटा का अभी तक बैकअप नहीं लिया गया है</string>
+    <string name="enter_a_manual_key">मैनुअल कुंजी दर्ज करें</string>
+    <string name="scan_code">कोड स्कैन करें</string>
+    <string name="authenticator_code">प्रमाणीकरण कोड</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">QR कोड स्कैन करें या सेटअप कुंजी मैन्युअल रूप से दर्ज करें</string>
+    <string name="your_data_is_backed_up_successfully">आपका डेटा सफलतापूर्वक बैकअप में ले लिया गया है</string>
+    <string name="respective_platform">संबंधित प्लेटफ़ॉर्म में QR कोड या कुंजी जनरेट करें</string>
+    <string name="authentication_security_section">प्रमाणीकरण सुरक्षा अनुभाग में, QR कोड जनरेट करें या सुरक्षा कुंजी बनाएँ</string>
+    <string name="enter_key_manually">QR कोड स्कैन करें या कुंजी मैन्युअल रूप से दर्ज करें</string>
+    <string name="create_backup">भविष्य के लिए कोड सुरक्षित रखने के लिए बैकअप बनाएं</string>
+    <string name="sign_in_to_create_backup">बैकअप कोड बनाने के लिए साइन इन करें जिन्हें आप कई उपकरणों पर उपयोग कर सकते हैं</string>
+    <string name="one_time_code_for_extra_security">अतिरिक्त सुरक्षा के लिए एक बार उपयोग का कोड</string>
+    <string name="protect_your_account_with">अतिरिक्त सुरक्षा के लिए आसान दो-कारक प्रमाणीकरण के साथ अपना खाता सुरक्षित रखें</string>
+    <string name="transfer_codes">कोड स्थानांतरित करें</string>
+    <string name="backup_your_codes">अपने कोड का बैकअप लें</string>
+    <string name="import_a_compatible">नए कोड लाने के लिए यहां एक संगत फ़ाइल आयात करें</string>
+    <string name="export_a_compatible_vault">अपने कोड निर्यात करने के लिए यहां एक संगत फ़ाइल निर्यात करें</string>
+    <string name="not_now">अभी नहीं</string>
+    <string name="sign_in_to_back_codes">अपने कोड का बैकअप लेने और अपने डेटा को भविष्य के उपयोग के लिए सुरक्षित करने के लिए साइन इन करें।</string>
+    <string name="looks_like_you_haven">ऐसा लगता है कि आपने अभी तक कोई कोड नहीं जोड़ा है।</string>
+    <string name="use_system_default">सिस्टम डिफ़ॉल्ट का उपयोग करें</string>
+    <string name="dark">डार्क</string>
+    <string name="light">लाइट</string>
+    <string name="select_your_desired_theme">अपना पसंदीदा थीम चुनें</string>
+    <string name="themes">थीम</string>
+    <string name="system">सिस्टम</string>
+    <string name="use_fingerprint">फिंगरप्रिंट का उपयोग करें</string>
+    <string name="set_password">पासवर्ड सेट करें</string>
+    <string name="backup_settings">बैकअप सेटिंग्स</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="warning">चेतावनी: यदि आप अपना पासवर्ड भूल जाते हैं, तो आप अपने कोड तक पहुंच स्थायी रूप से खो देंगे। पासवर्ड के बिना उन्हें पुनर्प्राप्त करने का कोई तरीका नहीं है।</string>
+    <string name="enter_your_current_password">अपना वर्तमान पासवर्ड दर्ज करें</string>
+    <string name="your_current_password">आपका वर्तमान पासवर्ड सही नहीं है! फिर से प्रयास करें।</string>
+    <string name="new_password">नया पासवर्ड</string>
+    <string name="n_password">पासवर्ड</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि करें</string>
+    <string name="save_password">पासवर्ड सहेजें</string>
+    <string name="change_password">पासवर्ड बदलें</string>
+    <string name="advanced">उन्नत</string>
+    <string name="account_details">खाते का विवरण</string>
+    <string name="your_entered_wrong">आपने गलत पासवर्ड दर्ज किया है! फिर से प्रयास करें।</string>
+    <string name="enter_your_password_to_continue">जारी रखने के लिए अपना पासवर्ड दर्ज करें</string>
+    <string name="welcome_back">वापसी पर स्वागत है!</string>
+    <string name="or_open_app_with_your_fingerprint">या अपनी फिंगरप्रिंट से ऐप खोलें</string>
+    <string name="n_continue">जारी रखें</string>
+    <string name="add_new">नया जोड़ें</string>
+    <string name="save">सहेजें</string>
+    <string name="create_new_group">नया समूह बनाएं</string>
+    <string name="enter_group_name_and_tap_on_save">समूह का नाम दर्ज करें और सहेजें पर टैप करें</string>
+    <string name="group_name">समूह का नाम</string>
+    <string name="search_your_codes">अपने कोड खोजें</string>
+    <string name="done">हो गया</string>
+    <string name="select_all">सभी का चयन करें</string>
+    <string name="edit">संपादित करें</string>
+
+
 
 </resources>

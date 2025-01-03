@@ -93,4 +93,74 @@
     <string name="stronger_security_with_secureauth">أمان أقوى مع SecureAuth</string>
     <string name="exit">خروج</string>
 
+
+    <string name="skip">تخطي</string>
+    <string name="privacy_protected_even_offline">الخصوصية محمية، حتى في وضع عدم الاتصال</string>
+    <string name="we_don_t_store_your">نحن لا نخزن معلوماتك الشخصية. خصوصيتك دائمًا محمية مع دعم وضع عدم الاتصال</string>
+    <string name="add_accounts_easily">أضف الحسابات بسهولة باستخدام QR</string>
+    <string name="adding_an_account_is_super">إضافة حساب أمر بسيط للغاية! فقط قم بمسح رمز QR، وأنت جاهز</string>
+    <string name="backup_and_sync">النسخ الاحتياطي والمزامنة على جميع الأجهزة</string>
+    <string name="your_accounts_are_backed_up">يتم نسخ حساباتك احتياطيًا ومزامنتها عبر جميع أجهزتك، لذا فأنت دائمًا محمي.</string>
+    <string name="get_started">ابدأ</string>
+    <string name="let_s_go">هيا بنا</string>
+    <string name="add_account">إضافة حساب</string>
+    <string name="backup_data">نسخ البيانات احتياطيًا</string>
+    <string name="how_it_works">كيف يعمل</string>
+    <string name="data_is_not_backed_up_yet">البيانات لم يتم نسخها احتياطيًا بعد</string>
+    <string name="enter_a_manual_key">أدخل مفتاحًا يدويًا</string>
+    <string name="scan_code">مسح الرمز</string>
+    <string name="authenticator_code">رمز المصادقة</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">قم بمسح رمز QR أو أدخل مفتاح الإعداد يدويًا</string>
+    <string name="your_data_is_backed_up_successfully">تم نسخ بياناتك احتياطيًا بنجاح</string>
+    <string name="respective_platform">قم بإنشاء رمز QR أو مفتاح على النظام الأساسي المناسب</string>
+    <string name="authentication_security_section">في قسم أمان المصادقة، قم بإنشاء رمز QR أو إنشاء مفتاح أمان</string>
+    <string name="enter_key_manually">قم بمسح رمز QR أو أدخل المفتاح يدويًا</string>
+    <string name="create_backup">قم بإنشاء نسخة احتياطية لتأمين الرموز للمستقبل</string>
+    <string name="sign_in_to_create_backup">سجّل الدخول لإنشاء رموز احتياطية يمكنك استخدامها على أجهزة متعددة</string>
+    <string name="one_time_code_for_extra_security">رمز لمرة واحدة لمزيد من الأمان</string>
+    <string name="protect_your_account_with">احمِ حسابك باستخدام المصادقة الثنائية بسهولة لمزيد من الأمان</string>
+    <string name="transfer_codes">نقل الرموز</string>
+    <string name="backup_your_codes">نسخ رموزك احتياطيًا</string>
+    <string name="import_a_compatible">استورد ملفًا متوافقًا هنا لإضافة رموز جديدة</string>
+    <string name="export_a_compatible_vault">صدّر ملفًا متوافقًا هنا لتصدير رموزك</string>
+    <string name="not_now">ليس الآن</string>
+    <string name="sign_in_to_back_codes">سجّل الدخول لنسخ رموزك احتياطيًا وتأمين بياناتك للاستخدام المستقبلي.</string>
+    <string name="looks_like_you_haven">يبدو أنك لم تقم بإضافة أي رموز بعد.</string>
+    <string name="use_system_default">استخدام الإعداد الافتراضي للنظام</string>
+    <string name="dark">داكن</string>
+    <string name="light">فاتح</string>
+    <string name="select_your_desired_theme">اختر السمة التي تفضلها</string>
+    <string name="themes">السمات</string>
+    <string name="system">النظام</string>
+    <string name="use_fingerprint">استخدام بصمة الإصبع</string>
+    <string name="set_password">تعيين كلمة المرور</string>
+    <string name="backup_settings">إعدادات النسخ الاحتياطي</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="warning">تحذير: إذا نسيت كلمة المرور، ستفقد الوصول إلى رموزك بشكل دائم. لا توجد طريقة لاستعادتها بدون كلمة المرور.</string>
+    <string name="enter_your_current_password">أدخل كلمة المرور الحالية</string>
+    <string name="your_current_password">كلمة المرور الحالية غير صحيحة! حاول مرة أخرى.</string>
+    <string name="new_password">كلمة مرور جديدة</string>
+    <string name="n_password">كلمة المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="save_password">حفظ كلمة المرور</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="advanced">خيارات متقدمة</string>
+    <string name="account_details">تفاصيل الحساب</string>
+    <string name="your_entered_wrong">أدخلت كلمة مرور خاطئة! حاول مرة أخرى.</string>
+    <string name="enter_your_password_to_continue">أدخل كلمة المرور للمتابعة</string>
+    <string name="welcome_back">مرحبًا بعودتك!</string>
+    <string name="or_open_app_with_your_fingerprint">أو افتح التطبيق باستخدام بصمة الإصبع</string>
+    <string name="n_continue">متابعة</string>
+    <string name="add_new">إضافة جديد</string>
+    <string name="save">حفظ</string>
+    <string name="create_new_group">إنشاء مجموعة جديدة</string>
+    <string name="enter_group_name_and_tap_on_save">أدخل اسم المجموعة واضغط على حفظ</string>
+    <string name="group_name">اسم المجموعة</string>
+    <string name="search_your_codes">ابحث عن رموزك</string>
+    <string name="done">تم</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="edit">تعديل</string>
+
+
+
 </resources>

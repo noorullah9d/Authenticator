@@ -94,4 +94,74 @@
     <string name="stronger_security_with_secureauth">Silnější zabezpečení se SecureAuth</string>
     <string name="exit">Ukončit</string>
 
+
+
+    <string name="skip">Přeskočit</string>
+    <string name="privacy_protected_even_offline">Ochrana soukromí, i offline</string>
+    <string name="we_don_t_store_your">Neukládáme vaše osobní údaje. Vaše soukromí je vždy chráněno s podporou offline režimu</string>
+    <string name="add_accounts_easily">Snadno přidejte účty pomocí QR</string>
+    <string name="adding_an_account_is_super">Přidání účtu je velmi jednoduché! Stačí naskenovat QR kód a je hotovo</string>
+    <string name="backup_and_sync">Zálohování a synchronizace na všech zařízeních</string>
+    <string name="your_accounts_are_backed_up">Vaše účty jsou zálohovány a synchronizovány na všech vašich zařízeních, takže jste vždy v bezpečí.</string>
+    <string name="get_started">Začít</string>
+    <string name="let_s_go">Pojďme na to</string>
+    <string name="add_account">Přidat účet</string>
+    <string name="backup_data">Zálohovat data</string>
+    <string name="how_it_works">Jak to funguje</string>
+    <string name="data_is_not_backed_up_yet">Data ještě nebyla zálohována</string>
+    <string name="enter_a_manual_key">Zadejte ruční klíč</string>
+    <string name="scan_code">Naskenovat kód</string>
+    <string name="authenticator_code">Autentizační kód</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Naskenujte QR kód nebo ručně zadejte klíč</string>
+    <string name="your_data_is_backed_up_successfully">Vaše data byla úspěšně zálohována</string>
+    <string name="respective_platform">Vygenerujte QR kód nebo klíč na odpovídající platformě</string>
+    <string name="authentication_security_section">V sekci zabezpečení autentizace vygenerujte QR kód nebo vytvořte bezpečnostní klíč</string>
+    <string name="enter_key_manually">Naskenujte QR kód nebo zadejte klíč ručně</string>
+    <string name="create_backup">Vytvořte zálohu pro zabezpečení kódů do budoucna</string>
+    <string name="sign_in_to_create_backup">Přihlaste se k vytvoření záložních kódů, které můžete používat na více zařízeních</string>
+    <string name="one_time_code_for_extra_security">Jednorázový kód pro větší bezpečnost</string>
+    <string name="protect_your_account_with">Chraňte svůj účet snadnou dvoufaktorovou autentizací pro větší bezpečnost</string>
+    <string name="transfer_codes">Převod kódů</string>
+    <string name="backup_your_codes">Zálohujte své kódy</string>
+    <string name="import_a_compatible">Importujte kompatibilní soubor trezoru a přidejte nové kódy</string>
+    <string name="export_a_compatible_vault">Exportujte kompatibilní soubor trezoru pro export kódů</string>
+    <string name="not_now">Teď ne</string>
+    <string name="sign_in_to_back_codes">Přihlaste se k zálohování kódů a zabezpečení dat pro budoucí použití.</string>
+    <string name="looks_like_you_haven">Vypadá to, že jste ještě nepřidali žádné kódy.</string>
+    <string name="use_system_default">Použít výchozí nastavení systému</string>
+    <string name="dark">Tmavý</string>
+    <string name="light">Světlý</string>
+    <string name="select_your_desired_theme">Vyberte požadované téma</string>
+    <string name="themes">Témata</string>
+    <string name="system">Systém</string>
+    <string name="use_fingerprint">Použít otisk prstu</string>
+    <string name="set_password">Nastavit heslo</string>
+    <string name="backup_settings">Nastavení zálohy</string>
+    <string name="logout">Odhlásit se</string>
+    <string name="warning">Varování: Pokud zapomenete heslo, trvale ztratíte přístup ke svým kódům. Bez hesla je nelze obnovit.</string>
+    <string name="enter_your_current_password">Zadejte své aktuální heslo</string>
+    <string name="your_current_password">Vaše aktuální heslo není správné! Zkuste to znovu.</string>
+    <string name="new_password">Nové heslo</string>
+    <string name="n_password">Heslo</string>
+    <string name="confirm_password">Potvrdit heslo</string>
+    <string name="save_password">Uložit heslo</string>
+    <string name="change_password">Změnit heslo</string>
+    <string name="advanced">Pokročilé</string>
+    <string name="account_details">Detaily účtu</string>
+    <string name="your_entered_wrong">Zadali jste nesprávné heslo! Zkuste to znovu.</string>
+    <string name="enter_your_password_to_continue">Zadejte heslo pro pokračování</string>
+    <string name="welcome_back">Vítejte zpět!</string>
+    <string name="or_open_app_with_your_fingerprint">Nebo otevřete aplikaci pomocí otisku prstu</string>
+    <string name="n_continue">Pokračovat</string>
+    <string name="add_new">Přidat nové</string>
+    <string name="save">Uložit</string>
+    <string name="create_new_group">Vytvořit novou skupinu</string>
+    <string name="enter_group_name_and_tap_on_save">Zadejte název skupiny a klepněte na Uložit</string>
+    <string name="group_name">Název skupiny</string>
+    <string name="search_your_codes">Hledat vaše kódy</string>
+    <string name="done">Hotovo</string>
+    <string name="select_all">Vybrat vše</string>
+    <string name="edit">Upravit</string>
+
+
 </resources>

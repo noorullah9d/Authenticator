@@ -70,7 +70,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:text="@string/backup_your_codes"
+                    android:id="@+id/emailText"
                     android:textColor="@color/n_consis_white"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/icClouds"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -292,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:fontFamily="@font/open_sans_semi_bold"
-                        android:text="@string/system"
+                        android:text="@string/light"
                         android:textColor="@color/n_sky_blue"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -95,6 +95,73 @@
     <string name="exit">Keluar</string>
 
 
+    <string name="skip">Lewati</string>
+    <string name="privacy_protected_even_offline">Privasi terlindungi, bahkan saat offline</string>
+    <string name="we_don_t_store_your">Kami tidak menyimpan informasi pribadi Anda. Privasi Anda selalu terlindungi, dengan dukungan offline</string>
+    <string name="add_accounts_easily">Tambahkan akun dengan mudah menggunakan QR</string>
+    <string name="adding_an_account_is_super">Menambahkan akun sangatlah mudah! Cukup pindai kode QR, dan selesai</string>
+    <string name="backup_and_sync">Cadangkan dan sinkronkan di semua perangkat</string>
+    <string name="your_accounts_are_backed_up">Akun Anda dicadangkan dan disinkronkan di semua perangkat Anda, sehingga Anda selalu terlindungi.</string>
+    <string name="get_started">Mulai</string>
+    <string name="let_s_go">Ayo Mulai</string>
+    <string name="add_account">Tambahkan Akun</string>
+    <string name="backup_data">Cadangkan Data</string>
+    <string name="how_it_works">Cara Kerja</string>
+    <string name="data_is_not_backed_up_yet">Data belum dicadangkan</string>
+    <string name="enter_a_manual_key">Masukkan Kunci Manual</string>
+    <string name="scan_code">Pindai Kode</string>
+    <string name="authenticator_code">Kode Otentikasi</string>
+    <string name="scan_qr_code_or_manually_enter_the_setup_key">Pindai kode QR atau masukkan kunci pengaturan secara manual</string>
+    <string name="your_data_is_backed_up_successfully">Data Anda berhasil dicadangkan</string>
+    <string name="respective_platform">Buat kode QR atau kunci di platform yang sesuai</string>
+    <string name="authentication_security_section">Di bagian keamanan autentikasi, buat kode QR atau kunci keamanan</string>
+    <string name="enter_key_manually">Pindai kode QR atau masukkan kunci secara manual</string>
+    <string name="create_backup">Buat cadangan untuk mengamankan kode Anda di masa depan</string>
+    <string name="sign_in_to_create_backup">Masuk untuk membuat kode cadangan yang dapat digunakan di beberapa perangkat</string>
+    <string name="one_time_code_for_extra_security">Kode sekali pakai untuk keamanan tambahan</string>
+    <string name="protect_your_account_with">Lindungi akun Anda dengan autentikasi dua faktor yang mudah untuk keamanan tambahan</string>
+    <string name="transfer_codes">Transfer Kode</string>
+    <string name="backup_your_codes">Cadangkan Kode Anda</string>
+    <string name="import_a_compatible">Impor file kompatibel di sini untuk menambahkan kode baru</string>
+    <string name="export_a_compatible_vault">Ekspor file kompatibel di sini untuk mengekspor kode Anda</string>
+    <string name="not_now">Tidak Sekarang</string>
+    <string name="sign_in_to_back_codes">Masuk untuk mencadangkan kode Anda dan mengamankan data Anda untuk penggunaan di masa depan.</string>
+    <string name="looks_like_you_haven">Sepertinya Anda belum menambahkan kode apa pun.</string>
+    <string name="use_system_default">Gunakan Default Sistem</string>
+    <string name="dark">Gelap</string>
+    <string name="light">Terang</string>
+    <string name="select_your_desired_theme">Pilih tema yang Anda inginkan</string>
+    <string name="themes">Tema</string>
+    <string name="system">Sistem</string>
+    <string name="use_fingerprint">Gunakan Sidik Jari</string>
+    <string name="set_password">Atur Kata Sandi</string>
+    <string name="backup_settings">Pengaturan Cadangan</string>
+    <string name="logout">Keluar</string>
+    <string name="warning">Peringatan: Jika Anda lupa kata sandi Anda, Anda akan kehilangan akses ke kode Anda secara permanen. Tidak ada cara untuk memulihkannya tanpa kata sandi.</string>
+    <string name="enter_your_current_password">Masukkan kata sandi Anda saat ini</string>
+    <string name="your_current_password">Kata sandi Anda saat ini salah! Coba lagi.</string>
+    <string name="new_password">Kata Sandi Baru</string>
+    <string name="n_password">Kata Sandi</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
+    <string name="save_password">Simpan Kata Sandi</string>
+    <string name="change_password">Ubah Kata Sandi</string>
+    <string name="advanced">Lanjutan</string>
+    <string name="account_details">Detail Akun</string>
+    <string name="your_entered_wrong">Anda memasukkan kata sandi yang salah! Coba lagi.</string>
+    <string name="enter_your_password_to_continue">Masukkan kata sandi Anda untuk melanjutkan</string>
+    <string name="welcome_back">Selamat Datang Kembali!</string>
+    <string name="or_open_app_with_your_fingerprint">Atau buka aplikasi dengan sidik jari Anda</string>
+    <string name="n_continue">Lanjutkan</string>
+    <string name="add_new">Tambahkan Baru</string>
+    <string name="save">Simpan</string>
+    <string name="create_new_group">Buat Grup Baru</string>
+    <string name="enter_group_name_and_tap_on_save">Masukkan nama grup dan tekan Simpan</string>
+    <string name="group_name">Nama Grup</string>
+    <string name="search_your_codes">Cari Kode Anda</string>
+    <string name="done">Selesai</string>
+    <string name="select_all">Pilih Semua</string>
+    <string name="edit">Edit</string>
+
 
 
 </resources>
