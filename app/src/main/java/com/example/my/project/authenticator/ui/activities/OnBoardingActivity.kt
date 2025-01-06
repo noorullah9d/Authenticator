@@ -44,10 +44,6 @@ class OnBoardingActivity : BaseActivity() {
 
     private fun onClickView() {
 
-        homeViewModel.addCategories(Categories(0, "Default"))
-        homeViewModel.addCategories(Categories(0, "Office"))
-        homeViewModel.addCategories(Categories(0, "Family"))
-
         binding.btnStart.setOnClickListener {
             when (binding.viewPager.currentItem) {
                 0 -> {
@@ -59,6 +55,11 @@ class OnBoardingActivity : BaseActivity() {
                 }
 
                 2 -> {
+
+                    homeViewModel.addCategories(Categories(0, "Default"))
+                    homeViewModel.addCategories(Categories(0, "Office"))
+                    homeViewModel.addCategories(Categories(0, "Family"))
+
                     val prefsHelper = SharedPreferencesHelper(this)
                     prefsHelper.isUserFirstTime = false
                     startActivityWithAnimation<MainActivity>()
@@ -70,6 +71,9 @@ class OnBoardingActivity : BaseActivity() {
 
 
         binding.skip.setOnClickListener {
+            homeViewModel.addCategories(Categories(0, "Default"))
+            homeViewModel.addCategories(Categories(0, "Office"))
+            homeViewModel.addCategories(Categories(0, "Family"))
             val prefsHelper = SharedPreferencesHelper(this)
 
             prefsHelper.isUserFirstTime = false

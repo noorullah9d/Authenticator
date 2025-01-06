@@ -81,6 +81,7 @@
             android:gravity="center_vertical"
             android:hint="@string/account_name"
             android:inputType="text"
+            android:maxLength="15"
             android:textColor="@color/n_dark_grey"
             android:textColorHint="@color/hint_color"
             android:textSize="@dimen/_12sdp"

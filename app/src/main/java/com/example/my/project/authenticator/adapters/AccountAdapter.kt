@@ -36,6 +36,7 @@ class AccountAdapter(
     }
 
     fun deselectAll() {
+        isSelectionMode = false
         selectedAccounts.clear()
         notifyDataSetChanged()
     }

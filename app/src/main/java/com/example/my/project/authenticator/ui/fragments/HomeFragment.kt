@@ -66,7 +66,6 @@ class HomeFragment : Fragment() {
     private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
-    private var count = 0
 
 
     @Inject
@@ -108,9 +107,6 @@ class HomeFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 requireActivity().finishAffinity()
-                /*showBottomSheetDialog(onExitClicked = {
-                    requireActivity().finishAffinity()
-                }, onCancelClicked = {})*/
             }
         })
     }
@@ -219,7 +215,7 @@ class HomeFragment : Fragment() {
                 val selectedItems = accountAdapter.getSelectedAccounts()[0]
 
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                intent.putExtra("bundle", selectedItems.name)
+                intent.putExtra("key_name", selectedItems.name)
                 intent.putExtra("secret_key", selectedItems.secretKey)
                 intent.putExtra("tool", "")
                 startActivity(intent)
@@ -228,9 +224,14 @@ class HomeFragment : Fragment() {
             }
 
             copy.setOnClickListener {
-                val selectedItems = accountAdapter.getSelectedAccounts()[0].oneTimeCode
+                try {
 
-                requireActivity().copyTextToClipboard(selectedItems.toString())
+                    val selectedItems = accountAdapter.getSelectedAccounts()[0].oneTimeCode
+
+                    requireActivity().copyTextToClipboard(selectedItems.toString())
+                } catch (e: Exception) {
+                    Log.d(TAG, "clickListeners: ${e.message}")
+                }
 
             }
 
@@ -270,10 +271,6 @@ class HomeFragment : Fragment() {
             }.invokeOnCompletion {
                 CoroutineScope(Dispatchers.Main).launch {
                     accountAdapter.removeAccounts(selectedItems)
-                    binding.clDeleteSelection.beGone()
-                    binding.clTopLayout.beVisible()
-                    binding.faButton.beVisible()
-                    binding.clEditing.beGone()
                     refreshCurrentFragment()
                 }
             }
@@ -319,7 +316,15 @@ class HomeFragment : Fragment() {
 
     private fun placeHolder() {
         binding.apply {
-            count++
+
+            llPlaceHolderLayout.beVisible()
+            faButton.beGone()
+            progressBar.beGone()
+            accountData.beGone()
+            llBackUphoworks.beVisible()
+            btnStartOpt.beVisible()
+
+            /*count++
             if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
                 llPlaceHolderLayout.beVisible()
                 faButton.beGone()
@@ -335,9 +340,10 @@ class HomeFragment : Fragment() {
                 llBackUphoworks.beVisible()
                 btnStartOpt.beVisible()
 
-            }
+            }*/
         }
     }
+
 
     private fun observerData() {
 
@@ -347,34 +353,27 @@ class HomeFragment : Fragment() {
                 homeViewModel.getAllGroups().collectLatest {
 
                     adapter = CategoryAdapter(it, selectionViewModel, catsId = { categories ->
-                        /* clCatEditing.beVisible()
-                         belowLayout.beGone()
-                         editCat.setOnClickListener {
-                             clCatEditing.beGone()
-                             belowLayout.beVisible()
-                             EditGroupDialog(categories.categories) { groupName ->
-
-                             }
-                         }
-
-                         copyCat.setOnClickListener {
-                             clCatEditing.beGone()
-                             belowLayout.beVisible()
-                             deleteGroupDialog {
-                                 categories.id
-                                 homeViewModel.delete(categories.id)
-                             }
-                         }
-
- */
+                        Log.d(TAG, "observerData: $categories")
                     }, groupCallBack = { group ->
+                        Log.d(TAG, "observerData: $group")
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
+
+                        if (::accountAdapter.isInitialized) {
+                            accountAdapter.deselectAll()
+                            clDeleteSelection.beGone()
+                            clTopLayout.beVisible()
+                            binding.clEditing.beGone()
+                            binding.faButton.beVisible()
+                        }
+
+
                     })
 
                     categoriesAccount.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
                     categoriesAccount.adapter = adapter
                 }
+
             }
 
             selectionViewModel.selectedCategoryIndex.observe(viewLifecycleOwner) { selectedIndex ->

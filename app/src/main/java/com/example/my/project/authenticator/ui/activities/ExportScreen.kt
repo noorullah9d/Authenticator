@@ -50,7 +50,6 @@ class ExportScreen : BaseActivity() {
             binding.exportTypeSpinner.performClick()
         }
 
-
         binding.backPress.setOnClickListener { finish() }
 
 

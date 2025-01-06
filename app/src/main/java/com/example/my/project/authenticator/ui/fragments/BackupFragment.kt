@@ -144,6 +144,7 @@ class BackupFragment : Fragment() {
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
                     binding.tvEmail.text = prefsHelper?.userEmail!!
+                    binding.ivProfileImage.text = prefsHelper?.userEmail?.getFirstCharacter().toString()
                 } else {
                     Log.d(TAG, "failed")
                     toast(getString(R.string.not_logged_in))

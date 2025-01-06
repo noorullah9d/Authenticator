@@ -105,7 +105,13 @@ class SettingScreen : Fragment() {
             ivUseFingerprintNext.isChecked = prefsHelper?.isFingerprintEnabled == true
             ivUseFingerprintNext.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
-                    fingerprint()
+                    if (prefsHelper?.userPassword == "") {
+                        findNavController().navigate(R.id.action_settingScreen_to_setPasswordFragment)
+                        ivUseFingerprintNext.isChecked = false
+                    } else {
+
+                        fingerprint()
+                    }
                 } else {
                     prefsHelper?.isFingerprintEnabled = false
                 }
@@ -195,55 +201,55 @@ class SettingScreen : Fragment() {
 
     private fun fingerprint() {
         FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Unlock to use Authenticator").setTitle("Touch the fingerprint sensor").setNegativeButtonText("Dismiss").build().authenticate(object : FingerprintCallback {
-                override fun onAuthenticationCancelled() {
-                    binding.ivUseFingerprintNext.isChecked = false
-                    Log.d(TAG, "onAuthenticationCancelled: ")
-                }
+            override fun onAuthenticationCancelled() {
+                binding.ivUseFingerprintNext.isChecked = false
+                Log.d(TAG, "onAuthenticationCancelled: ")
+            }
 
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                    Log.d(TAG, "onAuthenticationError: ")
-                    binding.ivUseFingerprintNext.isChecked = false
-                }
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                Log.d(TAG, "onAuthenticationError: ")
+                binding.ivUseFingerprintNext.isChecked = false
+            }
 
-                override fun onAuthenticationFailed() {
-                    Log.d(TAG, "onAuthenticationFailed: ")
-                    binding.ivUseFingerprintNext.isChecked = false
-                }
+            override fun onAuthenticationFailed() {
+                Log.d(TAG, "onAuthenticationFailed: ")
+                binding.ivUseFingerprintNext.isChecked = false
+            }
 
-                override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                    Log.d(TAG, "onAuthenticationHelp: ")
-                }
+            override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
+                Log.d(TAG, "onAuthenticationHelp: ")
+            }
 
-                override fun onAuthenticationSuccessful() {
-                    Log.d(TAG, "onAuthenticationSuccessful: ")
-                    prefsHelper?.isFingerprintEnabled = true
-                }
+            override fun onAuthenticationSuccessful() {
+                Log.d(TAG, "onAuthenticationSuccessful: ")
+                prefsHelper?.isFingerprintEnabled = true
+            }
 
-                override fun onBiometricAuthenticationInternalError(error: String?) {
-                    Log.d(TAG, "onBiometricAuthenticationInternalError: ")
-                    binding.ivUseFingerprintNext.isChecked = false
-                }
+            override fun onBiometricAuthenticationInternalError(error: String?) {
+                Log.d(TAG, "onBiometricAuthenticationInternalError: ")
+                binding.ivUseFingerprintNext.isChecked = false
+            }
 
-                override fun onBiometricAuthenticationNotAvailable() {
-                    Log.d(TAG, "onBiometricAuthenticationNotAvailable: ")
-                    toast("Device Not Supported")
-                }
+            override fun onBiometricAuthenticationNotAvailable() {
+                Log.d(TAG, "onBiometricAuthenticationNotAvailable: ")
+                toast("Device Not Supported")
+            }
 
-                override fun onBiometricAuthenticationNotSupported() {
-                    Log.d(TAG, "onBiometricAuthenticationNotSupported: ")
-                }
+            override fun onBiometricAuthenticationNotSupported() {
+                Log.d(TAG, "onBiometricAuthenticationNotSupported: ")
+            }
 
-                override fun onBiometricAuthenticationPermissionNotGranted() {
-                    Log.d(TAG, "onBiometricAuthenticationPermissionNotGranted: ")
-                    binding.ivUseFingerprintNext.isChecked = false
-                }
+            override fun onBiometricAuthenticationPermissionNotGranted() {
+                Log.d(TAG, "onBiometricAuthenticationPermissionNotGranted: ")
+                binding.ivUseFingerprintNext.isChecked = false
+            }
 
-                override fun onSdkVersionNotSupported() {
-                    Log.d(TAG, "onSdkVersionNotSupported: ")
-                    binding.ivUseFingerprintNext.isChecked = false
-                }
+            override fun onSdkVersionNotSupported() {
+                Log.d(TAG, "onSdkVersionNotSupported: ")
+                binding.ivUseFingerprintNext.isChecked = false
+            }
 
-            })
+        })
     }
 
     private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
@@ -259,13 +265,14 @@ class SettingScreen : Fragment() {
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    prefsHelper?.userEmail = email
-                } else {
-                    Log.d(TAG, "failed")
-                    toast(getString(R.string.not_logged_in))
-                }
+            if (task.isSuccessful) {
+                prefsHelper?.userEmail = email
+                binding.emailText.text = email
+            } else {
+                Log.d(TAG, "failed")
+                toast(getString(R.string.not_logged_in))
             }
+        }
     }
 
 

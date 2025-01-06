@@ -8,8 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ItemCategoryBinding
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.model.CardSelectionViewModel
 import com.example.my.project.authenticator.otp.data.database.Categories
 
@@ -70,8 +68,10 @@ class CategoryAdapter(
                 }*/
 
                 root.setOnClickListener {
-                    viewModel.setSelectedCategory(adapterPosition)
-                    groupCallBack.invoke(category.categories)
+                    if (!isSelected) {
+                        viewModel.setSelectedCategory(adapterPosition)
+                        groupCallBack.invoke(category.categories)
+                    }
                 }
             }
 

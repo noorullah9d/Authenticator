@@ -76,9 +76,14 @@ class ImportScreen : BaseActivity() {
 
             addSelectedButton.setOnClickListener {
                 lifecycleScope.launch {
-                    viewModel.addSelected()
-                    startActivityWithAnimationAndClearStack<MainActivity>()
-                    viewModel.importedKeys.clear()
+                    val size = viewModel.importedKeys.filter { it.checked }
+                    if (size.isNotEmpty()) {
+                        viewModel.addSelected()
+                        startActivityWithAnimationAndClearStack<MainActivity>()
+                        viewModel.importedKeys.clear()
+                    } else {
+                        toast("Please Select any one")
+                    }
                 }
             }
         }
@@ -112,7 +117,6 @@ class ImportScreen : BaseActivity() {
             finish()
         }
         if (isComing) {
-            Log.d(TAG, "updateUI: $isComing")
             if (importedKeys.toList().isEmpty()) {
                 toast("no key found")
                 finish()

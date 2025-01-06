@@ -404,8 +404,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
             android:orientation="horizontal"
-            android:visibility="gone"
             android:weightSum="2"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.button.MaterialButton

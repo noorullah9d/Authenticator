@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.otp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
@@ -32,15 +33,18 @@ class ExportViewModel @Inject constructor(
             val secretKey = SecretKeySpec(hash, "AES")
             AesGcmSecretEncryptor(secretKey)
         } else null
+        Log.d(TAG, "export: ${repository.getAllData(sharedPreferencesHelper.userEmail).size}")
 
         ExportKeysUseCase(
-            repository.getAllKeys(sharedPreferencesHelper.userEmail, "").stateIn(viewModelScope).value,
+            repository.getAllData(sharedPreferencesHelper.userEmail),
             outputStream,
             repositoryEncryptor,
             exportEncryptor,
             salt,
             savingMode
-        )
+        )()
     }
 
 }
+
+private const val TAG = "ExportViewModel"

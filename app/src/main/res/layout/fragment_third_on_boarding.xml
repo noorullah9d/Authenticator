@@ -17,7 +17,6 @@
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/onboarding_03"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/img_welcome_acess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

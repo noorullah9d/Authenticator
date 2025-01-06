@@ -14,7 +14,6 @@
         android:layout_height="@dimen/_160sdp"
         android:layout_marginTop="@dimen/_100sdp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/img_welcome_acess"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/onboarding_01"

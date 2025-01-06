@@ -1,7 +1,6 @@
 package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
-import androidx.activity.addCallback
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.my.project.authenticator.R
@@ -25,6 +24,21 @@ class ProfileScreen : BaseActivity() {
 
         val navigateTo = intent.getStringExtra("bundle")
         val backStack = intent.getIntExtra("backStack", 0)
+
+
+        val keyName = intent.getStringExtra("key_name")
+        val secretKey = intent.getStringExtra("secret_key")
+        val tool = intent.getStringExtra("tool")
+
+        val bundle = Bundle()
+
+        bundle.putString("key_name", keyName)
+        bundle.putString("secret_key", secretKey)
+        bundle.putString("tool", tool)
+
+        navController.navigate(R.id.accountsDetails, bundle)
+
+
         when (navigateTo) {
             "ivEnterKey" -> {
                 navController.navigate(R.id.accountsDetails)
@@ -35,13 +49,6 @@ class ProfileScreen : BaseActivity() {
             }
         }
 
-//        onBackPressedDispatcher.addCallback(this) {
-//            if (backStack == 0) {
-//                navController.popBackStack()
-//            } else {
-//                finish()
-//            }
-//        }
 
 
     }

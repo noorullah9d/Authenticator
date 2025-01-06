@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -37,9 +36,8 @@ class AccountsDetails : Fragment() {
     private val homeViewModel by viewModels<HomeViewModel>()
     private var exportOptions: List<String>? = null
     private val totp = listOf("TOTP", "HOTP")
-    private val sha = listOf("SHA256","SHA1" )
+    private val sha = listOf("SHA256", "SHA1")
     private var category: String? = null
-    var accountId = 0
 
 
     private lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -53,7 +51,6 @@ class AccountsDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        accountId = arguments?.getInt("accountId") ?: 0
 
 
         val accountName = arguments?.getString("key_name") ?: ""
@@ -86,20 +83,13 @@ class AccountsDetails : Fragment() {
 
 
             ivBackIcon.setOnClickListener {
-                if (accountId == 3) {
-                    findNavController().popBackStack()
-                } else {
-                    requireActivity().finish()
-                }
+                requireActivity().finish()
+
             }
 
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (accountId == 3) {
-                        findNavController().popBackStack()
-                    } else {
-                        requireActivity().finish()
-                    }
+                    requireActivity().finish()
                 }
             })
 
@@ -118,6 +108,7 @@ class AccountsDetails : Fragment() {
                     if (isExists > 0) {
                         showReplace(isExists, accountName, accountKey)
                     } else {
+                        Log.d(TAG, "clickListeners: $category")
                         var result = false
                         lifecycleScope.launch(Dispatchers.IO) {
                             val addResult = homeViewModel.addTotp(accountName, accountKey, "", categories = category ?: "Default")
@@ -242,7 +233,6 @@ class AccountsDetails : Fragment() {
 
         binding.spCodeSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                category = exportOptions?.get(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
