@@ -40,7 +40,7 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
     companion object {
         fun newInstance(homeViewModel: () -> Unit): GoogleSignInDialog {
             val fragment = GoogleSignInDialog()
-            fragment.homeViewModel = homeViewModel // Assign the lambda to the instance variable
+            fragment.homeViewModel = homeViewModel
             return fragment
         }
     }

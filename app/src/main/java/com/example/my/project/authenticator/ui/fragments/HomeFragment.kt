@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
             } else {
-                toast("Google sign-in canceled or failed $result")
+                toast("Google sign-in canceled or failed ")
             }
         }
 

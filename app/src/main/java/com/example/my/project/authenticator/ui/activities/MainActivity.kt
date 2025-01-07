@@ -35,8 +35,6 @@ class MainActivity : BaseActivity() {
             bottomSheetFragment.show(supportFragmentManager, "StaticBottomSheet")
         }
 
-
-
     }
 
 }
