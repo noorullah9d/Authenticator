@@ -52,6 +52,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -212,6 +213,8 @@ class HomeFragment : Fragment() {
             }
 
             edit.setOnClickListener {
+
+
                 val selectedItems = accountAdapter.getSelectedAccounts()[0]
 
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
@@ -219,7 +222,12 @@ class HomeFragment : Fragment() {
                 intent.putExtra("secret_key", selectedItems.secretKey)
                 intent.putExtra("tool", "")
                 startActivity(intent)
+                if (::accountAdapter.isInitialized)
+                    accountAdapter.deselectAll()
 
+                clDeleteSelection.beGone()
+                clTopLayout.beVisible()
+                binding.clEditing.beGone()
 
             }
 
@@ -344,7 +352,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun observerData() {
 
         binding.apply {
@@ -352,19 +359,20 @@ class HomeFragment : Fragment() {
             lifecycleScope.launch {
                 homeViewModel.getAllGroups().collectLatest {
 
-                    adapter = CategoryAdapter(it, selectionViewModel, catsId = { categories ->
-                        Log.d(TAG, "observerData: $categories")
+                    adapter = CategoryAdapter(it, selectionViewModel, catsId = { _ ->
                     }, groupCallBack = { group ->
-                        Log.d(TAG, "observerData: $group")
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
 
                         if (::accountAdapter.isInitialized) {
                             accountAdapter.deselectAll()
                             clDeleteSelection.beGone()
-                            clTopLayout.beVisible()
+                            if (searchView.visibility != View.VISIBLE) {
+                                clTopLayout.beVisible()
+                                searchView.beGone()
+                            }
+
                             binding.clEditing.beGone()
-                            binding.faButton.beVisible()
                         }
 
 
@@ -407,7 +415,7 @@ class HomeFragment : Fragment() {
 
                             clDeleteSelection.beVisible()
                             clTopLayout.beGone()
-
+                            searchView.beGone()
 
                             when (totpCardState.size) {
                                 0 -> {

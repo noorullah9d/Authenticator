@@ -77,7 +77,10 @@ class ImportViewModel @Inject constructor(
 
     suspend fun addSelected() {
         importedKeys.filter { it.checked }.forEach {
-            saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
+            if (sharedPreferencesHelper.userEmail!=""){
+
+                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
+            }
             addNewTotpUseCase(sharedPreferencesHelper.userEmail, "Default", Base32().decode(it.secretKey), it.name, it.secretKey)
         }
     }

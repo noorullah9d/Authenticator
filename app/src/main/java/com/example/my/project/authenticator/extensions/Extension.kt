@@ -17,11 +17,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.text.InputType
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -405,8 +407,13 @@ fun Fragment.createNewGroupDialog(newGroupName: (String) -> Unit) {
     bottomSheetDialog.setContentView(binding.root)
     binding.apply {
 
+
+        groupName.inputType = InputType.TYPE_CLASS_TEXT
+        groupName.imeOptions = EditorInfo.IME_ACTION_DONE
+
         ivEnterKey.setOnClickListener {
-            val groupName = groupName.text.toString()
+            val groupNameInput = groupName.text.toString()
+            val groupName = groupNameInput.replace("\n", "")
             if (groupName.isNotEmpty()) {
                 newGroupName.invoke(groupName)
             } else {

@@ -11,39 +11,43 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
     private val fireStore = FirebaseFirestore.getInstance()
 
     override fun saveDataToDB(email: String, passcode: String, accountName: String, tool: String, category: String) {
-        // Include 'tool' in the new account map
-        val newAccount = mapOf(
-            "accountName" to accountName,
-            "passcode" to passcode,
-            "category" to category,
-            "tool" to tool
-        )
+        try {
 
-        val documentRef = fireStore.collection("Authenticator").document(email)
+            val newAccount = mapOf(
+                "accountName" to accountName,
+                "passcode" to passcode,
+                "category" to category,
+                "tool" to tool
+            )
 
-        documentRef.get().addOnSuccessListener { document ->
-            if (document.exists()) {
-                val existingAccounts = document.get("accounts") as? MutableList<Map<String, String>> ?: mutableListOf()
-                existingAccounts.add(newAccount)
+            val documentRef = fireStore.collection("Authenticator").document(email)
 
-                documentRef.update("accounts", existingAccounts)
-                    .addOnSuccessListener {
-                        Log.d("SaveFirebase", "New account added under the same email")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("SaveFirebase", "Failed to add account: ${e.message}")
-                    }
-            } else {
-                documentRef.set(mapOf("accounts" to listOf(newAccount)))
-                    .addOnSuccessListener {
-                        Log.d("SaveFirebase", "Document created and account added")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e("SaveFirebase", "Failed to create document: ${e.message}")
-                    }
+            documentRef.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val existingAccounts = document.get("accounts") as? MutableList<Map<String, String>> ?: mutableListOf()
+                    existingAccounts.add(newAccount)
+
+                    documentRef.update("accounts", existingAccounts)
+                        .addOnSuccessListener {
+                            Log.d("SaveFirebase", "New account added under the same email")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("SaveFirebase", "Failed to add account: ${e.message}")
+                        }
+                } else {
+                    documentRef.set(mapOf("accounts" to listOf(newAccount)))
+                        .addOnSuccessListener {
+                            Log.d("SaveFirebase", "Document created and account added")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("SaveFirebase", "Failed to create document: ${e.message}")
+                        }
+                }
+            }.addOnFailureListener { e ->
+                Log.e("SaveFirebase", "Failed to retrieve document: ${e.message}")
             }
-        }.addOnFailureListener { e ->
-            Log.e("SaveFirebase", "Failed to retrieve document: ${e.message}")
+        }catch (e:Exception){
+            Log.d("TAG", "saveDataToDB: ${e.message}")
         }
     }
 

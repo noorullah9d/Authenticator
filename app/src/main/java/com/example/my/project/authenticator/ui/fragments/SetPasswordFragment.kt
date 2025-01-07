@@ -88,9 +88,11 @@ class SetPasswordFragment : Fragment() {
     private fun hidePassword(et: AppCompatEditText, image: ImageView) {
         if (et.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
             et.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            et.setSelection(et.length())
             image.setImageResource(R.drawable.hide_number)
         } else {
             et.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            et.setSelection(et.length())
             image.setImageResource(R.drawable.show_number)
         }
     }
