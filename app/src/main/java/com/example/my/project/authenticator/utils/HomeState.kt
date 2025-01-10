@@ -11,10 +11,17 @@ data class TotpCardState(
     val name: String,
     var oneTimeCode: Int,
     var secondsLeft: Int,
+    var SHA: String,
+    var OTP: String,
+    var filePath: String,
+    var category: String,
 )
 
 data class EditTotpState(
     val id: Int,
     val name: String,
     val base32Secret: String,
+    val shaStr: String,
+    val totpVsHop: String,
+    val filePath: String
 )

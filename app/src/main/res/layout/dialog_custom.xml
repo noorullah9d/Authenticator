@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardBackgroundColor="@color/white"
@@ -52,11 +53,12 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_24sdp"
-            app:layout_constraintTop_toBottomOf="@+id/scan_ocr">
+            app:layout_constraintTop_toBottomOf="@+id/scan_ocr"
+            tools:layout_editor_absoluteX="0dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ivScanQR"
@@ -70,10 +72,11 @@
                 android:text="@string/scan_code"
                 android:textAlignment="viewStart"
                 android:textColor="@color/n_consis_white"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_13sdp"
                 app:icon="@drawable/ic_camera"
                 app:iconGravity="textStart"
                 app:iconPadding="@dimen/_8sdp"
+                app:iconSize="@dimen/_20sdp"
                 app:iconTint="@null" />
 
             <com.google.android.material.button.MaterialButton
@@ -87,10 +90,11 @@
                 android:text="@string/enter_a_manual_key"
                 android:textAlignment="viewStart"
                 android:textColor="@color/n_dark_grey"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_13sdp"
                 app:icon="@drawable/ic_key"
                 app:iconGravity="textStart"
                 app:iconPadding="@dimen/_8sdp"
+                app:iconSize="@dimen/_17sdp"
                 app:iconTint="@null" />
 
 

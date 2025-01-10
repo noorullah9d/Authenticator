@@ -3,5 +3,5 @@ package com.example.my.project.authenticator.otp.domain.crypto
 import kotlin.time.Duration
 
 interface TotpCodeGenerator {
-    fun generate(secret: ByteArray, unixTime: Duration): Int
+    fun generate(secret: ByteArray, unixTime: Duration, shaStr: String, totpVsHop: String): Int
 }

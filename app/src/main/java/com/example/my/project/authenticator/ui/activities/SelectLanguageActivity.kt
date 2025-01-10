@@ -15,9 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SelectLanguageActivity : BaseActivity() {
     private lateinit var binding: ActivitySelectLanguageBinding
     private lateinit var languagesAdapter: LanguagesAdapterNew
-
     private val viewModel: LanguageViewModel by viewModels<LanguageViewModel>()
-
     private var selectedLanguage = "en"
 
 

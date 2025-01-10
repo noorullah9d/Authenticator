@@ -10,6 +10,7 @@ object Constants {
     const val DARK = "Dark"
     const val SYSTEM_DEFAULT = "SYSTEM_DEFAULT"
     const val backUp = "backUp"
+    const val firstTimeMain = "firstTimeMain"
     const val backUpGone = "backUpGone"
     const val FingerprintEnabled = "isFingerprintEnabled"
     const val APP_THEME = "app_theme"

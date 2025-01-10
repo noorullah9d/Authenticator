@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -121,8 +122,8 @@ class AccountAdapter(
     }
 
     fun updateAccounts(newAccounts: List<TotpCardState>) {
+        Log.d(TAG, "updateAccounts: ${newAccounts.size}")
         val selectedAccountIds = selectedAccounts.map { it.id }
-
         accounts.clear()
         accounts.addAll(newAccounts)
 

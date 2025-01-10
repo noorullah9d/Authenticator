@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,19 +29,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class AccountsDetails : Fragment() {
     private lateinit var binding: FragmentAccountsDetailsBinding
     private val homeViewModel by viewModels<HomeViewModel>()
     private var exportOptions: List<String>? = null
-    private val totp = listOf("TOTP", "HOTP")
-    private val sha = listOf("SHA256", "SHA1")
+    private var totp = listOf("TOTP", "HOTP")
+    private var sha = listOf("SHA1", "SHA256")
     private var category: String? = null
-
-
-    private lateinit var pickImageLauncher: ActivityResultLauncher<String>
+    private var SHA: String? = null
+    private var OTP: String? = null
+    private var filePath: String? = null
+    private var id: Int? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -53,10 +55,50 @@ class AccountsDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val edit = arguments?.getInt("edit")
+        if (edit == 1) {
+            id = arguments?.getInt("id") ?: -1
+
+            SHA = arguments?.getString("SHA") ?: "SHA1"
+            filePath = arguments?.getString("filePath") ?: ""
+            OTP = arguments?.getString("OTP") ?: "TOTP"
+            category = arguments?.getString("category") ?: "Default"
+            val tool = arguments?.getString("tool")
+
+
+            if (filePath != "") displayImage(filePath!!)
+
+            sha = when (SHA) {
+                "SHA1" -> {
+                    listOf("SHA1", "SHA256")
+                }
+
+                "SHA256" -> {
+                    listOf("SHA256", "SHA1")
+                }
+
+                else -> {
+                    listOf("SHA256", "SHA1")
+                }
+            }
+
+            totp = when (OTP) {
+                "TOTP" -> {
+                    listOf("TOTP", "HOTP")
+                }
+
+                "HOTP" -> {
+                    listOf("HOTP", "TOTP")
+                }
+
+                else -> {
+                    listOf("TOTP", "HOTP")
+                }
+            }
+        }
+
         val accountName = arguments?.getString("key_name") ?: ""
         val secretKey = arguments?.getString("secret_key") ?: ""
-        val tool = arguments?.getString("tool")
-
 
         binding.etAccountName.setText(accountName)
         binding.etAccountKey.setText(secretKey)
@@ -68,6 +110,7 @@ class AccountsDetails : Fragment() {
                 exportOptions = groups.map {
                     it.categories
                 }
+                Log.d(TAG, "onViewCreated: $category")
                 setupExportOptionsSpinner()
             }
         }
@@ -84,7 +127,6 @@ class AccountsDetails : Fragment() {
 
             ivBackIcon.setOnClickListener {
                 requireActivity().finish()
-
             }
 
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -97,32 +139,33 @@ class AccountsDetails : Fragment() {
                 val accountName = etAccountName.text.toString()
                 val accountKey = etAccountKey.text.toString()
 
-                if (accountName.isEmpty() && accountKey.isEmpty()) {
-                    toast(requireActivity().getString(R.string.field_should_not_empty))
-                } else if (accountName.isEmpty()) {
-                    toast(requireActivity().getString(R.string.account_should_not_empty))
-                } else if (accountKey.isEmpty()) {
-                    toast(requireActivity().getString(R.string.key_should_not_empty))
-                } else {
-                    val isExists = homeViewModel.isKeyExists(accountName, accountKey)
-                    if (isExists > 0) {
-                        showReplace(isExists, accountName, accountKey)
-                    } else {
-                        Log.d(TAG, "clickListeners: $category")
-                        var result = false
-                        lifecycleScope.launch(Dispatchers.IO) {
-                            val addResult = homeViewModel.addTotp(accountName, accountKey, "", categories = category ?: "Default")
-                            result = addResult
+                val validationMessage = validateInputs(accountName, accountKey)
+                if (validationMessage != null) {
+                    toast(requireActivity().getString(validationMessage))
+                    return@setOnClickListener
+                }
 
-                        }.invokeOnCompletion {
-                            if (result) {
+                val isExists = homeViewModel.isKeyExists(accountName, accountKey)
+                if (isExists > 0) {
+                    showReplace(isExists, accountName, accountKey)
+                } else {
+                    Log.d(TAG, "Adding TOTP with category: $category")
+                    lifecycleScope.launch {
+                        try {
+                            val addResult = withContext(Dispatchers.IO) {
+                                if (id != -1) homeViewModel.addTotp(accountName, accountKey, "", categories = category ?: "", shaStr = SHA ?: "SHA1", totpVsHop = OTP ?: "TOTP", filePath = filePath ?: "")
+                                else homeViewModel.addTotp(accountName, accountKey, "", categories = category ?: "", shaStr = SHA ?: "SHA1", totpVsHop = OTP ?: "TOTP", filePath = filePath ?: "", id!!)
+                            }
+
+                            if (addResult) {
                                 requireActivity().logFirebaseEvent("scan_option", mapOf("codescan" to "clicked"))
                                 requireActivity().finish()
                             } else {
-                                lifecycleScope.launch(Dispatchers.Main) {
-                                    toast(requireActivity().getString(R.string.error_occurs))
-                                }
+                                toast(requireActivity().getString(R.string.error_occurs))
                             }
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Error adding TOTP: ${e.message}", e)
+                            toast(requireActivity().getString(R.string.error_occurs))
                         }
                     }
                 }
@@ -138,22 +181,33 @@ class AccountsDetails : Fragment() {
             }
 
 
-            pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                if (uri != null) {
-                    handleImageUri(uri)
-                } else {
-                    toast("No image selected")
-                }
-            }
-
-
         }
 
     }
 
-    private fun handleImageUri(uri: Uri) {
-        binding.profileImage.setImageURI(uri)
+
+    private fun displayImage(imagePath: String) {
+        binding.profileImage.setImageURI(Uri.parse(imagePath))
+        filePath = imagePath
     }
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            try {
+                requireContext().contentResolver.takePersistableUriPermission(
+                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                filePath = uri.toString()
+                displayImage(uri.toString()) // Display the image
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Permission error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(requireContext(), "No image selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun showReplace(id: Int, accountName: String, passKey: String, tool: String = "") {
         showReplaceAccountDialog(onReplace = {
@@ -166,7 +220,7 @@ class AccountsDetails : Fragment() {
         }, onKeep = {
             var result = false
             lifecycleScope.launch(Dispatchers.IO) {
-                val addResult = homeViewModel.addTotp(accountName, passKey, tool)
+                val addResult = homeViewModel.addTotp(accountName, passKey, tool, shaStr = SHA ?: "SHA1", totpVsHop = OTP ?: "TOTP", filePath = filePath ?: "")
                 result = addResult
 
             }.invokeOnCompletion {
@@ -181,16 +235,15 @@ class AccountsDetails : Fragment() {
     }
 
     private fun setupExportOptionsSpinner() {
-
         binding.dropdownIcon.setOnClickListener {
             binding.spSelectGroup.performClick()
         }
 
-
-        val options = exportOptions
+        val options = exportOptions ?: listOf()
         Log.d(TAG, "setupExportOptionsSpinner: $options")
+
         val exportOptionsAdapter = StorageDetailsSpinnerArrayAdapter(
-            requireActivity(), options ?: listOf(), true, binding.spSelectGroup
+            requireActivity(), options, true, binding.spSelectGroup
         ) {
 
             createNewGroupDialog { groupName ->
@@ -199,21 +252,31 @@ class AccountsDetails : Fragment() {
                 binding.spSelectGroup.performClick()
             }
         }
-
-
         binding.spSelectGroup.adapter = exportOptionsAdapter
+
+        val currentCategory = category
+        val selectedPosition = options.indexOf(currentCategory)
+        Log.d(TAG, "setupExportOptionsSpinner: Current Category: $currentCategory, Position: $selectedPosition")
+
+
+        if (selectedPosition >= 0) {
+            binding.spSelectGroup.post {
+                binding.spSelectGroup.setSelection(selectedPosition, false)
+            }
+        }
 
         binding.spSelectGroup.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                category = exportOptions?.get(position) ?: ""
-                Log.d(TAG, "onItemSelected: $category")
+                category = options.getOrNull(position) ?: ""
+                Log.d(TAG, "onItemSelected: Selected Category: $category")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Log.d(TAG, "onNothingSelected: ")
+                Log.d(TAG, "onNothingSelected: No selection made")
             }
         }
     }
+
 
     private fun totpOptionsSpinner() {
         val options = totp
@@ -233,11 +296,10 @@ class AccountsDetails : Fragment() {
 
         binding.spCodeSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                OTP = totp[position]
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
@@ -254,8 +316,20 @@ class AccountsDetails : Fragment() {
         binding.spShaSelection.adapter = exportOptionsAdapter
 
         binding.spShaSelection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {}
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                SHA = sha[position]
+            }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun validateInputs(accountName: String, accountKey: String): Int? {
+        return when {
+            accountName.isEmpty() && accountKey.isEmpty() -> R.string.field_should_not_empty
+            accountName.isEmpty() -> R.string.account_should_not_empty
+            accountKey.isEmpty() -> R.string.key_should_not_empty
+            else -> null
         }
     }
 

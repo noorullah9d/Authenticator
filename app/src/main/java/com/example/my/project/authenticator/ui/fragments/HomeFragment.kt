@@ -1,11 +1,13 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,14 +24,12 @@ import com.example.my.project.authenticator.adapters.AccountAdapter
 import com.example.my.project.authenticator.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beInVisible
 import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
-import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
@@ -38,6 +38,8 @@ import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.TotpCardState
+import com.example.my.project.authenticator.utils.UiState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -107,10 +109,45 @@ class HomeFragment : Fragment() {
     private fun backPress() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                requireActivity().finishAffinity()
+                when {
+                    binding.clTopLayout.visibility == View.VISIBLE -> {
+                        requireActivity().finishAffinity()
+                    }
+
+                    binding.searchView.visibility == View.VISIBLE -> {
+                        updateUiState(UiState.DEFAULT)
+                    }
+
+                    binding.clDeleteSelection.visibility == View.VISIBLE -> {
+                        updateUiState(UiState.DEFAULT)
+                    }
+                }
             }
         })
     }
+
+    private fun updateUiState(state: UiState) {
+        binding.apply {
+            when (state) {
+                UiState.DEFAULT -> {
+                    clTopLayout.beVisible()
+                    searchView.beGone()
+                    clDeleteSelection.beGone()
+                    clEditing.beGone()
+                }
+
+                UiState.SEARCH -> {
+                    clTopLayout.beVisible()
+                    searchView.beGone()
+                }
+
+                UiState.DELETE_SELECTION -> {
+                    deselectAll()
+                }
+            }
+        }
+    }
+
 
     private fun clickListeners() {
         binding.apply {
@@ -121,11 +158,7 @@ class HomeFragment : Fragment() {
             }
 
             ivBackIcon.setOnClickListener {
-                accountAdapter.deselectAll()
-                clDeleteSelection.beGone()
-                clTopLayout.beVisible()
-                binding.clEditing.beGone()
-                binding.faButton.beVisible()
+                deselectAll()
             }
 
             if (sharedPreferencesHelper.isBackedGone) {
@@ -144,21 +177,6 @@ class HomeFragment : Fragment() {
                 requireActivity().startActivityWithAnimation<HowToWorkScreen>()
             }
 
-            icProfile.setOnDebouncedClickListener {
-                if (requireActivity().isInternetAvailable()) {
-                    changeGoogleAccount()
-                } else {
-                    toast(getString(R.string.no_internet_connection))
-                }
-            }
-
-            icProfileText.setOnDebouncedClickListener {
-                if (requireActivity().isInternetAvailable()) {
-                    changeGoogleAccount()
-                } else {
-                    toast(getString(R.string.no_internet_connection))
-                }
-            }
 
             btnAddCode.setOnClickListener {
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
@@ -181,6 +199,9 @@ class HomeFragment : Fragment() {
             ivSearchView.setOnClickListener {
                 clTopLayout.beGone()
                 searchView.beVisible()
+                search.requestFocus()
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.showSoftInput(view?.findFocus(), 0)
             }
 
             tvCancel.setOnClickListener {
@@ -219,8 +240,14 @@ class HomeFragment : Fragment() {
 
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
                 intent.putExtra("key_name", selectedItems.name)
+                intent.putExtra("id", selectedItems.id)
                 intent.putExtra("secret_key", selectedItems.secretKey)
                 intent.putExtra("tool", "")
+                intent.putExtra("SHA", selectedItems.SHA)
+                intent.putExtra("filePath", selectedItems.filePath)
+                intent.putExtra("OTP", selectedItems.OTP)
+                intent.putExtra("category", selectedItems.category)
+                intent.putExtra("edit", 1)
                 startActivity(intent)
                 if (::accountAdapter.isInitialized)
                     accountAdapter.deselectAll()
@@ -244,6 +271,14 @@ class HomeFragment : Fragment() {
             }
 
         }
+    }
+
+    private fun deselectAll() {
+        accountAdapter.deselectAll()
+        binding.clDeleteSelection.beGone()
+        binding.clTopLayout.beVisible()
+        binding.clEditing.beGone()
+        binding.faButton.beVisible()
     }
 
     private fun popupMenu(view: View) {
@@ -300,6 +335,7 @@ class HomeFragment : Fragment() {
             when (result) {
                 "ivScanQR" -> {
                     val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                    intent.putExtra("edit", 0)
                     intent.putExtra("bundle", "ivScanQR")
                     intent.putExtra("backStack", 1)
                     startActivity(intent)
@@ -308,6 +344,7 @@ class HomeFragment : Fragment() {
                 "ivEnterKey" -> {
                     val intent = Intent(requireActivity(), ProfileScreen::class.java)
                     intent.putExtra("bundle", "ivEnterKey")
+                    intent.putExtra("edit", 0)
                     intent.putExtra("backStack", 1)
                     startActivity(intent)
                 }
@@ -329,9 +366,9 @@ class HomeFragment : Fragment() {
             faButton.beGone()
             progressBar.beGone()
             accountData.beGone()
-            llBackUphoworks.beVisible()
-            btnStartOpt.beVisible()
-
+            /*llBackUphoworks.beVisible()
+            btnStartOpt.beVisible()*/
+            buttonsPlaceHolders.beVisible()
             /*count++
             if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
                 llPlaceHolderLayout.beVisible()
@@ -364,7 +401,7 @@ class HomeFragment : Fragment() {
                         if (group == "Default") homeViewModel.setCategory("Default")
                         else homeViewModel.setCategory(group)
 
-                        if (::accountAdapter.isInitialized) {
+                        /*if (::accountAdapter.isInitialized) {
                             accountAdapter.deselectAll()
                             clDeleteSelection.beGone()
                             if (searchView.visibility != View.VISIBLE) {
@@ -373,7 +410,7 @@ class HomeFragment : Fragment() {
                             }
 
                             binding.clEditing.beGone()
-                        }
+                        }*/
 
 
                     })
@@ -391,50 +428,27 @@ class HomeFragment : Fragment() {
             emailCondition()
 
 
-        }
+            homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
 
+                if (homeState.totpList.isNotEmpty()) {
 
+                    if (clEditing.visibility == View.VISIBLE) faButton.beGone()
+                    else faButton.beVisible()
 
-        homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
-
-            if (homeState.totpList.isNotEmpty()) {
-
-
-                binding.apply {
-                    faButton.beVisible()
                     progressBar.beGone()
+                    buttonsPlaceHolders.beGone()
                     llPlaceHolderLayout.beGone()
                     accountData.beVisible()
-                    llBackUphoworks.beGone()
-                    btnStartOpt.beGone()
-
 
                     if (!::accountAdapter.isInitialized) {
 
+
+//                        Log.d(TAG, "observerData: ${homeState.totpList.size}")
+
+
                         accountAdapter = AccountAdapter(homeState.totpList.toMutableList()) { position, totpCardState ->
 
-                            clDeleteSelection.beVisible()
-                            clTopLayout.beGone()
-                            searchView.beGone()
-
-                            when (totpCardState.size) {
-                                0 -> {
-                                    accountAdapter.deselectAll()
-                                    clDeleteSelection.beGone()
-                                    clTopLayout.beVisible()
-                                    clEditing.beGone()
-                                    faButton.beVisible()
-                                }
-
-                                1 -> {
-                                    clEditing.beVisible()
-                                    faButton.beInVisible()
-                                }
-
-                                else -> {
-                                    clEditing.beGone()
-                                }
-                            }
+                            deleteSelection(totpCardState)
 
                         }
 
@@ -442,19 +456,44 @@ class HomeFragment : Fragment() {
                         binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
 
                     } else {
-
+//                        Log.d(TAG, "observerData: isInitialized")
                         accountAdapter.updateAccounts(homeState.totpList)
-
                     }
 
 
+                } else {
+                    Log.d(TAG, "observerData: placeHolder")
+                    placeHolder()
+                }
+            }
+
+
+        }
+
+
+    }
+
+    private fun deleteSelection(totpCardState: List<TotpCardState>) {
+        binding.apply {
+            when (totpCardState.size) {
+                0 -> {
+                    accountAdapter.deselectAll()
+                    clDeleteSelection.beGone()
+                    clTopLayout.beVisible()
+                    clEditing.beGone()
+                    faButton.beGone()
                 }
 
+                1 -> {
+                    clEditing.beVisible()
+                    faButton.beGone()
+                    clTopLayout.beGone()
+                    clDeleteSelection.beVisible()
+                }
 
-            } else {
-
-                placeHolder()
-
+                else -> {
+                    clEditing.beGone()
+                }
             }
         }
 
@@ -465,9 +504,6 @@ class HomeFragment : Fragment() {
         binding.apply {
             if (sharedPreferencesHelper.userEmail != "") {
                 sharedPreferencesHelper.userEmail.getFirstCharacter()
-                icProfile.beGone()
-                icProfileText.beGone()
-                icProfileText.setProfileImage(sharedPreferencesHelper.userEmail)
                 if (sharedPreferencesHelper.isBackedUp) {
                     bgRectangle.setImageResource(R.drawable.ic_backed_up)
                     ivBlock.beGone()
@@ -477,18 +513,16 @@ class HomeFragment : Fragment() {
                     ivNext.beGone()
                 }
 
-                setFromRemote()
+//                setFromRemote()
             } else {
-                icProfile.beGone()
-                icProfileText.beGone()
                 bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
                 ivCross.beGone()
                 ivBackedUp.beGone()
                 ivNext.beVisible()
-                if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+                /*if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
                     placeHolder()
-                }
+                }*/
             }
 
 

@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
 
-        if (sharedPreferencesHelper.userEmail == "") {
+        if (!sharedPreferencesHelper.firstMain) {
             val bottomSheetFragment = GoogleSignInDialog.newInstance {
                 val currentDestinationId = navController.currentDestination?.id
                 currentDestinationId?.let { id ->
@@ -33,6 +33,7 @@ class MainActivity : BaseActivity() {
                 }
             }
             bottomSheetFragment.show(supportFragmentManager, "StaticBottomSheet")
+            sharedPreferencesHelper.firstMain = true
         }
 
     }

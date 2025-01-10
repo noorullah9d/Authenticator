@@ -8,6 +8,6 @@ abstract class TotpDatabase : RoomDatabase() {
     abstract val totpDao: TotpDao
 
     companion object {
-        const val DATABASE_NAME = "authenticator_database"
+        const val DATABASE_NAME = "mf_authenticator_database"
     }
 }

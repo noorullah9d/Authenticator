@@ -1,6 +1,5 @@
 package com.example.my.project.authenticator.otp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
@@ -77,11 +76,13 @@ class ImportViewModel @Inject constructor(
 
     suspend fun addSelected() {
         importedKeys.filter { it.checked }.forEach {
-            if (sharedPreferencesHelper.userEmail!=""){
+            if (sharedPreferencesHelper.userEmail != "") {
 
-                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
+//                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
+                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail,  it.secretKey, it.name, "","")
             }
-            addNewTotpUseCase(sharedPreferencesHelper.userEmail, "Default", Base32().decode(it.secretKey), it.name, it.secretKey)
+            addNewTotpUseCase(0, sharedPreferencesHelper.userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, it.SHA ?: "SHA1", it.type ?: "TOTP", "")
+//            addNewTotpUseCase(System.currentTimeMillis().toInt(), sharedPreferencesHelper.userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, shaStr = it.SHA ?: "SHA1", totpVsHop = it.type ?: "TOTP", filePath = "")
         }
     }
 

@@ -84,7 +84,6 @@ class BackupFragment : Fragment() {
 
             logout.setOnClickListener {
                 prefsHelper?.userEmail = ""
-                Log.d(TAG, "onViewCreated: ${prefsHelper?.userEmail}")
                 prefsHelper?.isBackedUp = false
                 prefsHelper?.isBackedGone = false
                 findNavController().popBackStack()

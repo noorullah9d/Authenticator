@@ -9,11 +9,19 @@ class AddNewTotpUseCase(
     private val repository: TotpKeyRepository,
     private val encryptor: SecretEncryptor,
 ) {
-    suspend operator fun invoke(email: String, categories: String = "", plainSecret: ByteArray, name: String, secretKey: String) {
+    suspend operator fun invoke(
+        id: Int, email: String, categories: String = "", plainSecret: ByteArray,
+        name: String, secretKey: String, shaStr: String, totpVsHop: String, filePath: String
+    ) {
         val random = SecureRandom()
         val iv = ByteArray(encryptor.ivSize)
         random.nextBytes(iv)
-        repository.addKey(EncryptedTotpKey(0, email, name, category = categories, secretKey, encryptor.encrypt(plainSecret, iv), iv))
+        if (id == 0) {
+
+            repository.addKey(EncryptedTotpKey(id = id, email = email, name = name, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath, category = categories, secretKey = secretKey, secret = encryptor.encrypt(plainSecret, iv), iv = iv))
+        } else {
+            repository.editKey(EncryptedTotpKey(id = id, email = email, name = name, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath, category = categories, secretKey = secretKey, secret = encryptor.encrypt(plainSecret, iv), iv = iv))
+        }
 //        repository.addKey(EncryptedTotpKey(id = 0, email = email, name = name, category = categories, secretKey = secretKey, secret = encryptor.encrypt(plainSecret, iv), iv = iv))
     }
 }

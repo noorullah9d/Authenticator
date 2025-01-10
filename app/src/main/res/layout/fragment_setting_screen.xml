@@ -106,6 +106,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/rect_premium"
                 android:contentDescription="@string/transfer_codes"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_premium_rectangle" />

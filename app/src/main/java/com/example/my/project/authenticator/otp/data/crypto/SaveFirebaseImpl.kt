@@ -17,7 +17,10 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
                 "accountName" to accountName,
                 "passcode" to passcode,
                 "category" to category,
-                "tool" to tool
+                "tool" to tool,
+                "shaStr" to tool,
+                "totpVsHop" to tool,
+                "filePath" to tool
             )
 
             val documentRef = fireStore.collection("Authenticator").document(email)
@@ -46,7 +49,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
             }.addOnFailureListener { e ->
                 Log.e("SaveFirebase", "Failed to retrieve document: ${e.message}")
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Log.d("TAG", "saveDataToDB: ${e.message}")
         }
     }
@@ -57,11 +60,24 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
 
         documentRef.get().addOnSuccessListener { document ->
             if (document.exists()) {
+
                 val accountsList = document.get("accounts") as? List<Map<String, String>>
+
                 val accountObjects = accountsList?.map {
-                    Account(it["accountName"].toString(), it["passcode"].toString(),it["category"].toString())
+
+                    Account(
+                        it["accountName"].toString(),
+                        it["passcode"].toString(),
+                        it["category"].toString(),
+                        it["shaStr"].toString(),
+                        it["totpVsHop"].toString(),
+                        it["filePath"].toString()
+                    )
+
                 } ?: listOf()
-                callback(accountObjects, null) // Pass data to the callback
+
+                callback(accountObjects, null)
+
             } else {
                 callback(null, "No data found for this email")
             }

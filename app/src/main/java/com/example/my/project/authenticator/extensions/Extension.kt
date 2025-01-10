@@ -268,7 +268,7 @@ fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit)
 
     val builder = AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
     builder.setView(binding.root)
-        .setCancelable(false)
+        .setCancelable(true)
 
     val alert = builder.create()
     alert.show()

@@ -17,15 +17,15 @@ class TotpKeyRepositoryImpl(
     override fun getAllKeys(email: String, cats: String, searchQuery: String): Flow<List<EncryptedTotpKey>> {
         return if (email == "") {
 
-            if (cats == "") {
-                dao.queryAll("Default", searchQuery).map { it.map(TotpDbMapper::toTotpKey) }
+            if (cats == "Default" || cats == "") {
+                dao.queryDefaultAll("",searchQuery).map { it.map(TotpDbMapper::toTotpKey) }
             } else {
                 dao.queryAll(cats, searchQuery).map { it.map(TotpDbMapper::toTotpKey) }
             }
 
         } else {
-            return if (cats == "") {
-                dao.queryAll(email, "Default", searchQuery).map {
+            return if (cats == "Default" || cats == "") {
+                dao.queryDefaultAll(email,  searchQuery).map {
                     Log.d(TAG, "getAllKeys: ${it.size}")
                     it.map(TotpDbMapper::toTotpKey)
                 }

@@ -27,6 +27,10 @@ interface TotpDao {
     @Query("SELECT * FROM $totpTableName WHERE (email = :email OR email='') AND category = :cats AND name LIKE '%' || :searchQuery || '%'")
     fun queryAll(email: String, cats: String = "Default", searchQuery: String): Flow<List<TotpDbEntity>>
 
+    @Query("SELECT * FROM $totpTableName WHERE (email = :email OR email='') AND name LIKE '%' || :searchQuery || '%'")
+    fun queryDefaultAll(email: String, searchQuery: String): Flow<List<TotpDbEntity>>
+
+
     @Query("SELECT * FROM $totpTableName WHERE email = :email")
     fun queryAllData(email: String): List<TotpDbEntity>
 

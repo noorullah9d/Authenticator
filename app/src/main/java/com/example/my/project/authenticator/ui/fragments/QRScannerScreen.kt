@@ -131,7 +131,7 @@ class QRScannerScreen : Fragment() {
                                 val infoData = parseTotpUri(displayValue)
                                 if (infoData != null) {
                                     val (secret, name, tool) = infoData
-                                    Log.d(TAG, "Scanned TOTP: Secret = $secret, Name = $name tool $tool")
+                                    Log.d(TAG, "Scanned TOTP: Secret = $secret, Name = $name tool $tool    $displayValue")
 
                                     val isExists = homeViewModel.isKeyExists(name, secret)
                                     Log.d(TAG, "startCamera: $isExists")
@@ -148,7 +148,7 @@ class QRScannerScreen : Fragment() {
                                                 putString("key_name", name)
                                                 putString("secret_key", secret)
                                                 putString("tool", tool)
-
+                                                putInt("edit", 0)
 
                                             }
 
@@ -204,7 +204,7 @@ class QRScannerScreen : Fragment() {
             val issuer = label?.substringBefore(':', "") ?: ""
             val name = label?.substringAfter(':', "") ?: ""
             if (secret != null && name.isNotEmpty()) {
-                Log.d(TAG, "parseTotpUri: $secret, $name, $issuer")
+                Log.d(TAG, "parseTotpUri: $secret, $name, $issuer , $label")
                 Triple(secret, name, issuer)
             } else {
                 null
@@ -215,7 +215,7 @@ class QRScannerScreen : Fragment() {
         }
     }
 
-    private fun showReplace(id: Int, accountName: String, passKey: String, tool: String) {
+    /*private fun showReplace(id: Int, accountName: String, passKey: String, tool: String) {
         showReplaceAccountDialog(
             onReplace = {
 
@@ -249,7 +249,7 @@ class QRScannerScreen : Fragment() {
 
             }
         )
-    }
+    }*/
 
     companion object {
         private const val TAG = "QRScannerScreen"

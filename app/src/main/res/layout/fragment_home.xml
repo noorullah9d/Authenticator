@@ -111,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
+                    android:focusable="true"
                     android:hint="@string/search_your_codes"
                     app:iconifiedByDefault="false"
                     app:layout_constraintEnd_toStartOf="@+id/tvCancel"
@@ -166,30 +167,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <ImageView
-        android:id="@+id/icProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_profile"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/endGuide"
-        app:layout_constraintTop_toBottomOf="@+id/topGuide" />
-
-    <TextView
-        android:id="@+id/icProfileText"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:background="@drawable/circle_background"
-        android:contentDescription="@string/app_name"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_9ssp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/endGuide"
-        app:layout_constraintTop_toBottomOf="@+id/topGuide" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -330,7 +307,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/btnStartOpt"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsPlaceHolders"
             app:layout_constraintTop_toTopOf="parent">
 
 
@@ -375,147 +352,77 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnStartOpt"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:backgroundTint="@color/n_sky_blue"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/add"
-            android:text="@string/add_account"
-            android:textColor="@color/n_consis_white"
-            android:textSize="@dimen/_13sdp"
-            android:visibility="gone"
-            app:cornerRadius="@dimen/_20sdp"
-            app:elevation="0dp"
-            app:icon="@drawable/ic_plus"
-            app:iconGravity="textStart"
-            app:iconPadding="@dimen/_8sdp"
-            app:iconSize="@dimen/_12sdp"
-            app:iconTint="@null"
-            app:layout_constraintBottom_toTopOf="@+id/llBackUphoworks"
-            app:shapeAppearance="@style/Widget.MaterialComponents.CircularProgressIndicator"
-            app:tint="@android:color/white" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llBackUphoworks"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonsPlaceHolders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
-            android:orientation="horizontal"
-            android:weightSum="2"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/backup"
+                android:id="@+id/btnStartOpt"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:layout_marginEnd="@dimen/_3sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/n_off_white"
-                android:text="@string/backup_data"
-                android:textColor="@color/n_dark_grey"
-                app:icon="@drawable/ic_cloud_backup"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:backgroundTint="@color/n_sky_blue"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/add"
+                android:text="@string/add_account"
+                android:textColor="@color/n_consis_white"
+                android:textSize="@dimen/_13sdp"
+                app:cornerRadius="@dimen/_20sdp"
+                app:elevation="0dp"
+                app:icon="@drawable/ic_plus"
                 app:iconGravity="textStart"
+                app:iconPadding="@dimen/_8sdp"
                 app:iconSize="@dimen/_12sdp"
-                app:iconTint="@null" />
+                app:iconTint="@null"
+                app:layout_constraintBottom_toTopOf="@+id/llBackUphoworks"
+                app:shapeAppearance="@style/Widget.MaterialComponents.CircularProgressIndicator"
+                app:tint="@android:color/white" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/howAppWorks"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llBackUphoworks"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/n_off_white"
-                android:text="@string/how_it_works"
-                android:textColor="@color/n_dark_grey"
-                app:icon="@drawable/ic_how"
-                app:iconGravity="textStart"
-                app:iconTint="@null" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/backup"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/n_off_white"
+                    android:text="@string/backup_data"
+                    android:textColor="@color/n_dark_grey"
+                    app:icon="@drawable/ic_cloud_backup"
+                    app:iconGravity="textStart"
+                    app:iconSize="@dimen/_12sdp"
+                    app:iconTint="@null" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clEditing"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@color/n_sky_blue"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/faButton">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/edit"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@+id/center_view"
-                app:layout_constraintStart_toStartOf="parent">
-
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/edit_option" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:text="@string/edit"
-                    android:textColor="@color/n_consis_white"
-                    android:textSize="@dimen/_10sdp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/howAppWorks"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/n_off_white"
+                    android:text="@string/how_it_works"
+                    android:textColor="@color/n_dark_grey"
+                    app:icon="@drawable/ic_how"
+                    app:iconGravity="textStart"
+                    app:iconTint="@null" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            <View
-                android:id="@+id/center_view"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:background="@color/n_off_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/copy"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:foreground="?selectableItemBackground"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/center_view">
-
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/edit_option" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:text="@string/copy"
-                    android:textColor="@color/n_consis_white"
-                    android:textSize="@dimen/_10sdp" />
-
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/faButton"
@@ -529,6 +436,84 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/add_button" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clEditing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@color/n_sky_blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/edit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/center_view"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/edit_option" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/edit"
+                android:textColor="@color/n_consis_white"
+                android:textSize="@dimen/_10sdp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <View
+            android:id="@+id/center_view"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:background="@color/view_line_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/copy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/center_view">
+
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/icon_copy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/copy"
+                android:textColor="@color/n_consis_white"
+                android:textSize="@dimen/_10sdp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,5 +10,7 @@ data class ImportedItemState(
     val secretKey: String,
     val nameSimilarity: String? = null,
     val secretSimilarity: String? = null,
-    var checked: Boolean = false
+    var checked: Boolean = false,
+    val SHA: String? = null,
+    val type: String? = null,
 )

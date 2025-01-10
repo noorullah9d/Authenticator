@@ -12,6 +12,8 @@ class GenerateTotpCodeUseCase(
 ) {
     operator fun invoke(totpKey: EncryptedTotpKey): Int {
         val secret = encryptor.decrypt(totpKey.secret, totpKey.iv)
-        return generator.generate(secret, getUnixTime())
+        return generator.generate(secret, getUnixTime(),totpKey.shaStr,totpKey.totpVsHop)
     }
 }
+
+private const val TAG = "GenerateTotpCodeUseCase"

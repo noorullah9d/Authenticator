@@ -11,6 +11,9 @@ object TotpDbMapper {
         secret = totpKey.secret,
         secretKey = totpKey.secretKey,
         iv = totpKey.iv,
+        shaStr = totpKey.shaStr,
+        totpVsHop = totpKey.totpVsHop,
+        filePath= totpKey.filePath
     )
 
     fun toTotpKey(totpEntity: TotpDbEntity) = EncryptedTotpKey(
@@ -21,5 +24,8 @@ object TotpDbMapper {
         secret = totpEntity.secret,
         secretKey = totpEntity.secretKey,
         iv = totpEntity.iv,
+        shaStr = totpEntity.shaStr,
+        totpVsHop = totpEntity.totpVsHop,
+        filePath= totpEntity.filePath
     )
 }

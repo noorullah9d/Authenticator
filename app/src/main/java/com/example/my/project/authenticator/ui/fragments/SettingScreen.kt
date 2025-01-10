@@ -146,8 +146,11 @@ class SettingScreen : Fragment() {
 
             ivSettingsCancel.setOnClickListener {
                 val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-
                 findNavController().navigate(R.id.homeFragment, null, navOptions)
+            }
+
+            rectPremium.setOnClickListener {
+                toast("Coming Soon")
             }
 
             privacyPolicy.setOnClickListener {

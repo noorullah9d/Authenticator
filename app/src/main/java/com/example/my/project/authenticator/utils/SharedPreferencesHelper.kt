@@ -44,6 +44,10 @@ class SharedPreferencesHelper(context: Context) {
         get() = sharedPreferences.getBoolean(Constants.backUp, false)
         set(value) = sharedPreferences.edit().putBoolean(Constants.backUp, value).apply()
 
+    var firstMain: Boolean
+        get() = sharedPreferences.getBoolean(Constants.firstTimeMain, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constants.firstTimeMain, value).apply()
+
     var isBackedGone: Boolean
         get() = sharedPreferences.getBoolean(Constants.backUpGone, false)
         set(value) = sharedPreferences.edit().putBoolean(Constants.backUpGone, value).apply()

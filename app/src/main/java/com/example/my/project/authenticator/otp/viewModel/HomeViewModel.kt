@@ -16,7 +16,6 @@ import com.example.my.project.authenticator.otp.domain.usecases.DeleteCategories
 import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.ReplaceTotpUseCase
-import com.example.my.project.authenticator.utils.EditTotpState
 import com.example.my.project.authenticator.utils.HomeState
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.example.my.project.authenticator.utils.TotpCardState
@@ -86,7 +85,7 @@ class HomeViewModel @Inject constructor(
 
     fun setCategory(newCategory: String) {
         if (newCategory == "") {
-            _category.value = "Default"
+            _category.value = ""
         } else {
             _category.value = newCategory
         }
@@ -132,7 +131,17 @@ class HomeViewModel @Inject constructor(
                 val secret = Base32().decode(account.passcode)
 
                 viewModelScope.launch(Dispatchers.IO) {
-                    addTotpUseCase(sharedPreferencesHelper.userEmail, categories = "", secret, account.accountName, account.passcode)
+                    addTotpUseCase(
+                        id = 0,
+                        email = sharedPreferencesHelper.userEmail,
+                        categories = "",
+                        secret,
+                        account.accountName,
+                        account.passcode,
+                        shaStr = account.shaStr,
+                        totpVsHop = account.totpVsHop,
+                        filePath = account.filePath
+                    )
                 }
             }
         }
@@ -208,7 +217,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     TotpCardState(
-                        it.id, it.secretKey, it.name, currentTotp, countSecondsLeft()
+                        id = it.id, secretKey = it.secretKey, name = it.name, currentTotp, secondsLeft = countSecondsLeft(), SHA = it.shaStr, OTP = it.totpVsHop, filePath = it.filePath, category = it.category
                     )
                 }
             }
@@ -223,7 +232,7 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = ""): Boolean {
+    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = "", shaStr: String, totpVsHop: String, filePath: String, id: Int = 0): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
 
         if (sharedPreferencesHelper.userEmail != "") {
@@ -232,7 +241,7 @@ class HomeViewModel @Inject constructor(
 
         val secret = Base32().decode(base32Secret)
         return try {
-            addTotpUseCase(sharedPreferencesHelper.userEmail, categories, secret, name, base32Secret)
+            addTotpUseCase(id, sharedPreferencesHelper.userEmail, categories, secret, name, base32Secret, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath)
 
             refreshTotpKeyFlow()
 
@@ -271,7 +280,7 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    fun requestEdit(id: Int) {
+    /*fun requestEdit(id: Int) {
         val toEdit = totpKeyFlow.value.find { key -> key.id == id }
         homeState.value = homeState.value?.copy(editingTotp = toEdit?.let {
             EditTotpState(
@@ -280,16 +289,17 @@ class HomeViewModel @Inject constructor(
                 ).decodeToString()
             )
         })
-    }
+    }*/
 
-    fun editTotp(edited: EditTotpState) {
-        if (!isSecretCorrect(edited.base32Secret)) return
+    /*fun editTotp(edited: EditTotpState):Boolean {
+        if (!isSecretCorrect(edited.base32Secret)) return false
         val secret = Base32().decode(edited.base32Secret)
         viewModelScope.launch {
             editTotpUseCase(sharedPreferencesHelper.userEmail, edited.id, edited.name, secret, edited.base32Secret)
         }
+        return true
     }
-
+*/
     fun clearTotpData() {
         homeState.value = homeState.value?.copy(totpList = emptyList())
     }
