@@ -8,58 +8,66 @@
     android:background="@color/white"
     tools:context=".ui.activities.SelectLanguageActivity">
 
-
-    <ImageView
-        android:id="@+id/confirm"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="?selectableItemBackground"
-        android:importantForAccessibility="no"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/backPress"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backPress"
-        app:srcCompat="@drawable/icons_tick" />
-
-    <ImageView
-        android:id="@+id/backPress"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
-        android:contentDescription="@string/app_name"
-        android:foreground="?selectableItemBackground"
-        android:padding="@dimen/_12sdp"
-        android:src="@drawable/right_arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/icBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:contentDescription="@string/app_name"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/right_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tool_bar_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/select_language"
-        android:textColor="@color/n_dark_grey"
-        android:textSize="@dimen/_18sdp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backPress"
-        app:layout_constraintStart_toEndOf="@+id/backPress"
-        app:layout_constraintTop_toTopOf="@+id/backPress" />
+        <TextView
+            android:id="@+id/tool_bar_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/select_language"
+            android:textColor="@color/n_dark_grey"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/icBack"
+            app:layout_constraintStart_toEndOf="@+id/icBack"
+            app:layout_constraintTop_toTopOf="@+id/icBack" />
 
+        <ImageView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:importantForAccessibility="no"
+            android:padding="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/icBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icBack"
+            app:srcCompat="@drawable/icons_tick" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/languages_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
         android:clipToPadding="false"
-        android:paddingBottom="6dp"
+        tools:listitem="@layout/languages_item_new"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backPress" />
-
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

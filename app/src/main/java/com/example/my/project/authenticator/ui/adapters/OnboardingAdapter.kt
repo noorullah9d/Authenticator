@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

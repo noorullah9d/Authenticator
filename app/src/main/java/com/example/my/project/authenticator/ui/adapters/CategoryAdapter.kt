@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.graphics.Typeface
 import android.view.LayoutInflater

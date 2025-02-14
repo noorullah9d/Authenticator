@@ -10,13 +10,14 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
+import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.ActivityExportScreenBinding
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
-import com.example.my.project.authenticator.otp.viewModel.ExportViewModel
+import com.example.my.project.authenticator.ui.viewModel.ExportViewModel
+import com.example.my.project.authenticator.ui.custom.CustomSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.OutputStream
@@ -47,10 +48,11 @@ class ExportScreen : BaseActivity() {
 
 
         binding.dropdownIcon.setOnClickListener {
+//            CustomSpinner.performClick()
             binding.exportTypeSpinner.performClick()
         }
 
-        binding.backPress.setOnClickListener { finish() }
+        binding.icBack.setOnClickListener { finish() }
 
 
     }
@@ -72,9 +74,9 @@ class ExportScreen : BaseActivity() {
         binding.exportTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (position != 0) {
-                    binding.passwordField.beVisible()
+                    binding.passwordField.show()
                 } else {
-                    binding.passwordField.beGone()
+                    binding.passwordField.hide()
                 }
             }
 

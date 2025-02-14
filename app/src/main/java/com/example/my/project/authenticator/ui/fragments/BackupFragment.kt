@@ -93,7 +93,7 @@ class BackupFragment : Fragment() {
 
 
 
-            backPress.setOnClickListener { findNavController().popBackStack() }
+            icBack.setOnClickListener { findNavController().popBackStack() }
 
             gmailSwitching.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {

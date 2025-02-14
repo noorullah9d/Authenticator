@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.show
 
 class AddCategorySpinnerArrayAdapter(
     context: Context,
@@ -36,9 +36,9 @@ class AddCategorySpinnerArrayAdapter(
 
 
         if (position == options.size - 1) {
-            textView.beGone()
+            textView.hide()
         } else {
-            textView.beVisible()
+            textView.show()
         }
 
         return view

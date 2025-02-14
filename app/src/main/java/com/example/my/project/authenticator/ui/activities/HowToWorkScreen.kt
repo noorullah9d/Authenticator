@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.adapters.HowWorksAdapter
+import com.example.my.project.authenticator.ui.adapters.HowWorksAdapter
 import com.example.my.project.authenticator.databinding.ActivityHowToWorkScreenBinding
 import com.example.my.project.authenticator.extensions.finishWithAnimation
 import com.example.my.project.authenticator.ui.fragments.UsageFragment1
@@ -48,7 +48,7 @@ class HowToWorkScreen : AppCompatActivity() {
 
         binding.apply {
 
-            backPress.setOnClickListener {
+            icBack.setOnClickListener {
                 finishWithAnimation()
             }
 

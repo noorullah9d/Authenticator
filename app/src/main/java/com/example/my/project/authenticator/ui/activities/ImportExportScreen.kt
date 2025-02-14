@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.databinding.ActivityImportExportScreenBinding
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.otp.viewModel.ImportViewModel
+import com.example.my.project.authenticator.ui.viewModel.ImportViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -63,7 +63,7 @@ class ImportExportScreen : BaseActivity() {
                 startActivityWithAnimation<ExportScreen>()
             }
 
-            backPress.setOnClickListener {
+            icBack.setOnClickListener {
                 finish()
             }
 

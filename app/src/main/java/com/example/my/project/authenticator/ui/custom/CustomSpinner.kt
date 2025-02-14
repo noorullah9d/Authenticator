@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.appclass
+package com.example.my.project.authenticator.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.module
+package com.example.my.project.authenticator.di
 
 import com.example.my.project.authenticator.otp.data.repository.TotpKeyRepositoryImpl
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository

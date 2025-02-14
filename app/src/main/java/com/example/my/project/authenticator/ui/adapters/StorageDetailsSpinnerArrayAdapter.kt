@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.appclass.CustomSpinner
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.ui.custom.CustomSpinner
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.show
 
 class StorageDetailsSpinnerArrayAdapter(
     context: Context,
@@ -32,15 +32,15 @@ class StorageDetailsSpinnerArrayAdapter(
         if (isRecommended) {
             if (spinner.isDropdownShown) {
                 if (position == spinnerList.size - 1 && spinner.isDropdownShown) {
-                    viewSpinner.beGone()
-                    llAddNew.beVisible()
+                    viewSpinner.hide()
+                    llAddNew.show()
                 } else {
-                    viewSpinner.beVisible()
-                    llAddNew.beGone()
+                    viewSpinner.show()
+                    llAddNew.hide()
                 }
             } else if (!spinner.isDropdownShown) {
-                viewSpinner.beGone()
-                llAddNew.beGone()
+                viewSpinner.hide()
+                llAddNew.hide()
             }
         }
 

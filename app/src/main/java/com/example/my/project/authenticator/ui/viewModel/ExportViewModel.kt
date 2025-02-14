@@ -1,8 +1,7 @@
-package com.example.my.project.authenticator.otp.viewModel
+package com.example.my.project.authenticator.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
 import com.example.my.project.authenticator.otp.domain.crypto.PasswordHasher
 import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
@@ -11,7 +10,6 @@ import com.example.my.project.authenticator.otp.domain.usecases.ExportKeysUseCas
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.stateIn
 import java.io.OutputStream
 import java.security.SecureRandom
 import javax.crypto.spec.SecretKeySpec

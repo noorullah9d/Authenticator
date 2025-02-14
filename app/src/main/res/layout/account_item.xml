@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_15sdp"
     android:animateLayoutChanges="true"
     android:foreground="?selectableItemBackground">
 
@@ -21,13 +21,13 @@
             android:layout_height="@dimen/_40sdp"
             android:background="@drawable/circle_background"
             android:gravity="center"
-            android:text="G"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="G" />
 
         <ImageView
             android:id="@+id/selected"
@@ -42,15 +42,19 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:ellipsize="end"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Tik-Tok"
+            android:maxLines="1"
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toStartOf="@id/circularProgress"
             app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-            app:layout_constraintTop_toTopOf="@+id/ivProfileImage" />
+            app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
+            tools:text="Tik-Tok" />
 
         <TextView
             android:id="@+id/tvPassCode"
@@ -59,12 +63,12 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_7sdp"
             android:fontFamily="@font/open_sans_bold"
-            android:text="999 754"
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="999 754" />
 
         <com.owl93.dpb.CircularProgressView
             android:id="@+id/circularProgress"
@@ -76,13 +80,26 @@
             app:maxValue="30"
             app:progress="10"
             app:progressAnimationDuration="30"
-            app:strokeColor="@color/secondary_color"
+            app:strokeColor="@color/n_sky_blue"
             app:strokeWidth="@dimen/_2sdp"
             app:text="30"
-            app:textColor="@color/secondary_color"
+            app:textColor="@color/n_sky_blue"
             app:textSize="@dimen/_9ssp"
             app:trackColor="@color/light_gray"
             app:trackWidth="@dimen/_1sdp" />
+
+        <ImageView
+            android:id="@+id/icRefresh"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_refresh"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <View
             android:layout_width="match_parent"
@@ -91,7 +108,6 @@
             android:background="@color/n_stroke_color"
             app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <FrameLayout
         android:id="@+id/backgroundLayout"
@@ -109,9 +125,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_gravity="end|center_vertical"
             android:padding="8dp"
-            android:src="@drawable/delete_otp" />
-
+            android:src="@drawable/delete_otp"
+            tools:ignore="ContentDescription" />
     </FrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

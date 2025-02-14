@@ -51,7 +51,7 @@ class ThemesFragment : Fragment() {
             darkRadio.buttonTintList = colorStateList
             darkRadio.invalidate()
 
-            backPress.setOnClickListener {
+            icBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

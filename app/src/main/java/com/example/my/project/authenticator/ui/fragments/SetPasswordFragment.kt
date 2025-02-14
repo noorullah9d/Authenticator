@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentSetPasswordBinding
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.extensions.validatePassword
@@ -38,11 +38,11 @@ class SetPasswordFragment : Fragment() {
         binding.apply {
 
             if (prefsHelper?.userPassword?.isNotEmpty() == true) {
-                currentPassword.beVisible()
+                currentPassword.show()
 //                currentPasswordNotCorrect.beVisible()
             }
 
-            backPress.setOnClickListener { findNavController().popBackStack() }
+            icBack.setOnClickListener { findNavController().popBackStack() }
 
             hidePassword.setOnClickListener {
                 hidePassword(enterCurrentPassword, hidePassword)
@@ -60,7 +60,7 @@ class SetPasswordFragment : Fragment() {
                 if (currentPassword.visibility == View.VISIBLE) {
                     val isTrue = prefsHelper?.userPassword?.validatePasswordChange(enterCurrentPassword.text.toString(), etNewPassword.text.toString(), etConfirmPassword.text.toString()) ?: false
                     if (isTrue == "not") {
-                        currentPasswordNotCorrect.beVisible()
+                        currentPasswordNotCorrect.show()
                     } else {
                         findNavController().popBackStack()
                     }

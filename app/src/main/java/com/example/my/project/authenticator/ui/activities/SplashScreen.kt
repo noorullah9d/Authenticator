@@ -23,7 +23,6 @@ class SplashScreen : BaseActivity() {
         binding = FragmentSplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val prefsHelper = SharedPreferencesHelper(applicationContext)
 
         setAppTheme()
@@ -39,9 +38,7 @@ class SplashScreen : BaseActivity() {
                 else startActivityWithAnimation<MainActivity>()
                 finish()
             }
-
         }
-
     }
 
     private fun setAppTheme() {
@@ -69,7 +66,4 @@ class SplashScreen : BaseActivity() {
             AppTheme.LIGHT
         }
     }
-
-
 }
-

@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.otp.viewModel
+package com.example.my.project.authenticator.ui.viewModel
 
 data class ImportScreenState(
     val errorText: String? = null,

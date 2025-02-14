@@ -5,7 +5,6 @@ import com.example.my.project.authenticator.utils.AppPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
 @HiltViewModel
 class LanguageViewModel @Inject constructor(private val appPreference: AppPreference) : ViewModel() {
 
@@ -24,6 +23,4 @@ class LanguageViewModel @Inject constructor(private val appPreference: AppPrefer
     fun getLanguageFirstTime(): String {
         return appPreference.getStringPreference(AppPreference.LANGUAGES_FIRST_TIME, "false")
     }
-
-
 }

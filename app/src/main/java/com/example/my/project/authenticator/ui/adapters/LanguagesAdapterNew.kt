@@ -1,13 +1,10 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.LanguagesItemNewBinding
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
 import com.example.my.project.authenticator.extensions.changeCardStorkColor
 import com.example.my.project.authenticator.model.LanguagesModel
 
@@ -29,13 +26,13 @@ class LanguagesAdapterNew(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): LanguagesAdapterNew.LanguagesViewHolder {
+    ): LanguagesViewHolder {
         val binding =
             LanguagesItemNewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LanguagesViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: LanguagesAdapterNew.LanguagesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LanguagesViewHolder, position: Int) {
 
         holder.bindData(currentLang, languagesList[holder.adapterPosition], languageSelected)
     }
@@ -63,45 +60,31 @@ class LanguagesAdapterNew(
 
                         if (isSelected) {
                             selectorIcon.setImageResource(R.drawable.selector_icon)
-                            root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
+//                            root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
 //                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
-
                         } else {
-                            root.changeCardStorkColor(R.color.white, itemView.context.theme)
+//                            root.changeCardStorkColor(R.color.white, itemView.context.theme)
 //                            root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.of_white))
-
                             selectorIcon.setImageResource(R.drawable.ic_unchecked)
                         }
                     }
-
-
                 } else {
                     val isSelected = adapterPosition == (selectedPosition ?: 0)
 
                     if (isSelected) {
-
                         selectorIcon.setImageResource(R.drawable.selector_icon)
 //                        root.changeCardStorkColor(R.color.md_theme_light_primary, itemView.context.theme)
 //                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
-
                     } else {
-
 //                        root.changeCardStorkColor(R.color.card_bg, itemView.context.theme)
 //                        root.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.card_bg))
                         selectorIcon.setImageResource(R.drawable.ic_unchecked)
-
                     }
                 }
 
-
-
-
-
-                "${language.name}  (${language.code})".also { languageName.text = it }
+//                "${language.name}  (${language.code})".also { languageName.text = it }
+                languageName.text = language.name
                 localName.text = language.localName
-
-
-
 
                 root.setOnClickListener {
                     checkDefault = false
@@ -109,7 +92,6 @@ class LanguagesAdapterNew(
                     selectItem(adapterPosition)
                 }
             }
-
         }
     }
 
@@ -123,6 +105,4 @@ class LanguagesAdapterNew(
             notifyItemChanged(selectedPosition ?: 0)
         }
     }
-
-
 }

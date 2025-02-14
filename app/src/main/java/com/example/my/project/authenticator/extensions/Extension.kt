@@ -94,15 +94,15 @@ fun Activity.showCustomDialog(callback: (result: String) -> Unit) {
     dialog.window?.setGravity(Gravity.BOTTOM)
 }
 
-fun View.beVisible() {
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun View.beGone() {
+fun View.hide() {
     visibility = View.GONE
 }
 
-fun View.beInVisible() {
+fun View.invisible() {
     visibility = View.INVISIBLE
 }
 

@@ -11,8 +11,8 @@ data class TotpCardState(
     val name: String,
     var oneTimeCode: Int,
     var secondsLeft: Int,
-    var SHA: String,
-    var OTP: String,
+    var cryptography: String,
+    var type: String,
     var filePath: String,
     var category: String,
 )

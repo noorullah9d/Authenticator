@@ -19,7 +19,7 @@
     <color name="view_line_color">#F1F1F1</color>
     <color name="transparent">#33FFFFFF</color>
 
-
+    <color name="mtrl_textinput_default_box_stroke_color">#B0B0B0</color>
 
 
     <color name="n_stroke_color">#EAEAEA</color>

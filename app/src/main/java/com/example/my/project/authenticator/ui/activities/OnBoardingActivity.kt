@@ -12,14 +12,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.adapters.OnboardingAdapter
+import com.example.my.project.authenticator.ui.adapters.OnboardingAdapter
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.otp.data.database.Categories
-import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
+import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -91,19 +91,19 @@ class OnBoardingActivity : BaseActivity() {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
-                        binding.skip.beVisible()
+                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.get_started)
                         binding.icons.setImageResource(R.drawable.ic_first_start)
                     }
 
                     1 -> {
-                        binding.skip.beVisible()
+                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.next)
                         binding.icons.setImageResource(R.drawable.ic_second_start)
                     }
 
                     2 -> {
-                        binding.skip.beGone()
+                        binding.skip.hide()
                         binding.btnStart.text = getString(R.string.let_s_go)
                         binding.icons.setImageResource(R.drawable.ic_third_start)
                     }

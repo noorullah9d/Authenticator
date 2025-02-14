@@ -48,4 +48,9 @@
         android:name="com.example.my.project.authenticator.ui.fragments.SetPasswordFragment"
         android:label="fragment_set_password"
         tools:layout="@layout/fragment_set_password" />
+    <fragment
+        android:id="@+id/homeFragmentNew"
+        android:name="com.example.my.project.authenticator.ui.fragments.HomeFragmentNew"
+        android:label="fragment_home_new"
+        tools:layout="@layout/fragment_home_new" />
 </navigation>

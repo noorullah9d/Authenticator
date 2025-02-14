@@ -16,14 +16,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="@dimen/_15sdp" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/endGuide"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/_15sdp" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/topGuide"
@@ -117,10 +115,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/tvCancel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
             </com.google.android.material.card.MaterialCardView>
-
 
             <TextView
                 android:id="@+id/tvCancel"
@@ -130,8 +125,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -161,13 +154,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_account"
@@ -198,7 +186,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivBlock"
             android:layout_width="@dimen/_22sdp"
@@ -223,7 +210,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/tv_backed_up"
@@ -267,10 +253,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/below_layout"
@@ -298,7 +281,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/llPlaceHolderLayout"
@@ -350,7 +332,6 @@
                 android:visibility="gone" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/buttonsPlaceHolders"
@@ -423,7 +404,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/faButton"
             android:layout_width="@dimen/_70sdp"
@@ -436,14 +416,12 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/add_button" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clEditing"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_54sdp"
         android:background="@color/n_sky_blue"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -458,7 +436,6 @@
             app:layout_constraintEnd_toStartOf="@+id/center_view"
             app:layout_constraintStart_toStartOf="parent">
 
-
             <ImageView
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
@@ -472,10 +449,7 @@
                 android:text="@string/edit"
                 android:textColor="@color/n_consis_white"
                 android:textSize="@dimen/_10sdp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <View
             android:id="@+id/center_view"
@@ -486,7 +460,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/copy"
             android:layout_width="0dp"
@@ -496,7 +469,6 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/center_view">
-
 
             <ImageView
                 android:layout_width="@dimen/_20sdp"
@@ -511,18 +483,13 @@
                 android:text="@string/copy"
                 android:textColor="@color/n_consis_white"
                 android:textSize="@dimen/_10sdp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clCatEditing"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_54sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@color/n_sky_blue"
         android:visibility="gone"
@@ -538,7 +505,6 @@
             app:layout_constraintEnd_toStartOf="@+id/center_cat_view"
             app:layout_constraintStart_toStartOf="parent">
 
-
             <ImageView
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
@@ -552,10 +518,7 @@
                 android:text="@string/edit"
                 android:textColor="@color/n_consis_white"
                 android:textSize="@dimen/_10sdp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <View
             android:id="@+id/center_cat_view"
@@ -565,7 +528,6 @@
             android:background="@color/n_off_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/copy_cat"
@@ -577,12 +539,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/center_cat_view">
 
-
             <ImageView
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/edit_option" />
+                android:src="@drawable/ic_delete" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -591,12 +552,6 @@
                 android:text="@string/delete"
                 android:textColor="@color/n_consis_white"
                 android:textSize="@dimen/_10sdp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

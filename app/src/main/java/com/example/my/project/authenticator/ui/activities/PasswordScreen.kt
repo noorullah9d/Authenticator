@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityPasswordScreenBinding
-import com.example.my.project.authenticator.extensions.beGone
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
@@ -55,7 +55,7 @@ class PasswordScreen : AppCompatActivity() {
                     if (prefsHelper?.userPassword == etNewPassword.text.toString()) {
                         startActivityWithAnimation<MainActivity>()
                     } else {
-                        passwordWrong.beVisible()
+                        passwordWrong.show()
                     }
                 }
             }
@@ -65,11 +65,11 @@ class PasswordScreen : AppCompatActivity() {
     private fun thumbVisibility() {
         binding.apply {
             if (prefsHelper?.isFingerprintEnabled!!) {
-                ivThumb.beVisible()
-                tvOpenThumb.beVisible()
+                ivThumb.show()
+                tvOpenThumb.show()
             } else {
-                ivThumb.beGone()
-                tvOpenThumb.beGone()
+                ivThumb.hide()
+                tvOpenThumb.hide()
             }
         }
     }

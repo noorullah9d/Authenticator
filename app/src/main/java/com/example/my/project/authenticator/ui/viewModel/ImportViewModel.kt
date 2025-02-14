@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.otp.viewModel
+package com.example.my.project.authenticator.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

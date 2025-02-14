@@ -16,15 +16,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.adapters.StorageDetailsSpinnerArrayAdapter
+import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
-import com.example.my.project.authenticator.extensions.beVisible
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.createNewGroupDialog
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.data.database.Categories
-import com.example.my.project.authenticator.otp.viewModel.HomeViewModel
+import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -171,9 +171,9 @@ class AccountsDetails : Fragment() {
                 }
             }
 
-            ivTheme.setOnClickListener { llAdvLL.beVisible() }
+            ivTheme.setOnClickListener { llAdvLL.show() }
 
-            tvTheme.setOnClickListener { llAdvLL.beVisible() }
+            tvTheme.setOnClickListener { llAdvLL.show() }
 
 
             profileImage.setOnClickListener {

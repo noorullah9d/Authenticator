@@ -61,7 +61,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageView
-        android:id="@+id/backPress"
+        android:id="@+id/icBack"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
         android:contentDescription="@string/app_name"
@@ -80,9 +80,9 @@
         android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/backPress"
-        app:layout_constraintStart_toEndOf="@+id/backPress"
-        app:layout_constraintTop_toTopOf="@+id/backPress" />
+        app:layout_constraintBottom_toBottomOf="@+id/icBack"
+        app:layout_constraintStart_toEndOf="@+id/icBack"
+        app:layout_constraintTop_toTopOf="@+id/icBack" />
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -91,7 +91,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/ivProgress"
-        app:layout_constraintTop_toBottomOf="@+id/backPress" />
+        app:layout_constraintTop_toBottomOf="@+id/icBack" />
 
     <ImageView
         android:id="@+id/ivProgress"

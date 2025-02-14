@@ -14,22 +14,22 @@ android {
     compileSdk = 34
 
 
-    signingConfigs {
+    /*signingConfigs {
         create("release") {
             keyAlias = "galixoai"
             keyPassword = "galixoai"
             storeFile = file("C:/Users/HP/Desktop/authenticator.jks")
             storePassword = "galixoai"
         }
-    }
+    }*/
 
 
     defaultConfig {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 6
+        versionName = "1.0.5"
         setProperty("archivesBaseName", "MF_Authenticator_App" + "_vc_" + versionCode + "_vn_" + versionName + "_")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -52,12 +52,12 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 //            signingConfig signingConfigs.release
-            signingConfig = signingConfigs.getByName("release")
+//            signingConfig = signingConfigs.getByName("release")
         }
         debug {
-//            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+//            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.databinding.AccountItemBinding
+import com.example.my.project.authenticator.extensions.invisible
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.utils.TotpCardState
@@ -13,7 +15,8 @@ import com.example.my.project.authenticator.utils.TotpCardState
 
 class AccountAdapter(
     private val accounts: MutableList<TotpCardState>,
-    private val onDeleteSelected: (Int, List<TotpCardState>) -> Unit
+    private val onDeleteSelected: (Int, List<TotpCardState>) -> Unit,
+    private val onHOTPRefreshClicked: (TotpCardState) -> Unit
 ) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     private val selectedAccounts = mutableSetOf<TotpCardState>()
@@ -49,16 +52,32 @@ class AccountAdapter(
     inner class AccountViewHolder(private val binding: AccountItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(account: TotpCardState, isSelected: Boolean) {
-            val otp = account.oneTimeCode.toString().length
+            /*val otp = account.oneTimeCode.toString().length
             binding.tvName.text = account.name
             if (otp == 5) {
                 binding.tvPassCode.text = "0" + account.oneTimeCode.toString()
             } else {
                 binding.tvPassCode.text = account.oneTimeCode.toString()
+            }*/
+            binding.tvName.text = account.name
+            binding.tvPassCode.text = account.oneTimeCode.toString().padStart(6, '0')
+
+            if (account.type == "TOTP") {
+                binding.circularProgress.show()
+                binding.icRefresh.invisible()
+                binding.circularProgress.progress = account.secondsLeft.toFloat()
+                binding.circularProgress.text = account.secondsLeft.toString()
+            } else {
+                binding.circularProgress.invisible()
+                binding.icRefresh.show()
+
+                binding.icRefresh.setOnClickListener{
+                    onHOTPRefreshClicked.invoke(account)
+                }
             }
 
-            binding.circularProgress.progress = account.secondsLeft.toFloat()
-            binding.circularProgress.text = account.secondsLeft.toString()
+//            binding.circularProgress.progress = account.secondsLeft.toFloat()
+//            binding.circularProgress.text = account.secondsLeft.toString()
             binding.ivProfileImage.setProfileImage(account.name)
 
             binding.selected.visibility = if (isSelected) View.VISIBLE else View.GONE
@@ -92,9 +111,7 @@ class AccountAdapter(
         holder.bind(account, isSelected)
     }
 
-    override fun getItemCount(): Int {
-        return accounts.size
-    }
+    override fun getItemCount(): Int = accounts.size
 
     private fun toggleSelection(position: Int, account: TotpCardState) {
         if (selectedAccounts.contains(account)) {

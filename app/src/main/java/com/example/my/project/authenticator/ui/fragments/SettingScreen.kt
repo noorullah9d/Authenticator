@@ -74,13 +74,11 @@ class SettingScreen : Fragment() {
                 handleSignInResult(task)
             } else {
                 Log.d(TAG, "Google sign-in canceled or failed $result")
+                toast("Google sign-in canceled or failed")
             }
         }
 
-
         binding.apply {
-
-
             if (prefsHelper?.userEmail != "") {
                 emailText.text = prefsHelper?.userEmail
             } else {
@@ -262,6 +260,7 @@ class SettingScreen : Fragment() {
             firebaseAuthWithGoogle(account.idToken!!, account.email!!)
         } catch (e: ApiException) {
             Log.d(TAG, "Google sign-in failed", e)
+            toast("Google sign-in failed")
         }
     }
 
@@ -271,14 +270,15 @@ class SettingScreen : Fragment() {
             if (task.isSuccessful) {
                 prefsHelper?.userEmail = email
                 binding.emailText.text = email
+
+                // go to backup
+                findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
             } else {
                 Log.d(TAG, "failed")
                 toast(getString(R.string.not_logged_in))
             }
         }
     }
-
-
 }
 
 private const val TAG = "SettingScreen"

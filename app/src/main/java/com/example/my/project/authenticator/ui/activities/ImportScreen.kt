@@ -8,12 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.my.project.authenticator.adapters.ImportedKeysAdapter
+import com.example.my.project.authenticator.ui.adapters.ImportedKeysAdapter
 import com.example.my.project.authenticator.databinding.ActivityImportScreenBinding
 import com.example.my.project.authenticator.extensions.showAskPasswordDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimationAndClearStack
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.otp.viewModel.ImportViewModel
+import com.example.my.project.authenticator.ui.viewModel.ImportViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

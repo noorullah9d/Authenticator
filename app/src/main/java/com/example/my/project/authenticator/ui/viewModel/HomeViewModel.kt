@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.otp.viewModel
+package com.example.my.project.authenticator.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -37,8 +37,6 @@ import kotlin.concurrent.fixedRateTimer
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 
-private const val defaultUpdateStepMs = 30_000L
-
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -48,7 +46,6 @@ class HomeViewModel @Inject constructor(
     totpCodeGenerator: TotpCodeGenerator,
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
-
 
     private val addTotpUseCase = AddNewTotpUseCase(totpKeyRepo, secretEncryptor)
     private val addCategoriesUseCase = AddCategories(totpKeyRepo)
@@ -79,9 +76,28 @@ class HomeViewModel @Inject constructor(
 
     val homeState = MutableLiveData(HomeState())
 
-
     private lateinit var oneSecondTimer: Timer
 
+    /* new changes -- start */
+
+    /** Manually generate HOTP when refresh is clicked */
+    fun generateHOTP(account: TotpCardState) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newOTP = try {
+                generateTotpCodeUseCase(totpKeyFlow.value.find { it.id == account.id }!!)
+            } catch (e: Exception) {
+                999999 // Fallback OTP
+            }
+
+            val updatedList = homeState.value?.totpList?.map {
+                if (it.id == account.id) it.copy(oneTimeCode = newOTP) else it
+            } ?: emptyList()
+
+            homeState.postValue(homeState.value?.copy(totpList = updatedList))
+        }
+    }
+
+    /* new changes -- end */
 
     fun setCategory(newCategory: String) {
         if (newCategory == "") {
@@ -91,7 +107,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     init {
         viewModelScope.launch(Dispatchers.Main) {
             autoUpdate()
@@ -99,12 +114,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     fun getAllGroups() = totpKeyRepo.getAllGroups()
 
-
     fun refreshTotpKeyFlow() {
-
         totpKeyFlow = combinedFilter.flatMapLatest { (categoryValue, searchQuery) ->
             totpKeyRepo.getAllKeys(sharedPreferencesHelper.userEmail, categoryValue, searchQuery)
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
@@ -116,14 +128,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     fun setRemote(email: String): Int {
         return totpKeyRepo.getAllData(email).size
     }
 
-
     fun isKeyExists(name: String, key: String) = totpKeyRepo.isKeyExists(name, key)
-
 
     fun fetchFromRemoteAndSave() {
         saveFirebase.retrieveDataFromDB(sharedPreferencesHelper.userEmail) { accounts, _ ->
@@ -173,9 +182,7 @@ class HomeViewModel @Inject constructor(
             ) {
                 timerUpdates()
             }
-
         }
-
     }
 
     private fun timerUpdates() {
@@ -186,7 +193,8 @@ class HomeViewModel @Inject constructor(
 
         updatedTotpList.forEachIndexed { index, totpCardState ->
 
-            if (currentSecondsLeft.toLong() == defaultUpdateStepMs / 1000) {
+            // Only generate a new OTP if the account type is "TOTP"
+            if (totpCardState.type == "TOTP" && currentSecondsLeft.toLong() == DEFAULT_UPDATE_STEP_MS / 1000) {
                 val updatedTotpCode = try {
                     generateTotpCodeUseCase(totpKeyFlow.value[index])
                 } catch (e: IllegalArgumentException) {
@@ -194,14 +202,11 @@ class HomeViewModel @Inject constructor(
                 } catch (e: IndexOutOfBoundsException) {
                     342233
                 }
-
                 updatedTotpList[index] = totpCardState.copy(oneTimeCode = updatedTotpCode)
 
             }
-
             updatedTotpList[index] = updatedTotpList[index].copy(secondsLeft = currentSecondsLeft)
         }
-
         homeState.postValue(homeState.value?.copy(totpList = updatedTotpList))
     }
 
@@ -217,7 +222,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     TotpCardState(
-                        id = it.id, secretKey = it.secretKey, name = it.name, currentTotp, secondsLeft = countSecondsLeft(), SHA = it.shaStr, OTP = it.totpVsHop, filePath = it.filePath, category = it.category
+                        id = it.id, secretKey = it.secretKey, name = it.name, currentTotp, secondsLeft = countSecondsLeft(), cryptography = it.shaStr, type = it.totpVsHop, filePath = it.filePath, category = it.category
                     )
                 }
             }
@@ -228,7 +233,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun countSecondsLeft(currentTime: Long = System.currentTimeMillis(), timeStep: Long = defaultUpdateStepMs): Int {
+    private fun countSecondsLeft(currentTime: Long = System.currentTimeMillis(), timeStep: Long = DEFAULT_UPDATE_STEP_MS): Int {
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
@@ -242,9 +247,7 @@ class HomeViewModel @Inject constructor(
         val secret = Base32().decode(base32Secret)
         return try {
             addTotpUseCase(id, sharedPreferencesHelper.userEmail, categories, secret, name, base32Secret, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath)
-
             refreshTotpKeyFlow()
-
             true
         } catch (e: IllegalArgumentException) {
             Log.d(TAG, "addTotp: ${e.message}")
@@ -267,8 +270,6 @@ class HomeViewModel @Inject constructor(
     }
 
     suspend fun removeTotpById(totpCard: TotpCardState) {
-
-
         if (sharedPreferencesHelper.userEmail != "") {
             saveFirebase.deleteAccount(sharedPreferencesHelper.userEmail, totpCard.name)
         }
@@ -277,7 +278,6 @@ class HomeViewModel @Inject constructor(
         toDelete?.let {
             totpKeyRepo.removeKey(it)
         }
-
     }
 
     /*fun requestEdit(id: Int) {
@@ -310,6 +310,9 @@ class HomeViewModel @Inject constructor(
         return base32Regex.matchEntire(sanitizedSecret) != null
     }
 
+    companion object {
+        private const val TAG = "HomeViewModel"
+        private const val DEFAULT_UPDATE_STEP_MS = 30_000L
+    }
 }
 
-private const val TAG = "HomeViewModel"

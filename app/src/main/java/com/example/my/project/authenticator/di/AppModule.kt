@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.module
+package com.example.my.project.authenticator.di
 
 import android.content.Context
 import com.example.my.project.authenticator.utils.AppPreference

@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.adapters
+package com.example.my.project.authenticator.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ItemImportedKeyBinding
-import com.example.my.project.authenticator.otp.viewModel.ImportedItemState
+import com.example.my.project.authenticator.ui.viewModel.ImportedItemState
 
 class ImportedKeysAdapter(
     private val onCheckedChange: (ArrayList<ImportedItemState>, Int) -> Unit

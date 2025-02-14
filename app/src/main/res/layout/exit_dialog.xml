@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />
 
-        <com.example.my.project.authenticator.appclass.DragRatingView
+        <com.example.my.project.authenticator.ui.custom.DragRatingView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
