@@ -9,6 +9,7 @@ import com.example.my.project.authenticator.databinding.AccountItemBinding
 import com.example.my.project.authenticator.extensions.invisible
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
+import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.utils.TotpCardState
 
@@ -68,7 +69,7 @@ class AccountAdapter(
                 binding.circularProgress.progress = account.secondsLeft.toFloat()
                 binding.circularProgress.text = account.secondsLeft.toString()
             } else {
-                binding.circularProgress.invisible()
+                binding.circularProgress.hide()
                 binding.icRefresh.show()
 
                 binding.icRefresh.setOnClickListener{

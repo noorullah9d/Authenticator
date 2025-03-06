@@ -13,6 +13,13 @@ class SharedPreferencesHelper(context: Context) {
         private const val PREFS_NAME = "my_prefs"
     }
 
+    fun getLong(key: String, default: Long = 0L): Long {
+        return sharedPreferences.getLong(key, default)
+    }
+
+    fun putLong(key: String, value: Long) {
+        sharedPreferences.edit().putLong(key, value).apply()
+    }
 
     fun setStringPreference(key: String, value: String) {
         sharedPreferences.edit().putString(key, value).apply()

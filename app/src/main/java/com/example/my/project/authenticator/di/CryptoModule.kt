@@ -12,8 +12,10 @@ import dagger.hilt.components.SingletonComponent
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
 import com.example.my.project.authenticator.otp.data.crypto.AndroidKeyStoreRepository
 import com.example.my.project.authenticator.otp.data.crypto.Argon2PasswordHasher
+import com.example.my.project.authenticator.otp.data.crypto.HotpCodeGeneratorImpl
 import com.example.my.project.authenticator.otp.data.crypto.SaveFirebaseImpl
 import com.example.my.project.authenticator.otp.data.crypto.TotpCodeGeneratorImpl
+import com.example.my.project.authenticator.otp.domain.crypto.HotpCodeGenerator
 import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -36,6 +38,9 @@ object CryptoModule {
 
     @Provides
     fun provideTotpCodeGenerator(): TotpCodeGenerator = TotpCodeGeneratorImpl()
+
+    @Provides
+    fun provideHotpCodeGenerator(): HotpCodeGenerator = HotpCodeGeneratorImpl()
 
     @Provides
     fun provideArgon2PasswordHasher(): PasswordHasher = Argon2PasswordHasher()

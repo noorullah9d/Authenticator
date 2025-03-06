@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.my.project.authenticator.otp.data.database.Categories
+import com.example.my.project.authenticator.otp.domain.crypto.HotpCodeGenerator
 import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
 import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import com.example.my.project.authenticator.otp.domain.crypto.TotpCodeGenerator
@@ -14,6 +15,7 @@ import com.example.my.project.authenticator.otp.domain.usecases.AddCategories
 import com.example.my.project.authenticator.otp.domain.usecases.AddNewTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.DeleteCategories
 import com.example.my.project.authenticator.otp.domain.usecases.EditTotpUseCase
+import com.example.my.project.authenticator.otp.domain.usecases.GenerateHotpCodeUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.GenerateTotpCodeUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.ReplaceTotpUseCase
 import com.example.my.project.authenticator.utils.HomeState
@@ -44,6 +46,7 @@ class HomeViewModel @Inject constructor(
     private val totpKeyRepo: TotpKeyRepository,
     private val secretEncryptor: SecretEncryptor,
     totpCodeGenerator: TotpCodeGenerator,
+    hotpCodeGenerator: HotpCodeGenerator,
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : ViewModel() {
 
@@ -53,6 +56,7 @@ class HomeViewModel @Inject constructor(
     private val replaceTotpUseCase = ReplaceTotpUseCase(totpKeyRepo, secretEncryptor)
     private val editTotpUseCase = EditTotpUseCase(totpKeyRepo, secretEncryptor)
     private val generateTotpCodeUseCase = GenerateTotpCodeUseCase(totpCodeGenerator, secretEncryptor, getUnixTime = { System.currentTimeMillis().milliseconds })
+    private val generateHotpCodeUseCase = GenerateHotpCodeUseCase(hotpCodeGenerator, secretEncryptor, sharedPreferencesHelper)
 
 
     private val _category = MutableStateFlow("")
@@ -81,10 +85,10 @@ class HomeViewModel @Inject constructor(
     /* new changes -- start */
 
     /** Manually generate HOTP when refresh is clicked */
-    fun generateHOTP(account: TotpCardState) {
+    fun regenerateHOTP(account: TotpCardState) {
         viewModelScope.launch(Dispatchers.IO) {
             val newOTP = try {
-                generateTotpCodeUseCase(totpKeyFlow.value.find { it.id == account.id }!!)
+                generateHotpCodeUseCase.invoke(totpKeyFlow.value.find { it.id == account.id }!!, isRegenerate = true)
             } catch (e: Exception) {
                 999999 // Fallback OTP
             }
@@ -204,6 +208,15 @@ class HomeViewModel @Inject constructor(
                 }
                 updatedTotpList[index] = totpCardState.copy(oneTimeCode = updatedTotpCode)
 
+            } else if (totpCardState.type == "HOTP") {
+                val updatedTotpCode = try {
+                    generateHotpCodeUseCase.invoke(totpKeyFlow.value[index], isRegenerate = false)
+                } catch (e: IllegalArgumentException) {
+                    110958
+                } catch (e: IndexOutOfBoundsException) {
+                    342233
+                }
+                updatedTotpList[index] = totpCardState.copy(oneTimeCode = updatedTotpCode)
             }
             updatedTotpList[index] = updatedTotpList[index].copy(secondsLeft = currentSecondsLeft)
         }

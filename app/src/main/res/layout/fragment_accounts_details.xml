@@ -109,6 +109,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
             android:inputType="text"
+            android:maxLength="50"
             android:maxLines="1"
             android:padding="@dimen/_16sdp"
             android:scrollbars="horizontal"

@@ -30,7 +30,6 @@ import kotlin.time.Duration
     }
 }*/
 
-
 class TotpCodeGeneratorImpl : TotpCodeGenerator {
     override fun generate(secret: ByteArray, unixTime: Duration, shaStr: String, totpVsHop: String): Int {
         val counter = when (totpVsHop) {

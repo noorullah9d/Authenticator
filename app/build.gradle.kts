@@ -13,7 +13,6 @@ android {
     namespace = "com.example.my.project.authenticator"
     compileSdk = 34
 
-
     /*signingConfigs {
         create("release") {
             keyAlias = "galixoai"
@@ -23,14 +22,13 @@ android {
         }
     }*/
 
-
     defaultConfig {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.0.5"
-        setProperty("archivesBaseName", "MF_Authenticator_App" + "_vc_" + versionCode + "_vn_" + versionName + "_")
+        versionCode = 7
+        versionName = "1.0.6"
+        setProperty("archivesBaseName", "Authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
     }
@@ -40,7 +38,6 @@ android {
             enableSplit = false
         }
     }
-
 
     buildFeatures {
         viewBinding = true
@@ -104,8 +101,6 @@ dependencies {
 
     implementation(libs.barcode.scanning)
 
-
-
     implementation(libs.release)
 
     implementation(libs.hilt.android)
@@ -139,6 +134,4 @@ dependencies {
     implementation("com.github.wdsqjq:AndRatingBar:1.0.6")
 
     implementation("com.github.rahulabrol:Android-Fingerprint:1.0.4")
-
 }
-

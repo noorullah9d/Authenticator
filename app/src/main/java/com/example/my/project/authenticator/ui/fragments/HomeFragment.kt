@@ -461,7 +461,7 @@ class HomeFragment : Fragment() {
                                     deleteSelection(totpCardState)
                                 },
                                 onHOTPRefreshClicked = { account ->
-                                    homeViewModel.generateHOTP(account)
+                                    homeViewModel.regenerateHOTP(account)
                                 }
                             )
 
