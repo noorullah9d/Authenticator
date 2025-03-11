@@ -7,6 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.firebase.crashlytics")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -105,7 +106,6 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
 
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.lambdapioneer.argon2kt:argon2kt:1.4.0")

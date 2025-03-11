@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_settingScreen_to_setPasswordFragment"
             app:destination="@id/setPasswordFragment" />
+        <action
+            android:id="@+id/action_settingScreen_to_userGuideFragment"
+            app:destination="@id/userGuideFragment" />
     </fragment>
     <fragment
         android:id="@+id/themesFragment"
@@ -50,7 +53,26 @@
         tools:layout="@layout/fragment_set_password" />
     <fragment
         android:id="@+id/homeFragmentNew"
-        android:name="com.example.my.project.authenticator.ui.fragments.HomeFragmentNew"
+        android:name="com.example.my.project.authenticator.ui.fragments.HomeFragment"
         android:label="fragment_home_new"
         tools:layout="@layout/fragment_home_new" />
+    <fragment
+        android:id="@+id/userGuideFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.UserGuideFragment"
+        android:label="fragment_user_guide"
+        tools:layout="@layout/fragment_user_guide" >
+        <action
+            android:id="@+id/action_userGuideFragment_to_guideDetailsFragment"
+            app:destination="@id/guideDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guideDetailsFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.GuideDetailsFragment"
+        android:label="fragment_guide_details"
+        tools:layout="@layout/fragment_guide_details" >
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

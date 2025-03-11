@@ -138,6 +138,10 @@ class SettingScreen : Fragment() {
                 requireActivity().startActivityWithAnimation<ImportExportScreen>()
             }
 
+            userGuide.setOnClickListener {
+                findNavController().navigate(R.id.action_settingScreen_to_userGuideFragment)
+            }
+
             feedback.setOnClickListener {
                 requireActivity().startActivityWithAnimation<FeedbackScreen>()
             }

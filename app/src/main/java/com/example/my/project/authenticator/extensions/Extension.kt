@@ -37,6 +37,7 @@ import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
+import com.example.my.project.authenticator.model.GuideItem
 import com.example.my.project.authenticator.model.LanguagesModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
@@ -108,6 +109,19 @@ fun View.invisible() {
 
 fun MaterialCardView.changeCardStorkColor(color: Int, theme: Resources.Theme) {
     strokeColor = ResourcesCompat.getColor(resources, color, theme)
+}
+
+fun getPlatformList(): ArrayList<GuideItem> {
+    val platforms = ArrayList<GuideItem>()
+    platforms.add(GuideItem("Facebook", "https://galixo.ai/authenticator/assets/guide_facebook.pdf", R.drawable.ic_fb))
+    platforms.add(GuideItem("Instagram", "https://galixo.ai/authenticator/assets/guide_instagram.pdf", R.drawable.ic_insta))
+    platforms.add(GuideItem("Tiktok", "https://galixo.ai/authenticator/assets/guide_tiktok.pdf", R.drawable.ic_tiktok))
+    platforms.add(GuideItem("Google", "https://galixo.ai/authenticator/assets/guide_google.pdf", R.drawable.ic_google))
+    platforms.add(GuideItem("LinkedIn", "https://galixo.ai/authenticator/assets/guide_linkedin.pdf", R.drawable.ic_linkedin))
+    platforms.add(GuideItem("Youtube", "https://galixo.ai/authenticator/assets/guide_youtube.pdf", R.drawable.ic_yt))
+    platforms.add(GuideItem("Dropbox", "https://galixo.ai/authenticator/assets/guide_dropbox.pdf", R.drawable.ic_dropbox))
+
+    return platforms
 }
 
 fun getLanguageList(): ArrayList<LanguagesModel> {
