@@ -9,9 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -20,32 +17,32 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.ui.adapters.AccountAdapter
-import com.example.my.project.authenticator.ui.adapters.CategoryAdapter
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
-import com.example.my.project.authenticator.extensions.hide
-import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.getFirstCharacter
+import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
+import com.example.my.project.authenticator.extensions.openFragment
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showCustomDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.CardSelectionViewModel
-import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
+import com.example.my.project.authenticator.ui.adapters.AccountAdapter
+import com.example.my.project.authenticator.ui.adapters.CategoryAdapter
+import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
+import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.example.my.project.authenticator.utils.UiState
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +50,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -64,8 +61,6 @@ class HomeFragment : Fragment() {
     private val selectionViewModel by viewModels<CardSelectionViewModel>()
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
@@ -90,22 +85,6 @@ class HomeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-        googleSignInLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                    val data = result.data
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    handleSignInResult(task)
-                } else {
-                    toast("Google sign-in canceled or failed")
-                }
-            }
-
         observerData()
         backPress()
         clickListeners()
@@ -117,15 +96,15 @@ class HomeFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     when {
-                        binding.clTopLayout.visibility == View.VISIBLE -> {
+                        binding.clTopLayout.isVisible -> {
                             requireActivity().finishAffinity()
                         }
 
-                        binding.searchView.visibility == View.VISIBLE -> {
+                        binding.searchView.isVisible -> {
                             updateUiState(UiState.DEFAULT)
                         }
 
-                        binding.clDeleteSelection.visibility == View.VISIBLE -> {
+                        binding.clDeleteSelection.isVisible -> {
                             deselectAll()
                         }
                     }
@@ -155,6 +134,31 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun startGoogleSignIn() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            // ✅ User is already signed in, proceed directly
+            toast("Already signed in as: ${currentUser.displayName}")
+            return
+        }
+
+        lifecycleScope.launch {
+            GoogleSignInManager.googleSignIn(
+                context = requireContext(),
+                apiKey = getString(R.string.web_client_id),
+                filterByAuthorizedAccounts = false,
+                doOnSuccess = { credentials ->
+                    toast("Signed in as: ${credentials.id}")
+                    println("Signed in as: ${credentials.id}")
+                    firebaseAuthWithGoogle(idToken = credentials.idToken, email = credentials.id)
+                },
+                doOnError = { exception ->
+                    println("Sign in failed: ${exception.message}")
+                    toast("Sign in failed: ${exception.message}")
+                }
+            )
+        }
+    }
 
     private fun clickListeners() {
         binding.apply {
@@ -177,11 +181,7 @@ class HomeFragment : Fragment() {
             }
 
             backup.setOnDebouncedClickListener {
-                if (requireActivity().isInternetAvailable()) {
-                    changeGoogleAccount()
-                } else {
-                    toast(getString(R.string.no_internet_connection))
-                }
+                backup()
             }
 
             howAppWorks.setOnClickListener {
@@ -197,7 +197,7 @@ class HomeFragment : Fragment() {
 
             signIn.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
-                    signInWithGoogle()
+                    startGoogleSignIn()
                 } else {
                     toast(getString(R.string.no_internet_connection))
                 }
@@ -286,13 +286,13 @@ class HomeFragment : Fragment() {
     private fun backup() {
         if (prefsHelper?.userEmail == "") {
             if (requireActivity().isInternetAvailable()) {
-                googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
-                    signInWithGoogle()
-                }
+                startGoogleSignIn()
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
-        } else findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+        } else {
+            requireActivity().openFragment(R.id.backupFragment, true)
+        }
     }
 
     private fun deselectAll() {
@@ -533,12 +533,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun changeGoogleAccount() {
-        googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
-            signInWithGoogle()
-        }
-    }
-
     private fun setFromRemote() {
         lifecycleScope.launch {
             if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
@@ -549,20 +543,6 @@ class HomeFragment : Fragment() {
             if (data == 0) {
                 placeHolder()
             }
-        }
-    }
-
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
-    }
-
-    private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
-        try {
-            val account = task.getResult(ApiException::class.java)!!
-            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
-        } catch (e: ApiException) {
-            Log.d(TAG, "Google sign-in failed", e)
         }
     }
 
@@ -583,9 +563,16 @@ class HomeFragment : Fragment() {
                 setFromRemote()
 
                 // go to backup screen
-                findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+                requireActivity().openFragment(R.id.backupFragment, true)
             } else {
-                toast(getString(R.string.not_logged_in))
+                val errorMessage = when (task.exception) {
+                    is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
+                    is FirebaseAuthUserCollisionException -> "Email already in use"
+                    is FirebaseAuthInvalidUserException -> "Invalid User"
+                    else -> "Authentication Failed"
+                }
+                toast(errorMessage)
+                println(task.exception)
             }
         }
     }

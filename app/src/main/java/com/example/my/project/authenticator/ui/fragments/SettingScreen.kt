@@ -1,17 +1,14 @@
 package com.example.my.project.authenticator.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
@@ -28,17 +25,17 @@ import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
 import com.example.my.project.authenticator.utils.Constants
+import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.ra.fingerprint_auth.FingerprintCallback
 import com.ra.fingerprint_auth.FingerprintManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingScreen : Fragment() {
@@ -46,9 +43,7 @@ class SettingScreen : Fragment() {
     private lateinit var binding: FragmentSettingScreenBinding
     private var prefsHelper: SharedPreferencesHelper? = null
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingScreenBinding.inflate(inflater, container, false)
@@ -59,24 +54,7 @@ class SettingScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prefsHelper = SharedPreferencesHelper(requireActivity())
 
-
-        auth = FirebaseAuth.getInstance()
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.d(TAG, "onViewCreated: ${result.resultCode}")
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                val data = result.data
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                handleSignInResult(task)
-            } else {
-                Log.d(TAG, "Google sign-in canceled or failed $result")
-                toast("Google sign-in canceled or failed")
-            }
-        }
+        firebaseAuth = FirebaseAuth.getInstance()
 
         binding.apply {
             if (prefsHelper?.userEmail != "") {
@@ -168,7 +146,6 @@ class SettingScreen : Fragment() {
                 backup()
             }
 
-
             termsConditions.setOnClickListener {
                 requireActivity().privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
             }
@@ -182,26 +159,34 @@ class SettingScreen : Fragment() {
                     findNavController().navigate(R.id.action_settingScreen_to_homeFragment)
                 }
             })
-
-
         }
     }
 
     private fun backup() {
         if (prefsHelper?.userEmail == "") {
             if (requireActivity().isInternetAvailable()) {
-                googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
-                    signInWithGoogle()
-                }
+                startGoogleSignIn()
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
         } else findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+    private fun startGoogleSignIn() {
+        lifecycleScope.launch {
+            GoogleSignInManager.googleSignIn(
+                context = requireContext(),
+                apiKey = getString(R.string.web_client_id),
+                filterByAuthorizedAccounts = false,
+                doOnSuccess = { credentials ->
+                    println("Signed in as: ${credentials.id}")
+                    firebaseAuthWithGoogle(idToken = credentials.idToken, email = credentials.id)
+                },
+                doOnError = { exception ->
+                    println("Sign in failed: ${exception.message}")
+                }
+            )
+        }
     }
 
     private fun fingerprint() {
@@ -257,20 +242,9 @@ class SettingScreen : Fragment() {
         })
     }
 
-    private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
-        try {
-            val account = task.getResult(ApiException::class.java)!!
-            Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
-            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
-        } catch (e: ApiException) {
-            Log.d(TAG, "Google sign-in failed", e)
-            toast("Google sign-in failed")
-        }
-    }
-
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 prefsHelper?.userEmail = email
                 binding.emailText.text = email
@@ -278,8 +252,13 @@ class SettingScreen : Fragment() {
                 // go to backup
                 findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
             } else {
-                Log.d(TAG, "failed")
-                toast(getString(R.string.not_logged_in))
+                val errorMessage = when (task.exception) {
+                    is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
+                    is FirebaseAuthUserCollisionException -> "Email already in use"
+                    is FirebaseAuthInvalidUserException -> "Invalid User"
+                    else -> "Authentication Failed"
+                }
+                toast(errorMessage)
             }
         }
     }

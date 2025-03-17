@@ -14,14 +14,14 @@ android {
     namespace = "com.example.my.project.authenticator"
     compileSdk = 34
 
-    /*signingConfigs {
+    signingConfigs {
         create("release") {
             keyAlias = "galixoai"
             keyPassword = "galixoai"
-            storeFile = file("C:/Users/HP/Desktop/authenticator.jks")
+            storeFile = file("/Users/galixo/Desktop/Authenticator Keystore/authenticator.jks")
             storePassword = "galixoai"
         }
-    }*/
+    }
 
     defaultConfig {
         applicationId = "com.authenticator.manager.password.generator"
@@ -50,12 +50,12 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 //            signingConfig signingConfigs.release
-//            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-//            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -92,13 +92,17 @@ dependencies {
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
 
-    implementation(libs.firebase.bom)
-
     implementation(libs.firebase.auth)
-    implementation(libs.play.services.auth)
+//    implementation(libs.play.services.auth)
+
+    // Google SignIn
+    implementation("androidx.credentials:credentials:1.2.2")
+    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
+    implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
     implementation("com.google.firebase:firebase-crashlytics:19.1.0")
-
 
     implementation(libs.barcode.scanning)
 
@@ -109,7 +113,6 @@ dependencies {
 
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.lambdapioneer.argon2kt:argon2kt:1.4.0")
-
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")

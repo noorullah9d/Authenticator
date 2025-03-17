@@ -1,30 +1,27 @@
 package com.example.my.project.authenticator.ui.fragments
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.GoogleSignInBinding
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.toast
+import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.launch
 
 class GoogleSignInDialog : BottomSheetDialogFragment() {
 
@@ -32,8 +29,6 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
     private lateinit var binding: GoogleSignInBinding
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
 
     private var prefsHelper: SharedPreferencesHelper? = null
 
@@ -72,47 +67,30 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
         auth = FirebaseAuth.getInstance()
         prefsHelper = SharedPreferencesHelper(requireActivity())
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-        googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                val data = result.data
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                handleSignInResult(task)
-            } else {
-                Log.d(TAG, "Google sign-in canceled or failed")
-            }
-        }
-
         binding.tvContinueWithoutAccount.setOnClickListener { dismiss() }
         binding.btnStartAccount.setOnDebouncedClickListener {
             if (requireActivity().isInternetAvailable()) {
-                signInWithGoogle()
+                startGoogleSignIn()
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
         }
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
-    }
-
-    private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
-        try {
-            val account = task.getResult(ApiException::class.java)!!
-            Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
-            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
-        } catch (e: ApiException) {
-            Log.d(TAG, "Google sign-in failed", e)
+    private fun startGoogleSignIn() {
+        lifecycleScope.launch {
+            GoogleSignInManager.googleSignIn(
+                context = requireContext(),
+                apiKey = getString(R.string.web_client_id),
+                filterByAuthorizedAccounts = false,
+                doOnSuccess = { credentials ->
+                    println("Signed in as: ${credentials.id}")
+                    firebaseAuthWithGoogle(idToken = credentials.idToken, email = credentials.id)
+                },
+                doOnError = { exception ->
+                    println("Sign in failed: ${exception.message}")
+                }
+            )
         }
     }
 
@@ -128,7 +106,13 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
                     dismiss()
                     Log.d(TAG, "signInWithCredential:success $user")
                 } else {
-                    toast(getString(R.string.error_occurs))
+                    val errorMessage = when (task.exception) {
+                        is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
+                        is FirebaseAuthUserCollisionException -> "Email already in use"
+                        is FirebaseAuthInvalidUserException -> "Invalid User"
+                        else -> "Authentication Failed"
+                    }
+                    toast(errorMessage)
                     Log.d(TAG, "signInWithCredential:failure", task.exception)
                 }
             }

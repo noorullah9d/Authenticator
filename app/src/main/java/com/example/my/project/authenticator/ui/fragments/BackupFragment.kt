@@ -1,16 +1,15 @@
 package com.example.my.project.authenticator.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.FragmentBackupBinding
@@ -18,27 +17,30 @@ import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.toast
+import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class BackupFragment : Fragment() {
     private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var binding: FragmentBackupBinding
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
+    private lateinit var firebaseAuth: FirebaseAuth
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentBackupBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,31 +49,9 @@ class BackupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prefsHelper = SharedPreferencesHelper(requireActivity())
 
-        auth = FirebaseAuth.getInstance()
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-        binding.tvEmail.text = prefsHelper?.userEmail!!
-
-
-        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.d(TAG, "onViewCreated: ${result.resultCode}")
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                val data = result.data
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                handleSignInResult(task)
-            } else {
-                Log.d(TAG, "Google sign-in canceled or failed $result")
-            }
-        }
-
-
+        firebaseAuth = FirebaseAuth.getInstance()
 
         binding.apply {
-
-
             ivSystemSelection.setOnCheckedChangeListener { _, isEnabled ->
                 Log.d(TAG, "onCheckedChanged: $isEnabled")
                 prefsHelper?.isBackedUp = isEnabled
@@ -81,77 +61,116 @@ class BackupFragment : Fragment() {
                 ivSystemSelection.isChecked = true
             }
 
-
             logout.setOnClickListener {
-                prefsHelper?.userEmail = ""
-                prefsHelper?.isBackedUp = false
-                prefsHelper?.isBackedGone = false
-                findNavController().popBackStack()
+                logoutUser()
             }
 
+            binding.tvEmail.text = prefsHelper?.userEmail!!
             ivProfileImage.text = prefsHelper?.userEmail?.getFirstCharacter().toString()
-
-
 
             icBack.setOnClickListener { findNavController().popBackStack() }
 
             gmailSwitching.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
-                    changeGoogleAccount()
+                    signOutAndSignInAgain()
                 } else {
                     toast(getString(R.string.no_internet_connection))
                 }
             }
-
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
+    }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+    private fun logoutUser() {
+        prefsHelper?.userEmail = ""
+        prefsHelper?.isBackedUp = false
+        prefsHelper?.isBackedGone = false
+
+        // ✅ Sign out from Firebase
+        firebaseAuth.signOut()
+
+        // ✅ Clear Google Credentials
+        val credentialManager = CredentialManager.create(requireContext())
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    credentialManager.clearCredentialState(ClearCredentialStateRequest())
+                }
+                toast("Logged out successfully")
+
+                // ✅ Only navigate back after clearing credentials
+                withContext(Dispatchers.Main) {
+                    findNavController().popBackStack()
+                }
+            } catch (e: Exception) {
+                Log.e("LogoutError", "Error clearing credentials: ${e.message}", e) // ✅ Logs exact error details
+                toast("Logout failed: ${e.localizedMessage}")
             }
-        })
-
-
-    }
-
-    private fun changeGoogleAccount() {
-        googleSignInClient.revokeAccess().addOnCompleteListener(requireActivity()) {
-            signInWithGoogle()
         }
     }
 
-    private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
+    private fun signOutAndSignInAgain() {
+        // ✅ Sign out from Firebase
+        firebaseAuth.signOut()
+
+        // ✅ Clear Google Credentials
+        val credentialManager = CredentialManager.create(requireContext())
+        lifecycleScope.launch {
+            try {
+                credentialManager.clearCredentialState(ClearCredentialStateRequest())
+                toast("Signed out successfully")
+                // ✅ Relaunch sign-in flow
+                startGoogleSignIn()
+            } catch (e: Exception) {
+                toast("Sign out failed: ${e.message}")
+            }
+        }
     }
 
-    private fun handleSignInResult(task: com.google.android.gms.tasks.Task<GoogleSignInAccount>) {
-        try {
-            val account = task.getResult(ApiException::class.java)!!
-            Log.d(TAG, "firebaseAuthWithGoogle: " + account.email)
-            firebaseAuthWithGoogle(account.idToken!!, account.email!!)
-        } catch (e: ApiException) {
-            Log.d(TAG, "Google sign-in failed", e)
+    private fun startGoogleSignIn() {
+        lifecycleScope.launch {
+            GoogleSignInManager.googleSignIn(
+                context = requireContext(),
+                apiKey = getString(R.string.web_client_id),
+                filterByAuthorizedAccounts = false,
+                doOnSuccess = { credentials ->
+                    println("Signed in as: ${credentials.id}")
+                    firebaseAuthWithGoogle(idToken = credentials.idToken, email = credentials.id)
+                },
+                doOnError = { exception ->
+                    println("Sign in failed: ${exception.message}")
+                }
+            )
         }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     prefsHelper?.userEmail = email
                     binding.tvEmail.text = prefsHelper?.userEmail!!
-                    binding.ivProfileImage.text = prefsHelper?.userEmail?.getFirstCharacter().toString()
+                    binding.ivProfileImage.text =
+                        prefsHelper?.userEmail?.getFirstCharacter().toString()
                 } else {
-                    Log.d(TAG, "failed")
-                    toast(getString(R.string.not_logged_in))
+                    val errorMessage = when (task.exception) {
+                        is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
+                        is FirebaseAuthUserCollisionException -> "Email already in use"
+                        is FirebaseAuthInvalidUserException -> "Invalid User"
+                        else -> "Authentication Failed"
+                    }
+                    toast(errorMessage)
                 }
             }
     }
-
-
 }
 
 private const val TAG = "BackupFragment"

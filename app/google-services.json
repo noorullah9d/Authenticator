@@ -14,23 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "705678505345-7s88vmeinu6191jabj375ielpkj9tlup.apps.googleusercontent.com",
+          "client_id": "705678505345-0lbo8h381p5ml42sa8cnqdi6hb1ijvkb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.authenticator.manager.password.generator",
-            "certificate_hash": "466ad912bb030092a4ac12d9b90209b96ec280dc"
+            "certificate_hash": "207cc370bd3be72e87d5c877acefff1e5a8bc600"
           }
         },
         {
-          "client_id": "705678505345-l99um8jrem8gs1h4hv2lj9o67qpfrfq8.apps.googleusercontent.com",
+          "client_id": "705678505345-lp1j06a1hp6408avar5ir7otb0d01246.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.authenticator.manager.password.generator",
-            "certificate_hash": "84c960c8399cc572547bead8465838bc43625f58"
+            "certificate_hash": "8e29572538a8625c34a75c83c54b8274a84c6a26"
           }
         },
         {
-          "client_id": "705678505345-8nrhrhrvnp1bkufau07pnphq3nar9fn0.apps.googleusercontent.com",
+          "client_id": "705678505345-nionroca8ukg2qbb6fmjeaqt09dudqbg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
