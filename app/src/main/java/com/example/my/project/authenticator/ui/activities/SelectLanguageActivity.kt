@@ -1,13 +1,24 @@
 package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.ActivitySelectLanguageBinding
+import com.example.my.project.authenticator.databinding.GntLanguagesBinding
+import com.example.my.project.authenticator.databinding.ShimmerLayoutLanguagesNativeBinding
 import com.example.my.project.authenticator.extensions.clickWithExtraDebounce
 import com.example.my.project.authenticator.extensions.getLanguageList
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.model.LanguageViewModel
 import com.example.my.project.authenticator.ui.adapters.LanguagesAdapterNew
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,20 +35,75 @@ class SelectLanguageActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        loadAndShowAdd()
         initLanguagesRecyclerView()
         setupClickListeners()
+        handleBackPress()
+    }
+
+    private fun loadAndShowAdd() {
+        if (!isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerLayoutLanguagesNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            this,
+            getString(R.string.admob_native_id_languages)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntLanguagesBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
+    }
+
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToForward()
+            }
+        })
     }
 
     private fun setupClickListeners() {
         binding.apply {
             icBack.setOnClickListener {
-                finish()
+                navigateToForward()
             }
 
             confirm.clickWithExtraDebounce {
                 viewModel.setLanguage(selectedLanguage)
                 viewModel.setLanguageFirstTime("true")
-                navigateToMainScreen()
+                PrefsHelper.isLanguageShown = true
+                navigateToForward()
             }
         }
     }
@@ -50,8 +116,18 @@ class SelectLanguageActivity : BaseActivity() {
         binding.languagesRecycler.adapter = languagesAdapter
     }
 
-    private fun navigateToMainScreen() {
-        startActivityWithAnimation<MainActivity>()
-        finishAffinity()
+    private fun navigateToForward() {
+        if (!PrefsHelper.isOnBoardingShown) {
+            startActivityWithAnimation<OnBoardingActivity>()
+            finish()
+        } else {
+            startActivityWithAnimation<MainActivity>()
+            finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NativeAd.admobNativeAd?.destroy()
     }
 }

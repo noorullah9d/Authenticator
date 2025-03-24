@@ -27,8 +27,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
-        versionName = "1.0.6"
+        versionCode = 8
+        versionName = "1.0.7"
         setProperty("archivesBaseName", "Authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -51,8 +51,34 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 //            signingConfig signingConfigs.release
             signingConfig = signingConfigs.getByName("release")
+
+            // original ad ids
+            resValue("string", "admob_app_id", "ca-app-pub-9555621625220566~7344809990")
+            resValue("string", "admob_interstitial_id_splash", "ca-app-pub-9555621625220566/2331693442")
+            resValue("string", "admob_interstitial_fragment", "ca-app-pub-9555621625220566/1060680660")
+            resValue("string", "admob_banner_id", "ca-app-pub-9555621625220566/1675758339")
+            resValue("string", "admob_native_id_languages", "ca-app-pub-9555621625220566/6328478893")
+            resValue("string", "admob_native_id_onboarding", "ca-app-pub-9555621625220566/2541283298")
+            resValue("string", "admob_native_id_home", "ca-app-pub-9555621625220566/7452158186")
+            resValue("string", "admob_native_id_qr", "ca-app-pub-9555621625220566/5211678661")
+            resValue("string", "admob_native_id_backup_theme", "ca-app-pub-9555621625220566/1036629933")
+            resValue("string", "admob_native_id_exit", "ca-app-pub-9555621625220566/3488862446")
+            resValue("string", "admob_app_open_id", "ca-app-pub-9555621625220566/2140121757")
         }
         debug {
+            // test ad ids
+            resValue("string", "admob_app_id", "ca-app-pub-3940256099942544~3347511713")
+            resValue("string", "admob_interstitial_id_splash", "ca-app-pub-3940256099942544/1033173712")
+            resValue("string", "admob_interstitial_fragment", "ca-app-pub-3940256099942544/1033173712")
+            resValue("string", "admob_banner_id", "ca-app-pub-3940256099942544/6300978111")
+            resValue("string", "admob_native_id_languages", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_onboarding", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_home", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_qr", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_backup_theme", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_exit", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_app_open_id", "ca-app-pub-3940256099942544/9257395921")
+
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
@@ -93,7 +119,18 @@ dependencies {
     implementation(libs.ssp.android)
 
     implementation(libs.firebase.auth)
-//    implementation(libs.play.services.auth)
+
+    // ump
+    implementation("com.google.android.ump:user-messaging-platform:2.2.0")
+
+    // admob
+    implementation("com.google.android.gms:play-services-ads:23.2.0")
+
+    //shimmer
+    implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
+
+    // in-app purchase
+    implementation("com.android.billingclient:billing-ktx:7.0.0")
 
     // Google SignIn
     implementation("androidx.credentials:credentials:1.2.2")
@@ -117,6 +154,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
+
+    // lifecycle
+    implementation("androidx.lifecycle:lifecycle-process:2.5.1")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")

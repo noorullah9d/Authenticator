@@ -1,14 +1,5 @@
 package com.example.my.project.authenticator.di
 
-import android.content.Context
-import com.example.my.project.authenticator.otp.domain.crypto.PasswordHasher
-import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
-import com.example.my.project.authenticator.otp.domain.crypto.SecretKeyRepository
-import com.example.my.project.authenticator.otp.domain.crypto.TotpCodeGenerator
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import com.example.my.project.authenticator.otp.data.crypto.AesGcmSecretEncryptor
 import com.example.my.project.authenticator.otp.data.crypto.AndroidKeyStoreRepository
 import com.example.my.project.authenticator.otp.data.crypto.Argon2PasswordHasher
@@ -16,9 +7,15 @@ import com.example.my.project.authenticator.otp.data.crypto.HotpCodeGeneratorImp
 import com.example.my.project.authenticator.otp.data.crypto.SaveFirebaseImpl
 import com.example.my.project.authenticator.otp.data.crypto.TotpCodeGeneratorImpl
 import com.example.my.project.authenticator.otp.domain.crypto.HotpCodeGenerator
+import com.example.my.project.authenticator.otp.domain.crypto.PasswordHasher
 import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
+import com.example.my.project.authenticator.otp.domain.crypto.SecretKeyRepository
+import com.example.my.project.authenticator.otp.domain.crypto.TotpCodeGenerator
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
@@ -52,9 +49,8 @@ object CryptoModule {
         return SaveFirebaseImpl()
     }
 
-    @Provides
-    fun provideSharedPreferencesHelper(@ApplicationContext context: Context): SharedPreferencesHelper {
+    /*@Provides
+    fun provideSharedPreferencesHelper(@ApplicationContext context: Context): PrefsHelper {
         return SharedPreferencesHelper(context)
-    }
-
+    }*/
 }

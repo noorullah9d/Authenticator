@@ -2,13 +2,15 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/_10sdp"
+    app:cardBackgroundColor="@color/white"
     app:strokeWidth="0dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
         <TextView
@@ -16,38 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_35sdp"
-            android:fontFamily="@font/lato_regular"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/open_sans_semi_bold"
             android:gravity="center"
-            android:text="@string/rate_experience"
+            android:text="@string/how_was_your_experience"
             android:textColor="@color/primary"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvQuestions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center"
-            android:text="@string/satisfied_service"
-            android:textColor="@color/light_gray"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />
-
-        <com.example.my.project.authenticator.ui.custom.DragRatingView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:visibility="gone"
-            app:initial_rating="0"
-            app:layout_constraintTop_toBottomOf="@+id/tvQuestions" />
-
 
         <per.wsj.library.AndRatingBar
             android:id="@+id/rating_stars"
@@ -56,48 +36,54 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:rating="2"
+            android:visibility="gone"
             app:bgColor="@color/card_light_color"
             app:bgDrawable="@drawable/ic_rate_us_filled"
-            app:layout_constraintTop_toBottomOf="@+id/tvQuestions"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading"
             app:starColor="@color/md_theme_light_primary"
             app:starDrawable="@drawable/ic_rate_us_unfilled" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <!--<com.example.my.project.authenticator.ui.custom.DragRatingView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:weightSum="2"
-            app:layout_constraintTop_toBottomOf="@+id/rating_stars">
+            android:layout_marginTop="@dimen/_15sdp"
+            android:visibility="gone"
+            app:initial_rating="0"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />-->
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/adContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/adBackgroundColor"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/exit"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/secondary_color"
-                android:text="@string/exit"
-                android:textColor="@color/white"
-                app:cornerRadius="@dimen/_5sdp" />
+            <FrameLayout
+                android:id="@+id/adFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <include layout="@layout/shimmer_medium_native" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"
-                android:text="@string/cancel"
-                android:textColor="@color/primary"
-                app:cornerRadius="@dimen/_5sdp"
-                app:strokeColor="@color/light_gray"
-                app:strokeWidth="@dimen/_1sdp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <com.google.android.material.button.MaterialButton
+            style="@style/ThemeOverlay.Material3.Button.TextButton"
+            android:id="@+id/exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="@string/tap_again_to_exit"
+            android:textColor="@color/n_dark_grey"
+            android:textSize="@dimen/_11ssp" />
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

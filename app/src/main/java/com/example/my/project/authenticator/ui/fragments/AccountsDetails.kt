@@ -16,15 +16,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.createNewGroupDialog
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -117,8 +124,51 @@ class AccountsDetails : Fragment() {
 
         totpOptionsSpinner()
         shaSpinner()
+        loadAndShowAdd()
+    }
 
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
 
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_qr)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntSmallBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
     }
 
     private fun clickListeners() {

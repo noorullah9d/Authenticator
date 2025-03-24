@@ -10,15 +10,23 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentBackupBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.getFirstCharacter
+import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.GoogleSignInManager
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -31,7 +39,6 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class BackupFragment : Fragment() {
-    private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var binding: FragmentBackupBinding
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -47,17 +54,16 @@ class BackupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.apply {
             ivSystemSelection.setOnCheckedChangeListener { _, isEnabled ->
                 Log.d(TAG, "onCheckedChanged: $isEnabled")
-                prefsHelper?.isBackedUp = isEnabled
+                PrefsHelper.isBackedUp = isEnabled
             }
 
-            if (prefsHelper?.isBackedUp!!) {
+            if (PrefsHelper.isBackedUp) {
                 ivSystemSelection.isChecked = true
             }
 
@@ -65,10 +71,13 @@ class BackupFragment : Fragment() {
                 logoutUser()
             }
 
-            binding.tvEmail.text = prefsHelper?.userEmail!!
-            ivProfileImage.text = prefsHelper?.userEmail?.getFirstCharacter().toString()
+            binding.tvEmail.text = PrefsHelper.userEmail
+            ivProfileImage.text = PrefsHelper.userEmail.getFirstCharacter().toString()
 
-            icBack.setOnClickListener { findNavController().popBackStack() }
+            icBack.setOnClickListener {
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                findNavController().navigate(R.id.homeFragment, null, navOptions)
+            }
 
             gmailSwitching.setOnDebouncedClickListener {
                 if (requireActivity().isInternetAvailable()) {
@@ -83,15 +92,63 @@ class BackupFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
+                    val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                    findNavController().navigate(R.id.homeFragment, null, navOptions)
                 }
-            })
+            }
+        )
+
+        loadAndShowAdd()
+    }
+
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_backup_theme)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntSmallBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
     }
 
     private fun logoutUser() {
-        prefsHelper?.userEmail = ""
-        prefsHelper?.isBackedUp = false
-        prefsHelper?.isBackedGone = false
+        PrefsHelper.userEmail = ""
+        PrefsHelper.isBackedUp = false
+        PrefsHelper.isBackedGone = false
 
         // ✅ Sign out from Firebase
         firebaseAuth.signOut()
@@ -110,7 +167,11 @@ class BackupFragment : Fragment() {
                     findNavController().popBackStack()
                 }
             } catch (e: Exception) {
-                Log.e("LogoutError", "Error clearing credentials: ${e.message}", e) // ✅ Logs exact error details
+                Log.e(
+                    "LogoutError",
+                    "Error clearing credentials: ${e.message}",
+                    e
+                ) // ✅ Logs exact error details
                 toast("Logout failed: ${e.localizedMessage}")
             }
         }
@@ -156,10 +217,10 @@ class BackupFragment : Fragment() {
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    prefsHelper?.userEmail = email
-                    binding.tvEmail.text = prefsHelper?.userEmail!!
+                    PrefsHelper.userEmail = email
+                    binding.tvEmail.text = PrefsHelper.userEmail
                     binding.ivProfileImage.text =
-                        prefsHelper?.userEmail?.getFirstCharacter().toString()
+                        PrefsHelper.userEmail.getFirstCharacter().toString()
                 } else {
                     val errorMessage = when (task.exception) {
                         is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"

@@ -22,10 +22,18 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.BarcodeAnalyzer
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
@@ -47,9 +55,7 @@ class QRScannerScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         accountId = arguments?.getInt("accountId") ?: 0
-
         binding.cancelScanning.setOnClickListener {
 
             if (accountId == 3) {
@@ -58,7 +64,6 @@ class QRScannerScreen : Fragment() {
                 requireActivity().finish()
             }
         }
-
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -70,11 +75,53 @@ class QRScannerScreen : Fragment() {
             }
         })
 
-
         checkAndRequestCameraPermission()
-
+        loadAndShowAdd()
     }
 
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_qr)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntSmallBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
+    }
 
     private val requestCameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -245,6 +292,11 @@ class QRScannerScreen : Fragment() {
             }
         )
     }*/
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NativeAd.admobNativeAd?.destroy()
+    }
 
     companion object {
         private const val TAG = "QRScannerScreen"

@@ -12,17 +12,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentThemesBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
+import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.model.CardSelectionViewModel
 import com.example.my.project.authenticator.utils.AppTheme
-import com.example.my.project.authenticator.utils.Constants
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.DARK
+import com.example.my.project.authenticator.utils.LIGHT
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
+import com.example.my.project.authenticator.utils.SYSTEM_DEFAULT
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ThemesFragment : Fragment() {
     private lateinit var binding: FragmentThemesBinding
-    private var prefsHelper: SharedPreferencesHelper? = null
 
     private val cardSelectionViewModel by viewModels<CardSelectionViewModel>()
 
@@ -33,7 +42,6 @@ class ThemesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         binding.apply {
 
@@ -68,18 +76,18 @@ class ThemesFragment : Fragment() {
                 } else darkRadio.isChecked = it.name != AppTheme.LIGHT.name
             }
 
-            when (prefsHelper?.userTheme) {
-                Constants.DARK -> {
+            when (PrefsHelper.userTheme) {
+                DARK -> {
                     darkRadio.isChecked = true
                     lightRadio.isChecked = false
                 }
 
-                Constants.LIGHT -> {
+                LIGHT -> {
                     darkRadio.isChecked = false
                     lightRadio.isChecked = true
                 }
 
-                getString(R.string.system) -> {
+                SYSTEM_DEFAULT -> {
                     darkRadio.isChecked = false
                     lightRadio.isChecked = false
                     darkRadio.isEnabled = false
@@ -92,7 +100,6 @@ class ThemesFragment : Fragment() {
                 }
             }
 
-
             lightRadio.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
                     if (systemSelection.isChecked) {
@@ -101,7 +108,7 @@ class ThemesFragment : Fragment() {
                     } else {
 
                         darkRadio.isChecked = false
-                        prefsHelper?.userTheme = Constants.LIGHT
+                        PrefsHelper.userTheme = LIGHT
 //                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         cardSelectionViewModel.changeTheme(AppTheme.LIGHT)
                     }
@@ -111,13 +118,13 @@ class ThemesFragment : Fragment() {
 
             systemSelection.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
-                    prefsHelper?.userTheme = getString(R.string.system)
+                    PrefsHelper.userTheme = SYSTEM_DEFAULT
                     darkRadio.isEnabled = false
                     lightRadio.isEnabled = false
                     cardSelectionViewModel.changeTheme(AppTheme.SYSTEM_DEFAULT)
 //                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 } else {
-                    prefsHelper?.userTheme = ""
+                    PrefsHelper.userTheme = ""
                     themesAvailability()
                     darkRadio.isEnabled = true
                     lightRadio.isEnabled = true
@@ -132,18 +139,60 @@ class ThemesFragment : Fragment() {
                         darkRadio.isEnabled = false
                     } else {
 
-                        prefsHelper?.userTheme = Constants.DARK
+                        PrefsHelper.userTheme = DARK
                         lightRadio.isChecked = false
                         cardSelectionViewModel.changeTheme(AppTheme.DARK)
                     }
                 }
             }
-
-
         }
 
+        loadAndShowAdd()
     }
 
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_backup_theme)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntSmallBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
+    }
 
     private fun themesAvailability() {
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -158,6 +207,4 @@ class ThemesFragment : Fragment() {
             }
         }
     }
-
-
 }

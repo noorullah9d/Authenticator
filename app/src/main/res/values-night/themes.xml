@@ -9,6 +9,11 @@
 
     </style>
 
+    <style name="ShapeAppearanceOverlay.RoundCornerImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
     <style name="ThemeOverlay.AppTheme.TextInputEditText.Outlined" parent="">
         <item name="colorPrimary">@color/n_sky_blue</item>
     </style>

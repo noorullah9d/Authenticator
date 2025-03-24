@@ -14,15 +14,18 @@
         <action
             android:id="@+id/action_homeFragment_to_settingScreen"
             app:destination="@id/settingScreen" />
+        <action
+            android:id="@+id/action_homeFragment_to_backupFragment"
+            app:destination="@id/backupFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingScreen"
         android:name="com.example.my.project.authenticator.ui.fragments.SettingScreen"
         android:label="fragment_setting_screen"
         tools:layout="@layout/fragment_setting_screen">
-        <action
+        <!--<action
             android:id="@+id/action_settingScreen_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment" />-->
         <action
             android:id="@+id/action_settingScreen_to_themesFragment"
             app:destination="@id/themesFragment" />
@@ -51,11 +54,6 @@
         android:name="com.example.my.project.authenticator.ui.fragments.SetPasswordFragment"
         android:label="fragment_set_password"
         tools:layout="@layout/fragment_set_password" />
-    <fragment
-        android:id="@+id/homeFragmentNew"
-        android:name="com.example.my.project.authenticator.ui.fragments.HomeFragment"
-        android:label="fragment_home_new"
-        tools:layout="@layout/fragment_home_new" />
     <fragment
         android:id="@+id/userGuideFragment"
         android:name="com.example.my.project.authenticator.ui.fragments.UserGuideFragment"

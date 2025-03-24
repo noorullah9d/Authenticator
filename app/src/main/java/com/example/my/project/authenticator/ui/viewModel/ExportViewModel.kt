@@ -8,7 +8,8 @@ import com.example.my.project.authenticator.otp.domain.crypto.SecretEncryptor
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
 import com.example.my.project.authenticator.otp.domain.usecases.ExportKeysUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.SavingMode
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.userEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.OutputStream
 import java.security.SecureRandom
@@ -19,8 +20,7 @@ import javax.inject.Inject
 class ExportViewModel @Inject constructor(
     private val repository: TotpKeyRepository,
     private val repositoryEncryptor: SecretEncryptor,
-    private val passwordHasher: PasswordHasher,
-    private val sharedPreferencesHelper: SharedPreferencesHelper
+    private val passwordHasher: PasswordHasher
 ) : ViewModel() {
 
     suspend fun export(savingMode: SavingMode, plainPassword: String, outputStream: OutputStream) {
@@ -31,10 +31,10 @@ class ExportViewModel @Inject constructor(
             val secretKey = SecretKeySpec(hash, "AES")
             AesGcmSecretEncryptor(secretKey)
         } else null
-        Log.d(TAG, "export: ${repository.getAllData(sharedPreferencesHelper.userEmail).size}")
+        Log.d(TAG, "export: ${repository.getAllData(userEmail).size}")
 
         ExportKeysUseCase(
-            repository.getAllData(sharedPreferencesHelper.userEmail),
+            repository.getAllData(userEmail),
             outputStream,
             repositoryEncryptor,
             exportEncryptor,

@@ -259,7 +259,7 @@
         android:id="@+id/below_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adContainer"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toStartOf="@id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/rlNotBackUp">
@@ -277,7 +277,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondary_color"
+            android:indeterminateTint="@color/n_sky_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -425,7 +425,7 @@
         android:layout_height="@dimen/_54sdp"
         android:background="@color/n_sky_blue"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/adContainer">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/edit"
@@ -494,7 +494,7 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:background="@color/n_sky_blue"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/adContainer">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/editCat"
@@ -555,4 +555,26 @@
                 android:textSize="@dimen/_10sdp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/adContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/adBackgroundColor"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="0dp"
+        android:layout_margin="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/adFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/shimmer_small_native" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,40 +57,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle"
         app:shapeAppearanceOverlay="@style/CircularImageViewStyle" />
 
-    <!--<com.google.android.material.card.MaterialCardView
-        android:id="@+id/mcvAccountName"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_40sdp"
-        android:padding="@dimen/_5sdp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_25sdp"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image">
-
-        <EditText
-            android:id="@+id/etAccountName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_13sdp"
-            android:autofillHints="Account Name"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/account_name"
-            android:inputType="text"
-            android:maxLines="1"
-            android:scrollbars="horizontal"
-            android:textColor="@color/n_dark_grey"
-            android:textColorHint="@color/hint_color"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.card.MaterialCardView>-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mcvAccountName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_35sdp"
         android:hint="@string/account_name"
         android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
         app:boxBackgroundColor="@color/white"
@@ -117,38 +89,12 @@
             android:textSize="@dimen/_12sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--<com.google.android.material.card.MaterialCardView
-        android:id="@+id/mcv_key"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:padding="@dimen/_5sdp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_25sdp"
-        app:layout_constraintTop_toBottomOf="@+id/mcvAccountName">
-
-        <EditText
-            android:id="@+id/etAccountKey"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_13sdp"
-            android:autofillHints="Your Key"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/account_key"
-            android:inputType="text"
-            android:textColor="@color/n_dark_grey"
-            android:textColorHint="@color/hint_color"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.card.MaterialCardView>-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mcv_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:hint="@string/account_key"
         android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
         app:boxBackgroundColor="@color/white"
@@ -179,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:padding="@dimen/_5sdp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_25sdp"
@@ -260,10 +206,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginVertical="@dimen/_15sdp"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/llAdvanced">
+        app:layout_constraintBottom_toTopOf="@id/adContainer"
+        app:layout_constraintTop_toBottomOf="@+id/llAdvanced"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="19dp"
+        tools:visibility="visible">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/code_selection"
@@ -359,4 +309,26 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/adContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/adBackgroundColor"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="0dp"
+        android:layout_margin="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/adFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/shimmer_small_native" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

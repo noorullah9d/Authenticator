@@ -17,14 +17,14 @@ import com.example.my.project.authenticator.extensions.setOnDebouncedClickListen
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.extensions.validatePassword
 import com.example.my.project.authenticator.extensions.validatePasswordChange
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class SetPasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentSetPasswordBinding
-    private var prefsHelper: SharedPreferencesHelper? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSetPasswordBinding.inflate(inflater, container, false)
@@ -33,11 +33,10 @@ class SetPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         binding.apply {
 
-            if (prefsHelper?.userPassword?.isNotEmpty() == true) {
+            if (PrefsHelper.userPassword.isNotEmpty()) {
                 currentPassword.show()
 //                currentPasswordNotCorrect.beVisible()
             }
@@ -57,8 +56,8 @@ class SetPasswordFragment : Fragment() {
             }
 
             savePassword.setOnDebouncedClickListener {
-                if (currentPassword.visibility == View.VISIBLE) {
-                    val isTrue = prefsHelper?.userPassword?.validatePasswordChange(enterCurrentPassword.text.toString(), etNewPassword.text.toString(), etConfirmPassword.text.toString()) ?: false
+                if (currentPassword.isVisible) {
+                    val isTrue = PrefsHelper.userPassword.validatePasswordChange(enterCurrentPassword.text.toString(), etNewPassword.text.toString(), etConfirmPassword.text.toString())
                     if (isTrue == "not") {
                         currentPasswordNotCorrect.show()
                     } else {
@@ -67,7 +66,7 @@ class SetPasswordFragment : Fragment() {
                 } else {
                     val validate = etNewPassword.text.toString().validatePassword(etConfirmPassword.text.toString())
                     if (validate == "Password is valid") {
-                        prefsHelper?.userPassword = etConfirmPassword.text.toString()
+                        PrefsHelper.userPassword = etConfirmPassword.text.toString()
                         findNavController().popBackStack()
                     } else requireActivity().toast(validate)
                 }

@@ -12,21 +12,18 @@ import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
 import com.ra.fingerprint_auth.FingerprintCallback
 import com.ra.fingerprint_auth.FingerprintManager
 
 class PasswordScreen : AppCompatActivity() {
     private lateinit var binding: ActivityPasswordScreenBinding
-    private var prefsHelper: SharedPreferencesHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPasswordScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        prefsHelper = SharedPreferencesHelper(this)
         thumbVisibility()
         clicks()
 
@@ -52,7 +49,7 @@ class PasswordScreen : AppCompatActivity() {
                     toast("Please Enter Password")
                 } else {
 
-                    if (prefsHelper?.userPassword == etNewPassword.text.toString()) {
+                    if (PrefsHelper.userPassword == etNewPassword.text.toString()) {
                         startActivityWithAnimation<MainActivity>()
                     } else {
                         passwordWrong.show()
@@ -64,7 +61,7 @@ class PasswordScreen : AppCompatActivity() {
 
     private fun thumbVisibility() {
         binding.apply {
-            if (prefsHelper?.isFingerprintEnabled!!) {
+            if (PrefsHelper.isFingerprintEnabled) {
                 ivThumb.show()
                 tvOpenThumb.show()
             } else {

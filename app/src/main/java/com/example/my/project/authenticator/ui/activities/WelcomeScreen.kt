@@ -10,7 +10,7 @@ import com.example.my.project.authenticator.extensions.setOnDebouncedClickListen
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.GoogleSignInManager
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -26,8 +26,6 @@ class WelcomeScreen : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    private var prefsHelper: SharedPreferencesHelper? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +34,6 @@ class WelcomeScreen : BaseActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-
-        prefsHelper = SharedPreferencesHelper(this@WelcomeScreen)
 
         binding.tvContinueWithoutAccount.setOnClickListener {
             startActivityWithAnimation<MainActivity>()
@@ -75,7 +71,7 @@ class WelcomeScreen : BaseActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    prefsHelper?.userEmail = email
+                    PrefsHelper.userEmail = email
                     val user = auth.currentUser
                     toast(getString(R.string.signed_in_successfully))
                     startActivityWithAnimation<MainActivity>()

@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.my.project.authenticator.utils.APP_THEME
 import com.example.my.project.authenticator.utils.AppTheme
-import com.example.my.project.authenticator.utils.Constants.APP_THEME
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CardSelectionViewModel @Inject constructor(val appPreference: SharedPreferencesHelper) : ViewModel() {
+class CardSelectionViewModel @Inject constructor(/*val appPreference: PrefsHelper*/) : ViewModel() {
 
     var selectedIndex: Int? = 0
     private val _selectedCardIndex = MutableLiveData<Int?>()
@@ -31,15 +31,15 @@ class CardSelectionViewModel @Inject constructor(val appPreference: SharedPrefer
 
 
     fun getAppTheme(): String {
-        return appPreference.getStringPreference(
+        return PrefsHelper.getStringPreference(
             APP_THEME,
-            AppTheme.LIGHT.name
+            AppTheme.SYSTEM_DEFAULT.name
         )
     }
 
 
     fun changeTheme(themeId: AppTheme) {
-        appPreference.setStringPreference(APP_THEME, themeId.toString())
+        PrefsHelper.setStringPreference(APP_THEME, themeId.toString())
         val themeMode = when (themeId) {
             AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
             AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
@@ -50,7 +50,7 @@ class CardSelectionViewModel @Inject constructor(val appPreference: SharedPrefer
     }
 
     private fun getSelectedTheme(): AppTheme {
-        val themeName = appPreference.getStringPreference(APP_THEME, AppTheme.SYSTEM_DEFAULT.name)
+        val themeName = PrefsHelper.getStringPreference(APP_THEME, AppTheme.SYSTEM_DEFAULT.name)
         return try {
             AppTheme.valueOf(themeName)
         } catch (e: IllegalArgumentException) {
@@ -70,6 +70,4 @@ class CardSelectionViewModel @Inject constructor(val appPreference: SharedPrefer
     fun getSelectedCardIndex(): Int? {
         return _selectedCardIndex.value
     }
-
-
 }

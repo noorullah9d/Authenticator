@@ -9,7 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.activities.OnBoardingActivity">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -29,7 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/icons"
         android:layout_width="wrap_content"
@@ -37,9 +35,31 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_first_start"
-        app:layout_constraintBottom_toTopOf="@+id/btn_start"
+        app:layout_constraintBottom_toTopOf="@+id/adContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/adContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/adBackgroundColor"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="0dp"
+        android:layout_margin="@dimen/_6sdp"
+        app:layout_constraintBottom_toTopOf="@id/btn_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/adFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/shimmer_small_native" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_start"
@@ -54,7 +74,6 @@
         app:cornerRadius="@dimen/_30sdp"
         app:layout_constraintBottom_toTopOf="@+id/privacyPolicyTextView" />
 
-
     <TextView
         android:id="@+id/privacyPolicyTextView"
         android:layout_width="match_parent"
@@ -68,6 +87,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

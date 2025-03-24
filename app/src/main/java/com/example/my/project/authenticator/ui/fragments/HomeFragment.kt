@@ -11,22 +11,28 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.FragInterstitial
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.logFirebaseEvent
-import com.example.my.project.authenticator.extensions.openFragment
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showCustomDialog
+import com.example.my.project.authenticator.extensions.showExitBottomSheet
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.CardSelectionViewModel
@@ -36,7 +42,8 @@ import com.example.my.project.authenticator.ui.adapters.AccountAdapter
 import com.example.my.project.authenticator.ui.adapters.CategoryAdapter
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.GoogleSignInManager
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.example.my.project.authenticator.utils.UiState
 import com.google.firebase.auth.FirebaseAuth
@@ -49,8 +56,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -61,14 +66,8 @@ class HomeFragment : Fragment() {
     private val selectionViewModel by viewModels<CardSelectionViewModel>()
 
     private lateinit var auth: FirebaseAuth
-    private var prefsHelper: SharedPreferencesHelper? = null
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
-
-
-    @Inject
-    lateinit var sharedPreferencesHelper: SharedPreferencesHelper
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,13 +80,65 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         auth = FirebaseAuth.getInstance()
 
         observerData()
         backPress()
         clickListeners()
+        loadAndShowAdd()
+        loadFragmentInterstitial()
+    }
+
+    private fun loadFragmentInterstitial() {
+        FragInterstitial.loadAd(
+            requireContext(),
+            getString(R.string.admob_interstitial_fragment)
+        )
+    }
+
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_home)
+        )
+    }
+
+    private fun showNativeAd() {
+        binding.apply {
+            adFrame.show()
+            NativeAd.admobNativeAd?.let {
+                val adView = GntSmallBinding.inflate(layoutInflater)
+                NativeAd.populateNativeAdView(it, adView)
+                adFrame.removeAllViews()
+                adFrame.safeAddView(adView.root)
+            }
+        }
     }
 
     private fun backPress() {
@@ -97,7 +148,11 @@ class HomeFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     when {
                         binding.clTopLayout.isVisible -> {
-                            requireActivity().finishAffinity()
+                            requireActivity().apply {
+                                showExitBottomSheet {
+                                    finishAffinity()
+                                }
+                            }
                         }
 
                         binding.searchView.isVisible -> {
@@ -169,14 +224,14 @@ class HomeFragment : Fragment() {
 
             ivCross.setOnDebouncedClickListener {
                 rlNotBackUp.hide()
-                sharedPreferencesHelper.isBackedGone = true
+                PrefsHelper.isBackedGone = true
             }
 
             ivBackIcon.setOnClickListener {
                 deselectAll()
             }
 
-            if (sharedPreferencesHelper.isBackedGone) {
+            if (PrefsHelper.isBackedGone) {
                 rlNotBackUp.hide()
             }
 
@@ -284,14 +339,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun backup() {
-        if (prefsHelper?.userEmail == "") {
+        if (PrefsHelper.userEmail == "") {
             if (requireActivity().isInternetAvailable()) {
                 startGoogleSignIn()
             } else {
                 toast(getString(R.string.no_internet_connection))
             }
         } else {
-            requireActivity().openFragment(R.id.backupFragment, true)
+//            requireActivity().openFragment(R.id.backupFragment, true)
+            findNavController().navigate(R.id.action_homeFragment_to_backupFragment)
         }
     }
 
@@ -354,19 +410,31 @@ class HomeFragment : Fragment() {
 
             when (result) {
                 "ivScanQR" -> {
-                    val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                    intent.putExtra("edit", 0)
-                    intent.putExtra("bundle", "ivScanQR")
-                    intent.putExtra("backStack", 1)
-                    startActivity(intent)
+                    FragInterstitial.showAd(
+                        requireActivity(),
+                        onDismissed = {
+                            loadFragmentInterstitial()
+                            val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                            intent.putExtra("edit", 0)
+                            intent.putExtra("bundle", "ivScanQR")
+                            intent.putExtra("backStack", 1)
+                            startActivity(intent)
+                        }
+                    )
                 }
 
                 "ivEnterKey" -> {
-                    val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                    intent.putExtra("bundle", "ivEnterKey")
-                    intent.putExtra("edit", 0)
-                    intent.putExtra("backStack", 1)
-                    startActivity(intent)
+                    FragInterstitial.showAd(
+                        requireActivity(),
+                        onDismissed = {
+                            loadFragmentInterstitial()
+                            val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                            intent.putExtra("bundle", "ivEnterKey")
+                            intent.putExtra("edit", 0)
+                            intent.putExtra("backStack", 1)
+                            startActivity(intent)
+                        }
+                    )
                 }
 
                 "dismiss" -> {
@@ -381,27 +449,8 @@ class HomeFragment : Fragment() {
             llPlaceHolderLayout.show()
             faButton.hide()
             progressBar.hide()
-            accountData.hide()
-            /*llBackUphoworks.beVisible()
-            btnStartOpt.beVisible()*/
+//            accountData.hide()
             buttonsPlaceHolders.show()
-            /*count++
-            if (count >= 3 && sharedPreferencesHelper.userEmail != "") {
-                llPlaceHolderLayout.beVisible()
-                faButton.beGone()
-                progressBar.beGone()
-                accountData.beGone()
-                llBackUphoworks.beVisible()
-                btnStartOpt.beVisible()
-            } else if (sharedPreferencesHelper.userEmail == "") {
-                llPlaceHolderLayout.beVisible()
-                faButton.beInVisible()
-                progressBar.beGone()
-                accountData.beGone()
-                llBackUphoworks.beVisible()
-                btnStartOpt.beVisible()
-
-            }*/
         }
     }
 
@@ -443,9 +492,9 @@ class HomeFragment : Fragment() {
 
             homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
 
-                Log.d(TAG, "observerData: accounts = ${homeState.totpList}")
+//                Log.d(TAG, "observerData: accounts = ${homeState.totpList.size}")
                 if (homeState.totpList.isNotEmpty()) {
-                    if (clEditing.visibility == View.VISIBLE) faButton.hide()
+                    if (clEditing.isVisible) faButton.hide()
                     else faButton.show()
 
                     progressBar.hide()
@@ -508,9 +557,9 @@ class HomeFragment : Fragment() {
 
     private fun emailCondition() {
         binding.apply {
-            if (sharedPreferencesHelper.userEmail != "") {
-                sharedPreferencesHelper.userEmail.getFirstCharacter()
-                if (sharedPreferencesHelper.isBackedUp) {
+            if (PrefsHelper.userEmail != "") {
+                PrefsHelper.userEmail.getFirstCharacter()
+                if (PrefsHelper.isBackedUp) {
                     bgRectangle.setImageResource(R.drawable.ic_backed_up)
                     ivBlock.hide()
                     tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
@@ -535,12 +584,13 @@ class HomeFragment : Fragment() {
 
     private fun setFromRemote() {
         lifecycleScope.launch {
-            if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
+            if (homeViewModel.setRemote(PrefsHelper.userEmail) == 0) {
                 homeViewModel.fetchFromRemoteAndSave()
             }
         }.invokeOnCompletion {
-            val data = homeViewModel.setRemote(sharedPreferencesHelper.userEmail)
+            val data = homeViewModel.setRemote(PrefsHelper.userEmail)
             if (data == 0) {
+                Log.d(TAG, "setFromRemote: placeHolder")
                 placeHolder()
             }
         }
@@ -551,9 +601,9 @@ class HomeFragment : Fragment() {
         auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 homeViewModel.clearTotpData()
-                prefsHelper?.userEmail = email
+                PrefsHelper.userEmail = email
 
-                sharedPreferencesHelper.userEmail.getFirstCharacter()
+                PrefsHelper.userEmail.getFirstCharacter()
 
                 lifecycleScope.launch {
                     homeViewModel.refreshTotpKeyFlow()
@@ -563,7 +613,8 @@ class HomeFragment : Fragment() {
                 setFromRemote()
 
                 // go to backup screen
-                requireActivity().openFragment(R.id.backupFragment, true)
+//                requireActivity().openFragment(R.id.backupFragment, true)
+                findNavController().navigate(R.id.action_homeFragment_to_backupFragment)
             } else {
                 val errorMessage = when (task.exception) {
                     is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"

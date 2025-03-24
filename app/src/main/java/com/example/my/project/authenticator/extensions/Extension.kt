@@ -26,6 +26,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
@@ -42,7 +43,25 @@ import com.example.my.project.authenticator.model.LanguagesModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
+import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.databinding.GntMediumBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 
+fun ViewGroup.safeAddView(adView: View) {
+    // Check if the ad view already has a parent
+    if (adView.parent != null) {
+        // Remove the ad view from its previous parent
+        (adView.parent as ViewGroup).removeView(adView)
+    }
+    // Add the ad view to the new parent
+    this.addView(adView)
+}
 
 inline fun <reified A : Activity> Activity.startActivityWithAnimation() {
     val intent = Intent(this, A::class.java)
@@ -175,32 +194,32 @@ fun Fragment.toast(message: String) {
 
 fun TextView.setProfileImage(accountName: String) {
     val letterColors = mapOf(
-        'A' to Color.parseColor("#4285F4"),
-        'B' to Color.parseColor("#DB4437"),
-        'C' to Color.parseColor("#0F9D58"),
-        'D' to Color.parseColor("#F4B400"),
-        'E' to Color.parseColor("#AB47BC"),
-        'F' to Color.parseColor("#FB8C00"),
-        'G' to Color.parseColor("#00ACC1"),
-        'H' to Color.parseColor("#039BE5"),
-        'I' to Color.parseColor("#1E88E5"),
-        'J' to Color.parseColor("#E91E63"),
-        'K' to Color.parseColor("#FFC107"),
-        'L' to Color.parseColor("#795548"),
-        'M' to Color.parseColor("#4285F4"),
-        'N' to Color.parseColor("#DB4437"),
-        'O' to Color.parseColor("#0F9D58"),
-        'P' to Color.parseColor("#F4B400"),
-        'Q' to Color.parseColor("#AB47BC"),
-        'R' to Color.parseColor("#FB8C00"),
-        'S' to Color.parseColor("#00ACC1"),
-        'T' to Color.parseColor("#039BE5"),
-        'U' to Color.parseColor("#1E88E5"),
-        'V' to Color.parseColor("#E91E63"),
-        'W' to Color.parseColor("#FFC107"),
-        'X' to Color.parseColor("#795548"),
-        'Y' to Color.parseColor("#4285F4"),
-        'Z' to Color.parseColor("#DB4437")
+        'A' to "#4285F4".toColorInt(),
+        'B' to "#DB4437".toColorInt(),
+        'C' to "#0F9D58".toColorInt(),
+        'D' to "#F4B400".toColorInt(),
+        'E' to "#AB47BC".toColorInt(),
+        'F' to "#FB8C00".toColorInt(),
+        'G' to "#00ACC1".toColorInt(),
+        'H' to "#039BE5".toColorInt(),
+        'I' to "#1E88E5".toColorInt(),
+        'J' to "#E91E63".toColorInt(),
+        'K' to "#FFC107".toColorInt(),
+        'L' to "#795548".toColorInt(),
+        'M' to "#4285F4".toColorInt(),
+        'N' to "#DB4437".toColorInt(),
+        'O' to "#0F9D58".toColorInt(),
+        'P' to "#F4B400".toColorInt(),
+        'Q' to "#AB47BC".toColorInt(),
+        'R' to "#FB8C00".toColorInt(),
+        'S' to "#00ACC1".toColorInt(),
+        'T' to "#039BE5".toColorInt(),
+        'U' to "#1E88E5".toColorInt(),
+        'V' to "#E91E63".toColorInt(),
+        'W' to "#FFC107".toColorInt(),
+        'X' to "#795548".toColorInt(),
+        'Y' to "#4285F4".toColorInt(),
+        'Z' to "#DB4437".toColorInt()
     )
 
     val firstLetter = accountName.firstOrNull()?.uppercaseChar() ?: 'A'
@@ -353,7 +372,7 @@ fun Context.isInternetAvailable(): Boolean {
 
 fun Context.sendEmail(recipient: String, subject: String, body: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
+        data = "mailto:".toUri()
         putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
         putExtra(Intent.EXTRA_SUBJECT, subject)
         putExtra(Intent.EXTRA_TEXT, body)
@@ -364,7 +383,7 @@ fun Context.sendEmail(recipient: String, subject: String, body: String) {
 
 fun Fragment.sendEmail(recipient: String, subject: String, body: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
+        data = "mailto:".toUri()
         putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
         putExtra(Intent.EXTRA_SUBJECT, subject)
         putExtra(Intent.EXTRA_TEXT, body)
@@ -377,42 +396,89 @@ fun Fragment.sendEmail(recipient: String, subject: String, body: String) {
 fun Context.openAppInPlayStore() {
     val appPackageName = this.packageName
     try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+        val intent = Intent(Intent.ACTION_VIEW, "market://details?id=$appPackageName".toUri())
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+        val intent = Intent(Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$appPackageName".toUri())
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
 }
 
 
-fun Fragment.showBottomSheetDialog(onExitClicked: () -> Unit, onCancelClicked: () -> Unit) {
-    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.TransparentDialog)
-    val binding = ExitDialogBinding.inflate(LayoutInflater.from(requireContext()))
+fun Activity.showExitBottomSheet(onExitClicked: () -> Unit) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog)
+    val binding = ExitDialogBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
     bottomSheetDialog.setContentView(binding.root)
-    binding.exit.setOnClickListener {
-        onExitClicked()
-        bottomSheetDialog.dismiss()
-    }
-    binding.ratingStars.setOnRatingChangeListener { ratingBar, rating, fromUser ->
-        if (ratingBar.rating > 3) {
-            openAppInPlayStore()
-            bottomSheetDialog.dismiss()
-        } else {
-            sendEmail("apps@galixo.ai", "", "")
+    bottomSheetDialog.show()
+
+    loadAndShowNativeAdd(this, binding.adFrame)
+
+    binding.apply {
+        ratingStars.setOnRatingChangeListener { ratingBar, rating, fromUser ->
+            if (ratingBar.rating > 3) {
+                openAppInPlayStore()
+                bottomSheetDialog.dismiss()
+            } else {
+                sendEmail("apps@galixo.ai", "", "")
+                bottomSheetDialog.dismiss()
+            }
+        }
+
+        exit.setOnClickListener {
+            onExitClicked()
             bottomSheetDialog.dismiss()
         }
     }
+}
 
+private fun loadAndShowNativeAdd(activity: Activity, adContainer: FrameLayout) {
+    activity.apply {
+        if (!isInternetAvailable() || PrefsHelper.isAdsRemoved) {
+            adContainer.hide()
+            return
+        }
+        adContainer.show()
+        val shimmer = ShimmerMediumNativeBinding.inflate(layoutInflater)
+        adContainer.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
 
-    binding.cancel.setOnClickListener {
-        onCancelClicked()
-        bottomSheetDialog.dismiss()
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd(activity, adContainer)
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd(activity, adContainer)
+            } else {
+                adContainer.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            this,
+            getString(R.string.admob_native_id_exit)
+        )
     }
+}
 
-    bottomSheetDialog.show()
+private fun showNativeAd(activity: Activity, adContainer: FrameLayout) {
+    activity.apply {
+        adContainer.show()
+        NativeAd.admobNativeAd?.let {
+            val adView = GntMediumBinding.inflate(layoutInflater)
+            NativeAd.populateNativeAdView(it, adView)
+            adContainer.removeAllViews()
+            adContainer.safeAddView(adView.root)
+        }
+    }
 }
 
 fun Fragment.createNewGroupDialog(newGroupName: (String) -> Unit) {
@@ -481,11 +547,12 @@ fun Fragment.deleteGroupDialog(deleteGroup: () -> Unit) {
 fun Fragment.openAppInPlayStore() {
     val appPackageName = requireContext().packageName
     try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+        val intent = Intent(Intent.ACTION_VIEW, "market://details?id=$appPackageName".toUri())
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+        val intent = Intent(Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$appPackageName".toUri())
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }

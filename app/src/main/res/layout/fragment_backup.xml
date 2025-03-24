@@ -51,15 +51,15 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:background="@drawable/circle_background"
-                android:gravity="center"
-                tools:text="n"
-                android:textAllCaps="true"
                 android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="n" />
 
 
             <TextView
@@ -70,12 +70,12 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_semi_bold"
                 android:maxLength="15"
-                tools:text="galixo@ai"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/gmailSwitching"
                 app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="galixo@ai" />
 
             <ImageView
                 android:id="@+id/gmailSwitching"
@@ -127,13 +127,33 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:backgroundTint="@color/n_off_white"
         android:fontFamily="@font/open_sans_bold"
         android:text="@string/logout"
         android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_14sdp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/adContainer" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/adContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/adBackgroundColor"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <FrameLayout
+            android:id="@+id/adFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/shimmer_small_native" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

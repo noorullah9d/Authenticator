@@ -13,7 +13,7 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.GoogleSignInManager
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -29,8 +29,6 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
     private lateinit var binding: GoogleSignInBinding
 
     private lateinit var auth: FirebaseAuth
-
-    private var prefsHelper: SharedPreferencesHelper? = null
 
     companion object {
         fun newInstance(homeViewModel: () -> Unit): GoogleSignInDialog {
@@ -65,7 +63,6 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
         }
 
         auth = FirebaseAuth.getInstance()
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         binding.tvContinueWithoutAccount.setOnClickListener { dismiss() }
         binding.btnStartAccount.setOnDebouncedClickListener {
@@ -100,7 +97,7 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     homeViewModel.invoke()
-                    prefsHelper?.userEmail = email
+                    PrefsHelper.userEmail = email
                     val user = auth.currentUser
                     toast(getString(R.string.signed_in_successfully))
                     dismiss()

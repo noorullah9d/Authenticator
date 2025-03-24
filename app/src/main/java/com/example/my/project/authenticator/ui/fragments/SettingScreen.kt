@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
 import com.example.my.project.authenticator.extensions.getLanguageName
 import com.example.my.project.authenticator.extensions.isInternetAvailable
@@ -24,9 +25,11 @@ import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
-import com.example.my.project.authenticator.utils.Constants
+import com.example.my.project.authenticator.utils.DARK
 import com.example.my.project.authenticator.utils.GoogleSignInManager
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.LIGHT
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.SYSTEM_DEFAULT
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -41,7 +44,6 @@ import kotlinx.coroutines.launch
 class SettingScreen : Fragment() {
     private val languageViewModel by viewModels<LanguageViewModel>()
     private lateinit var binding: FragmentSettingScreenBinding
-    private var prefsHelper: SharedPreferencesHelper? = null
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -52,36 +54,35 @@ class SettingScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prefsHelper = SharedPreferencesHelper(requireActivity())
 
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.apply {
-            if (prefsHelper?.userEmail != "") {
-                emailText.text = prefsHelper?.userEmail
+            if (PrefsHelper.userEmail != "") {
+                emailText.text = PrefsHelper.userEmail
             } else {
                 emailText.text = getText(R.string.backup_your_codes)
             }
 
-            when (prefsHelper?.userTheme) {
-                getString(R.string.system) -> {
-                    tvTheme.text = getString(R.string.system)
+            when (PrefsHelper.userTheme) {
+                SYSTEM_DEFAULT -> {
+                    tvTheme.text = SYSTEM_DEFAULT
                 }
 
-                Constants.DARK -> {
-                    tvTheme.text = Constants.DARK
+                DARK -> {
+                    tvTheme.text = DARK
                 }
 
-                Constants.LIGHT -> {
-                    tvTheme.text = Constants.LIGHT
+                LIGHT -> {
+                    tvTheme.text = LIGHT
                 }
             }
 
             ivUseFingerprintNext.setOnCheckedChangeListener(null)
-            ivUseFingerprintNext.isChecked = prefsHelper?.isFingerprintEnabled == true
+            ivUseFingerprintNext.isChecked = PrefsHelper.isFingerprintEnabled == true
             ivUseFingerprintNext.setOnCheckedChangeListener { _, isEnabled ->
                 if (isEnabled) {
-                    if (prefsHelper?.userPassword == "") {
+                    if (PrefsHelper.userPassword == "") {
                         findNavController().navigate(R.id.action_settingScreen_to_setPasswordFragment)
                         ivUseFingerprintNext.isChecked = false
                     } else {
@@ -89,7 +90,7 @@ class SettingScreen : Fragment() {
                         fingerprint()
                     }
                 } else {
-                    prefsHelper?.isFingerprintEnabled = false
+                    PrefsHelper.isFingerprintEnabled = false
                 }
             }
 
@@ -100,7 +101,7 @@ class SettingScreen : Fragment() {
                 requireActivity().startActivityWithAnimation<SelectLanguageActivity>()
             }
 
-            if (prefsHelper?.userPassword?.isNotEmpty() == true) {
+            if (PrefsHelper.userPassword.isNotEmpty()) {
                 tvSetPassword.text = getString(R.string.change_password)
             }
 
@@ -109,11 +110,29 @@ class SettingScreen : Fragment() {
             }
 
             appThemes.setOnClickListener {
-                findNavController().navigate(R.id.action_settingScreen_to_themesFragment)
+                FragInterstitial.showAd(
+                    requireActivity(),
+                    onDismissed = {
+                        FragInterstitial.loadAd(
+                            requireContext(),
+                            getString(R.string.admob_interstitial_fragment)
+                        )
+                        findNavController().navigate(R.id.action_settingScreen_to_themesFragment)
+                    }
+                )
             }
 
             importExport.setOnClickListener {
-                requireActivity().startActivityWithAnimation<ImportExportScreen>()
+                FragInterstitial.showAd(
+                    requireActivity(),
+                    onDismissed = {
+                        FragInterstitial.loadAd(
+                            requireContext(),
+                            getString(R.string.admob_interstitial_fragment)
+                        )
+                        requireActivity().startActivityWithAnimation<ImportExportScreen>()
+                    }
+                )
             }
 
             userGuide.setOnClickListener {
@@ -151,19 +170,29 @@ class SettingScreen : Fragment() {
             }
 
             howToWork.setOnClickListener {
-                requireActivity().startActivityWithAnimation<HowToWorkScreen>()
+                FragInterstitial.showAd(
+                    requireActivity(),
+                    onDismissed = {
+                        FragInterstitial.loadAd(
+                            requireContext(),
+                            getString(R.string.admob_interstitial_fragment)
+                        )
+                        requireActivity().startActivityWithAnimation<HowToWorkScreen>()
+                    }
+                )
             }
 
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_settingScreen_to_homeFragment)
+                    val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                    findNavController().navigate(R.id.homeFragment, null, navOptions)
                 }
             })
         }
     }
 
     private fun backup() {
-        if (prefsHelper?.userEmail == "") {
+        if (PrefsHelper.userEmail == "") {
             if (requireActivity().isInternetAvailable()) {
                 startGoogleSignIn()
             } else {
@@ -212,7 +241,7 @@ class SettingScreen : Fragment() {
 
             override fun onAuthenticationSuccessful() {
                 Log.d(TAG, "onAuthenticationSuccessful: ")
-                prefsHelper?.isFingerprintEnabled = true
+                PrefsHelper.isFingerprintEnabled = true
             }
 
             override fun onBiometricAuthenticationInternalError(error: String?) {
@@ -246,7 +275,7 @@ class SettingScreen : Fragment() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
-                prefsHelper?.userEmail = email
+                PrefsHelper.userEmail = email
                 binding.emailText.text = email
 
                 // go to backup

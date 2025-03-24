@@ -11,7 +11,8 @@ import com.example.my.project.authenticator.otp.domain.entities.NoEncryptionExpo
 import com.example.my.project.authenticator.otp.domain.repository.TotpKeyRepository
 import com.example.my.project.authenticator.otp.domain.usecases.AddNewTotpUseCase
 import com.example.my.project.authenticator.otp.domain.usecases.ImportKeysUseCase
-import com.example.my.project.authenticator.utils.SharedPreferencesHelper
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.userEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.stateIn
 import org.apache.commons.codec.binary.Base32
@@ -25,7 +26,6 @@ class ImportViewModel @Inject constructor(
     private val saveFirebase: SaveFirebase,
     private val repository: TotpKeyRepository,
     private val repositoryEncryptor: SecretEncryptor,
-    private val sharedPreferencesHelper: SharedPreferencesHelper,
     private val passwordHasher: PasswordHasher
 ) : ViewModel() {
 
@@ -54,7 +54,7 @@ class ImportViewModel @Inject constructor(
                 }
             }
 
-            val storedKeys = repository.getAllKeys(sharedPreferencesHelper.userEmail).stateIn(viewModelScope).value
+            val storedKeys = repository.getAllKeys(userEmail).stateIn(viewModelScope).value
             importedKeys = importedKeyList?.map { unencryptedKey ->
                 ImportedItemState(
                     unencryptedKey.name,
@@ -76,13 +76,13 @@ class ImportViewModel @Inject constructor(
 
     suspend fun addSelected() {
         importedKeys.filter { it.checked }.forEach {
-            if (sharedPreferencesHelper.userEmail != "") {
+            if (userEmail != "") {
 
-//                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail, it.secretKey, it.name)
-                saveFirebase.saveDataToDB(email = sharedPreferencesHelper.userEmail,  it.secretKey, it.name, "","")
+//                saveFirebase.saveDataToDB(email = userEmail, it.secretKey, it.name)
+                saveFirebase.saveDataToDB(email = userEmail,  it.secretKey, it.name, "","")
             }
-            addNewTotpUseCase(0, sharedPreferencesHelper.userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, it.SHA ?: "SHA1", it.type ?: "TOTP", "")
-//            addNewTotpUseCase(System.currentTimeMillis().toInt(), sharedPreferencesHelper.userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, shaStr = it.SHA ?: "SHA1", totpVsHop = it.type ?: "TOTP", filePath = "")
+            addNewTotpUseCase(0, userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, it.SHA ?: "SHA1", it.type ?: "TOTP", "")
+//            addNewTotpUseCase(System.currentTimeMillis().toInt(), userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, shaStr = it.SHA ?: "SHA1", totpVsHop = it.type ?: "TOTP", filePath = "")
         }
     }
 
