@@ -30,12 +30,14 @@ class SelectLanguageActivity : BaseActivity() {
     private val viewModel: LanguageViewModel by viewModels<LanguageViewModel>()
     private lateinit var languagesAdapter: LanguagesAdapterNew
     private var selectedLanguage = "en"
+    private var isFromSettings = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        loadAndShowAdd()
+        isFromSettings = intent.getBooleanExtra("isFromSettings", false)
+        if (!isFromSettings) loadAndShowAdd() else binding.adFrame.hide()
         initLanguagesRecyclerView()
         setupClickListeners()
         handleBackPress()
@@ -129,5 +131,6 @@ class SelectLanguageActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }

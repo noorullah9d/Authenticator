@@ -147,7 +147,7 @@ class SplashScreen : BaseActivity() {
     }
 
     private fun navigateForward() {
-        if (!PrefsHelper.isLanguageShown) {
+        if (!PrefsHelper.isLanguageShown && NativeAd.admobNativeAd != null) {
             startActivityWithAnimation<SelectLanguageActivity>()
             finish()
         } else if (!PrefsHelper.isOnBoardingShown) {

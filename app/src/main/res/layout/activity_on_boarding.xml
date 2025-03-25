@@ -43,7 +43,7 @@
         android:id="@+id/adContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/adBackgroundColor"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="0dp"

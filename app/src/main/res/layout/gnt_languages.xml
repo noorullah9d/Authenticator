@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/icon"
+                android:id="@+id/adAppIcon"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/gnt_no_margin"
@@ -57,7 +57,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/primary"
+                android:id="@+id/adHeadline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/gnt_default_margin"
@@ -71,9 +71,9 @@
                 android:textSize="@dimen/gnt_text_size_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/ad_notification_view"
-                app:layout_constraintEnd_toStartOf="@id/cta"
-                app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintTop_toTopOf="@id/icon"
+                app:layout_constraintEnd_toStartOf="@id/adCallToAction"
+                app:layout_constraintStart_toEndOf="@id/adAppIcon"
+                app:layout_constraintTop_toTopOf="@id/adAppIcon"
                 tools:text="App Name" />
 
             <TextView
@@ -89,12 +89,12 @@
                 android:textColor="@color/n_dark_grey"
                 android:textSize="@dimen/gnt_ad_indicator_text_size"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/icon"
-                app:layout_constraintStart_toStartOf="@id/primary"
-                app:layout_constraintTop_toBottomOf="@id/primary" />
+                app:layout_constraintBottom_toBottomOf="@id/adAppIcon"
+                app:layout_constraintStart_toStartOf="@id/adHeadline"
+                app:layout_constraintTop_toBottomOf="@id/adHeadline" />
 
             <RatingBar
-                android:id="@+id/rating_bar"
+                android:id="@+id/adStars"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 app:layout_constraintTop_toTopOf="@id/ad_notification_view" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/cta"
+                android:id="@+id/adCallToAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/gnt_no_margin"

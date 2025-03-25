@@ -42,7 +42,6 @@ class BackupFragment : Fragment() {
     private lateinit var binding: FragmentBackupBinding
     private lateinit var firebaseAuth: FirebaseAuth
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,7 +91,8 @@ class BackupFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                    val navOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
                     findNavController().navigate(R.id.homeFragment, null, navOptions)
                 }
             }
@@ -231,6 +231,18 @@ class BackupFragment : Fragment() {
                     toast(errorMessage)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }
 

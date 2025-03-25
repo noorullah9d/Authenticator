@@ -52,7 +52,7 @@ class OnBoardingActivity : BaseActivity() {
         addPolicyAndTerms()
         viewPager()
         onClickView()
-        loadAndShowAdd()
+//        loadAndShowAdd()
         loadInterstitial()
     }
 
@@ -99,7 +99,7 @@ class OnBoardingActivity : BaseActivity() {
                 }
             }
             interstitialAd?.show(this)
-        }
+        } else onDismissed.invoke()
     }
 
     private fun loadAndShowAdd() {
@@ -159,7 +159,6 @@ class OnBoardingActivity : BaseActivity() {
                 }
 
                 2 -> {
-
                     homeViewModel.addCategories(Categories(0, "Default"))
                     homeViewModel.addCategories(Categories(0, "Office"))
                     homeViewModel.addCategories(Categories(0, "Family"))
@@ -255,5 +254,6 @@ class OnBoardingActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }

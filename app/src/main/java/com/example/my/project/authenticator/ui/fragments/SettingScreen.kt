@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,7 +48,11 @@ class SettingScreen : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentSettingScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -98,7 +103,9 @@ class SettingScreen : Fragment() {
 
 
             languageSelection.setOnClickListener {
-                requireActivity().startActivityWithAnimation<SelectLanguageActivity>()
+                val intent = Intent(requireActivity(), SelectLanguageActivity::class.java)
+                intent.putExtra("isFromSettings", true)
+                requireActivity().startActivity(intent)
             }
 
             if (PrefsHelper.userPassword.isNotEmpty()) {
@@ -123,7 +130,7 @@ class SettingScreen : Fragment() {
             }
 
             importExport.setOnClickListener {
-                FragInterstitial.showAd(
+                /*FragInterstitial.showAd(
                     requireActivity(),
                     onDismissed = {
                         FragInterstitial.loadAd(
@@ -132,7 +139,8 @@ class SettingScreen : Fragment() {
                         )
                         requireActivity().startActivityWithAnimation<ImportExportScreen>()
                     }
-                )
+                )*/
+                requireActivity().startActivityWithAnimation<ImportExportScreen>()
             }
 
             userGuide.setOnClickListener {
@@ -170,7 +178,7 @@ class SettingScreen : Fragment() {
             }
 
             howToWork.setOnClickListener {
-                FragInterstitial.showAd(
+                /*FragInterstitial.showAd(
                     requireActivity(),
                     onDismissed = {
                         FragInterstitial.loadAd(
@@ -179,15 +187,19 @@ class SettingScreen : Fragment() {
                         )
                         requireActivity().startActivityWithAnimation<HowToWorkScreen>()
                     }
-                )
+                )*/
+                requireActivity().startActivityWithAnimation<HowToWorkScreen>()
             }
 
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
-                }
-            })
+            requireActivity().onBackPressedDispatcher.addCallback(
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        val navOptions =
+                            NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                        findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    }
+                })
         }
     }
 
@@ -219,77 +231,80 @@ class SettingScreen : Fragment() {
     }
 
     private fun fingerprint() {
-        FingerprintManager.FingerprintBuilder(requireActivity()).setTitle("Unlock to use Authenticator").setTitle("Touch the fingerprint sensor").setNegativeButtonText("Dismiss").build().authenticate(object : FingerprintCallback {
-            override fun onAuthenticationCancelled() {
-                binding.ivUseFingerprintNext.isChecked = false
-                Log.d(TAG, "onAuthenticationCancelled: ")
-            }
+        FingerprintManager.FingerprintBuilder(requireActivity())
+            .setTitle("Unlock to use Authenticator").setTitle("Touch the fingerprint sensor")
+            .setNegativeButtonText("Dismiss").build().authenticate(object : FingerprintCallback {
+                override fun onAuthenticationCancelled() {
+                    binding.ivUseFingerprintNext.isChecked = false
+                    Log.d(TAG, "onAuthenticationCancelled: ")
+                }
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                Log.d(TAG, "onAuthenticationError: ")
-                binding.ivUseFingerprintNext.isChecked = false
-            }
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    Log.d(TAG, "onAuthenticationError: ")
+                    binding.ivUseFingerprintNext.isChecked = false
+                }
 
-            override fun onAuthenticationFailed() {
-                Log.d(TAG, "onAuthenticationFailed: ")
-                binding.ivUseFingerprintNext.isChecked = false
-            }
+                override fun onAuthenticationFailed() {
+                    Log.d(TAG, "onAuthenticationFailed: ")
+                    binding.ivUseFingerprintNext.isChecked = false
+                }
 
-            override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                Log.d(TAG, "onAuthenticationHelp: ")
-            }
+                override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
+                    Log.d(TAG, "onAuthenticationHelp: ")
+                }
 
-            override fun onAuthenticationSuccessful() {
-                Log.d(TAG, "onAuthenticationSuccessful: ")
-                PrefsHelper.isFingerprintEnabled = true
-            }
+                override fun onAuthenticationSuccessful() {
+                    Log.d(TAG, "onAuthenticationSuccessful: ")
+                    PrefsHelper.isFingerprintEnabled = true
+                }
 
-            override fun onBiometricAuthenticationInternalError(error: String?) {
-                Log.d(TAG, "onBiometricAuthenticationInternalError: ")
-                binding.ivUseFingerprintNext.isChecked = false
-            }
+                override fun onBiometricAuthenticationInternalError(error: String?) {
+                    Log.d(TAG, "onBiometricAuthenticationInternalError: ")
+                    binding.ivUseFingerprintNext.isChecked = false
+                }
 
-            override fun onBiometricAuthenticationNotAvailable() {
-                Log.d(TAG, "onBiometricAuthenticationNotAvailable: ")
-                toast("Device Not Supported")
-            }
+                override fun onBiometricAuthenticationNotAvailable() {
+                    Log.d(TAG, "onBiometricAuthenticationNotAvailable: ")
+                    toast("Device Not Supported")
+                }
 
-            override fun onBiometricAuthenticationNotSupported() {
-                Log.d(TAG, "onBiometricAuthenticationNotSupported: ")
-            }
+                override fun onBiometricAuthenticationNotSupported() {
+                    Log.d(TAG, "onBiometricAuthenticationNotSupported: ")
+                }
 
-            override fun onBiometricAuthenticationPermissionNotGranted() {
-                Log.d(TAG, "onBiometricAuthenticationPermissionNotGranted: ")
-                binding.ivUseFingerprintNext.isChecked = false
-            }
+                override fun onBiometricAuthenticationPermissionNotGranted() {
+                    Log.d(TAG, "onBiometricAuthenticationPermissionNotGranted: ")
+                    binding.ivUseFingerprintNext.isChecked = false
+                }
 
-            override fun onSdkVersionNotSupported() {
-                Log.d(TAG, "onSdkVersionNotSupported: ")
-                binding.ivUseFingerprintNext.isChecked = false
-            }
+                override fun onSdkVersionNotSupported() {
+                    Log.d(TAG, "onSdkVersionNotSupported: ")
+                    binding.ivUseFingerprintNext.isChecked = false
+                }
 
-        })
+            })
     }
 
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
-            if (task.isSuccessful) {
-                PrefsHelper.userEmail = email
-                binding.emailText.text = email
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    PrefsHelper.userEmail = email
+                    binding.emailText.text = email
 
-                // go to backup
-                findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
-            } else {
-                val errorMessage = when (task.exception) {
-                    is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
-                    is FirebaseAuthUserCollisionException -> "Email already in use"
-                    is FirebaseAuthInvalidUserException -> "Invalid User"
-                    else -> "Authentication Failed"
+                    // go to backup
+                    findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+                } else {
+                    val errorMessage = when (task.exception) {
+                        is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"
+                        is FirebaseAuthUserCollisionException -> "Email already in use"
+                        is FirebaseAuthInvalidUserException -> "Invalid User"
+                        else -> "Authentication Failed"
+                    }
+                    toast(errorMessage)
                 }
-                toast(errorMessage)
             }
-        }
     }
 }
 

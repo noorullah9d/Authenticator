@@ -80,13 +80,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadAndShowAdd()
+        Log.d(TAG, "admobNativeAd onViewCreated: called")
 
         auth = FirebaseAuth.getInstance()
 
         observerData()
         backPress()
         clickListeners()
-        loadAndShowAdd()
         loadFragmentInterstitial()
     }
 
@@ -98,6 +99,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadAndShowAdd() {
+        Log.d(TAG, "admobNativeAd loadAndShowAdd: called")
         if (!requireContext().isInternetAvailable() || isAdsRemoved) {
             binding.adFrame.hide()
             return
@@ -130,6 +132,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showNativeAd() {
+        Log.d(TAG, "admobNativeAd showNativeAd: called")
         binding.apply {
             adFrame.show()
             NativeAd.admobNativeAd?.let {
@@ -217,7 +220,6 @@ class HomeFragment : Fragment() {
 
     private fun clickListeners() {
         binding.apply {
-
             rlNotBackUp.setOnDebouncedClickListener {
                 backup()
             }
@@ -449,7 +451,7 @@ class HomeFragment : Fragment() {
             llPlaceHolderLayout.show()
             faButton.hide()
             progressBar.hide()
-//            accountData.hide()
+            accountData.hide()
             buttonsPlaceHolders.show()
         }
     }
@@ -626,6 +628,20 @@ class HomeFragment : Fragment() {
                 println(task.exception)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "admobNativeAd onDestroyView: called!")
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "admobNativeAd onDestroy: called!")
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }
 

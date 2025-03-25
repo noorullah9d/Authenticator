@@ -35,7 +35,11 @@ class ThemesFragment : Fragment() {
 
     private val cardSelectionViewModel by viewModels<CardSelectionViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentThemesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,12 +50,14 @@ class ThemesFragment : Fragment() {
         binding.apply {
 
             val colorStateList = ColorStateList(
-                arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf(android.R.attr.state_enabled)), intArrayOf(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_enabled),
+                    intArrayOf(android.R.attr.state_enabled)
+                ), intArrayOf(
                     ContextCompat.getColor(requireActivity(), R.color.light_gray),
                     ContextCompat.getColor(requireActivity(), R.color.n_sky_blue)
                 )
             )
-
 
             lightRadio.buttonTintList = colorStateList
             lightRadio.invalidate()
@@ -63,11 +69,13 @@ class ThemesFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
-                }
-            })
+            requireActivity().onBackPressedDispatcher.addCallback(
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        findNavController().popBackStack()
+                    }
+                })
 
             cardSelectionViewModel.selectedTheme.observe(viewLifecycleOwner) {
 
@@ -206,5 +214,17 @@ class ThemesFragment : Fragment() {
                 binding.lightRadio.isChecked = true
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }

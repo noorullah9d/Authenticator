@@ -46,6 +46,8 @@ object NativeAd {
         isLoading = true
         val builder = AdLoader.Builder(activity, adId)
         builder.forNativeAd { ad ->
+            Log.d("AdDebug", "Has headline: ${ad.headline != null}")
+            Log.d("AdDebug", "Has media content: ${ad.mediaContent != null}")
             admobNativeAd = ad
         }
 
@@ -89,21 +91,26 @@ object NativeAd {
         adLoader.loadAd(AdRequest.Builder().build())
     }
 
-    fun populateNativeAdView(nativeAd: NativeAd, adViewBind: GntLanguagesBinding) {
+    fun populateNativeAdView(nativeAd: NativeAd, binding: GntLanguagesBinding) {
 
-        val nativeAdView = adViewBind.root
+        val nativeAdView = binding.root
 
-        nativeAdView.headlineView = adViewBind.primary
-//        nativeAdView.bodyView = adViewBind.body
-        nativeAdView.callToActionView = adViewBind.cta
-        nativeAdView.iconView = adViewBind.icon
-        nativeAdView.starRatingView = adViewBind.ratingBar
+        // Set the media view.
+        nativeAdView.mediaView = binding.mediaView
+
+        // Set other ad assets.
+        nativeAdView.headlineView = binding.adHeadline
+//        nativeAdView.bodyView = binding.adBody
+        nativeAdView.callToActionView = binding.adCallToAction
+        nativeAdView.iconView = binding.adAppIcon
+//        nativeAdView.priceView = binding.adPrice
+        nativeAdView.starRatingView = binding.adStars
+//        nativeAdView.storeView = binding.adStore
+//        nativeAdView.advertiserView = binding.adAdvertiser
+
         // The headline and media content are guaranteed to be in every UnifiedNativeAd.
-        adViewBind.primary.text = nativeAd.headline
-        nativeAd.mediaContent?.let {
-            nativeAdView.mediaView?.mediaContent = it
-        }
-
+        binding.adHeadline.text = nativeAd.headline
+        nativeAd.mediaContent?.let { binding.mediaView.mediaContent = it }
 
         // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
         // check before trying to display them.
@@ -115,25 +122,24 @@ object NativeAd {
         }*/
 
         if (nativeAd.callToAction == null) {
-            adViewBind.cta.invisible()
+            binding.adCallToAction.invisible()
         } else {
-            adViewBind.cta.show()
-            adViewBind.cta.text = nativeAd.callToAction
+            binding.adCallToAction.show()
+            binding.adCallToAction.text = nativeAd.callToAction
         }
 
         if (nativeAd.icon == null) {
-            adViewBind.icon.hide()
+            binding.adAppIcon.hide()
         } else {
-            adViewBind.icon.setImageDrawable(nativeAd.icon?.drawable)
-            adViewBind.icon.show()
+            binding.adAppIcon.setImageDrawable(nativeAd.icon?.drawable)
+            binding.adAppIcon.show()
         }
 
-
         if (nativeAd.starRating == null) {
-            adViewBind.ratingBar.invisible()
+            binding.adStars.invisible()
         } else {
-            adViewBind.ratingBar.rating = nativeAd.starRating!!.toFloat()
-            adViewBind.ratingBar.show()
+            binding.adStars.rating = nativeAd.starRating!!.toFloat()
+            binding.adStars.show()
         }
 
         nativeAdView.setNativeAd(nativeAd)

@@ -76,7 +76,7 @@ class QRScannerScreen : Fragment() {
         })
 
         checkAndRequestCameraPermission()
-        loadAndShowAdd()
+//        loadAndShowAdd()
     }
 
     private fun loadAndShowAdd() {
@@ -145,7 +145,6 @@ class QRScannerScreen : Fragment() {
         }
 
     }
-
 
     private fun startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
@@ -296,6 +295,7 @@ class QRScannerScreen : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 
     companion object {
