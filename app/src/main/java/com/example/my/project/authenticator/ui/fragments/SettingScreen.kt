@@ -62,6 +62,24 @@ class SettingScreen : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        initViews()
+        setupClickListeners()
+        handleBackPress()
+    }
+
+    private fun handleBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val navOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                }
+            })
+    }
+
+    private fun initViews() {
         binding.apply {
             if (PrefsHelper.userEmail != "") {
                 emailText.text = PrefsHelper.userEmail
@@ -101,15 +119,18 @@ class SettingScreen : Fragment() {
 
             tvLanguageCode.text = languageViewModel.getLanguage().getLanguageName()
 
+            if (PrefsHelper.userPassword.isNotEmpty()) {
+                tvSetPassword.text = getString(R.string.change_password)
+            }
+        }
+    }
 
+    private fun setupClickListeners() {
+        binding.apply {
             languageSelection.setOnClickListener {
                 val intent = Intent(requireActivity(), SelectLanguageActivity::class.java)
                 intent.putExtra("isFromSettings", true)
                 requireActivity().startActivity(intent)
-            }
-
-            if (PrefsHelper.userPassword.isNotEmpty()) {
-                tvSetPassword.text = getString(R.string.change_password)
             }
 
             setPassword.setOnClickListener {
@@ -168,7 +189,6 @@ class SettingScreen : Fragment() {
                 backup()
             }
 
-
             loginMail.setOnDebouncedClickListener {
                 backup()
             }
@@ -190,16 +210,6 @@ class SettingScreen : Fragment() {
                 )*/
                 requireActivity().startActivityWithAnimation<HowToWorkScreen>()
             }
-
-            requireActivity().onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        val navOptions =
-                            NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                        findNavController().navigate(R.id.homeFragment, null, navOptions)
-                    }
-                })
         }
     }
 

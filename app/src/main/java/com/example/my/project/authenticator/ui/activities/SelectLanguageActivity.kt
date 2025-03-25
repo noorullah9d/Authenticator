@@ -90,7 +90,7 @@ class SelectLanguageActivity : BaseActivity() {
     private fun handleBackPress() {
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                navigateToForward()
+                if (isFromSettings) finish() else navigateToForward()
             }
         })
     }
@@ -98,7 +98,7 @@ class SelectLanguageActivity : BaseActivity() {
     private fun setupClickListeners() {
         binding.apply {
             icBack.setOnClickListener {
-                navigateToForward()
+                if (isFromSettings) finish() else navigateToForward()
             }
 
             confirm.clickWithExtraDebounce {

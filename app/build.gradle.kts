@@ -27,8 +27,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.7"
+        versionCode = 9
+        versionName = "1.0.8"
         setProperty("archivesBaseName", "Authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
