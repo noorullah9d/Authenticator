@@ -18,17 +18,19 @@ import com.example.my.project.authenticator.admob.loadAdmobInterstitial
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
+import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
-import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.ui.adapters.OnboardingAdapter
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
+import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
+import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
 import com.example.my.project.authenticator.utils.isInterstitialShowing
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -229,7 +231,7 @@ class OnBoardingActivity : BaseActivity() {
         val privacyPolicyEnd = privacyPolicyStart + "Privacy Policy".length
         val privacyPolicySpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                privacyPolicy("https://galixo.ai/authenticator/privacy-policy")
+                browse(PRIVACY_POLICY_URL)
             }
         }
         spannableString.setSpan(privacyPolicySpan, privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -240,7 +242,7 @@ class OnBoardingActivity : BaseActivity() {
         val termsOfServiceEnd = termsOfServiceStart + "Terms of Service".length
         val termsOfServiceSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
+                browse(TERMS_CONDITIONS_URL)
             }
         }
         spannableString.setSpan(termsOfServiceSpan, termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

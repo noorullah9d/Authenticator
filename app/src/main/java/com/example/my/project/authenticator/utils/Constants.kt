@@ -16,7 +16,15 @@ const val APP_THEME = "app_theme"
 const val IS_PREMIUM = "is_premium"
 const val IS_LANGUAGE_SHOWN = "IS_LANGUAGE_SHOWN"
 const val IS_ONBOARDING_SHOWN = "IS_ONBOARDING_SHOWN"
+const val LAST_PREMIUM_SHOWN_TIME = "lastPremiumShownTime"
 
 var isInterstitialShowing = false
 var shouldShowInterstitialAd = false
 var isAnySystemDialogShown = false
+
+// IAP
+const val perMonth = "/month"
+const val perYear = "/year"
+
+const val PRIVACY_POLICY_URL = "https://galixo.ai/authenticator/privacy-policy"
+const val TERMS_CONDITIONS_URL = "https://galixo.ai/authenticator/terms-and-conditions"

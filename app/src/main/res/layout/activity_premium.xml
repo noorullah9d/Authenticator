@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_premium"
+    tools:context=".ui.activities.iap.PremiumActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icClose"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_margin="@dimen/_12sdp"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_cross"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/diamond"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="0dp"
+                android:src="@drawable/img_premium_diamond"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icClose"
+                tools:ignore="ContentDescription" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/get_unlimited_access"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/diamond" />
+
+            <include
+                android:id="@+id/constraintLayout"
+                layout="@layout/premium_points_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/yearlyLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:backgroundTint="#1EFFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/monthlyLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                app:strokeColor="@android:color/white">
+
+                <LinearLayout
+                    android:id="@+id/yearly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp">
+
+                    <ImageView
+                        android:id="@+id/yearlyCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_radio_uncheck" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvYearly1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/yearly"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/open_sans_semi_bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/materialButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/custom_switch_track"
+                        android:backgroundTint="#F3DC62"
+                        android:elevation="0dp"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/_8ssp"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:text="@string/best_offer"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        app:elevation="0dp"
+                        app:fontFamily="@font/open_sans_semi_bold"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAmountYearly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_13ssp"
+                            app:fontFamily="@font/open_sans_bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:text="$23.99" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPerYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:textColor="#B2FFFFFF"
+                            android:textSize="@dimen/_11ssp"
+                            app:fontFamily="@font/open_sans_regular"
+                            app:layout_constraintEnd_toStartOf="@id/tvSave"
+                            app:layout_constraintTop_toTopOf="@id/tvSave"
+                            app:layout_constraintBottom_toBottomOf="@id/tvSave"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/_year" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvSave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/bg_ad_attribute"
+                            android:backgroundTint="#4DD996"
+                            android:elevation="0dp"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_8ssp"
+                            android:paddingVertical="@dimen/_5sdp"
+                            android:text="@string/save_50"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_8ssp"
+                            app:elevation="0dp"
+                            app:fontFamily="@font/open_sans_semi_bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvAmountYearly" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/monthlyLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:backgroundTint="#1EFFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/yearlyLayout"
+                app:strokeColor="@android:color/transparent">
+
+                <LinearLayout
+                    android:id="@+id/monthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_10sdp">
+
+                    <ImageView
+                        android:id="@+id/monthlyCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_radio_uncheck" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/monthly"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/open_sans_semi_bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/_20sdp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAmountMonthly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_13ssp"
+                            app:fontFamily="@font/open_sans_bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:text="$3.99" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvPerMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#B2FFFFFF"
+                            android:textSize="@dimen/_11ssp"
+                            app:fontFamily="@font/open_sans_regular"
+                            app:layout_constraintEnd_toEndOf="@id/tvAmountMonthly"
+                            app:layout_constraintTop_toBottomOf="@id/tvAmountMonthly"
+                            app:layout_constraintStart_toStartOf="@id/tvAmountMonthly"
+                            android:text="@string/_month" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBuy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:background="@drawable/custom_switch_track"
+                android:gravity="center"
+                android:letterSpacing="0"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="@string/start_a_3_day_free_trial"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_13ssp"
+                app:backgroundTint="@android:color/white"
+                app:fontFamily="@font/open_sans_bold"
+                app:layout_constraintBottom_toTopOf="@id/footerScrollView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monthlyLayout"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/footerScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFooter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#E6E6E6"
+                    android:textSize="@dimen/_9ssp"
+                    app:fontFamily="@font/open_sans_regular"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/btnBuy"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/btnBuy"
+                    tools:text="Privacy Policy and Terms and Conditions. Please note: Your Google ID will be charged automatically with recurring billing." />
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

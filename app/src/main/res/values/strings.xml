@@ -66,7 +66,7 @@
     <string name="not_logged_in">Not Logged-In</string>
     <string name="camera_permission_denied">Camera permission denied</string>
     <string name="simple_security_easy_access">Simple Security, Easy Access.</string>
-    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_amp_condition"><![CDATA[Terms & condition]]></string>
     <string name="import_in_progress">Import in progress</string>
     <string name="export">Export codes</string>
@@ -162,9 +162,26 @@
     <string name="select_group">Select group</string>
     <string name="user_guide">User Guide</string>
     <string name="guide">Guide</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="how_was_your_experience">How was your experience?</string>
     <string name="tap_again_to_exit">Tap again to exit</string>
+    <string name="get_unlimited_access">Get unlimited access</string>
+    <string name="secure_your_accounts">Secure all your accounts</string>
+    <string name="auto_backup_sync"><![CDATA[Auto backup & sync]]></string>
+    <string name="easy_to_set_up">Easy to set up</string>
+    <string name="ads_free">Ads free</string>
+    <string name="yearly">Yearly</string>
+    <string name="best_offer">Best offer</string>
+    <string name="_year">/year</string>
+    <string name="save_50">SAVE 50%</string>
+    <string name="monthly">Monthly</string>
+    <string name="_month">/month</string>
+    <string name="start_a_3_day_free_trial">Start a 3-day free trial</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="policy_footer_text">Privacy Policy and Terms and Conditions Please Note: Your Google iD payment method will be automatically charged. Recurring billing, Cancel Any Time, cancel the subscription at least 24 hours before the current.</string>
+    <string name="failed_to_connect_to_billing_server">Failed to connect to billing server!</string>
+    <string name="you_don_t_have_any_purchases_yet">You don\'t have any purchases yet!</string>
+    <string name="failed_to_connect">Failed to connect</string>
+    <string name="subscription_already_purchased">Subscription already purchased!</string>
 
 </resources>

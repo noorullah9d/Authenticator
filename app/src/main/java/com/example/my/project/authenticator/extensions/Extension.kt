@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -18,6 +19,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.InputType
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +36,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
@@ -50,8 +58,104 @@ import com.example.my.project.authenticator.databinding.GntMediumBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
+import com.example.my.project.authenticator.utils.OnSingleClickListener
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
+
+fun Context.browse(url: String, newTask: Boolean = false): Boolean {
+    return try {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = url.toUri()
+        if (newTask) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
+        true
+    } catch (e: ActivityNotFoundException) {
+        false
+    } catch (e: Exception) {
+        false
+    }
+}
+
+fun TextView.formatFreeTrialFooter(
+    onPrivacyPolicyClicked: (() -> Unit)? = null,
+    onTermsAndConditionsClicked: (() -> Unit)? = null,
+    clickableTextColor: Int = ContextCompat.getColor(context, android.R.color.white)
+) {
+    val fullText = context.getString(R.string.policy_footer_text)
+    val privacyPolicyText = context.getString(R.string.privacy_policy)
+    val termsAndConditionsText = context.getString(R.string.terms_and_conditions)
+    val spannableString = SpannableString(fullText)
+
+    val privacyPolicyStart = fullText.indexOf(privacyPolicyText)
+    val termsAndConditionsStart = fullText.indexOf(termsAndConditionsText)
+
+    if (privacyPolicyStart != -1) {
+        val privacyPolicyClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                onPrivacyPolicyClicked?.invoke()
+            }
+        }
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            privacyPolicyStart,
+            privacyPolicyStart + privacyPolicyText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            privacyPolicyClickableSpan,
+            privacyPolicyStart,
+            privacyPolicyStart + privacyPolicyText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(clickableTextColor),
+            privacyPolicyStart,
+            privacyPolicyStart + privacyPolicyText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+
+    if (termsAndConditionsStart != -1) {
+        val termsAndConditionsClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                onTermsAndConditionsClicked?.invoke()
+            }
+        }
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            termsAndConditionsStart,
+            termsAndConditionsStart + termsAndConditionsText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            termsAndConditionsClickableSpan,
+            termsAndConditionsStart,
+            termsAndConditionsStart + termsAndConditionsText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(clickableTextColor),
+            termsAndConditionsStart,
+            termsAndConditionsStart + termsAndConditionsText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+
+    text = spannableString
+    movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun View.singleClick(onClick: () -> Unit) {
+    this.setOnClickListener(object : OnSingleClickListener() {
+        override fun onSingleClick(v: View?) {
+            onClick.invoke()
+        }
+    })
+}
 
 fun ViewGroup.safeAddView(adView: View) {
     // Check if the ad view already has a parent
@@ -324,21 +428,6 @@ fun Fragment.showReplaceAccountDialog(onReplace: () -> Unit, onKeep: () -> Unit)
     binding.buttonKeep.setOnClickListener {
         alert.dismiss()
         onKeep()
-    }
-}
-
-fun Context.privacyPolicy(url: String, newTask: Boolean = false): Boolean {
-    return try {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        if (newTask) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
-        true
-    } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
-        false
     }
 }
 

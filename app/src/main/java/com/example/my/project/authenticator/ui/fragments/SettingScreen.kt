@@ -15,9 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
+import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
 import com.example.my.project.authenticator.extensions.isInternetAvailable
-import com.example.my.project.authenticator.extensions.privacyPolicy
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
@@ -26,11 +26,14 @@ import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
+import com.example.my.project.authenticator.ui.activities.iap.PremiumActivity
 import com.example.my.project.authenticator.utils.DARK
 import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.LIGHT
+import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.SYSTEM_DEFAULT
+import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -177,12 +180,12 @@ class SettingScreen : Fragment() {
                 findNavController().navigate(R.id.homeFragment, null, navOptions)
             }
 
-            rectPremium.setOnClickListener {
-                toast("Coming Soon")
+            premiumView.setOnClickListener {
+                requireActivity().startActivityWithAnimation<PremiumActivity>()
             }
 
             privacyPolicy.setOnClickListener {
-                requireActivity().privacyPolicy("https://galixo.ai/authenticator/privacy-policy")
+                requireActivity().browse(PRIVACY_POLICY_URL)
             }
 
             ivBackup.setOnClickListener {
@@ -194,7 +197,7 @@ class SettingScreen : Fragment() {
             }
 
             termsConditions.setOnClickListener {
-                requireActivity().privacyPolicy("https://galixo.ai/authenticator/terms-and-conditions")
+                requireActivity().browse(TERMS_CONDITIONS_URL)
             }
 
             howToWork.setOnClickListener {

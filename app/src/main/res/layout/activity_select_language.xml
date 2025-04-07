@@ -46,12 +46,11 @@
 
         <ImageView
             android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
             android:layout_margin="@dimen/_10sdp"
             android:background="?selectableItemBackgroundBorderless"
             android:importantForAccessibility="no"
-            android:padding="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="@+id/icBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/icBack"
