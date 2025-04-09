@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,7 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
 
     private lateinit var homeViewModel: () -> Unit
     private lateinit var binding: GoogleSignInBinding
+    private lateinit var context: Context
 
     private lateinit var auth: FirebaseAuth
 
@@ -36,6 +38,11 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
             fragment.homeViewModel = homeViewModel
             return fragment
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.context = context
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -58,7 +65,7 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
             val layoutParams = it.layoutParams
-            layoutParams.height = (requireContext().resources.displayMetrics.heightPixels * 0.75).toInt()
+            layoutParams.height = (context.resources.displayMetrics.heightPixels * 0.75).toInt()
             it.layoutParams = layoutParams
         }
 
@@ -77,7 +84,7 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
     private fun startGoogleSignIn() {
         lifecycleScope.launch {
             GoogleSignInManager.googleSignIn(
-                context = requireContext(),
+                context = context,
                 apiKey = getString(R.string.web_client_id),
                 filterByAuthorizedAccounts = false,
                 doOnSuccess = { credentials ->

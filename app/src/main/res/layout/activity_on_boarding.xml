@@ -72,19 +72,5 @@
         android:textColor="@color/n_consis_white"
         android:textSize="@dimen/_12ssp"
         app:cornerRadius="@dimen/_30sdp"
-        app:layout_constraintBottom_toTopOf="@+id/privacyPolicyTextView" />
-
-    <TextView
-        android:id="@+id/privacyPolicyTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:textAlignment="textStart"
-        android:textColor="@color/black_light"
-        android:textSize="@dimen/_10ssp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

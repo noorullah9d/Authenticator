@@ -163,5 +163,30 @@
     <string name="select_all">Vybrat vše</string>
     <string name="edit">Upravit</string>
 
-
+    <string name="select_group">Vyberte skupinu</string>
+    <string name="user_guide">Uživatelská příručka</string>
+    <string name="guide">Příručka</string>
+    <string name="how_was_your_experience">Jaká byla vaše zkušenost?</string>
+    <string name="tap_again_to_exit">Klepněte znovu pro ukončení</string>
+    <string name="get_unlimited_access">Získejte neomezený přístup</string>
+    <string name="secure_your_accounts">Zabezpečte všechny své účty</string>
+    <string name="auto_backup_sync"><![CDATA[Automatické zálohování a synchronizace]]></string>
+    <string name="easy_to_set_up">Snadné nastavení</string>
+    <string name="ads_free">Bez reklam</string>
+    <string name="yearly">Ročně</string>
+    <string name="best_offer">Nejlepší nabídka</string>
+    <string name="_year">/rok</string>
+    <string name="save_50">UŠETŘETE 50%</string>
+    <string name="monthly">Měsíčně</string>
+    <string name="_month">/měsíc</string>
+    <string name="start_a_3_day_free_trial">Začněte 3denní bezplatnou zkušební verzi</string>
+    <string name="terms_and_conditions">Obchodní podmínky</string>
+    <string name="policy_footer_text">Zásady ochrany osobních údajů a obchodní podmínky. Upozornění: Vaše platební metoda Google ID bude automaticky účtována. Opakovaná fakturace, můžete kdykoliv zrušit, ale zrušení musí být provedeno nejméně 24 hodin před koncem aktuálního období.</string>
+    <string name="failed_to_connect_to_billing_server">Nepodařilo se připojit k fakturačnímu serveru!</string>
+    <string name="you_don_t_have_any_purchases_yet">Zatím nemáte žádné nákupy!</string>
+    <string name="failed_to_connect">Nepodařilo se připojit</string>
+    <string name="subscription_already_purchased">Předplatné již zakoupeno!</string>
+    <string name="account_info">Informace o účtu</string>
+    <string name="_2fa_code">2FA kód</string>
+    <string name="search_place_holder_summary">Nebyly nalezeny žádné odpovídající kódy. Zkuste prosím jiné hledání.</string>
 </resources>

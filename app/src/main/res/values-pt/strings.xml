@@ -161,6 +161,31 @@
     <string name="select_all">Selecionar Tudo</string>
     <string name="edit">Editar</string>
 
-
+    <string name="select_group">Selecionar grupo</string>
+    <string name="user_guide">Guia do usuário</string>
+    <string name="guide">Guia</string>
+    <string name="how_was_your_experience">Como foi sua experiência?</string>
+    <string name="tap_again_to_exit">Toque novamente para sair</string>
+    <string name="get_unlimited_access">Obtenha acesso ilimitado</string>
+    <string name="secure_your_accounts">Proteja todas as suas contas</string>
+    <string name="auto_backup_sync"><![CDATA[Backup e sincronização automáticos]]></string>
+    <string name="easy_to_set_up">Fácil de configurar</string>
+    <string name="ads_free">Sem anúncios</string>
+    <string name="yearly">Anual</string>
+    <string name="best_offer">Melhor oferta</string>
+    <string name="_year">/ano</string>
+    <string name="save_50">ECONOMIZE 50%</string>
+    <string name="monthly">Mensal</string>
+    <string name="_month">/mês</string>
+    <string name="start_a_3_day_free_trial">Comece um teste gratuito de 3 dias</string>
+    <string name="terms_and_conditions">Termos e Condições</string>
+    <string name="policy_footer_text">Política de Privacidade e Termos e Condições. Atenção: o método de pagamento do seu ID do Google será cobrado automaticamente. Cobrança recorrente, cancele a qualquer momento, mas com pelo menos 24 horas de antecedência ao final do período atual.</string>
+    <string name="failed_to_connect_to_billing_server">Falha ao conectar ao servidor de cobrança!</string>
+    <string name="you_don_t_have_any_purchases_yet">Você ainda não tem nenhuma compra!</string>
+    <string name="failed_to_connect">Falha na conexão</string>
+    <string name="subscription_already_purchased">Assinatura já adquirida!</string>
+    <string name="account_info">Informações da conta</string>
+    <string name="_2fa_code">Código 2FA</string>
+    <string name="search_place_holder_summary">Nenhum código correspondente. Tente outra pesquisa.</string>
 
 </resources>

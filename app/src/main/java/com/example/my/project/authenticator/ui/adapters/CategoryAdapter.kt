@@ -11,14 +11,12 @@ import com.example.my.project.authenticator.databinding.ItemCategoryBinding
 import com.example.my.project.authenticator.model.CardSelectionViewModel
 import com.example.my.project.authenticator.otp.data.database.Categories
 
-
 class CategoryAdapter(
     private val categories: List<Categories>,
     private val viewModel: CardSelectionViewModel,
     val groupCallBack: (String) -> Unit,
     val catsId: (Categories) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
-
 
     var selectedPosition: Int? = null
     var longSelected: Boolean = false
@@ -33,16 +31,16 @@ class CategoryAdapter(
                 categoryTextView.text = category.categories
 
                 if (isSelected) {
-                    selectCard.setCardBackgroundColor(ContextCompat.getColor(root.context, R.color.n_sky_blue))
-                    selectCard.strokeColor = ContextCompat.getColor(root.context, R.color.n_sky_blue)
-                    categoryTextView.setTextColor(ContextCompat.getColor(root.context, R.color.n_consis_white))
+                    selectCard.setCardBackgroundColor(ContextCompat.getColor(root.context, R.color.n_import_buttons))
+                    selectCard.strokeColor = ContextCompat.getColor(root.context, R.color.n_import_buttons)
+                    categoryTextView.setTextColor(ContextCompat.getColor(root.context, R.color.n_sky_blue))
                     val typeface: Typeface? = ResourcesCompat.getFont(root.context, R.font.open_sans_bold)
                     categoryTextView.typeface = typeface
 
                 } else {
                     selectCard.setCardBackgroundColor(ContextCompat.getColor(root.context, R.color.white))
                     categoryTextView.setTextColor(ContextCompat.getColor(root.context, R.color.n_dark_grey))
-                    selectCard.strokeColor = ContextCompat.getColor(root.context, R.color.n_stroke_color)
+                    selectCard.strokeColor = ContextCompat.getColor(root.context, R.color.white)
                     val typeface: Typeface? = ResourcesCompat.getFont(root.context, R.font.open_sans_regular)
                     categoryTextView.typeface = typeface
 
@@ -74,8 +72,6 @@ class CategoryAdapter(
                     }
                 }
             }
-
-
         }
     }
 
@@ -86,12 +82,11 @@ class CategoryAdapter(
 
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        if (categories.isEmpty() || position >= categories.size) return
         holder.bind(categories[position], position == viewModel.selectedIndex)
     }
 
-
     override fun getItemCount(): Int = categories.size
-
 
     fun updateSelectedIndex(newIndex: Int?) {
         val oldIndex = viewModel.selectedIndex
@@ -99,5 +94,4 @@ class CategoryAdapter(
         if (oldIndex != null) notifyItemChanged(oldIndex)
         if (newIndex != null) notifyItemChanged(newIndex)
     }
-
 }

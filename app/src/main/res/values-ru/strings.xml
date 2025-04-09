@@ -160,5 +160,31 @@
     <string name="select_all">Выбрать все</string>
     <string name="edit">Редактировать</string>
 
+    <string name="select_group">Выбрать группу</string>
+    <string name="user_guide">Руководство пользователя</string>
+    <string name="guide">Руководство</string>
+    <string name="how_was_your_experience">Каков был ваш опыт?</string>
+    <string name="tap_again_to_exit">Нажмите ещё раз, чтобы выйти</string>
+    <string name="get_unlimited_access">Получите неограниченный доступ</string>
+    <string name="secure_your_accounts">Защитите все свои аккаунты</string>
+    <string name="auto_backup_sync"><![CDATA[Автоматическое резервное копирование и синхронизация]]></string>
+    <string name="easy_to_set_up">Легко настроить</string>
+    <string name="ads_free">Без рекламы</string>
+    <string name="yearly">Ежегодно</string>
+    <string name="best_offer">Лучшее предложение</string>
+    <string name="_year">/год</string>
+    <string name="save_50">СЭКОНОМЬТЕ 50%</string>
+    <string name="monthly">Ежемесячно</string>
+    <string name="_month">/месяц</string>
+    <string name="start_a_3_day_free_trial">Начните 3-дневную бесплатную пробную версию</string>
+    <string name="terms_and_conditions">Условия и положения</string>
+    <string name="policy_footer_text">Политика конфиденциальности и Условия использования. Обратите внимание: способ оплаты, связанный с вашим Google ID, будет автоматически списан. Повторяющаяся оплата, можно отменить в любое время, но не менее чем за 24 часа до окончания текущего периода.</string>
+    <string name="failed_to_connect_to_billing_server">Не удалось подключиться к серверу оплаты!</string>
+    <string name="you_don_t_have_any_purchases_yet">У вас пока нет покупок!</string>
+    <string name="failed_to_connect">Не удалось подключиться</string>
+    <string name="subscription_already_purchased">Подписка уже приобретена!</string>
+    <string name="account_info">Информация об аккаунте</string>
+    <string name="_2fa_code">Код 2FA</string>
+    <string name="search_place_holder_summary">Совпадающих кодов не найдено. Попробуйте другой поиск.</string>
 
 </resources>

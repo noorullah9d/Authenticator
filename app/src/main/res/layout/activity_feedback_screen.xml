@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?><!--
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,7 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -34,7 +34,6 @@
         app:layout_constraintBottom_toBottomOf="@id/ivBackPress"
         app:layout_constraintStart_toEndOf="@id/ivBackPress"
         app:layout_constraintTop_toTopOf="@id/ivBackPress" />
-
 
     <TextView
         android:id="@+id/improveQuestion"
@@ -50,12 +49,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/allQuestionLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/improveQuestion"
         app:layout_constraintTop_toBottomOf="@+id/improveQuestion">
@@ -80,19 +79,17 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12sdp"
                     android:text="@string/overall_service"
                     android:textAlignment="center"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/inAppPurchases"
@@ -115,20 +112,18 @@
                     android:id="@+id/tvInApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12sdp"
                     android:text="@string/in_app_purchases"
                     android:textAlignment="center"
                     android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/overAditionalSecurity"
@@ -151,20 +146,18 @@
                     android:id="@+id/tvAditionalSecurity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12sdp"
                     android:text="@string/additional_security"
                     android:textAlignment="center"
                     android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/overPerformance"
@@ -188,20 +181,18 @@
                     android:id="@+id/tvPerformance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12sdp"
                     android:text="@string/performance"
                     android:textAlignment="center"
                     android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/userSupport"
@@ -224,18 +215,17 @@
                     android:id="@+id/tvuserSupport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12sdp"
                     android:text="@string/user_support"
                     android:textAlignment="center"
                     android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -260,23 +250,19 @@
                     android:id="@+id/tvdataPrivacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/lato_regular"
                     android:gravity="center"
+                    android:maxLines="1"
                     android:padding="@dimen/_12ssp"
                     android:text="@string/data_privacy"
                     android:textAlignment="center"
                     android:textColor="@color/n_sky_blue"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
         </com.google.android.material.card.MaterialCardView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/responseLayout"
@@ -313,11 +299,7 @@
                 android:textColorHint="@color/light_gray"
                 android:textSize="@dimen/_12sdp"
                 tools:ignore="LabelFor" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
@@ -330,7 +312,6 @@
         android:textColor="@color/n_dark_grey"
         app:layout_constraintEnd_toEndOf="@+id/responseLayout"
         app:layout_constraintTop_toBottomOf="@+id/responseLayout" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submitProblem"
@@ -345,6 +326,221 @@
         android:textSize="@dimen/_12sdp"
         app:cornerRadius="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:layoutDirection="ltr"
+    tools:context=".ui.activities.FeedbackScreen">
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/ivBackPress"
+            android:layout_width="@dimen/_42sdp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:foreground="?selectableItemBackground"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/right_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/feedback"
+            android:textColor="@color/n_dark_grey"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:padding="@dimen/_13sdp"
+        app:layout_constraintBottom_toTopOf="@id/submitProblem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/improveQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/tell_us_how_to_improve"
+                android:textColor="@color/n_dark_grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_13sdp"
+                app:chipSpacingVertical="@dimen/_3sdp"
+                app:singleSelection="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_overall_service"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overall_service"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp"
+                    tools:checked="true" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_in_app_purchase"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_app_purchases"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_additional_security"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/additional_security"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_performance"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/performance"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_user_support"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_support"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_data_privacy"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_privacy"
+                    android:textAppearance="@style/ChipTextAppearance"
+                    android:textColor="@color/chip_text_color_selector"
+                    app:chipBackgroundColor="@drawable/chip_background_color_selector"
+                    app:chipEndPadding="@dimen/_6ssp"
+                    app:chipMinHeight="@dimen/_34sdp"
+                    app:chipStartPadding="@dimen/_6ssp" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/responseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_140sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:maxWidth="@dimen/_60sdp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/allQuestionLayout">
+
+                <EditText
+                    android:id="@+id/etFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:autofillHints="How can we improve"
+                    android:background="@null"
+                    android:gravity="start"
+                    android:hint="@string/tell_us_how_can_we_improve"
+                    android:inputType="text"
+                    android:maxLength="500"
+                    android:maxLines="5"
+                    android:scrollbars="horizontal"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/n_dark_grey"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="@dimen/_12sdp"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/countChars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="end"
+                android:textColor="@color/n_dark_grey"
+                app:layout_constraintEnd_toEndOf="@+id/responseLayout"
+                app:layout_constraintTop_toBottomOf="@+id/responseLayout"
+                tools:text="20/500" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitProblem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:backgroundTint="@color/n_sky_blue"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="@string/submit"
+        android:textColor="@color/n_consis_white"
+        android:textSize="@dimen/_12sdp"
+        app:cornerRadius="@dimen/_25sdp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -161,5 +161,31 @@
     <string name="select_all">Pilih Semua</string>
     <string name="edit">Sunting</string>
 
+    <string name="select_group">Pilih kumpulan</string>
+    <string name="user_guide">Panduan Pengguna</string>
+    <string name="guide">Panduan</string>
+    <string name="how_was_your_experience">Bagaimana pengalaman anda?</string>
+    <string name="tap_again_to_exit">Ketik sekali lagi untuk keluar</string>
+    <string name="get_unlimited_access">Dapatkan akses tanpa had</string>
+    <string name="secure_your_accounts">Lindungi semua akaun anda</string>
+    <string name="auto_backup_sync"><![CDATA[Sandaran & penyegerakan automatik]]></string>
+    <string name="easy_to_set_up">Mudah untuk disediakan</string>
+    <string name="ads_free">Bebas iklan</string>
+    <string name="yearly">Tahunan</string>
+    <string name="best_offer">Tawaran terbaik</string>
+    <string name="_year">/tahun</string>
+    <string name="save_50">JIMAT 50%</string>
+    <string name="monthly">Bulanan</string>
+    <string name="_month">/bulan</string>
+    <string name="start_a_3_day_free_trial">Mulakan percubaan percuma selama 3 hari</string>
+    <string name="terms_and_conditions">Terma dan Syarat</string>
+    <string name="policy_footer_text">Dasar Privasi dan Terma dan Syarat. Sila ambil perhatian: Kaedah pembayaran ID Google anda akan dicaj secara automatik. Pengebilan berulang, batalkan pada bila-bila masa, sekurang-kurangnya 24 jam sebelum tempoh semasa tamat.</string>
+    <string name="failed_to_connect_to_billing_server">Gagal menyambung ke pelayan pengebilan!</string>
+    <string name="you_don_t_have_any_purchases_yet">Anda belum membuat sebarang pembelian!</string>
+    <string name="failed_to_connect">Gagal untuk menyambung</string>
+    <string name="subscription_already_purchased">Langganan telah dibeli!</string>
+    <string name="account_info">Maklumat akaun</string>
+    <string name="_2fa_code">Kod 2FA</string>
+    <string name="search_place_holder_summary">Tiada kod yang sepadan. Sila cuba carian lain.</string>
 
 </resources>

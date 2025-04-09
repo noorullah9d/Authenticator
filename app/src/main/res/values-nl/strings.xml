@@ -161,5 +161,31 @@
     <string name="select_all">Alles selecteren</string>
     <string name="edit">Bewerken</string>
 
+    <string name="select_group">Selecteer groep</string>
+    <string name="user_guide">Gebruikershandleiding</string>
+    <string name="guide">Handleiding</string>
+    <string name="how_was_your_experience">Hoe was je ervaring?</string>
+    <string name="tap_again_to_exit">Tik nogmaals om af te sluiten</string>
+    <string name="get_unlimited_access">Krijg onbeperkte toegang</string>
+    <string name="secure_your_accounts">Beveilig al je accounts</string>
+    <string name="auto_backup_sync"><![CDATA[Automatische back-up en synchronisatie]]></string>
+    <string name="easy_to_set_up">Makkelijk te installeren</string>
+    <string name="ads_free">Advertentievrij</string>
+    <string name="yearly">Jaarlijks</string>
+    <string name="best_offer">Beste aanbieding</string>
+    <string name="_year">/jaar</string>
+    <string name="save_50">BESPAAR 50%</string>
+    <string name="monthly">Maandelijks</string>
+    <string name="_month">/maand</string>
+    <string name="start_a_3_day_free_trial">Start een gratis proefperiode van 3 dagen</string>
+    <string name="terms_and_conditions">Algemene voorwaarden</string>
+    <string name="policy_footer_text">Privacybeleid en Algemene voorwaarden. Let op: je Google ID-betaalmethode wordt automatisch belast. Terugkerende betaling, op elk moment opzegbaar, zeg minstens 24 uur voor het einde van de huidige periode op.</string>
+    <string name="failed_to_connect_to_billing_server">Kan geen verbinding maken met de betalingsserver!</string>
+    <string name="you_don_t_have_any_purchases_yet">Je hebt nog geen aankopen gedaan!</string>
+    <string name="failed_to_connect">Kan geen verbinding maken</string>
+    <string name="subscription_already_purchased">Abonnement is al gekocht!</string>
+    <string name="account_info">Accountinformatie</string>
+    <string name="_2fa_code">2FA-code</string>
+    <string name="search_place_holder_summary">Er zijn geen overeenkomende codes. Probeer een andere zoekopdracht.</string>
 
 </resources>

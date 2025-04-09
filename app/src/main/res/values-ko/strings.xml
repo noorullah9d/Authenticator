@@ -160,6 +160,31 @@
     <string name="select_all">모두 선택</string>
     <string name="edit">편집</string>
 
-
+    <string name="select_group">그룹 선택</string>
+    <string name="user_guide">사용자 안내서</string>
+    <string name="guide">가이드</string>
+    <string name="how_was_your_experience">이용 경험은 어땠나요?</string>
+    <string name="tap_again_to_exit">종료하려면 한 번 더 탭하세요</string>
+    <string name="get_unlimited_access">무제한 액세스 이용하기</string>
+    <string name="secure_your_accounts">모든 계정을 안전하게 보호하세요</string>
+    <string name="auto_backup_sync"><![CDATA[자동 백업 및 동기화]]></string>
+    <string name="easy_to_set_up">설정이 간편합니다</string>
+    <string name="ads_free">광고 없음</string>
+    <string name="yearly">연간</string>
+    <string name="best_offer">최고의 혜택</string>
+    <string name="_year">/년</string>
+    <string name="save_50">50% 절약</string>
+    <string name="monthly">월간</string>
+    <string name="_month">/월</string>
+    <string name="start_a_3_day_free_trial">3일 무료 체험 시작</string>
+    <string name="terms_and_conditions">이용약관</string>
+    <string name="policy_footer_text">개인정보처리방침 및 이용약관. 참고: 귀하의 Google ID 결제 수단으로 자동 청구됩니다. 반복 청구, 언제든지 해지 가능, 현재 기간 종료 최소 24시간 전에 해지하세요.</string>
+    <string name="failed_to_connect_to_billing_server">결제 서버에 연결하지 못했습니다!</string>
+    <string name="you_don_t_have_any_purchases_yet">아직 구매 내역이 없습니다!</string>
+    <string name="failed_to_connect">연결 실패</string>
+    <string name="subscription_already_purchased">이미 구독한 항목입니다!</string>
+    <string name="account_info">계정 정보</string>
+    <string name="_2fa_code">2단계 인증 코드</string>
+    <string name="search_place_holder_summary">일치하는 코드가 없습니다. 다른 검색어를 입력해 주세요.</string>
 
 </resources>

@@ -160,6 +160,31 @@
     <string name="select_all">Velg alle</string>
     <string name="edit">Rediger</string>
 
-
+    <string name="select_group">Velg gruppe</string>
+    <string name="user_guide">Brukerguide</string>
+    <string name="guide">Guide</string>
+    <string name="how_was_your_experience">Hvordan var opplevelsen din?</string>
+    <string name="tap_again_to_exit">Trykk igjen for å avslutte</string>
+    <string name="get_unlimited_access">Få ubegrenset tilgang</string>
+    <string name="secure_your_accounts">Sikre alle kontoene dine</string>
+    <string name="auto_backup_sync"><![CDATA[Automatisk sikkerhetskopi og synkronisering]]></string>
+    <string name="easy_to_set_up">Enkel å sette opp</string>
+    <string name="ads_free">Annonsefri</string>
+    <string name="yearly">Årlig</string>
+    <string name="best_offer">Beste tilbud</string>
+    <string name="_year">/år</string>
+    <string name="save_50">SPAR 50 %</string>
+    <string name="monthly">Månedlig</string>
+    <string name="_month">/måned</string>
+    <string name="start_a_3_day_free_trial">Start en 3-dagers gratis prøveperiode</string>
+    <string name="terms_and_conditions">Vilkår og betingelser</string>
+    <string name="policy_footer_text">Personvernregler og Vilkår og betingelser. Merk: Betalingsmetoden knyttet til din Google-ID vil bli belastet automatisk. Gjentakende fakturering, kan avbestilles når som helst, men minst 24 timer før slutten av inneværende periode.</string>
+    <string name="failed_to_connect_to_billing_server">Kunne ikke koble til faktureringstjener!</string>
+    <string name="you_don_t_have_any_purchases_yet">Du har ingen kjøp ennå!</string>
+    <string name="failed_to_connect">Kunne ikke koble til</string>
+    <string name="subscription_already_purchased">Abonnementet er allerede kjøpt!</string>
+    <string name="account_info">Kontoinformasjon</string>
+    <string name="_2fa_code">2FA-kode</string>
+    <string name="search_place_holder_summary">Ingen matchende koder. Prøv et annet søk.</string>
 
 </resources>

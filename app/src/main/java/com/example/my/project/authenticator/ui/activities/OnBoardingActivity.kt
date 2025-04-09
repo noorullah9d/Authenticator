@@ -1,15 +1,7 @@
 package com.example.my.project.authenticator.ui.activities
 
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
@@ -18,7 +10,6 @@ import com.example.my.project.authenticator.admob.loadAdmobInterstitial
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
-import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
@@ -27,10 +18,8 @@ import com.example.my.project.authenticator.extensions.startActivityWithAnimatio
 import com.example.my.project.authenticator.otp.data.database.Categories
 import com.example.my.project.authenticator.ui.adapters.OnboardingAdapter
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
-import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
-import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
 import com.example.my.project.authenticator.utils.isInterstitialShowing
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -51,7 +40,6 @@ class OnBoardingActivity : BaseActivity() {
 
         PrefsHelper.isOnBoardingShown = true
 
-        addPolicyAndTerms()
         viewPager()
         onClickView()
 //        loadAndShowAdd()
@@ -171,15 +159,15 @@ class OnBoardingActivity : BaseActivity() {
                     // show interstitial ad
                     showInterstitialAd(
                         onDismissed = {
-                            startActivityWithAnimation<MainActivity>()
-                            finish()
+                            if (!isDestroyed && !isFinishing) {
+                                startActivityWithAnimation<MainActivity>()
+                                finish()
+                            }
                         }
                     )
                 }
             }
-
         }
-
 
         binding.skip.setOnClickListener {
             homeViewModel.addCategories(Categories(0, "Default"))
@@ -189,14 +177,17 @@ class OnBoardingActivity : BaseActivity() {
             startActivityWithAnimation<MainActivity>()
             finish()
         }
-
     }
 
     private fun viewPager() {
         binding.viewPager.adapter = OnboardingAdapter(this)
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
@@ -219,38 +210,6 @@ class OnBoardingActivity : BaseActivity() {
                 }
             }
         })
-    }
-
-    private fun addPolicyAndTerms() {
-        val text = getString(R.string.logs_policy)
-
-        val spannableString = SpannableString(text)
-
-
-        val privacyPolicyStart = text.indexOf("Privacy Policy")
-        val privacyPolicyEnd = privacyPolicyStart + "Privacy Policy".length
-        val privacyPolicySpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                browse(PRIVACY_POLICY_URL)
-            }
-        }
-        spannableString.setSpan(privacyPolicySpan, privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(UnderlineSpan(), privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(ForegroundColorSpan(Color.BLUE), privacyPolicyStart, privacyPolicyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        val termsOfServiceStart = text.indexOf("Terms of Service")
-        val termsOfServiceEnd = termsOfServiceStart + "Terms of Service".length
-        val termsOfServiceSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                browse(TERMS_CONDITIONS_URL)
-            }
-        }
-        spannableString.setSpan(termsOfServiceSpan, termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(UnderlineSpan(), termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(ForegroundColorSpan(Color.BLUE), termsOfServiceStart, termsOfServiceEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        binding.privacyPolicyTextView.text = spannableString
-        binding.privacyPolicyTextView.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onDestroy() {

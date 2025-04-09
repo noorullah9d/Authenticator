@@ -163,8 +163,31 @@
     <string name="select_all">Vælg alle</string>
     <string name="edit">Rediger</string>
 
-
-
-
+    <string name="select_group">Vælg gruppe</string>
+    <string name="user_guide">Brugervejledning</string>
+    <string name="guide">Vejledning</string>
+    <string name="how_was_your_experience">Hvordan var din oplevelse?</string>
+    <string name="tap_again_to_exit">Tryk igen for at afslutte</string>
+    <string name="get_unlimited_access">Få ubegrænset adgang</string>
+    <string name="secure_your_accounts">Sikr alle dine konti</string>
+    <string name="auto_backup_sync"><![CDATA[Automatisk backup og synkronisering]]></string>
+    <string name="easy_to_set_up">Nem at opsætte</string>
+    <string name="ads_free">Reklamefri</string>
+    <string name="yearly">Årligt</string>
+    <string name="best_offer">Bedste tilbud</string>
+    <string name="_year">/år</string>
+    <string name="save_50">SPAR 50%</string>
+    <string name="monthly">Månedligt</string>
+    <string name="_month">/måned</string>
+    <string name="start_a_3_day_free_trial">Start en gratis prøveperiode på 3 dage</string>
+    <string name="terms_and_conditions">Vilkår og betingelser</string>
+    <string name="policy_footer_text">Privatlivspolitik og vilkår og betingelser. Bemærk venligst: Din Google ID-betalingsmetode bliver automatisk opkrævet. Tilbagevendende betaling, kan annulleres når som helst, men annullér mindst 24 timer før den aktuelle periode slutter.</string>
+    <string name="failed_to_connect_to_billing_server">Kunne ikke oprette forbindelse til faktureringsserveren!</string>
+    <string name="you_don_t_have_any_purchases_yet">Du har ingen køb endnu!</string>
+    <string name="failed_to_connect">Kunne ikke oprette forbindelse</string>
+    <string name="subscription_already_purchased">Abonnement er allerede købt!</string>
+    <string name="account_info">Kontoinfo</string>
+    <string name="_2fa_code">2FA-kode</string>
+    <string name="search_place_holder_summary">Ingen matchende koder fundet. Prøv en anden søgning.</string>
 
 </resources>

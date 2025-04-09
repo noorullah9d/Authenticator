@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -307,7 +308,10 @@ class SettingScreen : Fragment() {
                     binding.emailText.text = email
 
                     // go to backup
-                    findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+                    // ✅ Safe navigation
+                    if (isAdded && view != null && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                        findNavController().navigate(R.id.action_settingScreen_to_backupFragment)
+                    }
                 } else {
                     val errorMessage = when (task.exception) {
                         is FirebaseAuthInvalidCredentialsException -> "Invalid Credentials"

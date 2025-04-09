@@ -9,7 +9,7 @@
     android:padding="16dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/_20sdp"
-    app:strokeColor="@color/n_stroke_color">
+    app:strokeColor="@color/white">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat

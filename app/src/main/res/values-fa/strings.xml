@@ -161,6 +161,31 @@
     <string name="select_all">انتخاب همه</string>
     <string name="edit">ویرایش</string>
 
-
+    <string name="select_group">انتخاب گروه</string>
+    <string name="user_guide">راهنمای کاربر</string>
+    <string name="guide">راهنما</string>
+    <string name="how_was_your_experience">تجربه‌تان چطور بود؟</string>
+    <string name="tap_again_to_exit">برای خروج دوباره ضربه بزنید</string>
+    <string name="get_unlimited_access">دسترسی نامحدود دریافت کنید</string>
+    <string name="secure_your_accounts">همه حساب‌های خود را ایمن کنید</string>
+    <string name="auto_backup_sync"><![CDATA[پشتیبان‌گیری و همگام‌سازی خودکار]]></string>
+    <string name="easy_to_set_up">راه‌اندازی آسان</string>
+    <string name="ads_free">بدون تبلیغات</string>
+    <string name="yearly">سالانه</string>
+    <string name="best_offer">بهترین پیشنهاد</string>
+    <string name="_year">/سال</string>
+    <string name="save_50">۵۰٪ صرفه‌جویی کنید</string>
+    <string name="monthly">ماهانه</string>
+    <string name="_month">/ماه</string>
+    <string name="start_a_3_day_free_trial">آغاز دوره آزمایشی رایگان ۳ روزه</string>
+    <string name="terms_and_conditions">شرایط و ضوابط</string>
+    <string name="policy_footer_text">سیاست حفظ حریم خصوصی و شرایط و ضوابط. لطفاً توجه داشته باشید: روش پرداخت شما در حساب Google به‌طور خودکار شارژ خواهد شد. صورتحساب مکرر، لغو در هر زمان، لطفاً حداقل ۲۴ ساعت قبل از پایان دوره فعلی لغو کنید.</string>
+    <string name="failed_to_connect_to_billing_server">اتصال به سرور صورتحساب ناموفق بود!</string>
+    <string name="you_don_t_have_any_purchases_yet">شما هنوز هیچ خریدی ندارید!</string>
+    <string name="failed_to_connect">اتصال ناموفق بود</string>
+    <string name="subscription_already_purchased">اشتراک قبلاً خریداری شده است!</string>
+    <string name="account_info">اطلاعات حساب</string>
+    <string name="_2fa_code">کد تأیید دو مرحله‌ای</string>
+    <string name="search_place_holder_summary">کدی مطابق یافت نشد. لطفاً جستجوی دیگری امتحان کنید.</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.ui.fragments
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -71,15 +72,19 @@ class GuideDetailsFragment : Fragment() {
             webView.webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
-                    progressBar.visibility = View.VISIBLE
-                    progressBar.setProgress(newProgress)
+                    linearProgressBar.visibility = View.VISIBLE
+                    linearProgressBar.setProgress(newProgress)
                     if (newProgress == 100) {
-                        progressBar.visibility = View.GONE
+                        linearProgressBar.visibility = View.GONE
                     }
                 }
             }
 
-            webView.loadUrl(googleDocsUrl)
+            try {
+                webView.loadUrl(googleDocsUrl)
+            } catch (e: Resources.NotFoundException) {
+                Log.w("WebView", "WebView resource error: ${e.message}")
+            }
         }
     }
 

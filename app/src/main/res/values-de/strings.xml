@@ -163,6 +163,31 @@
     <string name="select_all">Alles auswählen</string>
     <string name="edit">Bearbeiten</string>
 
-
+    <string name="select_group">Gruppe auswählen</string>
+    <string name="user_guide">Benutzerhandbuch</string>
+    <string name="guide">Leitfaden</string>
+    <string name="how_was_your_experience">Wie war Ihre Erfahrung?</string>
+    <string name="tap_again_to_exit">Zum Beenden erneut tippen</string>
+    <string name="get_unlimited_access">Unbegrenzten Zugriff erhalten</string>
+    <string name="secure_your_accounts">Sichern Sie all Ihre Konten</string>
+    <string name="auto_backup_sync"><![CDATA[Automatische Sicherung & Synchronisierung]]></string>
+    <string name="easy_to_set_up">Einfach einzurichten</string>
+    <string name="ads_free">Werbefrei</string>
+    <string name="yearly">Jährlich</string>
+    <string name="best_offer">Bestes Angebot</string>
+    <string name="_year">/Jahr</string>
+    <string name="save_50">SPARE 50 %</string>
+    <string name="monthly">Monatlich</string>
+    <string name="_month">/Monat</string>
+    <string name="start_a_3_day_free_trial">Starten Sie eine 3-tägige kostenlose Testversion</string>
+    <string name="terms_and_conditions">Allgemeine Geschäftsbedingungen</string>
+    <string name="policy_footer_text">Datenschutzrichtlinie und Allgemeine Geschäftsbedingungen. Hinweis: Ihre Google-ID-Zahlungsmethode wird automatisch belastet. Wiederkehrende Abrechnung, jederzeit kündbar, bitte mindestens 24 Stunden vor dem Ende des aktuellen Zeitraums kündigen.</string>
+    <string name="failed_to_connect_to_billing_server">Verbindung zum Abrechnungsserver fehlgeschlagen!</string>
+    <string name="you_don_t_have_any_purchases_yet">Sie haben noch keine Einkäufe getätigt!</string>
+    <string name="failed_to_connect">Verbindung fehlgeschlagen</string>
+    <string name="subscription_already_purchased">Abonnement bereits gekauft!</string>
+    <string name="account_info">Kontoinformationen</string>
+    <string name="_2fa_code">2FA-Code</string>
+    <string name="search_place_holder_summary">Keine passenden Codes gefunden. Bitte versuchen Sie eine andere Suche.</string>
 
 </resources>

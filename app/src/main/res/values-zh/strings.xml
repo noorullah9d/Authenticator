@@ -160,6 +160,31 @@
     <string name="select_all">全选</string>
     <string name="edit">编辑</string>
 
-
+    <string name="select_group">选择群组</string>
+    <string name="user_guide">用户指南</string>
+    <string name="guide">指南</string>
+    <string name="how_was_your_experience">您的体验如何？</string>
+    <string name="tap_again_to_exit">再次点击退出</string>
+    <string name="get_unlimited_access">获取无限访问权限</string>
+    <string name="secure_your_accounts">保护您的所有账户</string>
+    <string name="auto_backup_sync"><![CDATA[自动备份与同步]]></string>
+    <string name="easy_to_set_up">设置简单</string>
+    <string name="ads_free">无广告</string>
+    <string name="yearly">按年</string>
+    <string name="best_offer">最优惠</string>
+    <string name="_year">/年</string>
+    <string name="save_50">节省 50%</string>
+    <string name="monthly">按月</string>
+    <string name="_month">/月</string>
+    <string name="start_a_3_day_free_trial">开始3天免费试用</string>
+    <string name="terms_and_conditions">条款和条件</string>
+    <string name="policy_footer_text">隐私政策与条款和条件 请注意：您的 Google ID 支付方式将被自动扣款。定期计费，随时取消，请在当前周期结束前至少 24 小时取消订阅。</string>
+    <string name="failed_to_connect_to_billing_server">连接计费服务器失败！</string>
+    <string name="you_don_t_have_any_purchases_yet">您还没有任何购买记录！</string>
+    <string name="failed_to_connect">连接失败</string>
+    <string name="subscription_already_purchased">订阅已购买！</string>
+    <string name="account_info">账户信息</string>
+    <string name="_2fa_code">两步验证码</string>
+    <string name="search_place_holder_summary">没有匹配的代码。请尝试其他搜索。</string>
 
 </resources>

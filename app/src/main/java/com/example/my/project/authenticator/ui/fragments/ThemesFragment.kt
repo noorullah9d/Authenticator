@@ -191,13 +191,15 @@ class ThemesFragment : Fragment() {
     }
 
     private fun showNativeAd() {
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntSmallBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        if (isAdded) {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
         }
     }

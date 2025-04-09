@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.app.AlertDialog
@@ -14,7 +15,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
@@ -27,10 +27,12 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -38,29 +40,36 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.CreateNewGroupBinding
 import com.example.my.project.authenticator.databinding.DeleteGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
+import com.example.my.project.authenticator.databinding.DialogEditAccountBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
+import com.example.my.project.authenticator.databinding.GntMediumBinding
+import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
 import com.example.my.project.authenticator.model.GuideItem
 import com.example.my.project.authenticator.model.LanguagesModel
+import com.example.my.project.authenticator.utils.OnSingleClickListener
+import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.TotpCardState
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
-import androidx.core.graphics.toColorInt
-import androidx.core.net.toUri
-import com.example.my.project.authenticator.admob.NativeAd
-import com.example.my.project.authenticator.databinding.GntMediumBinding
-import com.example.my.project.authenticator.databinding.GntSmallBinding
-import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
-import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
-import com.example.my.project.authenticator.utils.OnSingleClickListener
-import com.example.my.project.authenticator.utils.PrefsHelper
-import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
+
+fun View.showKeyboard() {
+    if (requestFocus()) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+}
 
 fun Context.browse(url: String, newTask: Boolean = false): Boolean {
     return try {
@@ -169,7 +178,8 @@ fun ViewGroup.safeAddView(adView: View) {
 
 inline fun <reified A : Activity> Activity.startActivityWithAnimation() {
     val intent = Intent(this, A::class.java)
-    val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+    val options =
+        ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
     this.startActivity(intent, options.toBundle())
 }
 
@@ -177,7 +187,8 @@ inline fun <reified A : Activity> Activity.startActivityWithAnimationAndClearSta
     val intent = Intent(this, A::class.java).apply {
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
-    val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+    val options =
+        ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
     this.startActivity(intent, options.toBundle())
 }
 
@@ -236,13 +247,55 @@ fun MaterialCardView.changeCardStorkColor(color: Int, theme: Resources.Theme) {
 
 fun getPlatformList(): ArrayList<GuideItem> {
     val platforms = ArrayList<GuideItem>()
-    platforms.add(GuideItem("Facebook", "https://galixo.ai/authenticator/assets/guide_facebook.pdf", R.drawable.ic_fb))
-    platforms.add(GuideItem("Instagram", "https://galixo.ai/authenticator/assets/guide_instagram.pdf", R.drawable.ic_insta))
-    platforms.add(GuideItem("Tiktok", "https://galixo.ai/authenticator/assets/guide_tiktok.pdf", R.drawable.ic_tiktok))
-    platforms.add(GuideItem("Google", "https://galixo.ai/authenticator/assets/guide_google.pdf", R.drawable.ic_google))
-    platforms.add(GuideItem("LinkedIn", "https://galixo.ai/authenticator/assets/guide_linkedin.pdf", R.drawable.ic_linkedin))
-    platforms.add(GuideItem("Youtube", "https://galixo.ai/authenticator/assets/guide_youtube.pdf", R.drawable.ic_yt))
-    platforms.add(GuideItem("Dropbox", "https://galixo.ai/authenticator/assets/guide_dropbox.pdf", R.drawable.ic_dropbox))
+    platforms.add(
+        GuideItem(
+            "Facebook",
+            "https://galixo.ai/authenticator/assets/guide_facebook.pdf",
+            R.drawable.ic_fb
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "Instagram",
+            "https://galixo.ai/authenticator/assets/guide_instagram.pdf",
+            R.drawable.ic_insta
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "Tiktok",
+            "https://galixo.ai/authenticator/assets/guide_tiktok.pdf",
+            R.drawable.ic_tiktok
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "Google",
+            "https://galixo.ai/authenticator/assets/guide_google.pdf",
+            R.drawable.ic_google
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "LinkedIn",
+            "https://galixo.ai/authenticator/assets/guide_linkedin.pdf",
+            R.drawable.ic_linkedin
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "Youtube",
+            "https://galixo.ai/authenticator/assets/guide_youtube.pdf",
+            R.drawable.ic_yt
+        )
+    )
+    platforms.add(
+        GuideItem(
+            "Dropbox",
+            "https://galixo.ai/authenticator/assets/guide_dropbox.pdf",
+            R.drawable.ic_dropbox
+        )
+    )
 
     return platforms
 }
@@ -451,7 +504,8 @@ fun Context.isInternetAvailable(): Boolean {
     val networkInfo = connectivityManager.activeNetworkInfo
 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     } else {
         networkInfo != null && networkInfo.isConnected
@@ -489,13 +543,78 @@ fun Context.openAppInPlayStore() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        val intent = Intent(Intent.ACTION_VIEW,
-            "https://play.google.com/store/apps/details?id=$appPackageName".toUri())
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
+        )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
 }
 
+@SuppressLint("ClickableViewAccessibility")
+fun Activity.showEditAccountBottomSheet(
+    account: TotpCardState,
+    onNameChanged: (String) -> Unit,
+    onCopy: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog).apply {
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+    val binding = DialogEditAccountBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
+    bottomSheetDialog.setContentView(binding.root)
+    bottomSheetDialog.show()
+
+    binding.apply {
+        etAccountName.setText(account.name)
+        tvCode.text = account.oneTimeCode.toString()
+
+        etAccountName.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(
+                p0: View?,
+                event: MotionEvent?
+            ): Boolean {
+                if(event?.action == MotionEvent.ACTION_DOWN && icEdit.isVisible) {
+                    icEdit.hide()
+                    btnApply.show()
+                }
+                return false
+            }
+        })
+
+        icEdit.setOnClickListener {
+            icEdit.hide()
+            etAccountName.requestFocus()
+            // move the cursor to end of the text
+            if (etAccountName.getText().toString().isNotEmpty()) etAccountName.setSelection(etAccountName.text!!.length)
+            etAccountName.showKeyboard()
+            btnApply.show()
+        }
+
+        btnApply.setOnClickListener {
+            if (etAccountName.getText().toString() == "") {
+                toast(getString(R.string.field_should_not_empty))
+            }/* else if (etAccountName.getText().toString() == account.name) {
+                bottomSheetDialog.dismiss()
+            }*/ else {
+                onNameChanged.invoke(etAccountName.getText().toString())
+                bottomSheetDialog.dismiss()
+            }
+        }
+
+        btnDelete.setOnClickListener {
+            onDelete()
+            bottomSheetDialog.dismiss()
+        }
+
+        btnCopy.setOnClickListener {
+            onCopy()
+            bottomSheetDialog.dismiss()
+        }
+    }
+}
 
 fun Activity.showExitBottomSheet(onExitClicked: () -> Unit) {
     val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog)
@@ -640,8 +759,10 @@ fun Fragment.openAppInPlayStore() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        val intent = Intent(Intent.ACTION_VIEW,
-            "https://play.google.com/store/apps/details?id=$appPackageName".toUri())
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
+        )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
@@ -689,7 +810,11 @@ fun String.validatePassword(confirmPassword: String): String {
 }
 
 
-fun String?.validatePasswordChange(currentPassword: String, newPassword: String, confirmPassword: String): String {
+fun String?.validatePasswordChange(
+    currentPassword: String,
+    newPassword: String,
+    confirmPassword: String
+): String {
     if (currentPassword != this) {
         return "not"
     }

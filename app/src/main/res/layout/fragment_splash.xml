@@ -84,7 +84,7 @@
 
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/progressBar"
+        android:id="@+id/animationView"
         android:layout_width="@dimen/_180sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_120sdp"

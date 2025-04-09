@@ -2,22 +2,20 @@ package com.example.my.project.authenticator.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.databinding.AccountItemBinding
-import com.example.my.project.authenticator.extensions.invisible
-import com.example.my.project.authenticator.extensions.show
-import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.hide
+import com.example.my.project.authenticator.extensions.invisible
 import com.example.my.project.authenticator.extensions.setProfileImage
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.utils.TotpCardState
-
 
 class AccountAdapter(
     private val accounts: MutableList<TotpCardState>,
     private val onDeleteSelected: (Int, List<TotpCardState>) -> Unit,
-    private val onHOTPRefreshClicked: (TotpCardState) -> Unit
+    private val onHOTPRefreshClicked: (TotpCardState) -> Unit,
+    private val onItemClick: (TotpCardState) -> Unit
 ) : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
     private val selectedAccounts = mutableSetOf<TotpCardState>()
@@ -50,7 +48,8 @@ class AccountAdapter(
         return selectedAccounts.toList()
     }
 
-    inner class AccountViewHolder(private val binding: AccountItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class AccountViewHolder(private val binding: AccountItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(account: TotpCardState, isSelected: Boolean) {
             /*val otp = account.oneTimeCode.toString().length
@@ -72,7 +71,7 @@ class AccountAdapter(
                 binding.circularProgress.hide()
                 binding.icRefresh.show()
 
-                binding.icRefresh.setOnClickListener{
+                binding.icRefresh.setOnClickListener {
                     onHOTPRefreshClicked.invoke(account)
                 }
             }
@@ -81,23 +80,30 @@ class AccountAdapter(
 //            binding.circularProgress.text = account.secondsLeft.toString()
             binding.ivProfileImage.setProfileImage(account.name)
 
-            binding.selected.visibility = if (isSelected) View.VISIBLE else View.GONE
+//            binding.selected.visibility = if (isSelected) View.VISIBLE else View.GONE
 
             binding.root.setOnClickListener {
-                if (isSelectionMode) {
+                onItemClick.invoke(account)
+
+                if (!selectedAccounts.contains(account)) {
+                    selectedAccounts.add(account)
+                }
+                Log.d("EditAccount", "bind: selected accounts= ${selectedAccounts.size}")
+
+                /*if (isSelectionMode) {
                     toggleSelection(adapterPosition, account)
                 } else {
                     it.context.copyTextToClipboard(account.oneTimeCode.toString())
-                }
+                }*/
             }
 
-            binding.root.setOnLongClickListener {
+            /*binding.root.setOnLongClickListener {
                 if (!isSelectionMode) {
                     enterSelectionMode()
                 }
                 toggleSelection(adapterPosition, account)
                 true
-            }
+            }*/
         }
     }
 

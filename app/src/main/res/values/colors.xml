@@ -31,6 +31,7 @@
     <color name="n_dark_grey">#2A2A2A</color>
     <color name="n_import_buttons">#E8F3FF</color>
     <color name="n_warning_red">#FF4F5A</color>
+    <color name="errorSurfaceColor">#FFE9EA</color>
     <color name="n_switch_color">#D6D6D6</color>
 
 </resources>

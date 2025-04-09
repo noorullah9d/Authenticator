@@ -163,6 +163,31 @@
     <string name="select_all">Επιλογή όλων</string>
     <string name="edit">Επεξεργασία</string>
 
-
+    <string name="select_group">Επιλέξτε ομάδα</string>
+    <string name="user_guide">Οδηγός χρήστη</string>
+    <string name="guide">Οδηγός</string>
+    <string name="how_was_your_experience">Πώς ήταν η εμπειρία σας;</string>
+    <string name="tap_again_to_exit">Πατήστε ξανά για έξοδο</string>
+    <string name="get_unlimited_access">Αποκτήστε απεριόριστη πρόσβαση</string>
+    <string name="secure_your_accounts">Ασφαλίστε όλους τους λογαριασμούς σας</string>
+    <string name="auto_backup_sync"><![CDATA[Αυτόματη δημιουργία αντιγράφων & συγχρονισμός]]></string>
+    <string name="easy_to_set_up">Εύκολο στην εγκατάσταση</string>
+    <string name="ads_free">Χωρίς διαφημίσεις</string>
+    <string name="yearly">Ετήσιο</string>
+    <string name="best_offer">Καλύτερη προσφορά</string>
+    <string name="_year">/έτος</string>
+    <string name="save_50">ΕΞΟΙΚΟΝΟΜΗΣΗ 50%</string>
+    <string name="monthly">Μηνιαίο</string>
+    <string name="_month">/μήνα</string>
+    <string name="start_a_3_day_free_trial">Ξεκινήστε μια δωρεάν δοκιμή 3 ημερών</string>
+    <string name="terms_and_conditions">Όροι και προϋποθέσεις</string>
+    <string name="policy_footer_text">Πολιτική απορρήτου και Όροι και Προϋποθέσεις. Σημείωση: Ο τρόπος πληρωμής μέσω του Google ID σας θα χρεωθεί αυτόματα. Επαναλαμβανόμενη χρέωση, ακυρώστε οποιαδήποτε στιγμή, τουλάχιστον 24 ώρες πριν από τη λήξη της τρέχουσας περιόδου.</string>
+    <string name="failed_to_connect_to_billing_server">Αποτυχία σύνδεσης με τον διακομιστή χρέωσης!</string>
+    <string name="you_don_t_have_any_purchases_yet">Δεν έχετε πραγματοποιήσει ακόμη αγορές!</string>
+    <string name="failed_to_connect">Αποτυχία σύνδεσης</string>
+    <string name="subscription_already_purchased">Η συνδρομή έχει ήδη αγοραστεί!</string>
+    <string name="account_info">Πληροφορίες λογαριασμού</string>
+    <string name="_2fa_code">Κωδικός 2FA</string>
+    <string name="search_place_holder_summary">Δεν βρέθηκαν αντίστοιχοι κωδικοί. Δοκιμάστε άλλη αναζήτηση.</string>
 
 </resources>

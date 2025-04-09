@@ -24,3 +24,5 @@
 -keep class androidx.credentials.playservices.** {
   *;
 }
+
+-keep class com.example.my.project.authenticator.otp.domain.entities.** { *; }

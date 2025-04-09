@@ -162,5 +162,31 @@
     <string name="select_all">Chọn tất cả</string>
     <string name="edit">Chỉnh sửa</string>
 
+    <string name="select_group">Chọn nhóm</string>
+    <string name="user_guide">Hướng dẫn người dùng</string>
+    <string name="guide">Hướng dẫn</string>
+    <string name="how_was_your_experience">Trải nghiệm của bạn như thế nào?</string>
+    <string name="tap_again_to_exit">Nhấn lại để thoát</string>
+    <string name="get_unlimited_access">Nhận quyền truy cập không giới hạn</string>
+    <string name="secure_your_accounts">Bảo mật tất cả các tài khoản của bạn</string>
+    <string name="auto_backup_sync"><![CDATA[Sao lưu & đồng bộ tự động]]></string>
+    <string name="easy_to_set_up">Dễ dàng thiết lập</string>
+    <string name="ads_free">Không có quảng cáo</string>
+    <string name="yearly">Hàng năm</string>
+    <string name="best_offer">Ưu đãi tốt nhất</string>
+    <string name="_year">/năm</string>
+    <string name="save_50">TIẾT KIỆM 50%</string>
+    <string name="monthly">Hàng tháng</string>
+    <string name="_month">/tháng</string>
+    <string name="start_a_3_day_free_trial">Bắt đầu dùng thử miễn phí 3 ngày</string>
+    <string name="terms_and_conditions">Điều khoản và điều kiện</string>
+    <string name="policy_footer_text">Chính sách bảo mật và Điều khoản và Điều kiện. Xin lưu ý: Phương thức thanh toán Google ID của bạn sẽ được tự động tính phí. Thanh toán định kỳ, hủy bất kỳ lúc nào, hủy đăng ký ít nhất 24 giờ trước khi kết thúc kỳ hiện tại.</string>
+    <string name="failed_to_connect_to_billing_server">Không thể kết nối với máy chủ thanh toán!</string>
+    <string name="you_don_t_have_any_purchases_yet">Bạn chưa có bất kỳ giao dịch mua nào!</string>
+    <string name="failed_to_connect">Kết nối thất bại</string>
+    <string name="subscription_already_purchased">Đã mua gói đăng ký!</string>
+    <string name="account_info">Thông tin tài khoản</string>
+    <string name="_2fa_code">Mã 2FA</string>
+    <string name="search_place_holder_summary">Không có mã khớp. Vui lòng thử tìm kiếm khác.</string>
 
 </resources>

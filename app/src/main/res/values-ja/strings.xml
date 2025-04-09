@@ -162,5 +162,31 @@
     <string name="select_all">すべて選択</string>
     <string name="edit">編集</string>
 
+    <string name="select_group">グループを選択</string>
+    <string name="user_guide">ユーザーガイド</string>
+    <string name="guide">ガイド</string>
+    <string name="how_was_your_experience">ご利用の感想はいかがでしたか？</string>
+    <string name="tap_again_to_exit">もう一度タップして終了</string>
+    <string name="get_unlimited_access">無制限アクセスを取得</string>
+    <string name="secure_your_accounts">すべてのアカウントを保護</string>
+    <string name="auto_backup_sync"><![CDATA[自動バックアップと同期]]></string>
+    <string name="easy_to_set_up">簡単に設定可能</string>
+    <string name="ads_free">広告なし</string>
+    <string name="yearly">年額</string>
+    <string name="best_offer">最もお得</string>
+    <string name="_year">/年</string>
+    <string name="save_50">50%割引</string>
+    <string name="monthly">月額</string>
+    <string name="_month">/月</string>
+    <string name="start_a_3_day_free_trial">3日間の無料トライアルを開始</string>
+    <string name="terms_and_conditions">利用規約</string>
+    <string name="policy_footer_text">プライバシーポリシーおよび利用規約 ご注意：お支払いは Google ID に登録された方法で自動的に請求されます。定期課金、いつでも解約可能、現在の期間終了の24時間前までに解約してください。</string>
+    <string name="failed_to_connect_to_billing_server">課金サーバーへの接続に失敗しました！</string>
+    <string name="you_don_t_have_any_purchases_yet">まだ購入履歴がありません！</string>
+    <string name="failed_to_connect">接続に失敗しました</string>
+    <string name="subscription_already_purchased">サブスクリプションはすでに購入済みです！</string>
+    <string name="account_info">アカウント情報</string>
+    <string name="_2fa_code">2要素認証コード</string>
+    <string name="search_place_holder_summary">一致するコードが見つかりません。他の検索をお試しください。</string>
 
 </resources>

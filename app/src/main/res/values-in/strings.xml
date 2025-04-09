@@ -162,6 +162,31 @@
     <string name="select_all">Pilih Semua</string>
     <string name="edit">Edit</string>
 
-
+    <string name="select_group">Pilih grup</string>
+    <string name="user_guide">Panduan Pengguna</string>
+    <string name="guide">Panduan</string>
+    <string name="how_was_your_experience">Bagaimana pengalaman Anda?</string>
+    <string name="tap_again_to_exit">Ketuk lagi untuk keluar</string>
+    <string name="get_unlimited_access">Dapatkan akses tanpa batas</string>
+    <string name="secure_your_accounts">Amankan semua akun Anda</string>
+    <string name="auto_backup_sync"><![CDATA[Cadangan & sinkronisasi otomatis]]></string>
+    <string name="easy_to_set_up">Mudah diatur</string>
+    <string name="ads_free">Bebas iklan</string>
+    <string name="yearly">Tahunan</string>
+    <string name="best_offer">Penawaran terbaik</string>
+    <string name="_year">/tahun</string>
+    <string name="save_50">HEMAT 50%</string>
+    <string name="monthly">Bulanan</string>
+    <string name="_month">/bulan</string>
+    <string name="start_a_3_day_free_trial">Mulai uji coba gratis 3 hari</string>
+    <string name="terms_and_conditions">Syarat dan Ketentuan</string>
+    <string name="policy_footer_text">Kebijakan Privasi dan Syarat dan Ketentuan. Harap Diperhatikan: Metode pembayaran Google ID Anda akan dikenakan biaya secara otomatis. Penagihan berulang, batalkan kapan saja, batalkan setidaknya 24 jam sebelum periode saat ini berakhir.</string>
+    <string name="failed_to_connect_to_billing_server">Gagal terhubung ke server penagihan!</string>
+    <string name="you_don_t_have_any_purchases_yet">Anda belum memiliki pembelian!</string>
+    <string name="failed_to_connect">Gagal terhubung</string>
+    <string name="subscription_already_purchased">Langganan sudah dibeli!</string>
+    <string name="account_info">Informasi akun</string>
+    <string name="_2fa_code">Kode 2FA</string>
+    <string name="search_place_holder_summary">Tidak ada kode yang cocok. Silakan coba pencarian lain.</string>
 
 </resources>

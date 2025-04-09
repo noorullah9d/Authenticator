@@ -162,6 +162,31 @@
     <string name="select_all">सभी का चयन करें</string>
     <string name="edit">संपादित करें</string>
 
-
+    <string name="select_group">समूह चुनें</string>
+    <string name="user_guide">उपयोगकर्ता मार्गदर्शिका</string>
+    <string name="guide">मार्गदर्शिका</string>
+    <string name="how_was_your_experience">आपका अनुभव कैसा रहा?</string>
+    <string name="tap_again_to_exit">बाहर निकलने के लिए दोबारा टैप करें</string>
+    <string name="get_unlimited_access">असीमित पहुंच प्राप्त करें</string>
+    <string name="secure_your_accounts">अपने सभी खातों को सुरक्षित करें</string>
+    <string name="auto_backup_sync"><![CDATA[स्वचालित बैकअप और सिंक]]></string>
+    <string name="easy_to_set_up">सेटअप करना आसान</string>
+    <string name="ads_free">विज्ञापन-मुक्त</string>
+    <string name="yearly">वार्षिक</string>
+    <string name="best_offer">सर्वश्रेष्ठ ऑफ़र</string>
+    <string name="_year">/वर्ष</string>
+    <string name="save_50">50% बचाएं</string>
+    <string name="monthly">मासिक</string>
+    <string name="_month">/माह</string>
+    <string name="start_a_3_day_free_trial">3-दिन की मुफ्त परीक्षण अवधि शुरू करें</string>
+    <string name="terms_and_conditions">नियम और शर्तें</string>
+    <string name="policy_footer_text">गोपनीयता नीति और नियम व शर्तें। कृपया ध्यान दें: आपकी Google ID भुगतान विधि से स्वतः शुल्क लिया जाएगा। आवर्ती बिलिंग, किसी भी समय रद्द करें, वर्तमान अवधि समाप्त होने से कम से कम 24 घंटे पहले सदस्यता रद्द करें।</string>
+    <string name="failed_to_connect_to_billing_server">बिलिंग सर्वर से कनेक्ट करने में विफल!</string>
+    <string name="you_don_t_have_any_purchases_yet">आपकी अभी तक कोई खरीदारी नहीं हुई है!</string>
+    <string name="failed_to_connect">कनेक्ट करने में विफल</string>
+    <string name="subscription_already_purchased">सदस्यता पहले ही खरीदी जा चुकी है!</string>
+    <string name="account_info">खाता जानकारी</string>
+    <string name="_2fa_code">2FA कोड</string>
+    <string name="search_place_holder_summary">कोई मेल खाते कोड नहीं मिले। कृपया अलग खोज प्रयास करें।</string>
 
 </resources>

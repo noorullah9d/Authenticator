@@ -159,10 +159,10 @@
     <string name="done">Done</string>
     <string name="select_all">Select all</string>
     <string name="edit">Edit</string>
+
     <string name="select_group">Select group</string>
     <string name="user_guide">User Guide</string>
     <string name="guide">Guide</string>
-
     <string name="how_was_your_experience">How was your experience?</string>
     <string name="tap_again_to_exit">Tap again to exit</string>
     <string name="get_unlimited_access">Get unlimited access</string>
@@ -183,5 +183,8 @@
     <string name="you_don_t_have_any_purchases_yet">You don\'t have any purchases yet!</string>
     <string name="failed_to_connect">Failed to connect</string>
     <string name="subscription_already_purchased">Subscription already purchased!</string>
+    <string name="account_info">Account info</string>
+    <string name="_2fa_code">2FA code</string>
+    <string name="search_place_holder_summary">There are no matching codes. Please try a different search</string>
 
 </resources>

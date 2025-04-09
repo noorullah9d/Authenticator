@@ -162,5 +162,31 @@
     <string name="select_all">เลือกทั้งหมด</string>
     <string name="edit">แก้ไข</string>
 
+    <string name="select_group">เลือกกลุ่ม</string>
+    <string name="user_guide">คู่มือผู้ใช้</string>
+    <string name="guide">คู่มือ</string>
+    <string name="how_was_your_experience">ประสบการณ์ของคุณเป็นอย่างไรบ้าง?</string>
+    <string name="tap_again_to_exit">แตะอีกครั้งเพื่อออก</string>
+    <string name="get_unlimited_access">เข้าถึงไม่จำกัด</string>
+    <string name="secure_your_accounts">รักษาความปลอดภัยให้บัญชีทั้งหมดของคุณ</string>
+    <string name="auto_backup_sync"><![CDATA[สำรองและซิงค์อัตโนมัติ]]></string>
+    <string name="easy_to_set_up">ตั้งค่าง่าย</string>
+    <string name="ads_free">ไม่มีโฆษณา</string>
+    <string name="yearly">รายปี</string>
+    <string name="best_offer">ข้อเสนอที่ดีที่สุด</string>
+    <string name="_year">/ปี</string>
+    <string name="save_50">ประหยัด 50%</string>
+    <string name="monthly">รายเดือน</string>
+    <string name="_month">/เดือน</string>
+    <string name="start_a_3_day_free_trial">เริ่มทดลองใช้งานฟรี 3 วัน</string>
+    <string name="terms_and_conditions">ข้อกำหนดและเงื่อนไข</string>
+    <string name="policy_footer_text">นโยบายความเป็นส่วนตัวและข้อกำหนดและเงื่อนไข โปรดทราบ: วิธีชำระเงินของบัญชี Google ของคุณจะถูกเรียกเก็บเงินโดยอัตโนมัติ การเรียกเก็บเงินแบบต่อเนื่อง ยกเลิกได้ตลอดเวลา ต้องยกเลิกอย่างน้อย 24 ชั่วโมงก่อนสิ้นสุดรอบปัจจุบัน</string>
+    <string name="failed_to_connect_to_billing_server">ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์การเรียกเก็บเงิน!</string>
+    <string name="you_don_t_have_any_purchases_yet">คุณยังไม่มีการซื้อใด ๆ!</string>
+    <string name="failed_to_connect">เชื่อมต่อไม่สำเร็จ</string>
+    <string name="subscription_already_purchased">คุณได้ซื้อการสมัครใช้งานแล้ว!</string>
+    <string name="account_info">ข้อมูลบัญชี</string>
+    <string name="_2fa_code">รหัสยืนยันแบบ 2 ขั้นตอน</string>
+    <string name="search_place_holder_summary">ไม่พบรหัสที่ตรงกัน โปรดลองค้นหาใหม่อีกครั้ง</string>
 
 </resources>

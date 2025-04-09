@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,7 +33,9 @@ import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showCustomDialog
+import com.example.my.project.authenticator.extensions.showEditAccountBottomSheet
 import com.example.my.project.authenticator.extensions.showExitBottomSheet
+import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.CardSelectionViewModel
@@ -56,6 +59,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -68,6 +72,7 @@ class HomeFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
+    private var isSearchActive: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -133,13 +138,15 @@ class HomeFragment : Fragment() {
 
     private fun showNativeAd() {
         Log.d(TAG, "admobNativeAd showNativeAd: called")
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntSmallBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        if (isAdded) {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
         }
     }
@@ -158,8 +165,9 @@ class HomeFragment : Fragment() {
                             }
                         }
 
-                        binding.searchView.isVisible -> {
+                        binding.searchViewLayout.isVisible -> {
                             updateUiState(UiState.DEFAULT)
+                            deactivateSearch()
                         }
 
                         binding.clDeleteSelection.isVisible -> {
@@ -175,14 +183,14 @@ class HomeFragment : Fragment() {
             when (state) {
                 UiState.DEFAULT -> {
                     clTopLayout.show()
-                    searchView.hide()
+                    searchViewLayout.hide()
                     clDeleteSelection.hide()
                     clEditing.hide()
                 }
 
                 UiState.SEARCH -> {
                     clTopLayout.show()
-                    searchView.hide()
+                    searchViewLayout.hide()
                 }
 
                 UiState.DELETE_SELECTION -> {
@@ -265,17 +273,11 @@ class HomeFragment : Fragment() {
             }
 
             ivSearchView.setOnClickListener {
-                clTopLayout.hide()
-                searchView.show()
-                search.requestFocus()
-                val imm =
-                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                imm?.showSoftInput(view?.findFocus(), 0)
+                activateSearch()
             }
 
             tvCancel.setOnClickListener {
-                clTopLayout.show()
-                searchView.hide()
+                deactivateSearch()
             }
 
             search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -305,17 +307,17 @@ class HomeFragment : Fragment() {
             edit.setOnClickListener {
 
 
-                val selectedItems = accountAdapter.getSelectedAccounts()[0]
+                val selectedItem = accountAdapter.getSelectedAccounts()[0]
 
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                intent.putExtra("key_name", selectedItems.name)
-                intent.putExtra("id", selectedItems.id)
-                intent.putExtra("secret_key", selectedItems.secretKey)
+                intent.putExtra("key_name", selectedItem.name)
+                intent.putExtra("id", selectedItem.id)
+                intent.putExtra("secret_key", selectedItem.secretKey)
                 intent.putExtra("tool", "")
-                intent.putExtra("SHA", selectedItems.cryptography)
-                intent.putExtra("filePath", selectedItems.filePath)
-                intent.putExtra("OTP", selectedItems.type)
-                intent.putExtra("category", selectedItems.category)
+                intent.putExtra("SHA", selectedItem.cryptography)
+                intent.putExtra("filePath", selectedItem.filePath)
+                intent.putExtra("OTP", selectedItem.type)
+                intent.putExtra("category", selectedItem.category)
                 intent.putExtra("edit", 1)
                 startActivity(intent)
                 if (::accountAdapter.isInitialized)
@@ -337,6 +339,32 @@ class HomeFragment : Fragment() {
                     Log.d(TAG, "clickListeners: ${e.message}")
                 }
             }
+        }
+    }
+
+    private fun deactivateSearch() {
+        isSearchActive = false
+        binding.apply {
+            clTopLayout.show()
+            categoriesAccount.show()
+            rlNotBackUp.show()
+            search.setQuery("", false)
+            search.clearFocus()
+            searchViewLayout.hide()
+        }
+    }
+
+    private fun activateSearch() {
+        isSearchActive = true
+        binding.apply {
+            clTopLayout.hide()
+            categoriesAccount.hide()
+            rlNotBackUp.hide()
+            searchViewLayout.show()
+            search.requestFocus()
+            val imm =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.showSoftInput(view?.findFocus(), 0)
         }
     }
 
@@ -448,11 +476,16 @@ class HomeFragment : Fragment() {
 
     private fun placeHolder() {
         binding.apply {
-            llPlaceHolderLayout.show()
+            if (isSearchActive) {
+                searchPlaceHolder.show()
+            } else {
+                llPlaceHolderLayout.show()
+                buttonsPlaceHolders.show()
+            }
+
             faButton.hide()
             progressBar.hide()
             accountData.hide()
-            buttonsPlaceHolders.show()
         }
     }
 
@@ -460,22 +493,26 @@ class HomeFragment : Fragment() {
         binding.apply {
             lifecycleScope.launch {
                 homeViewModel.getAllGroups().collectLatest {
-                    adapter = CategoryAdapter(it, selectionViewModel, catsId = { _ ->
-                    }, groupCallBack = { group ->
-                        if (group == "Default") homeViewModel.setCategory("Default")
-                        else homeViewModel.setCategory(group)
+                    adapter = CategoryAdapter(
+                        it,
+                        selectionViewModel,
+                        catsId = { _ -> },
+                        groupCallBack = { group ->
+                            if (group == "Default") homeViewModel.setCategory("Default")
+                            else homeViewModel.setCategory(group)
 
-                        /*if (::accountAdapter.isInitialized) {
-                            accountAdapter.deselectAll()
-                            clDeleteSelection.beGone()
-                            if (searchView.visibility != View.VISIBLE) {
-                                clTopLayout.beVisible()
-                                searchView.beGone()
-                            }
+                            /*if (::accountAdapter.isInitialized) {
+                                accountAdapter.deselectAll()
+                                clDeleteSelection.beGone()
+                                if (searchView.visibility != View.VISIBLE) {
+                                    clTopLayout.beVisible()
+                                    searchView.beGone()
+                                }
 
-                            binding.clEditing.beGone()
-                        }*/
-                    })
+                                binding.clEditing.beGone()
+                            }*/
+                        }
+                    )
 
                     categoriesAccount.layoutManager = LinearLayoutManager(
                         requireActivity(),
@@ -493,35 +530,53 @@ class HomeFragment : Fragment() {
             emailCondition()
 
             homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
-
-//                Log.d(TAG, "observerData: accounts = ${homeState.totpList.size}")
+                Log.d("EditAccount", "observerData: accounts = ${homeState.totpList.size}")
                 if (homeState.totpList.isNotEmpty()) {
                     if (clEditing.isVisible) faButton.hide()
                     else faButton.show()
 
                     progressBar.hide()
-                    buttonsPlaceHolders.hide()
-                    llPlaceHolderLayout.hide()
+                    if (isSearchActive) searchPlaceHolder.hide()
+                    else {
+                        buttonsPlaceHolders.hide()
+                        llPlaceHolderLayout.hide()
+                    }
+
                     accountData.show()
 
                     if (!::accountAdapter.isInitialized) {
-                        accountAdapter =
-                            AccountAdapter(
-                                accounts = /*homeState.totpList.toMutableList()*/mutableListOf(),
-                                onDeleteSelected = { position, totpCardState ->
-                                    deleteSelection(totpCardState)
-                                },
-                                onHOTPRefreshClicked = { account ->
-                                    homeViewModel.regenerateHOTP(account)
-                                }
-                            )
+                        accountAdapter = AccountAdapter(
+                            accounts = /*homeState.totpList.toMutableList()*/mutableListOf(),
+                            onDeleteSelected = { position, totpCardState ->
+                                deleteSelection(totpCardState)
+                            },
+                            onHOTPRefreshClicked = { account ->
+                                homeViewModel.regenerateHOTP(account)
+                            },
+                            onItemClick = { account ->
+//                                requireContext().copyTextToClipboard(account.oneTimeCode.toString())
+                                // open editing bottom sheet
+                                requireActivity().showEditAccountBottomSheet(
+                                    account,
+                                    onNameChanged = { newName ->
+                                        updateAccountName(newName, account)
+                                    },
+                                    onCopy = {
+                                        requireContext().copyTextToClipboard(account.oneTimeCode.toString())
+                                    },
+                                    onDelete = {
+                                        deleteAccounts()
+                                    }
+                                )
+                            }
+                        )
 
                         accountAdapter.updateAccounts(homeState.totpList)
 
                         binding.accountData.adapter = accountAdapter
                         binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
                     } else {
-//                        Log.d(TAG, "observerData: isInitialized")
+                        Log.d(TAG, "observerData: isInitialized")
                         accountAdapter.updateAccounts(homeState.totpList)
                     }
                 } else {
@@ -530,6 +585,87 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun updateAccountName(
+        newName: String,
+        account: TotpCardState
+    ) {
+        val accountKey = account.secretKey
+        /*val isExists = homeViewModel.isKeyExists(newName, accountKey)
+        if (isExists > 0) {
+            showReplace(isExists, newName, accountKey, account = account)
+        } else {*/
+        lifecycleScope.launch {
+            try {
+                val addResult = withContext(Dispatchers.IO) {
+                    homeViewModel.addTotp(
+                        newName,
+                        accountKey,
+                        "",
+                        categories = account.category,
+                        shaStr = account.cryptography,
+                        totpVsHop = account.type,
+                        filePath = account.filePath,
+                        account.id
+                    )
+                }
+
+                if (addResult) {
+                    requireActivity().logFirebaseEvent(
+                        "scan_option",
+                        mapOf("codescan" to "clicked")
+                    )
+                } else {
+                    toast(requireActivity().getString(R.string.error_occurs))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error updating account: ${e.message}", e)
+                toast(requireActivity().getString(R.string.error_occurs))
+            }
+        }
+//        }
+    }
+
+    private fun showReplace(
+        id: Int,
+        accountName: String,
+        passKey: String,
+        tool: String = "",
+        account: TotpCardState
+    ) {
+        showReplaceAccountDialog(
+            onReplace = {
+                val result = homeViewModel.replaceTotp(id, accountName, passKey, tool)
+                /*if (result) {
+                    requireActivity().finish()
+                    findNavController().popBackStack()
+                }*/
+
+            }, onKeep = {
+                var result = false
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val addResult = homeViewModel.addTotp(
+                        accountName,
+                        passKey,
+                        tool,
+                        shaStr = account.cryptography,
+                        totpVsHop = account.type,
+                        filePath = account.filePath
+                    )
+                    result = addResult
+
+                }.invokeOnCompletion {
+                    if (result) {
+                        requireActivity().logFirebaseEvent(
+                            "scan_option",
+                            mapOf("codescan" to "clicked")
+                        )
+                    } else {
+                        toast(requireActivity().getString(R.string.error_occurs))
+                    }
+                }
+            })
     }
 
     private fun deleteSelection(totpCardState: List<TotpCardState>) {

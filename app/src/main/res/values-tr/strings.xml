@@ -162,5 +162,31 @@
     <string name="select_all">Tümünü Seç</string>
     <string name="edit">Düzenle</string>
 
+    <string name="select_group">Grup seç</string>
+    <string name="user_guide">Kullanıcı kılavuzu</string>
+    <string name="guide">Kılavuz</string>
+    <string name="how_was_your_experience">Deneyiminiz nasıldı?</string>
+    <string name="tap_again_to_exit">Çıkmak için tekrar dokunun</string>
+    <string name="get_unlimited_access">Sınırsız erişim elde et</string>
+    <string name="secure_your_accounts">Tüm hesaplarını güvenceye al</string>
+    <string name="auto_backup_sync"><![CDATA[Otomatik yedekleme ve senkronizasyon]]></string>
+    <string name="easy_to_set_up">Kurulumu kolay</string>
+    <string name="ads_free">Reklamsız</string>
+    <string name="yearly">Yıllık</string>
+    <string name="best_offer">En iyi teklif</string>
+    <string name="_year">/yıl</string>
+    <string name="save_50">%50 TASARRUF</string>
+    <string name="monthly">Aylık</string>
+    <string name="_month">/ay</string>
+    <string name="start_a_3_day_free_trial">3 günlük ücretsiz denemeyi başlat</string>
+    <string name="terms_and_conditions">Şartlar ve Koşullar</string>
+    <string name="policy_footer_text">Gizlilik Politikası ve Şartlar ve Koşullar. Lütfen dikkat: Google Kimliği ödeme yönteminiz otomatik olarak ücretlendirilecektir. Yinelenen faturalama, istediğiniz zaman iptal edilebilir, ancak geçerli dönemin bitiminden en az 24 saat önce iptal edilmelidir.</string>
+    <string name="failed_to_connect_to_billing_server">Faturalandırma sunucusuna bağlanılamadı!</string>
+    <string name="you_don_t_have_any_purchases_yet">Henüz herhangi bir satın alma işleminiz yok!</string>
+    <string name="failed_to_connect">Bağlantı başarısız</string>
+    <string name="subscription_already_purchased">Abonelik zaten satın alınmış!</string>
+    <string name="account_info">Hesap bilgileri</string>
+    <string name="_2fa_code">2FA kodu</string>
+    <string name="search_place_holder_summary">Eşleşen kod bulunamadı. Lütfen başka bir arama deneyin.</string>
 
 </resources>

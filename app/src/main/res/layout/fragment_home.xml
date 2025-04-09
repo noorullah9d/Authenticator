@@ -88,7 +88,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/search_view"
+            android:id="@+id/search_view_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
@@ -96,7 +96,6 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_20sdp"
@@ -114,7 +113,8 @@
                     app:iconifiedByDefault="false"
                     app:layout_constraintEnd_toStartOf="@+id/tvCancel"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:searchIcon="@drawable/ic_search_n" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -218,11 +218,13 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_40sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:text="@string/data_is_not_backed_up_yet"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/n_consis_white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivNext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -268,10 +270,10 @@
             android:id="@+id/accountData"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            tools:listitem="@layout/account_item"
             android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/account_item" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -284,7 +286,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llPlaceHolderLayout"
+            android:id="@+id/searchPlaceHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -293,6 +295,32 @@
             app:layout_constraintBottom_toTopOf="@+id/buttonsPlaceHolders"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/img_search_place_holder" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_27sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="center"
+                android:text="@string/search_place_holder_summary"
+                android:textSize="@dimen/_13sdp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llPlaceHolderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/buttonsPlaceHolders"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="@dimen/_200sdp"
@@ -342,7 +370,6 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnStartOpt"
                 android:layout_width="match_parent"
@@ -381,6 +408,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/n_off_white"
                     android:text="@string/backup_data"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/n_dark_grey"
                     app:icon="@drawable/ic_cloud_backup"
                     app:iconGravity="textStart"
@@ -393,14 +422,14 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:backgroundTint="@color/n_off_white"
                     android:text="@string/how_it_works"
                     android:textColor="@color/n_dark_grey"
                     app:icon="@drawable/ic_how"
                     app:iconGravity="textStart"
                     app:iconTint="@null" />
-
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -412,6 +441,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:contentDescription="@string/app_name"
+            android:fitsSystemWindows="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:lottie_autoPlay="true"
@@ -560,11 +590,11 @@
         android:id="@+id/adContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
         android:visibility="visible"
         app:cardBackgroundColor="@color/adBackgroundColor"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="0dp"
-        android:layout_margin="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

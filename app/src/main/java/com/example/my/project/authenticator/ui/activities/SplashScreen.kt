@@ -163,22 +163,24 @@ class SplashScreen : BaseActivity() {
     }
 
     private fun navigateForward() {
-        val currentTime = System.currentTimeMillis()
-        val lastShownTime = PrefsHelper.lastPremiumShownTime
-        if (shouldShowPremiumActivity(currentTime, lastShownTime) && !isAdsRemoved) {
-            Log.d("SplashFragment", "show premium screen")
-            PrefsHelper.lastPremiumShownTime = currentTime
-            navigateToPremium()
-        } else if (!PrefsHelper.isLanguageShown && NativeAd.admobNativeAd != null) {
-            startActivityWithAnimation<SelectLanguageActivity>()
-            finish()
-        } else if (!PrefsHelper.isOnBoardingShown) {
-            startActivityWithAnimation<OnBoardingActivity>()
-            finish()
-        } else {
-            if (PrefsHelper.userPassword != "") startActivityWithAnimation<PasswordScreen>()
-            else startActivityWithAnimation<MainActivity>()
-            finish()
+        if (!isFinishing && !isDestroyed) {
+            val currentTime = System.currentTimeMillis()
+            val lastShownTime = PrefsHelper.lastPremiumShownTime
+            if (shouldShowPremiumActivity(currentTime, lastShownTime) && !isAdsRemoved) {
+                Log.d("SplashFragment", "show premium screen")
+                PrefsHelper.lastPremiumShownTime = currentTime
+                navigateToPremium()
+            } else if (!PrefsHelper.isLanguageShown && NativeAd.admobNativeAd != null) {
+                startActivityWithAnimation<SelectLanguageActivity>()
+                finish()
+            } else if (!PrefsHelper.isOnBoardingShown) {
+                startActivityWithAnimation<OnBoardingActivity>()
+                finish()
+            } else {
+                if (PrefsHelper.userPassword != "") startActivityWithAnimation<PasswordScreen>()
+                else startActivityWithAnimation<MainActivity>()
+                finish()
+            }
         }
     }
 
