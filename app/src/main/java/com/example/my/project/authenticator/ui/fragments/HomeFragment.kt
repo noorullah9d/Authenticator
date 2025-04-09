@@ -350,6 +350,7 @@ class HomeFragment : Fragment() {
             rlNotBackUp.show()
             search.setQuery("", false)
             search.clearFocus()
+            searchPlaceHolder.hide()
             searchViewLayout.hide()
         }
     }

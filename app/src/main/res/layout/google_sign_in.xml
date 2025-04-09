@@ -33,7 +33,6 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/welcome" />
 
-
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="match_parent"
@@ -41,6 +40,8 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_bold"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:gravity="center"
             android:text="@string/welcome_to_authenticator"
             android:textColor="@color/n_dark_grey"
@@ -53,17 +54,21 @@
             android:id="@+id/tvSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_regular"
             android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:text="@string/sign_in_to_back_codes"
             android:textAlignment="center"
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@id/btnStartAccount"
             app:layout_constraintEnd_toEndOf="@+id/ivLockMode"
             app:layout_constraintStart_toStartOf="@+id/ivLockMode"
-            app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnStartAccount"
@@ -83,9 +88,7 @@
             app:iconPadding="6dp"
             app:iconSize="24dp"
             app:iconTint="@null"
-            app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount"
-            app:layout_constraintTop_toBottomOf="@+id/tvSignIn" />
-
+            app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tvContinueWithoutAccount"
@@ -99,11 +102,6 @@
             android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12ssp"
             app:cornerRadius="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnStartAccount" />
-
-
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </com.google.android.material.card.MaterialCardView>

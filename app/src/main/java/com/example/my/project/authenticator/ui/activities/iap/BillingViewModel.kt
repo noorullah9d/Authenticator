@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class BillingViewModel(
     context: Context
-): ViewModel(), PurchasesUpdatedListener, ProductDetailsResponseListener {
+) : ViewModel(), PurchasesUpdatedListener, ProductDetailsResponseListener {
 
     private val _purchases = MutableStateFlow<List<Purchase>?>(null)
     val purchases: Flow<List<Purchase>?> get() = _purchases.asStateFlow()
@@ -117,39 +117,40 @@ class BillingViewModel(
 
     fun buySubscription(
         productDetails: ProductDetails,
-        basePlanId: String? = null,
-        offerId: String? = null,
         activity: Activity?
     ) {
         try {
-            productDetails.subscriptionOfferDetails?.let { offerDetailsList ->
-                val matchingOffer = offerDetailsList.firstOrNull { offerDetails ->
-                    offerDetails.basePlanId == basePlanId && (offerId == null || offerDetails.offerId == offerId)
-                }
+            val offerToken = productDetails.subscriptionOfferDetails?.get(0)?.offerToken
+            val billingParams = offerToken?.let {
+                billingFlowParamsBuilder(
+                    productDetails = productDetails,
+                    offerToken = it
+                )
+            }
 
-                if (matchingOffer == null) {
-                    println("IAP: No matching subscription offer details found for BasePlan: $basePlanId and Offer: $offerId")
-                    return
-                }
-
-                // Create billing flow parameters with the selected offer token
-                val billingParams = BillingFlowParams.newBuilder()
-                    .setProductDetailsParamsList(
-                        listOf(
-                            BillingFlowParams.ProductDetailsParams.newBuilder()
-                                .setProductDetails(productDetails)
-                                .setOfferToken(matchingOffer.offerToken)
-                                .build()
-                        )
-                    )
-                    .build()
-
-                // Launch the purchase flow
-                launchBillingFlow(activity, billingParams)
+            if (billingParams != null) {
+                launchBillingFlow(
+                    activity,
+                    billingParams.build()
+                )
             }
         } catch (e: Exception) {
-            println("Error initiating purchase: $e")
+            e.printStackTrace()
         }
+    }
+
+    private fun billingFlowParamsBuilder(
+        productDetails: ProductDetails,
+        offerToken: String
+    ): BillingFlowParams.Builder {
+        return BillingFlowParams.newBuilder().setProductDetailsParamsList(
+            listOf(
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(productDetails)
+                    .setOfferToken(offerToken)
+                    .build()
+            )
+        )
     }
 
     fun getProductDetails(): LiveData<Map<String, ProductDetails>> = _productWithProductDetails

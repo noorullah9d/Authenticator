@@ -191,19 +191,19 @@ class OnBoardingActivity : BaseActivity() {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
-                        binding.skip.show()
+//                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.get_started)
                         binding.icons.setImageResource(R.drawable.ic_first_start)
                     }
 
                     1 -> {
-                        binding.skip.show()
+//                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.next)
                         binding.icons.setImageResource(R.drawable.ic_second_start)
                     }
 
                     2 -> {
-                        binding.skip.hide()
+//                        binding.skip.hide()
                         binding.btnStart.text = getString(R.string.let_s_go)
                         binding.icons.setImageResource(R.drawable.ic_third_start)
                     }
