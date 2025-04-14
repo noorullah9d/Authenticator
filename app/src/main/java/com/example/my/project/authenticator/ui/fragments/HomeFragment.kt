@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -73,6 +72,7 @@ class HomeFragment : Fragment() {
     private lateinit var accountAdapter: AccountAdapter
     private var adapter: CategoryAdapter? = null
     private var isSearchActive: Boolean = false
+    private var hasCodes = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -347,7 +347,7 @@ class HomeFragment : Fragment() {
         binding.apply {
             clTopLayout.show()
             categoriesAccount.show()
-            rlNotBackUp.show()
+            if (hasCodes) rlNotBackUp.show() else rlNotBackUp.hide()
             search.setQuery("", false)
             search.clearFocus()
             searchPlaceHolder.hide()
@@ -484,6 +484,7 @@ class HomeFragment : Fragment() {
                 buttonsPlaceHolders.show()
             }
 
+            rlNotBackUp.hide()
             faButton.hide()
             progressBar.hide()
             accountData.hide()
@@ -533,6 +534,8 @@ class HomeFragment : Fragment() {
             homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
                 Log.d("EditAccount", "observerData: accounts = ${homeState.totpList.size}")
                 if (homeState.totpList.isNotEmpty()) {
+                    hasCodes = true
+                    if (!isSearchActive) rlNotBackUp.show()
                     if (clEditing.isVisible) faButton.hide()
                     else faButton.show()
 
@@ -583,6 +586,7 @@ class HomeFragment : Fragment() {
                 } else {
                     Log.d(TAG, "observerData: placeHolder")
                     placeHolder()
+                    hasCodes = false
                 }
             }
         }
@@ -699,7 +703,7 @@ class HomeFragment : Fragment() {
             if (PrefsHelper.userEmail != "") {
                 PrefsHelper.userEmail.getFirstCharacter()
                 if (PrefsHelper.isBackedUp) {
-                    bgRectangle.setImageResource(R.drawable.ic_backed_up)
+                    rlNotBackUp.setBackgroundResource(R.drawable.bg_backed_up)
                     ivBlock.hide()
                     tvBackedUp.text = getString(R.string.your_data_is_backed_up_successfully)
                     ivCross.show()
@@ -709,7 +713,7 @@ class HomeFragment : Fragment() {
 
 //                setFromRemote()
             } else {
-                bgRectangle.setImageResource(R.drawable.ic_back_up_frame)
+                rlNotBackUp.setBackgroundResource(R.drawable.bg_gradient_backup)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
                 ivCross.hide()
                 ivBackedUp.hide()

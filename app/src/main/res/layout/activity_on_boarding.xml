@@ -17,7 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +25,7 @@
         android:fontFamily="@font/open_sans_regular"
         android:text="@string/skip"
         android:textColor="@color/n_dark_grey"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,11 +44,11 @@
         android:id="@+id/adContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_margin="@dimen/_6sdp"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/adBackgroundColor"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="0dp"
-        android:layout_margin="@dimen/_6sdp"
         app:layout_constraintBottom_toTopOf="@id/btn_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

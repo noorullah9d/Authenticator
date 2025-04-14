@@ -8,7 +8,6 @@
     android:background="@color/white"
     tools:context=".ui.fragments.HomeFragment">
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startGuide"
         android:layout_width="1dp"
@@ -169,27 +168,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rlNotBackUp"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_height="@dimen/_42sdp"
         android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/bg_gradient_backup"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
         app:layout_constraintStart_toEndOf="@+id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/categories_account">
 
-        <ImageView
-            android:id="@+id/bg_rectangle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_back_up_frame"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/ivBlock"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:contentDescription="@string/app_name"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -219,9 +208,9 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_40sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:text="@string/data_is_not_backed_up_yet"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/data_is_not_backed_up_yet"
             android:textColor="@color/n_consis_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivNext"
@@ -338,7 +327,6 @@
                 android:text="@string/looks_like_you_haven"
                 android:textSize="@dimen/_13sdp" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddCode"
                 android:layout_width="match_parent"
@@ -359,7 +347,6 @@
                 android:text="@string/sign_in"
                 android:textColor="@color/secondary_color"
                 android:visibility="gone" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -407,9 +394,9 @@
                     android:layout_marginEnd="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/n_off_white"
-                    android:text="@string/backup_data"
-                    android:maxLines="1"
                     android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/backup_data"
                     android:textColor="@color/n_dark_grey"
                     app:icon="@drawable/ic_cloud_backup"
                     app:iconGravity="textStart"
@@ -422,16 +409,15 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:backgroundTint="@color/n_off_white"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="@string/how_it_works"
                     android:textColor="@color/n_dark_grey"
                     app:icon="@drawable/ic_how"
                     app:iconGravity="textStart"
                     app:iconTint="@null" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.lottie.LottieAnimationView

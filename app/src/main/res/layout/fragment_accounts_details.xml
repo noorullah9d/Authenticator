@@ -15,7 +15,7 @@
         android:layout_margin="@dimen/_15sdp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/end_add_account"
+        android:src="@drawable/right_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,12 +35,12 @@
 
     <ImageView
         android:id="@+id/btnAdd"
-        android:layout_width="@dimen/_26sdp"
-        android:layout_height="@dimen/_26sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_15sdp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/new_icons_tick"
+        android:src="@drawable/icon_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

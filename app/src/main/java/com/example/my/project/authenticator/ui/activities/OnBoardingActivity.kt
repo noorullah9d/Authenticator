@@ -42,7 +42,7 @@ class OnBoardingActivity : BaseActivity() {
 
         viewPager()
         onClickView()
-//        loadAndShowAdd()
+        loadAndShowAdd()
         loadInterstitial()
     }
 

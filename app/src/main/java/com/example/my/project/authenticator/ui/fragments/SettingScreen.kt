@@ -15,11 +15,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
+import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
+import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.model.LanguageViewModel
@@ -33,6 +39,7 @@ import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.LIGHT
 import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.example.my.project.authenticator.utils.SYSTEM_DEFAULT
 import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
 import com.google.firebase.auth.FirebaseAuth
@@ -66,9 +73,56 @@ class SettingScreen : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        loadAndShowAdd()
         initViews()
         setupClickListeners()
         handleBackPress()
+    }
+
+    private fun loadAndShowAdd() {
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            getString(R.string.admob_native_id_home)
+        )
+    }
+
+    private fun showNativeAd() {
+        if (isAdded) {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
+            }
+        }
     }
 
     private fun handleBackPress() {
@@ -322,6 +376,18 @@ class SettingScreen : Fragment() {
                     toast(errorMessage)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
     }
 }
 

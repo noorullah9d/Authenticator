@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginVertical="@dimen/gnt_default_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cta"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/media">
@@ -54,7 +54,7 @@
                 android:layout_marginBottom="@dimen/gnt_no_margin"
                 android:background="@color/colorShimmer"
                 app:layout_constraintBottom_toTopOf="@id/ad_notification_view"
-                app:layout_constraintEnd_toStartOf="@id/cta"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icon"
                 app:layout_constraintTop_toTopOf="@id/icon" />
 
@@ -82,22 +82,23 @@
                 app:layout_constraintBottom_toBottomOf="@id/ad_notification_view"
                 app:layout_constraintStart_toEndOf="@id/ad_notification_view"
                 app:layout_constraintTop_toTopOf="@id/ad_notification_view" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/gnt_default_margin"
-                android:layout_marginEnd="@dimen/gnt_default_margin"
-                android:backgroundTint="@color/colorShimmer"
-                android:fontFamily="@font/open_sans_semi_bold"
-                android:gravity="center"
-                android:lines="1"
-                android:textSize="@dimen/_12sdp"
-                app:cornerRadius="@dimen/_25sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/gnt_default_margin"
+            android:layout_marginHorizontal="@dimen/gnt_default_margin"
+            android:paddingVertical="@dimen/gnt_default_margin"
+            android:backgroundTint="@color/colorShimmer"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:gravity="center"
+            android:lines="1"
+            android:textSize="@dimen/_12sdp"
+            app:cornerRadius="@dimen/_25sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>

@@ -48,13 +48,13 @@
             android:id="@+id/confirm"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_margin="@dimen/_12sdp"
             android:background="?selectableItemBackgroundBorderless"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/icBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/icBack"
-            app:srcCompat="@drawable/icons_tick" />
+            app:srcCompat="@drawable/icon_done" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

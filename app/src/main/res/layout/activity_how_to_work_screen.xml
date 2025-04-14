@@ -56,8 +56,6 @@
             android:layout_weight="1"
             app:cardBackgroundColor="@color/card_light_color"
             app:strokeWidth="0dp" />
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageView
@@ -71,7 +69,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,14 +81,35 @@
         app:layout_constraintStart_toEndOf="@+id/icBack"
         app:layout_constraintTop_toTopOf="@+id/icBack" />
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/_10sdp"
-        app:layout_constraintBottom_toTopOf="@+id/ivProgress"
+        app:layout_constraintBottom_toTopOf="@+id/adContainer"
         app:layout_constraintTop_toBottomOf="@+id/icBack" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/adContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        android:visibility="visible"
+        app:cardBackgroundColor="@color/adBackgroundColor"
+        app:cardCornerRadius="@dimen/_6sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/adFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/shimmer_small_native" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/ivProgress"
@@ -99,12 +117,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_15sdp"
         android:contentDescription="@string/how_to_word"
-        android:visibility="gone"
         android:src="@drawable/first_intro"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next"
@@ -119,6 +136,4 @@
         android:textSize="@dimen/_14sdp"
         app:cornerRadius="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

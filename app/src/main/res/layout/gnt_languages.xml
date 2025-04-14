@@ -71,7 +71,7 @@
                 android:textSize="@dimen/gnt_text_size_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/ad_notification_view"
-                app:layout_constraintEnd_toStartOf="@id/adCallToAction"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/adAppIcon"
                 app:layout_constraintTop_toTopOf="@id/adAppIcon"
                 tools:text="App Name" />
@@ -111,24 +111,25 @@
                 app:layout_constraintBottom_toBottomOf="@id/ad_notification_view"
                 app:layout_constraintStart_toEndOf="@id/ad_notification_view"
                 app:layout_constraintTop_toTopOf="@id/ad_notification_view" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/adCallToAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/gnt_no_margin"
-                android:layout_marginVertical="@dimen/gnt_default_margin"
-                android:fontFamily="@font/open_sans_semi_bold"
-                android:gravity="center"
-                android:lines="1"
-                android:backgroundTint="@color/n_sky_blue"
-                android:textColor="@color/n_consis_white"
-                android:textSize="@dimen/_12sdp"
-                app:cornerRadius="@dimen/_25sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Install" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/adCallToAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/gnt_no_margin"
+            android:layout_marginTop="@dimen/gnt_default_margin"
+            android:paddingVertical="@dimen/gnt_default_margin"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:gravity="center"
+            android:lines="1"
+            android:backgroundTint="@color/n_sky_blue"
+            android:textColor="@color/n_consis_white"
+            android:textSize="@dimen/_12sdp"
+            app:cornerRadius="@dimen/_25sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Install" />
     </LinearLayout>
 </com.google.android.gms.ads.nativead.NativeAdView>
