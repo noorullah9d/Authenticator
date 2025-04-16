@@ -187,4 +187,17 @@
     <string name="_2fa_code">2단계 인증 코드</string>
     <string name="search_place_holder_summary">일치하는 코드가 없습니다. 다른 검색어를 입력해 주세요.</string>
 
+    <string name="unlimited_access">무제한 액세스</string>
+    <string name="to_all_features">모든 기능에 접근</string>
+    <string name="start_free_trail">무료 체험 시작</string>
+    <string name="free_trial_offer_then_amount_yearly">3일 무료 체험, 이후 %1$s/년</string>
+    <string name="free_trial_offer_then_amount_weekly">3일 무료 체험, 이후 %1$s/주</string>
+    <string name="auto_renewable_cancel_anytime">자동 갱신. 언제든지 취소 가능</string>
+    <string name="activate_2fa_mfa"><![CDATA[2FA 및 MFA 활성화]]></string>
+    <string name="protect_all_passwords">모든 비밀번호 보호</string>
+    <string name="auto_sync_backup"><![CDATA[자동 동기화 및 백업]]></string>
+    <string name="terms_of_use_privacy_policy">이용 약관 | 개인정보 처리방침</string>
+    <string name="terms_of_use">이용 약관</string>
+    <string name="save_75">75% 절약</string>
+
 </resources>

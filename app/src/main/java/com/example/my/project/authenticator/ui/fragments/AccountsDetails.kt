@@ -128,7 +128,7 @@ class AccountsDetails : Fragment() {
 
         totpOptionsSpinner()
         shaSpinner()
-//        loadAndShowAdd()
+        loadAndShowAdd()
     }
 
     private fun loadAndShowAdd() {

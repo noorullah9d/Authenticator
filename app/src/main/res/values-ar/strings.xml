@@ -188,4 +188,17 @@
     <string name="_2fa_code">رمز التحقق بخطوتين</string>
     <string name="search_place_holder_summary">لا توجد رموز مطابقة. يرجى تجربة بحث مختلف.</string>
 
+    <string name="unlimited_access">وصول غير محدود</string>
+    <string name="to_all_features">إلى جميع الميزات</string>
+    <string name="start_free_trail">ابدأ النسخة التجريبية المجانية</string>
+    <string name="free_trial_offer_then_amount_yearly">3 أيام تجريبية مجانية، ثم %1$s/سنة</string>
+    <string name="free_trial_offer_then_amount_weekly">3 أيام تجريبية مجانية، ثم %1$s/أسبوع</string>
+    <string name="auto_renewable_cancel_anytime">تجديد تلقائي. الإلغاء في أي وقت</string>
+    <string name="activate_2fa_mfa"><![CDATA[فعّل التحقق الثنائي و MFA]]></string>
+    <string name="protect_all_passwords">حماية جميع كلمات المرور</string>
+    <string name="auto_sync_backup"><![CDATA[مزامنة ونسخ احتياطي تلقائي]]></string>
+    <string name="terms_of_use_privacy_policy">شروط الاستخدام | سياسة الخصوصية</string>
+    <string name="terms_of_use">شروط الاستخدام</string>
+    <string name="save_75">وفر 75٪</string>
+
 </resources>

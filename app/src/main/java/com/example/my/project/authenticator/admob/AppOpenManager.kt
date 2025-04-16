@@ -10,7 +10,9 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.ui.activities.SplashScreen
+import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.isInterstitialShowing
 import com.google.android.gms.ads.AdActivity
 import com.google.android.gms.ads.AdRequest
@@ -53,7 +55,11 @@ class AppOpenManager(private var application: Application) :
     /** Request an ad  */
     fun fetchAd() {
 
-        if (isAdAvailable || isLoadingAd) {
+        if (isAdAvailable || isLoadingAd || !application.isInternetAvailable()) {
+            return
+        }
+
+        if (PrefsHelper.isAdsRemoved) {
             return
         }
 
@@ -84,6 +90,10 @@ class AppOpenManager(private var application: Application) :
     private fun showAdIfAvailable() {
         // Only show ad if there is not already an app open ad currently showing
         // and an ad is available.
+
+        if (PrefsHelper.isAdsRemoved) {
+            return
+        }
 
         try {
             if (!isShowingAd && isAdAvailable) {

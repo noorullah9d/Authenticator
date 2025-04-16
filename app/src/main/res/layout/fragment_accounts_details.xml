@@ -45,7 +45,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:visibility="gone"
         android:id="@+id/profile_image"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
@@ -53,6 +52,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_image_accounts"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle"
@@ -315,11 +315,11 @@
         android:id="@+id/adContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_margin="@dimen/_6sdp"
+        android:visibility="visible"
         app:cardBackgroundColor="@color/adBackgroundColor"
         app:cardCornerRadius="@dimen/_6sdp"
         app:cardElevation="0dp"
-        android:layout_margin="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

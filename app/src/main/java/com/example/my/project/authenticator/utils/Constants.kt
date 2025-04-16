@@ -23,6 +23,9 @@ var shouldShowInterstitialAd = false
 var isAnySystemDialogShown = false
 
 // IAP
+const val WEEKLY = "weekly"
+const val YEARLY = "yearly"
+var splashIAPExperiment = YEARLY
 const val perMonth = "/month"
 const val perYear = "/year"
 

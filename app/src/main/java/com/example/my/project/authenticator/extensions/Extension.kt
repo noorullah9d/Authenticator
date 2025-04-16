@@ -90,11 +90,11 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
 fun TextView.formatFreeTrialFooter(
     onPrivacyPolicyClicked: (() -> Unit)? = null,
     onTermsAndConditionsClicked: (() -> Unit)? = null,
-    clickableTextColor: Int = ContextCompat.getColor(context, android.R.color.white)
+    clickableTextColor: Int = ContextCompat.getColor(context, R.color.black)
 ) {
-    val fullText = context.getString(R.string.policy_footer_text)
+    val fullText = context.getString(R.string.terms_of_use_privacy_policy)
     val privacyPolicyText = context.getString(R.string.privacy_policy)
-    val termsAndConditionsText = context.getString(R.string.terms_and_conditions)
+    val termsAndConditionsText = context.getString(R.string.terms_of_use)
     val spannableString = SpannableString(fullText)
 
     val privacyPolicyStart = fullText.indexOf(privacyPolicyText)
@@ -576,7 +576,7 @@ fun Activity.showEditAccountBottomSheet(
                 p0: View?,
                 event: MotionEvent?
             ): Boolean {
-                if(event?.action == MotionEvent.ACTION_DOWN && icEdit.isVisible) {
+                if (event?.action == MotionEvent.ACTION_DOWN && icEdit.isVisible) {
                     icEdit.hide()
                     btnApply.show()
                 }
@@ -588,7 +588,9 @@ fun Activity.showEditAccountBottomSheet(
             icEdit.hide()
             etAccountName.requestFocus()
             // move the cursor to end of the text
-            if (etAccountName.getText().toString().isNotEmpty()) etAccountName.setSelection(etAccountName.text!!.length)
+            if (etAccountName.getText().toString().isNotEmpty()) etAccountName.setSelection(
+                etAccountName.text!!.length
+            )
             etAccountName.showKeyboard()
             btnApply.show()
         }

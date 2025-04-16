@@ -60,6 +60,7 @@ object FragInterstitial {
         onDismissed: () -> Unit = {}
     ) {
         if (PrefsHelper.isAdsRemoved) {
+            onDismissed.invoke()
             return
         }
 

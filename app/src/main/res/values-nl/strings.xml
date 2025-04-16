@@ -188,4 +188,17 @@
     <string name="_2fa_code">2FA-code</string>
     <string name="search_place_holder_summary">Er zijn geen overeenkomende codes. Probeer een andere zoekopdracht.</string>
 
+    <string name="unlimited_access">Onbeperkte toegang</string>
+    <string name="to_all_features">tot alle functies</string>
+    <string name="start_free_trail">Start gratis proefperiode</string>
+    <string name="free_trial_offer_then_amount_yearly">3 dagen gratis proef, daarna %1$s/jaar</string>
+    <string name="free_trial_offer_then_amount_weekly">3 dagen gratis proef, daarna %1$s/week</string>
+    <string name="auto_renewable_cancel_anytime">Automatisch verlengen. Op elk moment annuleren</string>
+    <string name="activate_2fa_mfa"><![CDATA[2FA & MFA activeren]]></string>
+    <string name="protect_all_passwords">Bescherm alle wachtwoorden</string>
+    <string name="auto_sync_backup"><![CDATA[Automatische synchronisatie en backup]]></string>
+    <string name="terms_of_use_privacy_policy">Gebruiksvoorwaarden | Privacybeleid</string>
+    <string name="terms_of_use">Gebruiksvoorwaarden</string>
+    <string name="save_75">Bespaar 75%</string>
+
 </resources>

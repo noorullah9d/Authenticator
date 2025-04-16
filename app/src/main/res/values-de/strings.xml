@@ -190,4 +190,17 @@
     <string name="_2fa_code">2FA-Code</string>
     <string name="search_place_holder_summary">Keine passenden Codes gefunden. Bitte versuchen Sie eine andere Suche.</string>
 
+    <string name="unlimited_access">Unbegrenzter Zugriff</string>
+    <string name="to_all_features">auf alle Funktionen</string>
+    <string name="start_free_trail">Kostenlose Testversion starten</string>
+    <string name="free_trial_offer_then_amount_yearly">3 Tage kostenlos testen, danach %1$s/Jahr</string>
+    <string name="free_trial_offer_then_amount_weekly">3 Tage kostenlos testen, danach %1$s/Woche</string>
+    <string name="auto_renewable_cancel_anytime">Automatisch verlängerbar. Jederzeit kündbar</string>
+    <string name="activate_2fa_mfa"><![CDATA[2FA & MFA aktivieren]]></string>
+    <string name="protect_all_passwords">Alle Passwörter schützen</string>
+    <string name="auto_sync_backup"><![CDATA[Automatische Synchronisierung & Sicherung]]></string>
+    <string name="terms_of_use_privacy_policy">Nutzungsbedingungen | Datenschutzrichtlinie</string>
+    <string name="terms_of_use">Nutzungsbedingungen</string>
+    <string name="save_75">Spare 75 %</string>
+
 </resources>

@@ -34,4 +34,8 @@
     <color name="errorSurfaceColor">#FFE9EA</color>
     <color name="n_switch_color">#D6D6D6</color>
 
+    <color name="iap_secondary_color">#707070</color>
+    <color name="iap_cross_icon_color">#9D9D9D</color>
+    <color name="iap_tile_color">#F3F3F3</color>
+
 </resources>

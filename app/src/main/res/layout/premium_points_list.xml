@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="16dp"
-    android:background="@drawable/translucent_bg"
-    tools:background="@drawable/translucent_bg"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/_12sdp"
     android:paddingVertical="@dimen/_14sdp">
@@ -13,47 +10,47 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/icons_tick"
-        android:drawablePadding="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_tick_yellow"
+        android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:fontFamily="@font/open_sans_semi_bold"
-        android:text="@string/secure_your_accounts"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_11ssp" />
+        android:text="@string/activate_2fa_mfa"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:drawableStart="@drawable/icons_tick"
-        android:drawablePadding="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_tick_yellow"
+        android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:fontFamily="@font/open_sans_semi_bold"
-        android:text="@string/auto_backup_sync"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_11ssp" />
+        android:text="@string/protect_all_passwords"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:drawableStart="@drawable/icons_tick"
-        android:drawablePadding="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_tick_yellow"
+        android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:fontFamily="@font/open_sans_semi_bold"
-        android:text="@string/easy_to_set_up"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_11ssp" />
+        android:text="@string/auto_sync_backup"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
-        android:drawableStart="@drawable/icons_tick"
-        android:drawablePadding="@dimen/_8sdp"
+        android:drawableStart="@drawable/ic_tick_yellow"
+        android:drawablePadding="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:fontFamily="@font/open_sans_semi_bold"
         android:text="@string/ads_free"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_11ssp" />
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp" />
 </LinearLayout>

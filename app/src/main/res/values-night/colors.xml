@@ -23,7 +23,7 @@
     <color name="mtrl_textinput_default_box_stroke_color">#585858</color>
 
     <color name="adBackgroundColor">#1A3856</color>
-    <color name="colorShimmer">#B3FFFFFF</color>
+    <color name="colorShimmer">#33FFFFFF</color>
 
     <color name="n_stroke_color">#585858</color>
     <color name="n_sky_blue">#1E90FF</color>
@@ -35,5 +35,8 @@
     <color name="n_switch_color">#3D3D3D</color>
     <color name="errorSurfaceColor">#3C2728</color>
 
+    <color name="iap_secondary_color">#BABABA</color>
+    <color name="iap_cross_icon_color">#49495F</color>
+    <color name="iap_tile_color">#353535</color>
 
 </resources>

@@ -76,7 +76,7 @@ class QRScannerScreen : Fragment() {
         })
 
         checkAndRequestCameraPermission()
-//        loadAndShowAdd()
+        loadAndShowAdd()
     }
 
     private fun loadAndShowAdd() {

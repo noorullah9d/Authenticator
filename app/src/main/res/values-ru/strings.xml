@@ -187,4 +187,17 @@
     <string name="_2fa_code">Код 2FA</string>
     <string name="search_place_holder_summary">Совпадающих кодов не найдено. Попробуйте другой поиск.</string>
 
+    <string name="unlimited_access">Неограниченный доступ</string>
+    <string name="to_all_features">ко всем функциям</string>
+    <string name="start_free_trail">Начать бесплатный пробный период</string>
+    <string name="free_trial_offer_then_amount_yearly">3 дня бесплатного пробного периода, затем %1$s/год</string>
+    <string name="free_trial_offer_then_amount_weekly">3 дня бесплатного пробного периода, затем %1$s/неделя</string>
+    <string name="auto_renewable_cancel_anytime">Автопродление. Отмена в любое время</string>
+    <string name="activate_2fa_mfa"><![CDATA[Активировать 2FA и MFA]]></string>
+    <string name="protect_all_passwords">Защищать все пароли</string>
+    <string name="auto_sync_backup"><![CDATA[Автосинхронизация и резервное копирование]]></string>
+    <string name="terms_of_use_privacy_policy">Условия использования | Политика конфиденциальности</string>
+    <string name="terms_of_use">Условия использования</string>
+    <string name="save_75">Сэкономьте 75%</string>
+
 </resources>

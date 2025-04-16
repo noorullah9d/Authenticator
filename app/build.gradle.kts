@@ -18,7 +18,8 @@ android {
         create("release") {
             keyAlias = "galixoai"
             keyPassword = "galixoai"
-            storeFile = file("/Users/galixo/Desktop/Authenticator Keystore/authenticator.jks")
+//            storeFile = file("/Users/galixo/Desktop/Authenticator Keystore/authenticator.jks")
+            storeFile = file("D:\\Authenticator Credientials/authenticator.jks")
             storePassword = "galixoai"
         }
     }
@@ -27,8 +28,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 10
-        versionName = "1.0.9"
+        versionCode = 11
+        versionName = "1.1.0"
         setProperty("archivesBaseName", "Authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -56,6 +57,7 @@ android {
             resValue("string", "admob_app_id", "ca-app-pub-9555621625220566~7344809990")
             resValue("string", "admob_interstitial_id_splash", "ca-app-pub-9555621625220566/2331693442")
             resValue("string", "admob_interstitial_fragment", "ca-app-pub-9555621625220566/1060680660")
+            resValue("string", "admob_interstitial_onboarding", "ca-app-pub-9555621625220566/1144384649")
             resValue("string", "admob_banner_id", "ca-app-pub-9555621625220566/1675758339")
             resValue("string", "admob_native_id_languages", "ca-app-pub-9555621625220566/6328478893")
             resValue("string", "admob_native_id_onboarding", "ca-app-pub-9555621625220566/2541283298")
@@ -71,6 +73,7 @@ android {
             resValue("string", "admob_app_id", "ca-app-pub-3940256099942544~3347511713")
             resValue("string", "admob_interstitial_id_splash", "ca-app-pub-3940256099942544/1033173712")
             resValue("string", "admob_interstitial_fragment", "ca-app-pub-3940256099942544/1033173712")
+            resValue("string", "admob_interstitial_onboarding", "ca-app-pub-3940256099942544/1033173712")
             resValue("string", "admob_banner_id", "ca-app-pub-3940256099942544/6300978111")
             resValue("string", "admob_native_id_languages", "ca-app-pub-3940256099942544/2247696110")
             resValue("string", "admob_native_id_onboarding", "ca-app-pub-3940256099942544/2247696110")
@@ -142,6 +145,7 @@ dependencies {
     implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
     implementation("com.google.firebase:firebase-crashlytics:19.1.0")
+    implementation("com.google.firebase:firebase-config:22.0.1")
 
     implementation(libs.barcode.scanning)
 

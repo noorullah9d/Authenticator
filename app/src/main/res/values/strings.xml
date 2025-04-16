@@ -187,4 +187,17 @@
     <string name="_2fa_code">2FA code</string>
     <string name="search_place_holder_summary">There are no matching codes. Please try a different search</string>
 
+    <string name="unlimited_access">Unlimited Access</string>
+    <string name="to_all_features">to all features</string>
+    <string name="start_free_trail">Start free trial</string>
+    <string name="free_trial_offer_then_amount_yearly">3 days free trial, then %1$s/year</string>
+    <string name="free_trial_offer_then_amount_weekly">3 days free trial, then %1$s/week</string>
+    <string name="auto_renewable_cancel_anytime">Auto-renewable. Cancel anytime</string>
+    <string name="activate_2fa_mfa"><![CDATA[Activate 2FA & MFA]]></string>
+    <string name="protect_all_passwords">Protect all passwords</string>
+    <string name="auto_sync_backup"><![CDATA[Auto sync & backup]]></string>
+    <string name="terms_of_use_privacy_policy">Terms of Use | Privacy Policy</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="save_75">Save 75%</string>
+
 </resources>

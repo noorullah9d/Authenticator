@@ -189,4 +189,17 @@
     <string name="_2fa_code">Mã 2FA</string>
     <string name="search_place_holder_summary">Không có mã khớp. Vui lòng thử tìm kiếm khác.</string>
 
+    <string name="unlimited_access">Truy cập không giới hạn</string>
+    <string name="to_all_features">tất cả các tính năng</string>
+    <string name="start_free_trail">Bắt đầu dùng thử miễn phí</string>
+    <string name="free_trial_offer_then_amount_yearly">Dùng thử miễn phí 3 ngày, sau đó %1$s/năm</string>
+    <string name="free_trial_offer_then_amount_weekly">Dùng thử miễn phí 3 ngày, sau đó %1$s/tuần</string>
+    <string name="auto_renewable_cancel_anytime">Tự động gia hạn. Hủy bất cứ lúc nào</string>
+    <string name="activate_2fa_mfa"><![CDATA[Kích hoạt 2FA & MFA]]></string>
+    <string name="protect_all_passwords">Bảo vệ tất cả mật khẩu</string>
+    <string name="auto_sync_backup"><![CDATA[Đồng bộ và sao lưu tự động]]></string>
+    <string name="terms_of_use_privacy_policy">Điều khoản sử dụng | Chính sách bảo mật</string>
+    <string name="terms_of_use">Điều khoản sử dụng</string>
+    <string name="save_75">Tiết kiệm 75%</string>
+
 </resources>

@@ -184,4 +184,18 @@
     <string name="account_info">Rekeninginligting</string>
     <string name="_2fa_code">2FA-kode</string>
     <string name="search_place_holder_summary">Daar is geen ooreenstemmende kodes nie. Probeer asseblief \'n ander soektog.</string>
+
+    <string name="unlimited_access">Onbeperkte Toegang</string>
+    <string name="to_all_features">tot al die funksies</string>
+    <string name="start_free_trail">Begin gratis proeflopie</string>
+    <string name="free_trial_offer_then_amount_yearly">3 dae gratis proeflopie, daarna %1$s/jaar</string>
+    <string name="free_trial_offer_then_amount_weekly">3 dae gratis proeflopie, daarna %1$s/week</string>
+    <string name="auto_renewable_cancel_anytime">Outo-hernubaar. Kanselleer enige tyd</string>
+    <string name="activate_2fa_mfa"><![CDATA[Aktiveer 2FA & MFA]]></string>
+    <string name="protect_all_passwords">Beskerm alle wagwoorde</string>
+    <string name="auto_sync_backup"><![CDATA[Outo-sinkroniseer & rugsteun]]></string>
+    <string name="terms_of_use_privacy_policy">Gebruiksvoorwaardes | Privaatheidsbeleid</string>
+    <string name="terms_of_use">Gebruiksvoorwaardes</string>
+    <string name="save_75">Spaar 75%</string>
+
 </resources>

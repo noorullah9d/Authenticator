@@ -189,4 +189,17 @@
     <string name="_2fa_code">Kode 2FA</string>
     <string name="search_place_holder_summary">Tidak ada kode yang cocok. Silakan coba pencarian lain.</string>
 
+    <string name="unlimited_access">Akses tanpa batas</string>
+    <string name="to_all_features">ke semua fitur</string>
+    <string name="start_free_trail">Mulai uji coba gratis</string>
+    <string name="free_trial_offer_then_amount_yearly">3 hari uji coba gratis, lalu %1$s/tahun</string>
+    <string name="free_trial_offer_then_amount_weekly">3 hari uji coba gratis, lalu %1$s/minggu</string>
+    <string name="auto_renewable_cancel_anytime">Perpanjangan otomatis. Batalkan kapan saja</string>
+    <string name="activate_2fa_mfa"><![CDATA[Aktifkan 2FA & MFA]]></string>
+    <string name="protect_all_passwords">Lindungi semua kata sandi</string>
+    <string name="auto_sync_backup"><![CDATA[Sinkronisasi & pencadangan otomatis]]></string>
+    <string name="terms_of_use_privacy_policy">Syarat Penggunaan | Kebijakan Privasi</string>
+    <string name="terms_of_use">Syarat Penggunaan</string>
+    <string name="save_75">Hemat 75%</string>
+
 </resources>

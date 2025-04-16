@@ -189,4 +189,17 @@
     <string name="_2fa_code">รหัสยืนยันแบบ 2 ขั้นตอน</string>
     <string name="search_place_holder_summary">ไม่พบรหัสที่ตรงกัน โปรดลองค้นหาใหม่อีกครั้ง</string>
 
+    <string name="unlimited_access">การเข้าถึงไม่จำกัด</string>
+    <string name="to_all_features">ทั้งหมดในคุณสมบัติ</string>
+    <string name="start_free_trail">เริ่มทดลองใช้ฟรี</string>
+    <string name="free_trial_offer_then_amount_yearly">ทดลองใช้ฟรี 3 วัน จากนั้น %1$s/ปี</string>
+    <string name="free_trial_offer_then_amount_weekly">ทดลองใช้ฟรี 3 วัน จากนั้น %1$s/สัปดาห์</string>
+    <string name="auto_renewable_cancel_anytime">ต่ออายุอัตโนมัติ ยกเลิกได้ตลอดเวลา</string>
+    <string name="activate_2fa_mfa"><![CDATA[เปิดใช้งาน 2FA & MFA]]></string>
+    <string name="protect_all_passwords">ปกป้องรหัสผ่านทั้งหมด</string>
+    <string name="auto_sync_backup"><![CDATA[ซิงค์อัตโนมัติและสำรองข้อมูล]]></string>
+    <string name="terms_of_use_privacy_policy">ข้อกำหนดการใช้งาน | นโยบายความเป็นส่วนตัว</string>
+    <string name="terms_of_use">ข้อกำหนดการใช้งาน</string>
+    <string name="save_75">ประหยัด 75%</string>
+
 </resources>

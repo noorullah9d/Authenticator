@@ -49,7 +49,7 @@ class OnBoardingActivity : BaseActivity() {
     private fun loadInterstitial() {
         if (interstitialAd == null) {
             loadAdmobInterstitial(
-                getString(R.string.admob_interstitial_fragment),
+                getString(R.string.admob_interstitial_onboarding),
                 onAdLoaded = {
                     interstitialAd = it
                     Log.d("OnBoarding", "interstitial ad loaded")
@@ -153,8 +153,6 @@ class OnBoardingActivity : BaseActivity() {
                     homeViewModel.addCategories(Categories(0, "Office"))
                     homeViewModel.addCategories(Categories(0, "Family"))
                     PrefsHelper.isUserFirstTime = false
-//                    startActivityWithAnimation<MainActivity>()
-//                    finish()
 
                     // show interstitial ad
                     showInterstitialAd(
@@ -191,19 +189,16 @@ class OnBoardingActivity : BaseActivity() {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
-//                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.get_started)
                         binding.icons.setImageResource(R.drawable.ic_first_start)
                     }
 
                     1 -> {
-//                        binding.skip.show()
                         binding.btnStart.text = getString(R.string.next)
                         binding.icons.setImageResource(R.drawable.ic_second_start)
                     }
 
                     2 -> {
-//                        binding.skip.hide()
                         binding.btnStart.text = getString(R.string.let_s_go)
                         binding.icons.setImageResource(R.drawable.ic_third_start)
                     }

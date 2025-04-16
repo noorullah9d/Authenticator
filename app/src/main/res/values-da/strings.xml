@@ -190,4 +190,17 @@
     <string name="_2fa_code">2FA-kode</string>
     <string name="search_place_holder_summary">Ingen matchende koder fundet. Prøv en anden søgning.</string>
 
+    <string name="unlimited_access">Ubegrænset adgang</string>
+    <string name="to_all_features">til alle funktioner</string>
+    <string name="start_free_trail">Start gratis prøveperiode</string>
+    <string name="free_trial_offer_then_amount_yearly">3 dages gratis prøve, derefter %1$s/år</string>
+    <string name="free_trial_offer_then_amount_weekly">3 dages gratis prøve, derefter %1$s/uge</string>
+    <string name="auto_renewable_cancel_anytime">Automatisk fornyelse. Aflys når som helst</string>
+    <string name="activate_2fa_mfa"><![CDATA[Aktivér 2FA og MFA]]></string>
+    <string name="protect_all_passwords">Beskyt alle adgangskoder</string>
+    <string name="auto_sync_backup"><![CDATA[Automatisk synkronisering og backup]]></string>
+    <string name="terms_of_use_privacy_policy">Vilkår for brug | Privatlivspolitik</string>
+    <string name="terms_of_use">Vilkår for brug</string>
+    <string name="save_75">Spar 75%</string>
+
 </resources>

@@ -190,4 +190,17 @@
     <string name="_2fa_code">Κωδικός 2FA</string>
     <string name="search_place_holder_summary">Δεν βρέθηκαν αντίστοιχοι κωδικοί. Δοκιμάστε άλλη αναζήτηση.</string>
 
+    <string name="unlimited_access">Απεριόριστη πρόσβαση</string>
+    <string name="to_all_features">σε όλες τις λειτουργίες</string>
+    <string name="start_free_trail">Ξεκινήστε τη δωρεάν δοκιμή</string>
+    <string name="free_trial_offer_then_amount_yearly">3 ημέρες δωρεάν δοκιμή, μετά %1$s/έτος</string>
+    <string name="free_trial_offer_then_amount_weekly">3 ημέρες δωρεάν δοκιμή, μετά %1$s/εβδομάδα</string>
+    <string name="auto_renewable_cancel_anytime">Αυτόματη ανανέωση. Ακύρωση ανά πάσα στιγμή</string>
+    <string name="activate_2fa_mfa"><![CDATA[Ενεργοποιήστε 2FA & MFA]]></string>
+    <string name="protect_all_passwords">Προστασία όλων των κωδικών πρόσβασης</string>
+    <string name="auto_sync_backup"><![CDATA[Αυτόματος συγχρονισμός & αντίγραφα ασφαλείας]]></string>
+    <string name="terms_of_use_privacy_policy">Όροι χρήσης | Πολιτική απορρήτου</string>
+    <string name="terms_of_use">Όροι χρήσης</string>
+    <string name="save_75">Εξοικονομήστε 75%</string>
+
 </resources>

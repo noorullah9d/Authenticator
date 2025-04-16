@@ -21,6 +21,7 @@ import com.example.my.project.authenticator.utils.PrefsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 
 class BillingViewModel(
     context: Context
@@ -72,6 +73,13 @@ class BillingViewModel(
             }
         }
     }
+
+    suspend fun isAdsRemoved(): Boolean {
+        return purchases
+            .firstOrNull { it != null } // wait for at least one emission
+            ?.isNotEmpty() == true
+    }
+
 
     private fun acknowledgePurchases(purchase: Purchase?) {
         purchase?.let {
@@ -251,6 +259,7 @@ class BillingViewModel(
 //        const val PACKAGE_PREMIUM_BUTTON_CLICK = "dec24_premium_button_click"
 
         // Base Plan IDs
+        const val BASE_PLAN_WEEKLY_SUBSCRIPTION = "weekly_sub"
         const val BASE_PLAN_MONTHLY_SUBSCRIPTION = "monthly_sub"
         const val BASE_PLAN_ANNUAL_SUBSCRIPTION = "yearly_sub"
 
@@ -259,6 +268,7 @@ class BillingViewModel(
 
         // Define packages (Base plans and Offers will be handled later during purchase)
         val packageIds = listOf(
+            BASE_PLAN_WEEKLY_SUBSCRIPTION,
             BASE_PLAN_MONTHLY_SUBSCRIPTION,
             BASE_PLAN_ANNUAL_SUBSCRIPTION
         )

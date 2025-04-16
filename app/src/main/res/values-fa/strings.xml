@@ -188,4 +188,17 @@
     <string name="_2fa_code">کد تأیید دو مرحله‌ای</string>
     <string name="search_place_holder_summary">کدی مطابق یافت نشد. لطفاً جستجوی دیگری امتحان کنید.</string>
 
+    <string name="unlimited_access">دسترسی نامحدود</string>
+    <string name="to_all_features">به تمام ویژگی‌ها</string>
+    <string name="start_free_trail">شروع دوره آزمایشی رایگان</string>
+    <string name="free_trial_offer_then_amount_yearly">۳ روز دوره رایگان، سپس %1$s/سال</string>
+    <string name="free_trial_offer_then_amount_weekly">۳ روز دوره رایگان، سپس %1$s/هفته</string>
+    <string name="auto_renewable_cancel_anytime">تمدید خودکار. لغو در هر زمان</string>
+    <string name="activate_2fa_mfa"><![CDATA[فعال‌سازی احراز هویت دو مرحله‌ای و MFA]]></string>
+    <string name="protect_all_passwords">محافظت از تمام گذرواژه‌ها</string>
+    <string name="auto_sync_backup"><![CDATA[پشتیبان‌گیری و همگام‌سازی خودکار]]></string>
+    <string name="terms_of_use_privacy_policy">شرایط استفاده | سیاست حفظ حریم خصوصی</string>
+    <string name="terms_of_use">شرایط استفاده</string>
+    <string name="save_75">۷۵٪ صرفه‌جویی کنید</string>
+
 </resources>

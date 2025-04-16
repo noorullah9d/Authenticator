@@ -189,4 +189,17 @@
     <string name="_2fa_code">2FA कोड</string>
     <string name="search_place_holder_summary">कोई मेल खाते कोड नहीं मिले। कृपया अलग खोज प्रयास करें।</string>
 
+    <string name="unlimited_access">असीमित पहुँच</string>
+    <string name="to_all_features">सभी फीचर्स तक</string>
+    <string name="start_free_trail">फ्री ट्रायल शुरू करें</string>
+    <string name="free_trial_offer_then_amount_yearly">3 दिन का फ्री ट्रायल, फिर %1$s/वर्ष</string>
+    <string name="free_trial_offer_then_amount_weekly">3 दिन का फ्री ट्रायल, फिर %1$s/सप्ताह</string>
+    <string name="auto_renewable_cancel_anytime">ऑटो-रिन्यूएबल। कभी भी रद्द करें</string>
+    <string name="activate_2fa_mfa"><![CDATA[2FA और MFA सक्रिय करें]]></string>
+    <string name="protect_all_passwords">सभी पासवर्ड सुरक्षित करें</string>
+    <string name="auto_sync_backup"><![CDATA[ऑटो सिंक और बैकअप]]></string>
+    <string name="terms_of_use_privacy_policy">उपयोग की शर्तें | गोपनीयता नीति</string>
+    <string name="terms_of_use">उपयोग की शर्तें</string>
+    <string name="save_75">75% बचाएं</string>
+
 </resources>

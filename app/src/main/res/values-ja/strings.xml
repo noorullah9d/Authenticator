@@ -189,4 +189,17 @@
     <string name="_2fa_code">2要素認証コード</string>
     <string name="search_place_holder_summary">一致するコードが見つかりません。他の検索をお試しください。</string>
 
+    <string name="unlimited_access">無制限のアクセス</string>
+    <string name="to_all_features">すべての機能へのアクセス</string>
+    <string name="start_free_trail">無料トライアルを開始</string>
+    <string name="free_trial_offer_then_amount_yearly">3日間の無料トライアル後、%1$s/年</string>
+    <string name="free_trial_offer_then_amount_weekly">3日間の無料トライアル後、%1$s/週</string>
+    <string name="auto_renewable_cancel_anytime">自動更新。いつでもキャンセル可能</string>
+    <string name="activate_2fa_mfa"><![CDATA[2FA & MFAを有効にする]]></string>
+    <string name="protect_all_passwords">すべてのパスワードを保護</string>
+    <string name="auto_sync_backup"><![CDATA[自動同期とバックアップ]]></string>
+    <string name="terms_of_use_privacy_policy">利用規約 | プライバシーポリシー</string>
+    <string name="terms_of_use">利用規約</string>
+    <string name="save_75">75％割引</string>
+
 </resources>

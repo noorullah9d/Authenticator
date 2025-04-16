@@ -188,4 +188,17 @@
     <string name="_2fa_code">Código 2FA</string>
     <string name="search_place_holder_summary">Nenhum código correspondente. Tente outra pesquisa.</string>
 
+    <string name="unlimited_access">Acesso ilimitado</string>
+    <string name="to_all_features">a todas as funcionalidades</string>
+    <string name="start_free_trail">Iniciar teste gratuito</string>
+    <string name="free_trial_offer_then_amount_yearly">3 dias de teste grátis, depois %1$s/ano</string>
+    <string name="free_trial_offer_then_amount_weekly">3 dias de teste grátis, depois %1$s/semana</string>
+    <string name="auto_renewable_cancel_anytime">Renovação automática. Cancele a qualquer momento</string>
+    <string name="activate_2fa_mfa"><![CDATA[Ativar 2FA e MFA]]></string>
+    <string name="protect_all_passwords">Proteger todas as senhas</string>
+    <string name="auto_sync_backup"><![CDATA[Sincronização e backup automáticos]]></string>
+    <string name="terms_of_use_privacy_policy">Termos de uso | Política de privacidade</string>
+    <string name="terms_of_use">Termos de uso</string>
+    <string name="save_75">Economize 75%</string>
+
 </resources>

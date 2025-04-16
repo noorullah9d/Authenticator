@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -13,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.billingclient.api.ProductDetails
 import com.example.my.project.authenticator.R
-import com.example.my.project.authenticator.databinding.ActivityPremiumBinding
+import com.example.my.project.authenticator.databinding.ActivityFreeTrialBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.formatFreeTrialFooter
 import com.example.my.project.authenticator.extensions.isInternetAvailable
@@ -27,26 +26,27 @@ import com.example.my.project.authenticator.ui.activities.SplashScreen
 import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
-import com.google.android.material.card.MaterialCardView
+import com.example.my.project.authenticator.utils.WEEKLY
+import com.example.my.project.authenticator.utils.YEARLY
+import com.example.my.project.authenticator.utils.splashIAPExperiment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PremiumActivity : BaseActivity() {
-    private val binding: ActivityPremiumBinding by lazy {
-        ActivityPremiumBinding.inflate(layoutInflater)
+class FreeTrialActivity : BaseActivity() {
+    private val binding: ActivityFreeTrialBinding by lazy {
+        ActivityFreeTrialBinding.inflate(layoutInflater)
     }
 
     @Inject
     lateinit var viewModel: BillingViewModel
 
     private var selectedProduct: ProductDetails? = null
-    private var monthlyProduct: ProductDetails? = null
     private var yearlyProduct: ProductDetails? = null
+    private var weeklyProduct: ProductDetails? = null
     private var shouldShowToast = false
     private var doesHaveCurrentPurchase = false
-    private var selectedOfferType: String = ""
     private var isFromSplash = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,10 +101,6 @@ class PremiumActivity : BaseActivity() {
 
     private fun initViews() {
         binding.apply {
-            yearlyCheck.setImageResource(R.drawable.ic_radio_check)
-            monthlyCheck.setImageResource(R.drawable.ic_radio_uncheck)
-            selectedOfferType = BillingViewModel.BASE_PLAN_ANNUAL_SUBSCRIPTION
-
             tvFooter.formatFreeTrialFooter(
                 onPrivacyPolicyClicked = {
                     browse(PRIVACY_POLICY_URL)
@@ -116,11 +112,11 @@ class PremiumActivity : BaseActivity() {
         }
 
         lifecycleScope.launch {
-            viewModel.getProductDetails().observe(this@PremiumActivity) {
+            viewModel.getProductDetails().observe(this@FreeTrialActivity) {
                 setPrices(it)
             }
 
-            viewModel.hasActiveSubs.observe(this@PremiumActivity) {
+            viewModel.hasActiveSubs.observe(this@FreeTrialActivity) {
                 Log.d("IAP", "called! $doesHaveCurrentPurchase")
                 if (!doesHaveCurrentPurchase && shouldShowToast) {
                     shouldShowToast = false
@@ -135,7 +131,7 @@ class PremiumActivity : BaseActivity() {
                 startActivity(intent)
             }
 
-            viewModel.isBillingConnected().observe(this@PremiumActivity) {
+            viewModel.isBillingConnected().observe(this@FreeTrialActivity) {
                 if (!it) {
                     toast(getString(R.string.failed_to_connect_to_billing_server))
                 }
@@ -153,32 +149,6 @@ class PremiumActivity : BaseActivity() {
                         navigateToMainActivity()
                     }
                 } else finish()
-            }
-
-            monthlyLayout.singleClick {
-                yearlyCheck.setImageResource(R.drawable.ic_radio_uncheck)
-                monthlyCheck.setImageResource(R.drawable.ic_radio_check)
-                tvBuy.text = getString(R.string.n_continue)
-                selectedProduct = monthlyProduct
-                selectedOfferType = BillingViewModel.BASE_PLAN_MONTHLY_SUBSCRIPTION
-
-                selectSubscriptionLayout(
-                    selectedLayout = binding.monthlyLayout,
-                    unselectedLayout = binding.yearlyLayout
-                )
-            }
-
-            yearlyLayout.singleClick {
-                yearlyCheck.setImageResource(R.drawable.ic_radio_check)
-                monthlyCheck.setImageResource(R.drawable.ic_radio_uncheck)
-                tvBuy.text = getString(R.string.start_free_trail)
-                selectedProduct = yearlyProduct
-                selectedOfferType = BillingViewModel.BASE_PLAN_ANNUAL_SUBSCRIPTION
-
-                selectSubscriptionLayout(
-                    selectedLayout = binding.yearlyLayout,
-                    unselectedLayout = binding.monthlyLayout
-                )
             }
 
             btnBuy.singleClick {
@@ -205,15 +175,14 @@ class PremiumActivity : BaseActivity() {
                 }
             }
         }
-        selectedProduct = yearlyProduct
 
-        var monthlyPostTrialPrice = ""
-        monthlyProduct = products[BillingViewModel.BASE_PLAN_MONTHLY_SUBSCRIPTION]
-        monthlyProduct?.subscriptionOfferDetails?.forEach { offerDetails ->
+        var weeklyPostTrialPrice = ""
+        weeklyProduct = products[BillingViewModel.BASE_PLAN_WEEKLY_SUBSCRIPTION]
+        weeklyProduct?.subscriptionOfferDetails?.forEach { offerDetails ->
             offerDetails.pricingPhases.pricingPhaseList.let { phases ->
                 for (pricingPhase in phases) {
                     if (pricingPhase.priceAmountMicros > 0) {
-                        monthlyPostTrialPrice =
+                        weeklyPostTrialPrice =
                             "${pricingPhase.priceCurrencyCode} ${(pricingPhase.priceAmountMicros / 1_000_000)}"
                         break
                     }
@@ -222,34 +191,32 @@ class PremiumActivity : BaseActivity() {
         }
 
         binding.apply {
-            if (monthlyPostTrialPrice.trim().isNotEmpty()) {
-                tvAmountMonthly.text = monthlyPostTrialPrice
-            } else tvAmountMonthly.text = "$3.99"
+            when (splashIAPExperiment) {
+                WEEKLY -> {
+                    if (weeklyPostTrialPrice.trim().isNotEmpty()) {
+                        binding.tvAmountYearly.text = getString(
+                            R.string.free_trial_offer_then_amount_weekly,
+                            weeklyPostTrialPrice
+                        )
+                    } else binding.tvAmountYearly.text =
+                        getString(R.string.free_trial_offer_then_amount_weekly, "$7.99")
 
-            if (annualPostTrialPrice.trim().isNotEmpty()) {
-                binding.tvAmountYearly.text = annualPostTrialPrice
-            } else binding.tvAmountYearly.text = "$23.99"
-        }
-    }
 
-    private fun selectSubscriptionLayout(
-        selectedLayout: MaterialCardView?,
-        unselectedLayout: MaterialCardView?
-    ) {
-        selectedLayout?.apply {
-            strokeColor = ResourcesCompat.getColor(
-                resources,
-                R.color.n_sky_blue,
-                theme
-            )
-        }
+                    selectedProduct = weeklyProduct
+                }
 
-        unselectedLayout?.apply {
-            strokeColor = ResourcesCompat.getColor(
-                resources,
-                android.R.color.transparent,
-                theme
-            )
+                YEARLY -> {
+                    if (annualPostTrialPrice.trim().isNotEmpty()) {
+                        binding.tvAmountYearly.text = getString(
+                            R.string.free_trial_offer_then_amount_yearly,
+                            annualPostTrialPrice
+                        )
+                    } else binding.tvAmountYearly.text =
+                        getString(R.string.free_trial_offer_then_amount_yearly, "$23.99")
+
+                    selectedProduct = yearlyProduct
+                }
+            }
         }
     }
 
@@ -272,7 +239,7 @@ class PremiumActivity : BaseActivity() {
                         )
                     } else {
                         resources?.getString(R.string.failed_to_connect)?.let {
-                            toast(it)
+                            toast("No offer selected!")
                         }
                     }
                 } else {
