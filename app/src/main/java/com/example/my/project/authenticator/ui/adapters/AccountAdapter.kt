@@ -32,6 +32,11 @@ class AccountAdapter(
         notifyDataSetChanged()
     }
 
+    fun removeAccount(account: TotpCardState) {
+        accounts.remove(account)
+        notifyDataSetChanged()
+    }
+
     fun selectAll() {
         selectedAccounts.clear()
         selectedAccounts.addAll(accounts)

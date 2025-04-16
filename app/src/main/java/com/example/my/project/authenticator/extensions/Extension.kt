@@ -557,7 +557,7 @@ fun Activity.showEditAccountBottomSheet(
     account: TotpCardState,
     onNameChanged: (String) -> Unit,
     onCopy: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: (TotpCardState) -> Unit
 ) {
     val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog).apply {
         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -607,7 +607,7 @@ fun Activity.showEditAccountBottomSheet(
         }
 
         btnDelete.setOnClickListener {
-            onDelete()
+            onDelete(account)
             bottomSheetDialog.dismiss()
         }
 

@@ -397,7 +397,7 @@ class HomeFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_delete -> {
-                    deleteAccounts()
+//                    deleteAccounts()
                     true
                 }
 
@@ -568,8 +568,8 @@ class HomeFragment : Fragment() {
                                     onCopy = {
                                         requireContext().copyTextToClipboard(account.oneTimeCode.toString())
                                     },
-                                    onDelete = {
-                                        deleteAccounts()
+                                    onDelete = { account ->
+                                        deleteAccount(account)
                                     }
                                 )
                             }
@@ -588,6 +588,17 @@ class HomeFragment : Fragment() {
                     placeHolder()
                     hasCodes = false
                 }
+            }
+        }
+    }
+
+    private fun deleteAccount(account: TotpCardState) {
+        lifecycleScope.launch(Dispatchers.IO) {
+                homeViewModel.removeTotpById(account)
+        }.invokeOnCompletion {
+            CoroutineScope(Dispatchers.Main).launch {
+                accountAdapter.removeAccount(account)
+                refreshCurrentFragment()
             }
         }
     }
