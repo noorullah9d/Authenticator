@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_10sdp"
     app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_10sdp"
     app:strokeWidth="0dp">
 
     <LinearLayout
@@ -13,50 +14,48 @@
         android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
-        <TextView
-            android:id="@+id/tvSubHeading"
+        <LinearLayout
+            android:id="@+id/ratingContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:fontFamily="@font/open_sans_semi_bold"
-            android:gravity="center"
-            android:text="@string/how_was_your_experience"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <per.wsj.library.AndRatingBar
-            android:id="@+id/rating_stars"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:rating="2"
-            android:visibility="gone"
-            app:bgColor="@color/card_light_color"
-            app:bgDrawable="@drawable/ic_rate_us_filled"
-            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading"
-            app:starColor="@color/md_theme_light_primary"
-            app:starDrawable="@drawable/ic_rate_us_unfilled" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSubHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:gravity="center"
+                android:text="@string/how_was_your_experience"
+                android:textColor="@color/n_dark_grey"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<com.example.my.project.authenticator.ui.custom.DragRatingView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:visibility="gone"
-            app:initial_rating="0"
-            app:layout_constraintTop_toBottomOf="@+id/tvSubHeading" />-->
+            <per.wsj.library.AndRatingBar
+                android:id="@+id/rating_stars"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:visibility="visible"
+                app:bgColor="@color/n_dark_grey"
+                app:bgDrawable="@drawable/ic_star_empty"
+                app:layout_constraintTop_toBottomOf="@+id/tvSubHeading"
+                app:starColor="@color/n_dark_grey"
+                app:starDrawable="@drawable/ic_star_filled"
+                tools:rating="2" />
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/adContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
             android:visibility="visible"
             app:cardBackgroundColor="@color/adBackgroundColor"
             app:cardCornerRadius="@dimen/_6sdp"
@@ -75,12 +74,12 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
-            style="@style/ThemeOverlay.Material3.Button.TextButton"
             android:id="@+id/exit"
+            style="@style/ThemeOverlay.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
             android:layout_marginTop="@dimen/_13sdp"
+            android:backgroundTint="@android:color/transparent"
             android:fontFamily="@font/open_sans_regular"
             android:text="@string/tap_again_to_exit"
             android:textColor="@color/n_dark_grey"

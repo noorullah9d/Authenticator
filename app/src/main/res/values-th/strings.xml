@@ -202,4 +202,7 @@
     <string name="terms_of_use">ข้อกำหนดการใช้งาน</string>
     <string name="save_75">ประหยัด 75%</string>
 
+    <string name="delete_account">ลบบัญชี</string>
+    <string name="delete_account_summary">คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีของคุณ?</string>
+
 </resources>

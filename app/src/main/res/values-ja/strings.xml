@@ -202,4 +202,7 @@
     <string name="terms_of_use">利用規約</string>
     <string name="save_75">75％割引</string>
 
+    <string name="delete_account">アカウント削除</string>
+    <string name="delete_account_summary">本当にアカウントを削除してもよろしいですか？</string>
+
 </resources>

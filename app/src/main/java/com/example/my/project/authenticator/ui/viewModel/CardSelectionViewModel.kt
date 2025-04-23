@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.model
+package com.example.my.project.authenticator.ui.viewModel
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData

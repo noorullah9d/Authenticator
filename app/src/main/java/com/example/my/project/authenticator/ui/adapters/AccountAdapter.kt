@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.databinding.AccountItemBinding
+import com.example.my.project.authenticator.extensions.formatCode
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.invisible
+import com.example.my.project.authenticator.extensions.loadIssuerLogo
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.utils.TotpCardState
@@ -57,58 +59,48 @@ class AccountAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(account: TotpCardState, isSelected: Boolean) {
-            /*val otp = account.oneTimeCode.toString().length
-            binding.tvName.text = account.name
-            if (otp == 5) {
-                binding.tvPassCode.text = "0" + account.oneTimeCode.toString()
-            } else {
-                binding.tvPassCode.text = account.oneTimeCode.toString()
-            }*/
-            binding.tvName.text = account.name
-            binding.tvPassCode.text = account.oneTimeCode.toString().padStart(6, '0')
+            Log.d(TAG, "bind: account= $account")
 
-            if (account.type == "TOTP") {
-                binding.circularProgress.show()
-                binding.icRefresh.invisible()
-                binding.circularProgress.progress = account.secondsLeft.toFloat()
-                binding.circularProgress.text = account.secondsLeft.toString()
-            } else {
-                binding.circularProgress.hide()
-                binding.icRefresh.show()
+            binding.apply {
+                tvName.text = account.name
+                val code = account.oneTimeCode.toString().padStart(6, '0')
+                tvPassCode.text = code.formatCode()
 
-                binding.icRefresh.setOnClickListener {
-                    onHOTPRefreshClicked.invoke(account)
-                }
-            }
-
-//            binding.circularProgress.progress = account.secondsLeft.toFloat()
-//            binding.circularProgress.text = account.secondsLeft.toString()
-            binding.ivProfileImage.setProfileImage(account.name)
-
-//            binding.selected.visibility = if (isSelected) View.VISIBLE else View.GONE
-
-            binding.root.setOnClickListener {
-                onItemClick.invoke(account)
-
-                if (!selectedAccounts.contains(account)) {
-                    selectedAccounts.add(account)
-                }
-                Log.d("EditAccount", "bind: selected accounts= ${selectedAccounts.size}")
-
-                /*if (isSelectionMode) {
-                    toggleSelection(adapterPosition, account)
+                if (account.type == "TOTP") {
+                    circularProgress.show()
+                    icRefresh.invisible()
+                    circularProgress.progress = account.secondsLeft.toFloat()
+                    circularProgress.text = account.secondsLeft.toString()
                 } else {
-                    it.context.copyTextToClipboard(account.oneTimeCode.toString())
-                }*/
-            }
+                    circularProgress.hide()
+                    icRefresh.show()
 
-            /*binding.root.setOnLongClickListener {
-                if (!isSelectionMode) {
-                    enterSelectionMode()
+                    icRefresh.setOnClickListener {
+                        onHOTPRefreshClicked.invoke(account)
+                    }
                 }
-                toggleSelection(adapterPosition, account)
-                true
-            }*/
+
+                if (account.issuer.isEmpty()) {
+                    tvIssuer.hide()
+                    ivProfileImage.hide()
+                    tvProfileImage.show()
+                    tvProfileImage.setProfileImage(account.name)
+                } else {
+                    tvProfileImage.hide()
+                    tvIssuer.show()
+                    tvIssuer.text = account.issuer
+                    ivProfileImage.show()
+                    ivProfileImage.loadIssuerLogo(account.issuer)
+                }
+
+                root.setOnClickListener {
+                    onItemClick.invoke(account)
+
+                    if (!selectedAccounts.contains(account)) {
+                        selectedAccounts.add(account)
+                    }
+                }
+            }
         }
     }
 

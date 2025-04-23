@@ -203,4 +203,7 @@
     <string name="terms_of_use">Podmínky použití</string>
     <string name="save_75">Ušetřete 75 %</string>
 
+    <string name="delete_account">Smazat účet</string>
+    <string name="delete_account_summary">Jste si jisti, že chcete smazat svůj účet?</string>
+
 </resources>

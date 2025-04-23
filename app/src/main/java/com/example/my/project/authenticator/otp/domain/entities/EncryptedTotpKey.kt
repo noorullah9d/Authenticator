@@ -3,8 +3,9 @@ package com.example.my.project.authenticator.otp.domain.entities
 data class EncryptedTotpKey(
     val id: Int,
     val email: String,
-    val shaStr :String,
-    val totpVsHop :String,
+    val shaStr: String,
+    val issuer: String,
+    val totpVsHop: String,
     val name: String,
     val category: String,
     val filePath: String,

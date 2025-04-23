@@ -203,4 +203,7 @@
     <string name="terms_of_use">Nutzungsbedingungen</string>
     <string name="save_75">Spare 75 %</string>
 
+    <string name="delete_account">Konto löschen</string>
+    <string name="delete_account_summary">Bist du sicher, dass du dein Konto löschen möchtest?</string>
+
 </resources>

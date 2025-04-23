@@ -15,7 +15,7 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.model.LanguageViewModel
+import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.ui.adapters.LanguagesAdapterNew
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved

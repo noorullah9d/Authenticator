@@ -9,7 +9,7 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ActivityFeedbackScreenBinding
 import com.example.my.project.authenticator.extensions.sendEmail
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 

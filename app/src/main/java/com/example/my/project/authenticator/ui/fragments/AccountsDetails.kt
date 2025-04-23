@@ -46,6 +46,7 @@ class AccountsDetails : Fragment() {
     private var totp = listOf("TOTP", "HOTP")
     private var sha = listOf("SHA1", "SHA256")
     private var category: String? = null
+    private var issuer: String? = null
     private var SHA: String? = null
     private var OTP: String? = null
     private var filePath: String? = null
@@ -74,8 +75,6 @@ class AccountsDetails : Fragment() {
             filePath = arguments?.getString("filePath") ?: ""
             OTP = arguments?.getString("OTP") ?: "TOTP"
             category = arguments?.getString("category") ?: "Default"
-            val tool = arguments?.getString("tool")
-
 
             if (filePath != "") displayImage(filePath!!)
 
@@ -110,6 +109,7 @@ class AccountsDetails : Fragment() {
 
         val accountName = arguments?.getString("key_name") ?: ""
         val secretKey = arguments?.getString("secret_key") ?: ""
+        issuer = arguments?.getString("issuer") ?: ""
 
         binding.etAccountName.setText(accountName)
         binding.etAccountKey.setText(secretKey)
@@ -129,6 +129,17 @@ class AccountsDetails : Fragment() {
         totpOptionsSpinner()
         shaSpinner()
         loadAndShowAdd()
+        handleBackPress()
+    }
+
+    private fun handleBackPress() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 
     private fun loadAndShowAdd() {
@@ -179,19 +190,9 @@ class AccountsDetails : Fragment() {
 
     private fun clickListeners() {
         binding.apply {
-
-
             ivBackIcon.setOnClickListener {
                 requireActivity().finish()
             }
-
-            requireActivity().onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        requireActivity().finish()
-                    }
-                })
 
             btnAdd.setOnClickListener {
                 val accountName = etAccountName.text.toString()
@@ -212,18 +213,18 @@ class AccountsDetails : Fragment() {
                         try {
                             val addResult = withContext(Dispatchers.IO) {
                                 if (id != -1) homeViewModel.addTotp(
-                                    accountName,
-                                    accountKey,
-                                    "",
+                                    name = accountName,
+                                    base32Secret = accountKey,
+                                    issuer = issuer ?: "",
                                     categories = category ?: "",
                                     shaStr = SHA ?: "SHA1",
                                     totpVsHop = OTP ?: "TOTP",
                                     filePath = filePath ?: ""
                                 )
                                 else homeViewModel.addTotp(
-                                    accountName,
-                                    accountKey,
-                                    "",
+                                    name = accountName,
+                                    base32Secret = accountKey,
+                                    issuer = issuer ?: "",
                                     categories = category ?: "",
                                     shaStr = SHA ?: "SHA1",
                                     totpVsHop = OTP ?: "TOTP",
@@ -257,12 +258,8 @@ class AccountsDetails : Fragment() {
             profileImage.setOnClickListener {
                 pickImageLauncher.launch("image/*")
             }
-
-
         }
-
     }
-
 
     private fun displayImage(imagePath: String) {
         binding.profileImage.setImageURI(Uri.parse(imagePath))
@@ -353,7 +350,6 @@ class AccountsDetails : Fragment() {
             TAG,
             "setupExportOptionsSpinner: Current Category: $currentCategory, Position: $selectedPosition"
         )
-
 
         if (selectedPosition >= 0) {
             binding.spSelectGroup.post {

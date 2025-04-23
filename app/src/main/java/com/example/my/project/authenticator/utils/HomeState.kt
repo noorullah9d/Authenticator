@@ -9,6 +9,7 @@ data class TotpCardState(
     val id: Int,
     val secretKey: String,
     val name: String,
+    val issuer: String,
     var oneTimeCode: Int,
     var secondsLeft: Int,
     var cryptography: String,

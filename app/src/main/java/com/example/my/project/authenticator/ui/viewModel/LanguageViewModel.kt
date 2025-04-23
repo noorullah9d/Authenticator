@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.model
+package com.example.my.project.authenticator.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.example.my.project.authenticator.utils.AppPreference

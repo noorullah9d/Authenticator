@@ -201,4 +201,7 @@
     <string name="terms_of_use">Termos de uso</string>
     <string name="save_75">Economize 75%</string>
 
+    <string name="delete_account">Excluir conta</string>
+    <string name="delete_account_summary">Tem certeza de que deseja excluir sua conta?</string>
+
 </resources>

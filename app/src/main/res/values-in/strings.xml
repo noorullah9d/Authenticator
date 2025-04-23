@@ -202,4 +202,7 @@
     <string name="terms_of_use">Syarat Penggunaan</string>
     <string name="save_75">Hemat 75%</string>
 
+    <string name="delete_account">Hapus akun</string>
+    <string name="delete_account_summary">Apakah Anda yakin ingin menghapus akun Anda?</string>
+
 </resources>

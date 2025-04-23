@@ -24,6 +24,7 @@
 
     <color name="adBackgroundColor">#1A3856</color>
     <color name="colorShimmer">#33FFFFFF</color>
+    <color name="colorTextSecondary">#DBDBDB</color>
 
     <color name="n_stroke_color">#585858</color>
     <color name="n_sky_blue">#1E90FF</color>

@@ -36,6 +36,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -44,15 +45,19 @@ import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import coil.load
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.ExitNativeAd
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.CreateNewGroupBinding
 import com.example.my.project.authenticator.databinding.DeleteGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
+import com.example.my.project.authenticator.databinding.DialogDeleteAccountBinding
 import com.example.my.project.authenticator.databinding.DialogEditAccountBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
+import com.example.my.project.authenticator.databinding.GntLanguagesBinding
 import com.example.my.project.authenticator.databinding.GntMediumBinding
 import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
 import com.example.my.project.authenticator.model.GuideItem
@@ -349,6 +354,28 @@ fun Fragment.toast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
+fun String.formatCode(): String {
+    if (isEmpty()) return ""
+
+    return when (this.length) {
+        5 -> if (this.toIntOrNull() == null) take(5) else "${take(3)} ${takeLast(2)}"
+        6 -> "${take(3)} ${takeLast(3)}"
+        7 -> "${take(4)} ${takeLast(3)}"
+        8 -> "${take(4)} ${takeLast(4)}"
+        else -> this
+    }
+}
+
+fun ImageView.loadIssuerLogo(issuer: String) {
+    val logoUrl = "https://logo.clearbit.com/${issuer.lowercase()}.com"
+
+    // Use Coil to load the image into the ImageView
+    load(logoUrl) {
+        placeholder(R.drawable.ic_how)  // Placeholder while loading
+        error(R.drawable.ic_how)  // Error image if the logo fails to load
+    }
+}
+
 fun TextView.setProfileImage(accountName: String) {
     val letterColors = mapOf(
         'A' to "#4285F4".toColorInt(),
@@ -598,21 +625,42 @@ fun Activity.showEditAccountBottomSheet(
         btnApply.setOnClickListener {
             if (etAccountName.getText().toString() == "") {
                 toast(getString(R.string.field_should_not_empty))
-            }/* else if (etAccountName.getText().toString() == account.name) {
-                bottomSheetDialog.dismiss()
-            }*/ else {
+            } else {
                 onNameChanged.invoke(etAccountName.getText().toString())
                 bottomSheetDialog.dismiss()
             }
         }
 
-        btnDelete.setOnClickListener {
+        icDelete.setOnClickListener {
             onDelete(account)
             bottomSheetDialog.dismiss()
         }
 
         btnCopy.setOnClickListener {
             onCopy()
+            bottomSheetDialog.dismiss()
+        }
+    }
+}
+
+fun Activity.showDeleteAccountBottomSheet(
+    onDelete: () -> Unit
+) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog).apply {
+        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+    val binding = DialogDeleteAccountBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
+    bottomSheetDialog.setContentView(binding.root)
+    bottomSheetDialog.show()
+
+    binding.apply {
+        btnDelete.setOnClickListener {
+            onDelete()
+            bottomSheetDialog.dismiss()
+        }
+
+        btnCancel.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
     }
@@ -625,11 +673,22 @@ fun Activity.showExitBottomSheet(onExitClicked: () -> Unit) {
     bottomSheetDialog.setContentView(binding.root)
     bottomSheetDialog.show()
 
-    loadAndShowNativeAdd(this, binding.adFrame)
-
     binding.apply {
+        // Show appropriate containers based on whether an ad is loaded
+        if (ExitNativeAd.mNativeAd != null) {
+            // Show ad container
+            ratingContainer.hide()
+            adContainer.show()
+            showNativeAd(this@showExitBottomSheet, adContainer)
+        } else {
+            // Show rating container
+            ratingContainer.show()
+            adContainer.hide()
+        }
+
         ratingStars.setOnRatingChangeListener { ratingBar, rating, fromUser ->
             if (ratingBar.rating > 3) {
+                PrefsHelper.isAppRated = true
                 openAppInPlayStore()
                 bottomSheetDialog.dismiss()
             } else {
@@ -645,46 +704,12 @@ fun Activity.showExitBottomSheet(onExitClicked: () -> Unit) {
     }
 }
 
-private fun loadAndShowNativeAdd(activity: Activity, adContainer: FrameLayout) {
-    activity.apply {
-        if (!isInternetAvailable() || PrefsHelper.isAdsRemoved) {
-            adContainer.hide()
-            return
-        }
-        adContainer.show()
-        val shimmer = ShimmerMediumNativeBinding.inflate(layoutInflater)
-        adContainer.apply {
-            removeAllViews()
-            safeAddView(shimmer.root)
-            shimmer.root.startShimmerAnimation()
-        }
-
-        if (NativeAd.admobNativeAd != null) {
-            showNativeAd(activity, adContainer)
-            return
-        }
-
-        NativeAd.result = {
-            if (it) {
-                showNativeAd(activity, adContainer)
-            } else {
-                adContainer.hide()
-            }
-        }
-
-        NativeAd.loadAd(
-            this,
-            getString(R.string.admob_native_id_exit)
-        )
-    }
-}
-
 private fun showNativeAd(activity: Activity, adContainer: FrameLayout) {
     activity.apply {
         adContainer.show()
-        NativeAd.admobNativeAd?.let {
-            val adView = GntMediumBinding.inflate(layoutInflater)
-            NativeAd.populateNativeAdView(it, adView)
+        ExitNativeAd.mNativeAd?.let {
+            val adView = GntLanguagesBinding.inflate(layoutInflater)
+            ExitNativeAd.populateNativeAdView(it, adView)
             adContainer.removeAllViews()
             adContainer.safeAddView(adView.root)
         }

@@ -201,4 +201,7 @@
     <string name="terms_of_use">شرایط استفاده</string>
     <string name="save_75">۷۵٪ صرفه‌جویی کنید</string>
 
+    <string name="delete_account">حذف حساب</string>
+    <string name="delete_account_summary">آیا مطمئن هستید که می‌خواهید حساب خود را حذف کنید؟</string>
+
 </resources>

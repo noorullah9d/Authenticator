@@ -200,4 +200,7 @@
     <string name="terms_of_use">使用条款</string>
     <string name="save_75">节省75%</string>
 
+    <string name="delete_account">删除账户</string>
+    <string name="delete_account_summary">您确定要删除您的账户吗？</string>
+
 </resources>

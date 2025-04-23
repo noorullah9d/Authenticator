@@ -20,7 +20,7 @@ import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.show
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.utils.AppTheme
 import com.example.my.project.authenticator.utils.DARK
 import com.example.my.project.authenticator.utils.LIGHT

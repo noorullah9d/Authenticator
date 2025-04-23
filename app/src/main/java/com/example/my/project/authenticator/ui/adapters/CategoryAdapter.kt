@@ -8,7 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.ItemCategoryBinding
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.otp.data.database.Categories
 
 class CategoryAdapter(

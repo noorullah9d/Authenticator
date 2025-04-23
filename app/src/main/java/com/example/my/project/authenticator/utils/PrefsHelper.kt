@@ -27,6 +27,10 @@ object PrefsHelper {
         return sharedPreferences.getString(key, def)!!
     }
 
+    var isAppRated
+        get() = sharedPreferences.getBoolean(IS_APP_RATED, false)
+        set(value) = sharedPreferences.edit { putBoolean(IS_APP_RATED, value) }
+
     var lastPremiumShownTime: Long
         get() = sharedPreferences.getLong(LAST_PREMIUM_SHOWN_TIME, 0)
         set(value) = sharedPreferences.edit { putLong(LAST_PREMIUM_SHOWN_TIME, value) }

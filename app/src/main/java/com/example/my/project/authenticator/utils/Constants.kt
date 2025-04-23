@@ -17,6 +17,7 @@ const val IS_PREMIUM = "is_premium"
 const val IS_LANGUAGE_SHOWN = "IS_LANGUAGE_SHOWN"
 const val IS_ONBOARDING_SHOWN = "IS_ONBOARDING_SHOWN"
 const val LAST_PREMIUM_SHOWN_TIME = "lastPremiumShownTime"
+const val IS_APP_RATED = "is_app_rated"
 
 var isInterstitialShowing = false
 var shouldShowInterstitialAd = false

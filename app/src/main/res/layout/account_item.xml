@@ -1,72 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_6sdp"
     android:animateLayoutChanges="true"
-    android:foreground="?selectableItemBackground">
+    android:foreground="?selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:strokeColor="@color/n_stroke_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/foregroundLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/backgroundLayout"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/ivProfileImage"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:background="@drawable/circle_background"
-            android:gravity="center"
-            android:textColor="@android:color/white"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profileContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_3sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvProfileImage"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/circle_background"
+                android:fontFamily="@font/open_sans_semi_bold"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="G" />
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_google"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvIssuer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:maxLines="1"
+            android:textColor="@color/n_dark_grey"
             android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/circularProgress"
+            app:layout_constraintStart_toEndOf="@+id/profileContainer"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="G" />
+            tools:text="Google" />
 
-        <ImageView
-            android:id="@+id/selected"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/is_selected"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:ellipsize="end"
             android:fontFamily="@font/open_sans_regular"
             android:maxLines="1"
-            android:textColor="@color/n_dark_grey"
-            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintEnd_toStartOf="@id/circularProgress"
-            app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-            app:layout_constraintTop_toTopOf="@+id/ivProfileImage"
-            tools:text="Tik-Tok" />
+            app:layout_constraintStart_toEndOf="@+id/profileContainer"
+            app:layout_constraintTop_toBottomOf="@id/tvIssuer"
+            tools:text="team@galixo.ai" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvPassCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/bg_backed_up"
+            android:backgroundTint="@color/n_off_white"
             android:fontFamily="@font/open_sans_bold"
+            android:paddingHorizontal="@dimen/_40sdp"
+            android:paddingVertical="@dimen/_4sdp"
             android:textColor="@color/n_dark_grey"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="@dimen/_19ssp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="@id/profileContainer"
+            app:layout_constraintTop_toBottomOf="@+id/profileContainer"
             tools:text="999 754" />
 
         <com.owl93.dpb.CircularProgressView
@@ -75,7 +114,7 @@
             android:layout_height="@dimen/_30sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPassCode"
             app:maxValue="30"
             app:progress="10"
             app:progressAnimationDuration="30"
@@ -97,34 +136,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvPassCode"
             tools:ignore="ContentDescription" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:background="@color/n_stroke_color"
-            app:layout_constraintTop_toBottomOf="@+id/tvPassCode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/backgroundLayout"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="0dp"
-        android:background="@color/md_theme_light_primary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/delete_icon"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="end|center_vertical"
-            android:padding="8dp"
-            android:src="@drawable/delete_otp"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

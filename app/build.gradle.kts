@@ -28,9 +28,9 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 11
-        versionName = "1.1.0"
-        setProperty("archivesBaseName", "Authenticator_v$versionCode($versionName)")
+        versionCode = 12
+        versionName = "1.1.1"
+        setProperty("archivesBaseName", "authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
     }
@@ -125,11 +125,26 @@ dependencies {
 
     implementation(libs.firebase.auth)
 
+    // coil
+    implementation(libs.coil)
+
     // ump
     implementation("com.google.android.ump:user-messaging-platform:2.2.0")
 
     // admob
     implementation("com.google.android.gms:play-services-ads:23.2.0")
+
+    // fb mediation
+    implementation("com.google.ads.mediation:facebook:6.17.0.0")
+
+    // mintegral mediation
+    implementation("com.google.ads.mediation:mintegral:16.7.81.0")
+
+    // applovin mediation
+    implementation("com.google.ads.mediation:applovin:12.5.0.1")
+
+    // liftOff mediation
+    implementation("com.google.ads.mediation:vungle:7.4.0.0")
 
     //shimmer
     implementation("com.facebook.shimmer:shimmer:0.1.0@aar")

@@ -81,7 +81,7 @@ class ImportViewModel @Inject constructor(
 //                saveFirebase.saveDataToDB(email = userEmail, it.secretKey, it.name)
                 saveFirebase.saveDataToDB(email = userEmail,  it.secretKey, it.name, "","")
             }
-            addNewTotpUseCase(0, userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, it.SHA ?: "SHA1", it.type ?: "TOTP", "")
+            addNewTotpUseCase(0, userEmail, issuer = "", "", Base32().decode(it.secretKey), it.name, it.secretKey, it.SHA ?: "SHA1", it.type ?: "TOTP", "")
 //            addNewTotpUseCase(System.currentTimeMillis().toInt(), userEmail, "", Base32().decode(it.secretKey), it.name, it.secretKey, shaStr = it.SHA ?: "SHA1", totpVsHop = it.type ?: "TOTP", filePath = "")
         }
     }

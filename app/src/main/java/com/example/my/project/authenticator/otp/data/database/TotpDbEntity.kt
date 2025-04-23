@@ -9,6 +9,7 @@ data class TotpDbEntity(
     val email: String,
     val category: String,
     val name: String,
+    val issuer: String,
     val shaStr :String,
     val totpVsHop :String,
     val filePath: String,

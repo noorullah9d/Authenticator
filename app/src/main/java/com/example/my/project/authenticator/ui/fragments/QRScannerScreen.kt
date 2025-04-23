@@ -170,11 +170,12 @@ class QRScannerScreen : Fragment() {
                         result++
                         if (result < 2) {
                             val displayValue = barcode.displayValue
+                            Log.d(TAG, "startCamera: scan result= ${barcode.displayValue}")
                             if (displayValue != null) {
                                 val infoData = parseTotpUri(displayValue)
                                 if (infoData != null) {
-                                    val (secret, name, tool) = infoData
-                                    Log.d(TAG, "Scanned TOTP: Secret = $secret, Name = $name tool $tool    $displayValue")
+                                    val (secret, name, issuer) = infoData
+                                    Log.d(TAG, "Scanned TOTP: Secret = $secret, Name= $name -- issuer= $issuer  -- displayValue= $displayValue")
 
                                     val isExists = homeViewModel.isKeyExists(name, secret)
                                     Log.d(TAG, "startCamera: $isExists")
@@ -190,7 +191,7 @@ class QRScannerScreen : Fragment() {
                                             val bundle = Bundle().apply {
                                                 putString("key_name", name)
                                                 putString("secret_key", secret)
-                                                putString("tool", tool)
+                                                putString("issuer", issuer)
                                                 putInt("edit", 0)
 
                                             }

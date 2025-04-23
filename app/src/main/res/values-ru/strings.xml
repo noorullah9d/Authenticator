@@ -200,4 +200,7 @@
     <string name="terms_of_use">Условия использования</string>
     <string name="save_75">Сэкономьте 75%</string>
 
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="delete_account_summary">Вы уверены, что хотите удалить свой аккаунт?</string>
+
 </resources>

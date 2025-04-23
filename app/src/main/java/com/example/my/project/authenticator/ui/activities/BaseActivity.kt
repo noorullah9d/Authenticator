@@ -2,9 +2,7 @@ package com.example.my.project.authenticator.ui.activities
 
 import android.content.Context
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.my.project.authenticator.model.LanguageViewModel
 import com.example.my.project.authenticator.utils.AppPreference
 import com.example.my.project.authenticator.utils.LanguageContextWrapper
 import dagger.hilt.android.AndroidEntryPoint

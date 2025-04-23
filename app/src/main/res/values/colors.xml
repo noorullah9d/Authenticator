@@ -23,6 +23,7 @@
 
     <color name="adBackgroundColor">#DBEDFF</color>
     <color name="colorShimmer">#D6D6D6</color>
+    <color name="colorTextSecondary">#434343</color>
 
     <color name="n_stroke_color">#EAEAEA</color>
     <color name="n_consis_white">#FFFFFF</color>

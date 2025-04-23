@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import com.applovin.sdk.AppLovinPrivacySettings
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.loadAdmobInterstitial
@@ -14,7 +15,7 @@ import com.example.my.project.authenticator.admob.requestConsentForm
 import com.example.my.project.authenticator.databinding.FragmentSplashBinding
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.ui.activities.iap.BillingViewModel
 import com.example.my.project.authenticator.ui.activities.iap.FreeTrialActivity
 import com.example.my.project.authenticator.utils.AppTheme
@@ -28,6 +29,9 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.mbridge.msdk.MBridgeConstans
+import com.mbridge.msdk.out.MBridgeSDKFactory
+import com.vungle.ads.VunglePrivacySettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,6 +70,12 @@ class SplashScreen : BaseActivity() {
         if (isInternetAvailable() && !isAdsRemoved) {
             requestConsentForm {
                 isConsentCompleted = true
+
+                // mediation consent
+                val sdk = MBridgeSDKFactory.getMBridgeSDK()
+                sdk.setConsentStatus(this, MBridgeConstans.IS_SWITCH_ON)
+                VunglePrivacySettings.setGDPRStatus(true, "1.0.0")
+                AppLovinPrivacySettings.setHasUserConsent(true, this)
 
                 // load ads here
                 if (!PrefsHelper.isLanguageShown && !isAdsRemoved) {
@@ -219,7 +229,6 @@ class SplashScreen : BaseActivity() {
     }
 
     private fun navigateToPremium() {
-
         val intent = Intent(this, FreeTrialActivity::class.java)
         intent.putExtra("isFromSplash", true)
         startActivity(intent)

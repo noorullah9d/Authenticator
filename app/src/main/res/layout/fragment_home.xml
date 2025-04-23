@@ -250,6 +250,7 @@
         android:id="@+id/below_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_8sdp"
         app:layout_constraintBottom_toTopOf="@id/adContainer"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toStartOf="@id/startGuide"
@@ -259,7 +260,6 @@
             android:id="@+id/accountData"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/account_item" />

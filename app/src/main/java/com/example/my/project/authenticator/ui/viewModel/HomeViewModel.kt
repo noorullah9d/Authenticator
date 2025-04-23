@@ -148,6 +148,7 @@ class HomeViewModel @Inject constructor(
                     addTotpUseCase(
                         id = 0,
                         email = userEmail,
+                        issuer = account.issuer,
                         categories = "",
                         secret,
                         account.accountName,
@@ -236,7 +237,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     TotpCardState(
-                        id = it.id, secretKey = it.secretKey, name = it.name, currentTotp, secondsLeft = countSecondsLeft(), cryptography = it.shaStr, type = it.totpVsHop, filePath = it.filePath, category = it.category
+                        id = it.id, secretKey = it.secretKey, name = it.name, issuer = it.issuer, oneTimeCode = currentTotp, secondsLeft = countSecondsLeft(), cryptography = it.shaStr, type = it.totpVsHop, filePath = it.filePath, category = it.category
                     )
                 }
             }
@@ -251,16 +252,20 @@ class HomeViewModel @Inject constructor(
         return ((timeStep - currentTime % timeStep).toDouble() / 1000).roundToInt()
     }
 
-    suspend fun addTotp(name: String, base32Secret: String, tool: String = "", categories: String = "", shaStr: String, totpVsHop: String, filePath: String, id: Int = 0): Boolean {
+    suspend fun addTotp(name: String, base32Secret: String, issuer: String = "", categories: String = "", shaStr: String, totpVsHop: String, filePath: String, id: Int = 0): Boolean {
         if (!isSecretCorrect(base32Secret)) return false
 
         if (userEmail != "") {
-            saveFirebase.saveDataToDB(email = userEmail, base32Secret, name, tool, categories)
+            saveFirebase.saveDataToDB(email = userEmail, base32Secret, name, issuer, categories)
         }
 
         val secret = Base32().decode(base32Secret)
         return try {
-            addTotpUseCase(id, userEmail, categories, secret, name, base32Secret, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath)
+            addTotpUseCase(
+                id = id,
+                email = userEmail,
+                issuer = issuer,
+                categories = categories, secret, name, base32Secret, shaStr = shaStr, totpVsHop = totpVsHop, filePath = filePath)
             refreshTotpKeyFlow()
             true
         } catch (e: IllegalArgumentException) {

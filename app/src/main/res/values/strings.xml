@@ -200,4 +200,7 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="save_75">Save 75%</string>
 
+    <string name="delete_account">Delete account</string>
+    <string name="delete_account_summary">Are you sure you want to delete your account?</string>
+
 </resources>

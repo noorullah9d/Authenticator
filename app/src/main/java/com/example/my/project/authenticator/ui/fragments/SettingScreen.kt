@@ -28,7 +28,7 @@ import com.example.my.project.authenticator.extensions.setOnDebouncedClickListen
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.model.LanguageViewModel
+import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen

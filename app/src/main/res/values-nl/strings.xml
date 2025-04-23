@@ -201,4 +201,7 @@
     <string name="terms_of_use">Gebruiksvoorwaarden</string>
     <string name="save_75">Bespaar 75%</string>
 
+    <string name="delete_account">Verwijder account</string>
+    <string name="delete_account_summary">Weet je zeker dat je je account wilt verwijderen?</string>
+
 </resources>

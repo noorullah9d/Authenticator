@@ -201,4 +201,7 @@
     <string name="terms_of_use">Terma Penggunaan</string>
     <string name="save_75">Jimat 75%</string>
 
+    <string name="delete_account">Padam akaun</string>
+    <string name="delete_account_summary">Adakah anda pasti ingin memadam akaun anda?</string>
+
 </resources>

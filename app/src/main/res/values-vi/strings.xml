@@ -202,4 +202,7 @@
     <string name="terms_of_use">Điều khoản sử dụng</string>
     <string name="save_75">Tiết kiệm 75%</string>
 
+    <string name="delete_account">Xóa tài khoản</string>
+    <string name="delete_account_summary">Bạn có chắc chắn muốn xóa tài khoản của mình không?</string>
+
 </resources>

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.my.project.authenticator.databinding.FragmentSecondOnBoardingBinding
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.utils.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

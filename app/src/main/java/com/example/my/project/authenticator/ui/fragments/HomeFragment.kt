@@ -3,6 +3,8 @@ package com.example.my.project.authenticator.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.ExitNativeAd
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
@@ -32,12 +35,13 @@ import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showCustomDialog
+import com.example.my.project.authenticator.extensions.showDeleteAccountBottomSheet
 import com.example.my.project.authenticator.extensions.showEditAccountBottomSheet
 import com.example.my.project.authenticator.extensions.showExitBottomSheet
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.model.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ProfileScreen
 import com.example.my.project.authenticator.ui.adapters.AccountAdapter
@@ -46,6 +50,7 @@ import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
+import com.example.my.project.authenticator.utils.PrefsHelper.isAppRated
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.example.my.project.authenticator.utils.UiState
 import com.google.firebase.auth.FirebaseAuth
@@ -94,6 +99,11 @@ class HomeFragment : Fragment() {
         backPress()
         clickListeners()
         loadFragmentInterstitial()
+        loadExitNative()
+    }
+
+    private fun loadExitNative() {
+        ExitNativeAd.loadAd(requireActivity())
     }
 
     private fun loadFragmentInterstitial() {
@@ -156,26 +166,39 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    when {
-                        binding.clTopLayout.isVisible -> {
+                    if (isSearchActive) {
+                        deactivateSearch()
+                    } else {
+                        // Exit Bottom Sheet should be shown only if:
+                        // - Ads are not removed and a native ad is available.
+                        // - OR the app is not rated.
+                        if ((!isAdsRemoved && ExitNativeAd.mNativeAd != null) || !isAppRated) {
                             requireActivity().apply {
                                 showExitBottomSheet {
                                     finishAffinity()
                                 }
                             }
-                        }
-
-                        binding.searchViewLayout.isVisible -> {
-                            updateUiState(UiState.DEFAULT)
-                            deactivateSearch()
-                        }
-
-                        binding.clDeleteSelection.isVisible -> {
-                            deselectAll()
+                        } else {
+                            Log.d(TAG, "handleOnBackPressed: double tap to exit")
+                            handleDoubleTapExit()
                         }
                     }
                 }
             })
+    }
+
+    private var exitTapCount = 0
+    private fun handleDoubleTapExit() {
+        if (exitTapCount == 0) {
+            requireActivity().toast(getString(R.string.tap_again_to_exit))
+            exitTapCount++
+            // Reset the tap count after 2 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                exitTapCount = 0
+            }, 2000)
+        } else if (exitTapCount == 1) {
+            requireActivity().finishAffinity()
+        }
     }
 
     private fun updateUiState(state: UiState) {
@@ -305,8 +328,6 @@ class HomeFragment : Fragment() {
             }
 
             edit.setOnClickListener {
-
-
                 val selectedItem = accountAdapter.getSelectedAccounts()[0]
 
                 val intent = Intent(requireActivity(), ProfileScreen::class.java)
@@ -377,7 +398,6 @@ class HomeFragment : Fragment() {
                 toast(getString(R.string.no_internet_connection))
             }
         } else {
-//            requireActivity().openFragment(R.id.backupFragment, true)
             findNavController().navigate(R.id.action_homeFragment_to_backupFragment)
         }
     }
@@ -569,7 +589,11 @@ class HomeFragment : Fragment() {
                                         requireContext().copyTextToClipboard(account.oneTimeCode.toString())
                                     },
                                     onDelete = { account ->
-                                        deleteAccount(account)
+                                        requireActivity().showDeleteAccountBottomSheet(
+                                            onDelete = {
+                                                deleteAccount(account)
+                                            }
+                                        )
                                     }
                                 )
                             }
@@ -594,7 +618,7 @@ class HomeFragment : Fragment() {
 
     private fun deleteAccount(account: TotpCardState) {
         lifecycleScope.launch(Dispatchers.IO) {
-                homeViewModel.removeTotpById(account)
+            homeViewModel.removeTotpById(account)
         }.invokeOnCompletion {
             CoroutineScope(Dispatchers.Main).launch {
                 accountAdapter.removeAccount(account)

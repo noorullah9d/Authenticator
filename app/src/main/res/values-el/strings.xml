@@ -203,4 +203,7 @@
     <string name="terms_of_use">Όροι χρήσης</string>
     <string name="save_75">Εξοικονομήστε 75%</string>
 
+    <string name="delete_account">Διαγραφή λογαριασμού</string>
+    <string name="delete_account_summary">Είστε σίγουροι ότι θέλετε να διαγράψετε τον λογαριασμό σας;</string>
+
 </resources>

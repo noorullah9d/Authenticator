@@ -17,7 +17,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
                 "accountName" to accountName,
                 "passcode" to passcode,
                 "category" to category,
-                "tool" to tool,
+                "issuer" to tool,
                 "shaStr" to tool,
                 "totpVsHop" to tool,
                 "filePath" to tool
@@ -69,6 +69,7 @@ class SaveFirebaseImpl @Inject constructor() : SaveFirebase {
                         it["accountName"].toString(),
                         it["passcode"].toString(),
                         it["category"].toString(),
+                        it["issuer"].toString(),
                         it["shaStr"].toString(),
                         it["totpVsHop"].toString(),
                         it["filePath"].toString()

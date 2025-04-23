@@ -202,4 +202,7 @@
     <string name="terms_of_use">उपयोग की शर्तें</string>
     <string name="save_75">75% बचाएं</string>
 
+    <string name="delete_account">खाता हटाएं</string>
+    <string name="delete_account_summary">क्या आप सुनिश्चित हैं कि आप अपना खाता हटाना चाहते हैं?</string>
+
 </resources>
