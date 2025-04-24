@@ -59,8 +59,6 @@ class AccountAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(account: TotpCardState, isSelected: Boolean) {
-            Log.d(TAG, "bind: account= $account")
-
             binding.apply {
                 tvName.text = account.name
                 val code = account.oneTimeCode.toString().padStart(6, '0')
@@ -146,7 +144,7 @@ class AccountAdapter(
         Log.d(TAG, "updateAccounts: ${newAccounts.size}")
         val selectedAccountIds = selectedAccounts.map { it.id }
         accounts.clear()
-        accounts.addAll(newAccounts)
+        accounts.addAll(newAccounts.reversed())
 
         selectedAccounts.clear()
         selectedAccounts.addAll(accounts.filter { it.id in selectedAccountIds })

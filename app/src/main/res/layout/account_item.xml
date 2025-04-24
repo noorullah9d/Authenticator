@@ -124,7 +124,7 @@
             app:textColor="@color/n_sky_blue"
             app:textSize="@dimen/_10ssp"
             app:trackColor="@color/light_gray"
-            app:trackWidth="@dimen/_1sdp" />
+            app:trackWidth="@dimen/_2sdp" />
 
         <ImageView
             android:id="@+id/icRefresh"

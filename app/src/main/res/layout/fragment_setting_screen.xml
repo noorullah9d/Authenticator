@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_8sdp"
-        app:layout_constraintBottom_toTopOf="@id/adContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivSettingsCancel">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -720,8 +720,8 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/adContainer"
+    <!--<androidx.cardview.widget.CardView
+        android:id="@+id/adContainerSettings"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_6sdp"
@@ -734,11 +734,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <FrameLayout
-            android:id="@+id/adFrame"
+            android:id="@+id/adFrameSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <include layout="@layout/shimmer_small_native" />
         </FrameLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

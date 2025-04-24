@@ -552,7 +552,7 @@ class HomeFragment : Fragment() {
             emailCondition()
 
             homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
-                Log.d("EditAccount", "observerData: accounts = ${homeState.totpList.size}")
+                Log.d(TAG, "observerData: accounts = ${homeState.totpList.size}")
                 if (homeState.totpList.isNotEmpty()) {
                     hasCodes = true
                     if (!isSearchActive) rlNotBackUp.show()
@@ -581,12 +581,11 @@ class HomeFragment : Fragment() {
 //                                requireContext().copyTextToClipboard(account.oneTimeCode.toString())
                                 // open editing bottom sheet
                                 requireActivity().showEditAccountBottomSheet(
+                                    viewLifecycleOwner,
+                                    homeViewModel,
                                     account,
                                     onNameChanged = { newName ->
                                         updateAccountName(newName, account)
-                                    },
-                                    onCopy = {
-                                        requireContext().copyTextToClipboard(account.oneTimeCode.toString())
                                     },
                                     onDelete = { account ->
                                         requireActivity().showDeleteAccountBottomSheet(

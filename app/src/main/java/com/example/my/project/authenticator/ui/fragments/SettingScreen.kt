@@ -17,29 +17,23 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
-import com.example.my.project.authenticator.databinding.GntSmallBinding
-import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
-import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
-import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
-import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
 import com.example.my.project.authenticator.extensions.toast
-import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.ui.activities.FeedbackScreen
 import com.example.my.project.authenticator.ui.activities.HowToWorkScreen
 import com.example.my.project.authenticator.ui.activities.ImportExportScreen
 import com.example.my.project.authenticator.ui.activities.SelectLanguageActivity
 import com.example.my.project.authenticator.ui.activities.iap.PremiumActivity
+import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.utils.DARK
 import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.LIGHT
 import com.example.my.project.authenticator.utils.PRIVACY_POLICY_URL
 import com.example.my.project.authenticator.utils.PrefsHelper
-import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.example.my.project.authenticator.utils.SYSTEM_DEFAULT
 import com.example.my.project.authenticator.utils.TERMS_CONDITIONS_URL
 import com.google.firebase.auth.FirebaseAuth
@@ -73,20 +67,20 @@ class SettingScreen : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        loadAndShowAdd()
+//        loadAndShowAdd()
         initViews()
         setupClickListeners()
         handleBackPress()
     }
 
-    private fun loadAndShowAdd() {
+    /*private fun loadAndShowAdd() {
         if (!requireContext().isInternetAvailable() || isAdsRemoved) {
-            binding.adFrame.hide()
+            binding.adFrameSettings.hide()
             return
         }
-        binding.adFrame.show()
+        binding.adFrameSettings.show()
         val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
-        binding.adFrame.apply {
+        binding.adFrameSettings.apply {
             removeAllViews()
             safeAddView(shimmer.root)
             shimmer.root.startShimmerAnimation()
@@ -101,7 +95,7 @@ class SettingScreen : Fragment() {
             if (it) {
                 showNativeAd()
             } else {
-                binding.adFrame.hide()
+                binding.adFrameSettings.hide()
             }
         }
 
@@ -114,16 +108,16 @@ class SettingScreen : Fragment() {
     private fun showNativeAd() {
         if (isAdded) {
             binding.apply {
-                adFrame.show()
+                adFrameSettings.show()
                 NativeAd.admobNativeAd?.let {
                     val adView = GntSmallBinding.inflate(layoutInflater)
                     NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+                    adFrameSettings.removeAllViews()
+                    adFrameSettings.safeAddView(adView.root)
                 }
             }
         }
-    }
+    }*/
 
     private fun handleBackPress() {
         requireActivity().onBackPressedDispatcher.addCallback(

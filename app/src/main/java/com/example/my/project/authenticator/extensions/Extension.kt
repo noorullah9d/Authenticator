@@ -17,6 +17,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.InputType
 import android.text.SpannableString
@@ -25,6 +27,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -45,10 +48,11 @@ import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import coil.load
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.ExitNativeAd
-import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.databinding.CreateNewGroupBinding
 import com.example.my.project.authenticator.databinding.DeleteGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
@@ -58,10 +62,9 @@ import com.example.my.project.authenticator.databinding.DialogReplaceAccountBind
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
 import com.example.my.project.authenticator.databinding.GntLanguagesBinding
-import com.example.my.project.authenticator.databinding.GntMediumBinding
-import com.example.my.project.authenticator.databinding.ShimmerMediumNativeBinding
 import com.example.my.project.authenticator.model.GuideItem
 import com.example.my.project.authenticator.model.LanguagesModel
+import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.OnSingleClickListener
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.TotpCardState
@@ -369,6 +372,9 @@ fun String.formatCode(): String {
 fun ImageView.loadIssuerLogo(issuer: String) {
     val logoUrl = "https://logo.clearbit.com/${issuer.lowercase()}.com"
 
+    // NOTE: if the above url is not working use following one
+//    val logoUrl = "https://img.logo.dev/${issuer.lowercase()}.com"
+
     // Use Coil to load the image into the ImageView
     load(logoUrl) {
         placeholder(R.drawable.ic_how)  // Placeholder while loading
@@ -581,9 +587,10 @@ fun Context.openAppInPlayStore() {
 
 @SuppressLint("ClickableViewAccessibility")
 fun Activity.showEditAccountBottomSheet(
+    viewLifecycleOwner: LifecycleOwner,
+    homeViewModel: HomeViewModel,
     account: TotpCardState,
     onNameChanged: (String) -> Unit,
-    onCopy: () -> Unit,
     onDelete: (TotpCardState) -> Unit
 ) {
     val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog).apply {
@@ -594,9 +601,33 @@ fun Activity.showEditAccountBottomSheet(
     bottomSheetDialog.setContentView(binding.root)
     bottomSheetDialog.show()
 
+    // Observe the homeState from homeViewModel (LiveData)
+    homeViewModel.homeState.observe(viewLifecycleOwner, Observer { homeState ->
+        // Look for the specific account in homeState.totpList and update the dialog UI
+        val accountInHomeState = homeState.totpList.find { it.id == account.id }
+        accountInHomeState?.let { mAccount ->
+            // Update OTP and progress bar every time the account data changes
+            Log.d("TAG888", "showEditAccountBottomSheet: otp= ${mAccount.oneTimeCode}")
+            binding.apply {
+                tvCode.text = mAccount.oneTimeCode.toString().padStart(6, '0').formatCode()
+                circularProgress.progress = mAccount.secondsLeft.toFloat()
+                circularProgress.text = mAccount.secondsLeft.toString()
+
+                icCopy.setOnClickListener {
+                    copyTextToClipboard(mAccount.oneTimeCode.toString())
+                    bottomSheetDialog.dismiss()
+                }
+
+                btnCopy.setOnClickListener {
+                    copyTextToClipboard(mAccount.oneTimeCode.toString())
+                    bottomSheetDialog.dismiss()
+                }
+            }
+        }
+    })
+
     binding.apply {
         etAccountName.setText(account.name)
-        tvCode.text = account.oneTimeCode.toString()
 
         etAccountName.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(
@@ -633,11 +664,6 @@ fun Activity.showEditAccountBottomSheet(
 
         icDelete.setOnClickListener {
             onDelete(account)
-            bottomSheetDialog.dismiss()
-        }
-
-        btnCopy.setOnClickListener {
-            onCopy()
             bottomSheetDialog.dismiss()
         }
     }

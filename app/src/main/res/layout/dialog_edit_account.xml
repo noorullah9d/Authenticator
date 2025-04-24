@@ -86,7 +86,7 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_25sdp"
                 app:layout_constraintTop_toBottomOf="@+id/mcv_key"
-                app:strokeColor="@color/mtrl_textinput_default_box_stroke_color">
+                app:strokeColor="@color/n_stroke_color">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:fontFamily="@font/open_sans_regular"
+                        android:fontFamily="@font/open_sans_semi_bold"
                         android:hint="@string/account_name"
                         android:inputType="text"
                         android:maxLength="50"
@@ -109,7 +109,7 @@
                         android:scrollbars="horizontal"
                         android:textColor="@color/n_dark_grey"
                         android:textColorHint="@color/n_dark_grey"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_13ssp" />
 
                     <ImageView
                         android:id="@+id/icEdit"
@@ -160,21 +160,65 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_25sdp"
             app:layout_constraintTop_toBottomOf="@+id/mcv_key"
-            app:strokeColor="@color/mtrl_textinput_default_box_stroke_color">
+            app:strokeColor="@color/n_stroke_color">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvCode"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_13sdp"
-                android:fontFamily="@font/open_sans_semi_bold"
-                android:gravity="start|center"
-                android:textColor="@color/n_dark_grey"
-                android:textSize="@dimen/_18sdp"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="343567" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:fontFamily="@font/open_sans_semi_bold"
+                    android:gravity="start|center"
+                    android:textColor="@color/n_dark_grey"
+                    android:textSize="@dimen/_13ssp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="343 567" />
+
+                <com.owl93.dpb.CircularProgressView
+                    android:id="@+id/circularProgress"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_margin="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvPassCode"
+                    app:maxValue="30"
+                    app:progress="10"
+                    app:progressAnimationDuration="30"
+                    app:strokeColor="@color/n_sky_blue"
+                    app:strokeWidth="@dimen/_2sdp"
+                    app:text="30"
+                    app:textColor="@color/n_sky_blue"
+                    app:textSize="@dimen/_8ssp"
+                    app:trackColor="@color/light_gray"
+                    app:trackWidth="@dimen/_2sdp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/icCopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_4sdp"
+                    android:src="@drawable/ic_copy"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
