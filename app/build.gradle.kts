@@ -28,8 +28,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 12
-        versionName = "1.1.1"
+        versionCode = 13
+        versionName = "1.1.2"
         setProperty("archivesBaseName", "authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -129,7 +129,7 @@ dependencies {
     implementation(libs.coil)
 
     // ump
-    implementation("com.google.android.ump:user-messaging-platform:2.2.0")
+    implementation(libs.user.messaging.platform)
 
     // admob
     implementation("com.google.android.gms:play-services-ads:23.2.0")
@@ -147,10 +147,10 @@ dependencies {
     implementation("com.google.ads.mediation:vungle:7.4.0.0")
 
     //shimmer
-    implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
+    implementation(libs.shimmer)
 
     // in-app purchase
-    implementation("com.android.billingclient:billing-ktx:7.0.0")
+    implementation(libs.billing.ktx)
 
     // Google SignIn
     implementation("androidx.credentials:credentials:1.2.2")
@@ -159,8 +159,8 @@ dependencies {
 
     implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
-    implementation("com.google.firebase:firebase-crashlytics:19.1.0")
-    implementation("com.google.firebase:firebase-config:22.0.1")
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.config)
 
     implementation(libs.barcode.scanning)
 
@@ -172,7 +172,7 @@ dependencies {
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.lambdapioneer.argon2kt:argon2kt:1.4.0")
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
 
