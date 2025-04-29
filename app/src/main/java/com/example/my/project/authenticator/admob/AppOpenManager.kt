@@ -80,7 +80,7 @@ class AppOpenManager(private var application: Application) :
         isLoadingAd = true
         AppOpenAd.load(
             application.applicationContext,
-            application.applicationContext.getString(R.string.admob_app_open_id),
+            admob_app_open,
             adRequest,
             loadCallback!!
         )

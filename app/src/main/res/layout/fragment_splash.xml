@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context=".ui.activities.SplashScreen">
 
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,15 +28,14 @@
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/splash_screen_authenticator_logo" />
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvAuthApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/app_name"
         android:textSize="@dimen/_22sdp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLockImageMode" />
@@ -52,36 +50,32 @@
         app:layout_constraintEnd_toEndOf="@+id/tvAuthApp"
         app:layout_constraintTop_toBottomOf="@+id/tvAuthApp" />
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSecure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/lato_light"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/secure_auth"
-        android:textColor="@color/white"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_18ssp"
-        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/tvSimpleSecurity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSimpleSecurity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_30sdp"
         android:text="@string/simple_security_easy_access"
-        android:textColor="@color/off_white"
+        android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_9ssp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
@@ -96,6 +90,4 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading_splash_anim" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

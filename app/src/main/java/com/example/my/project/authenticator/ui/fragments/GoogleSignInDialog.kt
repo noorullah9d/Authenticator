@@ -45,7 +45,11 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
         this.context = context
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = GoogleSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,7 +62,8 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
             Configuration.UI_MODE_NIGHT_NO -> binding.ivLockMode.setAnimation(R.raw.welcome)
         }
 
-        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let {
             val behavior = BottomSheetBehavior.from(it)
             behavior.isDraggable = false
@@ -101,12 +106,17 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
     private fun firebaseAuthWithGoogle(idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
+            .addOnCompleteListener { task ->
+                if (!isAdded) {
+                    // Fragment is no longer attached, so just return early
+                    return@addOnCompleteListener
+                }
                 if (task.isSuccessful) {
+                    val msg = context.getString(R.string.signed_in_successfully)
+                    toast(msg)
                     homeViewModel.invoke()
                     PrefsHelper.userEmail = email
                     val user = auth.currentUser
-                    toast(getString(R.string.signed_in_successfully))
                     dismiss()
                     Log.d(TAG, "signInWithCredential:success $user")
                 } else {
@@ -122,6 +132,5 @@ class GoogleSignInDialog : BottomSheetDialogFragment() {
             }
     }
 }
-
 
 private const val TAG = "GoogleSignIn"

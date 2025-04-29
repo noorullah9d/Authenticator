@@ -23,6 +23,8 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.ExitNativeAd
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_interstitial_fragment
+import com.example.my.project.authenticator.admob.admob_native_home
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -109,7 +111,7 @@ class HomeFragment : Fragment() {
     private fun loadFragmentInterstitial() {
         FragInterstitial.loadAd(
             requireContext(),
-            getString(R.string.admob_interstitial_fragment)
+            admob_interstitial_fragment
         )
     }
 
@@ -142,7 +144,7 @@ class HomeFragment : Fragment() {
 
         NativeAd.loadAd(
             requireActivity(),
-            getString(R.string.admob_native_id_home)
+            admob_native_home
         )
     }
 

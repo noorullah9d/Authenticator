@@ -5,6 +5,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_languages
 import com.example.my.project.authenticator.databinding.ActivitySelectLanguageBinding
 import com.example.my.project.authenticator.databinding.GntLanguagesBinding
 import com.example.my.project.authenticator.databinding.ShimmerLayoutLanguagesNativeBinding
@@ -71,7 +72,7 @@ class SelectLanguageActivity : BaseActivity() {
 
         NativeAd.loadAd(
             this,
-            getString(R.string.admob_native_id_languages)
+            admob_native_languages
         )
     }
 

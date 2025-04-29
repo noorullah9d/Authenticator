@@ -45,7 +45,7 @@ object ExitNativeAd {
         }
 
         isLoading = true
-        val builder = AdLoader.Builder(activity, activity.getString(R.string.admob_native_id_exit))
+        val builder = AdLoader.Builder(activity, admob_native_exit)
         builder.forNativeAd { ad ->
             Log.d("ExitNativeAd", "Has headline: ${ad.headline != null}")
             Log.d("ExitNativeAd", "Has media content: ${ad.mediaContent != null}")

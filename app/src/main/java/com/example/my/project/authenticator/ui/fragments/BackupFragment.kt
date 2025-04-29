@@ -14,6 +14,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_backup
 import com.example.my.project.authenticator.databinding.FragmentBackupBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -23,6 +24,8 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
+import com.example.my.project.authenticator.extensions.showAskPasswordDialog
+import com.example.my.project.authenticator.extensions.showLogoutBottomSheet
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.PrefsHelper
@@ -67,7 +70,11 @@ class BackupFragment : Fragment() {
             }
 
             logout.setOnClickListener {
-                logoutUser()
+                requireActivity().showLogoutBottomSheet(
+                    onLogout = {
+                        logoutUser()
+                    }
+                )
             }
 
             binding.tvEmail.text = PrefsHelper.userEmail
@@ -129,7 +136,7 @@ class BackupFragment : Fragment() {
 
         NativeAd.loadAd(
             requireActivity(),
-            getString(R.string.admob_native_id_backup_theme)
+            admob_native_backup
         )
     }
 

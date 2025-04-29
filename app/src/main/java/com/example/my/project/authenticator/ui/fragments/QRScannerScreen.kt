@@ -23,6 +23,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_scanner
 import com.example.my.project.authenticator.databinding.FragmentQRScannerScreenBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -107,7 +108,7 @@ class QRScannerScreen : Fragment() {
 
         NativeAd.loadAd(
             requireActivity(),
-            getString(R.string.admob_native_id_qr)
+            admob_native_scanner
         )
     }
 

@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_scanner
 import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
@@ -170,7 +171,7 @@ class AccountsDetails : Fragment() {
 
         NativeAd.loadAd(
             requireActivity(),
-            getString(R.string.admob_native_id_qr)
+            admob_native_scanner
         )
     }
 

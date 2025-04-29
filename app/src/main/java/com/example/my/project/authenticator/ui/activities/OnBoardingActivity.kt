@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_interstitial_onboarding
+import com.example.my.project.authenticator.admob.admob_native_onboarding
 import com.example.my.project.authenticator.admob.loadAdmobInterstitial
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
@@ -49,7 +51,7 @@ class OnBoardingActivity : BaseActivity() {
     private fun loadInterstitial() {
         if (interstitialAd == null) {
             loadAdmobInterstitial(
-                getString(R.string.admob_interstitial_onboarding),
+                admob_interstitial_onboarding,
                 onAdLoaded = {
                     interstitialAd = it
                     Log.d("OnBoarding", "interstitial ad loaded")
@@ -120,7 +122,7 @@ class OnBoardingActivity : BaseActivity() {
 
         NativeAd.loadAd(
             this,
-            getString(R.string.admob_native_id_onboarding)
+            admob_native_onboarding
         )
     }
 

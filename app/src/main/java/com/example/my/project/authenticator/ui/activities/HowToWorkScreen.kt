@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_onboarding
 import com.example.my.project.authenticator.ui.adapters.HowWorksAdapter
 import com.example.my.project.authenticator.databinding.ActivityHowToWorkScreenBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
@@ -145,7 +146,7 @@ class HowToWorkScreen : AppCompatActivity() {
 
         NativeAd.loadAd(
             this,
-            getString(R.string.admob_native_id_onboarding)
+            admob_native_onboarding
         )
     }
 

@@ -1,29 +1,40 @@
 [versions]
 agp = "8.3.2"
+andratingbar = "1.0.6"
+androidFingerprint = "1.0.4"
+applovin = "12.5.0.1"
+argon2kt = "1.4.0"
 barcodeScanning = "17.3.0"
 billingKtx = "7.0.0"
+camera = "1.3.4"
 coil = "2.6.0"
-commonsCodec = "1.16.0"
+commonsCodec = "1.15"
+credentials = "1.2.2"
+facebook = "6.17.0.0"
 firebaseAnalytics = "22.1.0"
 firebaseAuth = "23.0.0"
 firebaseBom = "33.2.0"
 firebaseConfig = "22.0.1"
 firebaseCrashlytics = "19.1.0"
+googleid = "1.1.0"
+gson = "2.10"
 hiltAndroid = "2.52"
-koinCore = "3.5.6"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
-lifecycleRuntimeKtx = "2.8.5"
+kotlinxSerializationJson = "1.6.3"
+lifecycle = "2.8.5"
+lottie = "6.0.1"
 material = "1.12.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
-navigationFragment = "2.7.7"
-playServicesAuth = "21.2.0"
-release = "v1.4.4"
+mintegral = "16.7.81.0"
+playServicesAds = "23.2.0"
+progressView = "v1.4.4"
+roomKtx = "2.6.1"
 sdpAndroid = "1.1.1"
 shimmer = "0.1.0"
 sspAndroid = "1.1.1"
@@ -32,38 +43,56 @@ navigationUiKtx = "2.7.7"
 playServicesVision = "20.1.3"
 firebaseFirestoreKtx = "25.1.0"
 firebaseCrashlyticsBuildtools = "3.0.2"
-lifecycleLivedataKtx = "2.8.6"
 fragmentKtx = "1.8.2"
 firebaseMessagingKtx = "24.1.0"
 userMessagingPlatform = "2.2.0"
+vungle = "7.4.0.0"
 
 [libraries]
+andratingbar = { module = "com.github.wdsqjq:AndRatingBar", version.ref = "andratingbar" }
+android-fingerprint = { module = "com.github.rahulabrol:Android-Fingerprint", version.ref = "androidFingerprint" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "camera" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "camera" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationFragment" }
-androidx-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationFragment" }
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
+applovin = { module = "com.google.ads.mediation:applovin", version.ref = "applovin" }
+argon2kt = { module = "com.lambdapioneer.argon2kt:argon2kt", version.ref = "argon2kt" }
 barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
 billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billingKtx" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 commons-codec = { module = "commons-codec:commons-codec", version.ref = "commonsCodec" }
+facebook = { module = "com.google.ads.mediation:facebook", version.ref = "facebook" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-config = { module = "com.google.firebase:firebase-config", version.ref = "firebaseConfig" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
-release = { module = "com.github.owl-93.Determinate-Progress-View:release", version.ref = "release" }
+mintegral = { module = "com.google.ads.mediation:mintegral", version.ref = "mintegral" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+progress-view = { module = "com.github.owl-93.Determinate-Progress-View:release", version.ref = "progressView" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
@@ -72,10 +101,10 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 play-services-vision = { group = "com.google.android.gms", name = "play-services-vision", version.ref = "playServicesVision" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
-androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
+vungle = { module = "com.google.ads.mediation:vungle", version.ref = "vungle" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

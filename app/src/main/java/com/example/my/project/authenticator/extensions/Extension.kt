@@ -58,6 +58,7 @@ import com.example.my.project.authenticator.databinding.DeleteGroupBinding
 import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogDeleteAccountBinding
 import com.example.my.project.authenticator.databinding.DialogEditAccountBinding
+import com.example.my.project.authenticator.databinding.DialogLogoutBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
@@ -683,6 +684,27 @@ fun Activity.showDeleteAccountBottomSheet(
     binding.apply {
         btnDelete.setOnClickListener {
             onDelete()
+            bottomSheetDialog.dismiss()
+        }
+
+        btnCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+    }
+}
+
+fun Activity.showLogoutBottomSheet(
+    onLogout: () -> Unit
+) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog)
+    val binding = DialogLogoutBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
+    bottomSheetDialog.setContentView(binding.root)
+    bottomSheetDialog.show()
+
+    binding.apply {
+        btnLogout.setOnClickListener {
+            onLogout()
             bottomSheetDialog.dismiss()
         }
 

@@ -8,27 +8,25 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.applovin.sdk.AppLovinPrivacySettings
-import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_interstitial_splash
+import com.example.my.project.authenticator.admob.admob_native_languages
 import com.example.my.project.authenticator.admob.loadAdmobInterstitial
 import com.example.my.project.authenticator.admob.requestConsentForm
 import com.example.my.project.authenticator.databinding.FragmentSplashBinding
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
 import com.example.my.project.authenticator.ui.activities.iap.BillingViewModel
 import com.example.my.project.authenticator.ui.activities.iap.FreeTrialActivity
+import com.example.my.project.authenticator.ui.viewModel.CardSelectionViewModel
+import com.example.my.project.authenticator.ui.viewModel.SplashViewModel
 import com.example.my.project.authenticator.utils.AppTheme
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
-import com.example.my.project.authenticator.utils.YEARLY
 import com.example.my.project.authenticator.utils.isInterstitialShowing
-import com.example.my.project.authenticator.utils.splashIAPExperiment
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.mbridge.msdk.MBridgeConstans
 import com.mbridge.msdk.out.MBridgeSDKFactory
 import com.vungle.ads.VunglePrivacySettings
@@ -39,9 +37,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashScreen : BaseActivity() {
     private lateinit var binding: FragmentSplashBinding
-    private val cardSelectionViewModel by viewModels<CardSelectionViewModel>()
 
-    private lateinit var remoteConfig: FirebaseRemoteConfig
+    private val splashViewModel by viewModels<SplashViewModel>()
+
+    private val cardSelectionViewModel by viewModels<CardSelectionViewModel>()
 
     @Inject
     lateinit var billingViewModel: BillingViewModel
@@ -53,16 +52,14 @@ class SplashScreen : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentSplashBinding.inflate(layoutInflater)
+
+        // get remote config values
+        splashViewModel.getRemoteConfig()
+
         setContentView(binding.root)
         setAppTheme()
-        setupRemoteConfig()
-        fetchRemoteConfig()
 
         lifecycleScope.launch {
-            /*billingViewModel.purchases.collect { purchaseList ->
-                Log.d("SplashScreen", "purchase list: $purchaseList")
-                isAdsRemoved = purchaseList?.isNotEmpty() == true
-            }*/
             isAdsRemoved = billingViewModel.isAdsRemoved()
             Log.d("SplashScreen", "isAdsRemoved: $isAdsRemoved")
         }
@@ -81,13 +78,13 @@ class SplashScreen : BaseActivity() {
                 if (!PrefsHelper.isLanguageShown && !isAdsRemoved) {
                     NativeAd.loadAd(
                         this,
-                        getString(R.string.admob_native_id_languages)
+                        admob_native_languages
                     )
                 }
 
                 if (interstitialAd == null && !isAdsRemoved) {
                     loadAdmobInterstitial(
-                        getString(R.string.admob_interstitial_id_splash),
+                        admob_interstitial_splash,
                         onAdLoaded = {
                             interstitialAd = it
                             Log.d("SplashScreen", "splash interstitial ad loaded")
@@ -109,31 +106,6 @@ class SplashScreen : BaseActivity() {
         } else {
             startPremiumCountDownTimer()
         }
-    }
-
-    private fun setupRemoteConfig() {
-        remoteConfig = FirebaseRemoteConfig.getInstance()
-        val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(0) // 1 hour; set 0 for testing
-            .build()
-        remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaultsAsync(mapOf("splash_iap_exp" to YEARLY))
-    }
-
-    private fun fetchRemoteConfig() {
-        remoteConfig.fetchAndActivate()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val value = remoteConfig.getString("splash_iap_exp")
-                    splashIAPExperiment = value
-                    // You can log or act on it here
-                    Log.d("SplashScreen", "fetchRemoteConfig: experiment = $value")
-                } else {
-                    // Fallback or log failure
-                    Log.d("SplashScreen", "fetchRemoteConfig: failed")
-                    splashIAPExperiment = YEARLY
-                }
-            }
     }
 
     private fun startCountDownTimer() {

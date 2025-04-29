@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/_15sdp"
-        android:fontFamily="@font/lato_regular"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/condition"
         android:textColor="@color/natural_color"
         android:textSize="@dimen/_12ssp"
@@ -55,11 +55,11 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_15sdp"
         app:cardBackgroundColor="@color/white"
-        app:strokeColor="@color/n_stroke_color"
         app:cardCornerRadius="@dimen/_25sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvConditon">
+        app:layout_constraintTop_toBottomOf="@id/tvConditon"
+        app:strokeColor="@color/n_stroke_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -86,9 +86,9 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:visibility="gone"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_encrypt_circle"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -118,9 +118,9 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_margin="@dimen/_15sdp"
         app:cardBackgroundColor="@color/white"
-        app:strokeColor="@color/n_stroke_color"
         app:cardCornerRadius="@dimen/_25sdp"
-        app:layout_constraintTop_toBottomOf="@id/card_export_type_spinner">
+        app:layout_constraintTop_toBottomOf="@id/card_export_type_spinner"
+        app:strokeColor="@color/n_stroke_color">
 
         <EditText
             android:id="@+id/passwordEditText"

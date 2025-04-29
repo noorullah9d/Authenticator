@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@android:color/transparent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="16dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_height="wrap_content">
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/dialog_image"
@@ -28,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/lato_bold"
+            android:fontFamily="@font/open_sans_bold"
             android:text="@string/account_already_exsist"
             android:textColor="@color/primary"
             android:textSize="@dimen/_14ssp"
@@ -42,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/lato_regular"
+            android:fontFamily="@font/open_sans_regular"
             android:text="@string/do_you_want_replace"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/_11ssp"
@@ -54,8 +53,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintTop_toBottomOf="@+id/dialog_description">
 
@@ -64,10 +63,11 @@
                 android:id="@+id/button_replace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="1"
+                android:fontFamily="@font/open_sans_semi_bold"
                 android:text="@string/replace"
                 android:textColor="@color/white"
-                android:layout_marginEnd="@dimen/_5sdp"
                 app:backgroundTint="@color/secondary_color"
                 app:cornerRadius="@dimen/_5sdp"
                 app:layout_constraintTop_toBottomOf="@+id/dialog_message" />
@@ -76,9 +76,10 @@
                 android:id="@+id/button_keep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:fontFamily="@font/open_sans_semi_bold"
                 android:text="@string/keep"
                 android:textAllCaps="false"
                 android:textColor="@color/primary"

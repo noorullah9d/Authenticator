@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_transfer_code
 import com.example.my.project.authenticator.databinding.ActivityImportExportScreenBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -102,7 +103,7 @@ class ImportExportScreen : BaseActivity() {
 
         NativeAd.loadAd(
             this,
-            getString(R.string.admob_native_id_transfer_codes)
+            admob_native_transfer_code
         )
     }
 

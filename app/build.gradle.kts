@@ -28,8 +28,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 13
-        versionName = "1.1.2"
+        versionCode = 14
+        versionName = "1.1.3"
         setProperty("archivesBaseName", "authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -103,27 +103,24 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.vision)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.crashlytics.buildtools)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.firebase.messaging.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
+    implementation(libs.commons.codec)
+    implementation(libs.argon2kt)
 
+    // sdp
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
 
-    implementation(libs.firebase.auth)
+    // navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx)
 
     // coil
     implementation(libs.coil)
@@ -132,19 +129,19 @@ dependencies {
     implementation(libs.user.messaging.platform)
 
     // admob
-    implementation("com.google.android.gms:play-services-ads:23.2.0")
+    implementation(libs.play.services.ads)
 
     // fb mediation
-    implementation("com.google.ads.mediation:facebook:6.17.0.0")
+    implementation(libs.facebook)
 
     // mintegral mediation
-    implementation("com.google.ads.mediation:mintegral:16.7.81.0")
+    implementation(libs.mintegral)
 
     // applovin mediation
-    implementation("com.google.ads.mediation:applovin:12.5.0.1")
+    implementation(libs.applovin)
 
     // liftOff mediation
-    implementation("com.google.ads.mediation:vungle:7.4.0.0")
+    implementation(libs.vungle)
 
     //shimmer
     implementation(libs.shimmer)
@@ -152,50 +149,60 @@ dependencies {
     // in-app purchase
     implementation(libs.billing.ktx)
 
-    // Google SignIn
-    implementation("androidx.credentials:credentials:1.2.2")
-    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+    // google sign in
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
+    // firebase
     implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.messaging.ktx)
     implementation(libs.firebase.config)
 
+    // gson
+    implementation(libs.gson)
+
+    // barcode scanner
     implementation(libs.barcode.scanning)
 
-    implementation(libs.release)
+    // progress view
+    implementation(libs.progress.view)
 
+    // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    implementation("commons-codec:commons-codec:1.15")
-    implementation("com.lambdapioneer.argon2kt:argon2kt:1.4.0")
-
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
-
     // lifecycle
-    implementation("androidx.lifecycle:lifecycle-process:2.5.1")
+    implementation(libs.androidx.lifecycle.process)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
-    // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
-    //lottie animation
-    implementation("com.airbnb.android:lottie:6.0.1")
+    //lottie
+    implementation(libs.lottie)
 
-    // CameraX dependencies
-    implementation("androidx.camera:camera-core:1.3.4")
-    implementation("androidx.camera:camera-camera2:1.3.4")
-    implementation("androidx.camera:camera-lifecycle:1.3.4")
-    implementation("androidx.camera:camera-view:1.3.4")
+    // cameraX
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
 
     //serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("com.github.wdsqjq:AndRatingBar:1.0.6")
+    implementation(libs.kotlinx.serialization.json)
 
-    implementation("com.github.rahulabrol:Android-Fingerprint:1.0.4")
+    // rating bar
+    implementation(libs.andratingbar)
+
+    // fingerprint
+    implementation(libs.android.fingerprint)
 }

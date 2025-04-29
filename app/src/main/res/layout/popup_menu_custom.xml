@@ -7,7 +7,6 @@
     app:cardCornerRadius="@dimen/_5sdp"
     app:strokeWidth="0dp">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,16 +30,14 @@
                 android:contentDescription="@string/copy"
                 android:src="@drawable/delete_otp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/lato_regular"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="@string/delete"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
@@ -50,7 +47,6 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:background="@color/view_color"
             app:layout_constraintTop_toBottomOf="@+id/menu_delete" />
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/menu_copy"
@@ -67,20 +63,14 @@
                 android:contentDescription="@string/copy"
                 android:src="@drawable/ic_otp_copy" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/lato_regular"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="@string/copy"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_11ssp" />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 </com.google.android.material.card.MaterialCardView>

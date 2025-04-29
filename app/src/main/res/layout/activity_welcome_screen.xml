@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activities.WelcomeScreen">
-
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivLockMode"
@@ -21,13 +20,12 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/welcome" />
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/welcome_to_authenticator"
         android:textColor="@color/primary"
         android:textSize="@dimen/_14ssp"
@@ -35,10 +33,11 @@
         app:layout_constraintStart_toStartOf="@+id/ivLockMode"
         app:layout_constraintTop_toBottomOf="@+id/ivLockMode" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/safe_and_easy"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/_10ssp"
@@ -53,22 +52,21 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:backgroundTint="@color/secondary_color"
-        android:textColor="@color/white"
         android:text="@string/signin_google"
+        android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         app:cornerRadius="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/tvContinueWithoutAccount" />
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvContinueWithoutAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_40sdp"
+        android:fontFamily="@font/open_sans_regular"
         android:text="@string/without_account"
         android:textColor="@color/secondary_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

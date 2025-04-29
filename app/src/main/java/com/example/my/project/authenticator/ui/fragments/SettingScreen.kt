@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_interstitial_fragment
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
@@ -67,57 +68,10 @@ class SettingScreen : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-//        loadAndShowAdd()
         initViews()
         setupClickListeners()
         handleBackPress()
     }
-
-    /*private fun loadAndShowAdd() {
-        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
-            binding.adFrameSettings.hide()
-            return
-        }
-        binding.adFrameSettings.show()
-        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
-        binding.adFrameSettings.apply {
-            removeAllViews()
-            safeAddView(shimmer.root)
-            shimmer.root.startShimmerAnimation()
-        }
-
-        if (NativeAd.admobNativeAd != null) {
-            showNativeAd()
-            return
-        }
-
-        NativeAd.result = {
-            if (it) {
-                showNativeAd()
-            } else {
-                binding.adFrameSettings.hide()
-            }
-        }
-
-        NativeAd.loadAd(
-            requireActivity(),
-            getString(R.string.admob_native_id_home)
-        )
-    }
-
-    private fun showNativeAd() {
-        if (isAdded) {
-            binding.apply {
-                adFrameSettings.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrameSettings.removeAllViews()
-                    adFrameSettings.safeAddView(adView.root)
-                }
-            }
-        }
-    }*/
 
     private fun handleBackPress() {
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -195,7 +149,7 @@ class SettingScreen : Fragment() {
                     onDismissed = {
                         FragInterstitial.loadAd(
                             requireContext(),
-                            getString(R.string.admob_interstitial_fragment)
+                            admob_interstitial_fragment
                         )
                         findNavController().navigate(R.id.action_settingScreen_to_themesFragment)
                     }
@@ -208,7 +162,7 @@ class SettingScreen : Fragment() {
                     onDismissed = {
                         FragInterstitial.loadAd(
                             requireContext(),
-                            getString(R.string.admob_interstitial_fragment)
+                            admob_interstitial_fragment
                         )
                         requireActivity().startActivityWithAnimation<ImportExportScreen>()
                     }
@@ -255,7 +209,7 @@ class SettingScreen : Fragment() {
                     onDismissed = {
                         FragInterstitial.loadAd(
                             requireContext(),
-                            getString(R.string.admob_interstitial_fragment)
+                            admob_interstitial_fragment
                         )
                         requireActivity().startActivityWithAnimation<HowToWorkScreen>()
                     }
