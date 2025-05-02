@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.databinding.ItemGuideBinding
-import com.example.my.project.authenticator.model.GuideItem
+import com.example.my.project.authenticator.otp.domain.model.GuideItem
 
 @SuppressLint("NotifyDataSetChanged")
 class GuideAdapter(

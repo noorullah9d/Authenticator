@@ -22,76 +22,80 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Authenticator"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.activities.iap.FreeTrialActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activities.iap.PremiumActivity"
             android:exported="false" />
-
-        <property
-            android:name="android.adservices.AD_SERVICES_CONFIG"
-            android:resource="@xml/gma_ad_services_config"
-            tools:replace="android:resource" />
 
         <activity
             android:name=".ui.activities.PasswordScreen"
             android:exported="false"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.HowToWorkScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.ImportScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.ExportScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.ImportExportScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.FeedbackScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.ProfileScreen"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
-        <activity
-            android:name=".ui.activities.WelcomeScreen"
-            android:exported="false"
-            android:screenOrientation="locked" />
+
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".ui.activities.SelectLanguageActivity"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:exported="false"
             android:screenOrientation="locked"
             android:theme="@style/SplashTheme" />
+
         <activity
             android:name=".ui.activities.BaseActivity"
             android:exported="false"
             android:screenOrientation="locked" />
+
         <activity
             android:name=".ui.activities.SplashScreen"
             android:configChanges="uiMode|screenLayout|screenSize|smallestScreenSize|orientation"
@@ -106,6 +110,11 @@
             </intent-filter>
         </activity>
 
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
+
         <service
             android:name=".utils.MyFirebaseMessagingService"
             android:exported="true">
@@ -117,6 +126,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />

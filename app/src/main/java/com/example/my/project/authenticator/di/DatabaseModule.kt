@@ -2,6 +2,7 @@ package com.example.my.project.authenticator.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.my.project.authenticator.otp.data.database.PasswordDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,12 +24,18 @@ object DatabaseModule {
             TotpDatabase::class.java,
             TotpDatabase.DATABASE_NAME
         )
-            .addMigrations(TotpDatabase.MIGRATION_1_2)
-//            .fallbackToDestructiveMigration()
+            .addMigrations(
+                TotpDatabase.MIGRATION_1_2,
+                TotpDatabase.MIGRATION_2_3
+            )
             .allowMainThreadQueries()
             .build()
     }
 
     @Provides
     fun provideTotpDao(db: TotpDatabase): TotpDao = db.totpDao
+
+    @Provides
+    fun providePasswordDao(db: TotpDatabase): PasswordDao = db.passwordDao
+
 }

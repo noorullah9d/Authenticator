@@ -1,7 +1,7 @@
 package com.example.my.project.authenticator.otp.data.crypto
 
 import android.util.Log
-import com.example.my.project.authenticator.model.Account
+import com.example.my.project.authenticator.otp.domain.model.Account
 import com.example.my.project.authenticator.otp.domain.crypto.SaveFirebase
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject

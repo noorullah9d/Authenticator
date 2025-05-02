@@ -178,10 +178,10 @@ class SettingScreen : Fragment() {
                 requireActivity().startActivityWithAnimation<FeedbackScreen>()
             }
 
-            ivSettingsCancel.setOnClickListener {
+            /*ivSettingsCancel.setOnClickListener {
                 val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
                 findNavController().navigate(R.id.homeFragment, null, navOptions)
-            }
+            }*/
 
             premiumView.setOnClickListener {
                 requireActivity().startActivityWithAnimation<PremiumActivity>()

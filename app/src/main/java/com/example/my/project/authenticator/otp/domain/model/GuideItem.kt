@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.model
+package com.example.my.project.authenticator.otp.domain.model
 
 import androidx.annotation.Keep
 

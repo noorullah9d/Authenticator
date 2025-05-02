@@ -1,6 +1,6 @@
 package com.example.my.project.authenticator.otp.domain.crypto
 
-import com.example.my.project.authenticator.model.Account
+import com.example.my.project.authenticator.otp.domain.model.Account
 
 interface SaveFirebase {
     fun saveDataToDB(email: String, passcode: String, accountName: String,tool:String="", category: String="Default")

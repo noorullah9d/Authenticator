@@ -17,8 +17,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import android.text.InputType
 import android.text.SpannableString
@@ -63,8 +61,8 @@ import com.example.my.project.authenticator.databinding.DialogReplaceAccountBind
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
 import com.example.my.project.authenticator.databinding.GntLanguagesBinding
-import com.example.my.project.authenticator.model.GuideItem
-import com.example.my.project.authenticator.model.LanguagesModel
+import com.example.my.project.authenticator.otp.domain.model.GuideItem
+import com.example.my.project.authenticator.otp.domain.model.LanguagesModel
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.OnSingleClickListener
 import com.example.my.project.authenticator.utils.PrefsHelper

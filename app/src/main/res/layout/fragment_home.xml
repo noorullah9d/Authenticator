@@ -64,23 +64,12 @@
 
             <ImageView
                 android:id="@+id/ivSearchView"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
+                android:padding="@dimen/_4sdp"
                 android:src="@drawable/ic_search_n"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/settings"
-                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
-
-            <ImageView
-                android:id="@+id/settings"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_settings_n"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvTitle" />

@@ -5,9 +5,14 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [TotpDbEntity::class, Categories::class], version = 2, exportSchema = false)
+@Database(
+    entities = [TotpDbEntity::class, Categories::class, PasswordEntity::class],
+    version = 3,
+    exportSchema = false
+)
 abstract class TotpDatabase : RoomDatabase() {
     abstract val totpDao: TotpDao
+    abstract val passwordDao: PasswordDao
 
     companion object {
         const val DATABASE_NAME = "mf_authenticator_database"
@@ -30,6 +35,24 @@ abstract class TotpDatabase : RoomDatabase() {
                 if (!columnExists) {
                     database.execSQL("ALTER TABLE $totpTableName ADD COLUMN issuer TEXT NOT NULL DEFAULT ''")
                 }
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    """
+            CREATE TABLE IF NOT EXISTS passwords (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                url TEXT,
+                emailOrUsername TEXT NOT NULL,
+                password TEXT NOT NULL,
+                notes TEXT,
+                imageRes INTEGER NOT NULL
+            )
+            """.trimIndent()
+                )
             }
         }
     }

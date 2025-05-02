@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/ivSettingsCancel"
         android:layout_width="@dimen/_26sdp"
         android:layout_height="@dimen/_26sdp"
@@ -199,19 +200,7 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/tvSettings">
 
-                        <ImageView
-                            android:id="@+id/ivSettings"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:contentDescription="@string/settings"
-                            android:src="@drawable/ic_settings"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -221,7 +210,7 @@
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivSettings"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -267,19 +256,7 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/tvSettings">
 
-                        <ImageView
-                            android:id="@+id/ivThemes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:contentDescription="@string/settings"
-                            android:src="@drawable/ic_settings"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -289,7 +266,7 @@
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivThemes"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -334,19 +311,7 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/tvSettings">
 
-                        <ImageView
-                            android:id="@+id/ivSetPassword"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:contentDescription="@string/settings"
-                            android:src="@drawable/ic_settings"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvSetPassword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -357,7 +322,7 @@
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivSetPassword"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
@@ -389,19 +354,7 @@
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/setPassword">
 
-                        <ImageView
-                            android:id="@+id/ivUseFingerprint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:contentDescription="@string/settings"
-                            android:src="@drawable/ic_settings"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -411,7 +364,7 @@
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivUseFingerprint"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch

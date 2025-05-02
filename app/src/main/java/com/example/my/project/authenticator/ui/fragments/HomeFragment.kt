@@ -293,10 +293,6 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            settings.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_settingScreen)
-            }
-
             ivSearchView.setOnClickListener {
                 activateSearch()
             }

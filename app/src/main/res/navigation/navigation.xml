@@ -12,9 +12,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_settingScreen"
-            app:destination="@id/settingScreen" />
-        <action
             android:id="@+id/action_homeFragment_to_backupFragment"
             app:destination="@id/backupFragment" />
     </fragment>
@@ -23,9 +20,6 @@
         android:name="com.example.my.project.authenticator.ui.fragments.SettingScreen"
         android:label="fragment_setting_screen"
         tools:layout="@layout/fragment_setting_screen">
-        <!--<action
-            android:id="@+id/action_settingScreen_to_homeFragment"
-            app:destination="@id/homeFragment" />-->
         <action
             android:id="@+id/action_settingScreen_to_themesFragment"
             app:destination="@id/themesFragment" />
@@ -73,4 +67,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/vaultFragment"
+        android:name="com.example.my.project.authenticator.ui.fragments.VaultFragment"
+        android:label=""
+        tools:layout="@layout/fragment_vault" />
 </navigation>

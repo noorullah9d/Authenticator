@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.databinding.LanguagesItemNewBinding
-import com.example.my.project.authenticator.extensions.changeCardStorkColor
-import com.example.my.project.authenticator.model.LanguagesModel
+import com.example.my.project.authenticator.otp.domain.model.LanguagesModel
 
 class LanguagesAdapterNew(
     private val currentLang: String,
