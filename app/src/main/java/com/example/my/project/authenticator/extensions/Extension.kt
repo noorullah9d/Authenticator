@@ -9,6 +9,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Typeface
@@ -38,6 +39,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -57,25 +59,42 @@ import com.example.my.project.authenticator.databinding.DialogCustomBinding
 import com.example.my.project.authenticator.databinding.DialogDeleteAccountBinding
 import com.example.my.project.authenticator.databinding.DialogEditAccountBinding
 import com.example.my.project.authenticator.databinding.DialogLogoutBinding
+import com.example.my.project.authenticator.databinding.DialogPasswordGenerationBinding
+import com.example.my.project.authenticator.databinding.DialogPasswordOptionsBinding
 import com.example.my.project.authenticator.databinding.DialogReplaceAccountBinding
 import com.example.my.project.authenticator.databinding.EditGroupBinding
 import com.example.my.project.authenticator.databinding.ExitDialogBinding
 import com.example.my.project.authenticator.databinding.GntLanguagesBinding
 import com.example.my.project.authenticator.otp.domain.model.GuideItem
 import com.example.my.project.authenticator.otp.domain.model.LanguagesModel
+import com.example.my.project.authenticator.otp.domain.model.Password
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.OnSingleClickListener
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.firebase.analytics.FirebaseAnalytics
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+fun Long.toFormattedDate(): String {
+    val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    return formatter.format(Date(this))
+}
 
 fun View.showKeyboard() {
     if (requestFocus()) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
+}
+
+fun Fragment.hideKeyboard() {
+    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(requireView().windowToken, 0)
 }
 
 fun Context.browse(url: String, newTask: Boolean = false): Boolean {
@@ -376,8 +395,8 @@ fun ImageView.loadIssuerLogo(issuer: String) {
 
     // Use Coil to load the image into the ImageView
     load(logoUrl) {
-        placeholder(R.drawable.ic_how)  // Placeholder while loading
-        error(R.drawable.ic_how)  // Error image if the logo fails to load
+        placeholder(R.drawable.ic_profile_placeholder)  // Placeholder while loading
+        error(R.drawable.ic_profile_placeholder)  // Error image if the logo fails to load
     }
 }
 
@@ -747,6 +766,218 @@ fun Activity.showExitBottomSheet(onExitClicked: () -> Unit) {
             onExitClicked()
             bottomSheetDialog.dismiss()
         }
+    }
+}
+
+fun Activity.showPasswordGenerationBottomSheet(
+    onUsePassword: (String) -> Unit
+) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog)
+    val binding = DialogPasswordGenerationBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
+    bottomSheetDialog.setContentView(binding.root)
+    bottomSheetDialog.show()
+
+    var passwordLength = 16
+    var includeLower = true
+    var includeUpper = true
+    var includeNumbers = false
+    var includeSymbols = false
+
+    fun updatePasswordUI(password: String) {
+        binding.tvPassword.text = password
+
+        // Evaluate strength
+        val strength: String
+        val color: Int
+        val colorHeader: Int
+
+        val diversityScore =
+            listOf(includeLower, includeUpper, includeNumbers, includeSymbols).count { it }
+
+        if (password.length >= 14 && diversityScore >= 3) {
+            strength = "Very Strong"
+            color = ContextCompat.getColor(this, R.color.green100)
+            colorHeader = ContextCompat.getColor(this, R.color.greenLight)
+        } else if (password.length >= 8 && diversityScore >= 2) {
+            strength = "Average"
+            color = ContextCompat.getColor(this, R.color.orange100)
+            colorHeader = ContextCompat.getColor(this, R.color.orangeLight)
+        } else {
+            strength = "Weak"
+            color = ContextCompat.getColor(this, R.color.red100)
+            colorHeader = ContextCompat.getColor(this, R.color.redLight)
+        }
+
+        binding.tvPasswordStrength.text = strength
+        binding.tvPasswordStrength.setTextColor(color)
+
+        binding.btnCopy.backgroundTintList = ColorStateList.valueOf(color)
+        binding.divider.setBackgroundColor(color)
+        binding.header.setBackgroundColor(colorHeader)
+    }
+
+    // Generate password logic
+    fun generatePassword(): String {
+        val lower = "abcdefghijklmnopqrstuvwxyz"
+        val upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        val numbers = "0123456789"
+        val symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?/"
+
+        var chars = ""
+        if (includeLower) chars += lower
+        if (includeUpper) chars += upper
+        if (includeNumbers) chars += numbers
+        if (includeSymbols) chars += symbols
+
+        if (chars.isEmpty()) return ""
+
+        return (1..passwordLength)
+            .map { chars.random() }
+            .joinToString("")
+    }
+
+    // Set initial values
+    binding.tvCharacterCount.text =
+        getString(R.string.password_length_characters, passwordLength.toString())
+    binding.seekBarPasswordCharacters.progress = passwordLength
+    binding.seekBarPasswordCharacters.setOnSeekBarChangeListener(object :
+        SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            passwordLength = progress.coerceAtLeast(4)
+            val password = generatePassword()
+            updatePasswordUI(password)
+            binding.tvCharacterCount.text =
+                getString(R.string.password_length_characters, passwordLength.toString())
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+    })
+
+    // Switch listeners
+    fun MaterialSwitch.bindToggle(onChange: (Boolean) -> Unit) {
+        setOnCheckedChangeListener { _, isChecked -> onChange(isChecked) }
+    }
+
+    binding.switchLowercase.bindToggle { includeLower = it }
+    binding.switchUppercase.bindToggle { includeUpper = it }
+    binding.switchNumbers.bindToggle { includeNumbers = it }
+    binding.switchSymbols.bindToggle { includeSymbols = it }
+
+    binding.apply {
+        // Generate button (icGeneratePassword)
+        icGeneratePassword.setOnClickListener {
+            val password = generatePassword()
+            updatePasswordUI(password)
+        }
+
+        // Copy button
+        btnCopy.setOnClickListener {
+            val password = binding.tvPassword.text.toString()
+            if (password.isNotBlank()) copyTextToClipboard(password)
+        }
+
+        // Use password button
+        btnUsePassword.setOnClickListener {
+            val password = binding.tvPassword.text.toString()
+            if (password.isNotBlank()) {
+                onUsePassword(password)
+                bottomSheetDialog.dismiss()
+            } else {
+                toast(getString(R.string.generate_password_first))
+            }
+        }
+
+        // Auto-generate once on open
+        val initialPassword = generatePassword()
+        updatePasswordUI(initialPassword)
+    }
+}
+
+fun Activity.showPasswordOptionsBottomSheet(
+    password: Password,
+    onOptionSelected: (Int) -> Unit
+) {
+    val bottomSheetDialog = BottomSheetDialog(this, R.style.TransparentDialog)
+    val binding = DialogPasswordOptionsBinding.inflate(LayoutInflater.from(this))
+    bottomSheetDialog.setCancelable(true)
+    bottomSheetDialog.setContentView(binding.root)
+    bottomSheetDialog.show()
+
+    binding.apply {
+        tvName.text = password.name
+        tvLastModified.text =
+            getString(R.string.last_modified_time, password.lastModified.toFormattedDate())
+
+        if (password.profileImagePath.isNullOrEmpty()) {
+            ivProfileImage.hide()
+            tvProfileImage.show()
+            tvProfileImage.setProfileImage(password.name)
+        } else {
+            tvProfileImage.hide()
+            ivProfileImage.show()
+            ivProfileImage.load(password.profileImagePath.toUri()) {
+                placeholder(R.drawable.ic_profile_placeholder)
+                error(R.drawable.ic_profile_placeholder)
+            }
+        }
+
+        tvView.setOnClickListener {
+            onOptionSelected(tvView.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvEdit.setOnClickListener {
+            onOptionSelected(tvEdit.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvCopyUrl.setOnClickListener {
+            onOptionSelected(tvCopyUrl.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvCopyUsername.setOnClickListener {
+            onOptionSelected(tvCopyUsername.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvCopyPassword.setOnClickListener {
+            onOptionSelected(tvCopyPassword.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvShare.setOnClickListener {
+            onOptionSelected(tvShare.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        tvDelete.setOnClickListener {
+            onOptionSelected(tvDelete.id)
+            bottomSheetDialog.dismiss()
+        }
+    }
+}
+
+fun Activity.sharePassword(password: Password) {
+    val shareText = """
+    🔐 Password Info
+
+    Name: ${password.name}
+    URL: ${password.url.orEmpty()}
+    Username: ${password.emailOrUsername}
+    Password: ${password.password}
+    Notes: ${password.notes.orEmpty()}""".trimIndent()
+
+    try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+        startActivity(Intent.createChooser(intent, "Share via"))
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
     }
 }
 

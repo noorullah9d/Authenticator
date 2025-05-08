@@ -202,9 +202,32 @@
 
     <string name="delete_account">Delete account</string>
     <string name="delete_account_summary">Are you sure you want to delete your account?</string>
+
     <string name="logout_summary">Do you really want to logout?</string>
     <string name="vault">Vault</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_password">Add Password</string>
+    <string name="password_placeholder_summary">Save your passwords here for quick and secure access.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Username</string>
+    <string name="password_text">Password</string>
+    <string name="note">Note</string>
+    <string name="password_saved">Password saved</string>
+    <string name="view">View</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="copy_username">Copy username</string>
+    <string name="copy_password">Copy password</string>
+    <string name="share">Share</string>
+    <string name="last_modified_time">Last Modified %1$s</string>
+    <string name="password_updated">Password updated!</string>
+    <string name="update">Update</string>
+    <string name="very_strong">Very strong</string>
+    <string name="password_length_characters">Password length: %1$s characters</string>
+    <string name="lowercase_abc">Lowercase (abc)</string>
+    <string name="uppercase_abc">Uppercase (ABC)</string>
+    <string name="choose_a_password_type">Choose a password type</string>
+    <string name="numbers_123">Numbers (123)</string>
+    <string name="randomized_symbols">Randomized symbols (!#$)</string>
+    <string name="use_password">Use Password</string>
+    <string name="generate_password_first">Generate a password first</string>
 
 </resources>

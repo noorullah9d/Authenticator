@@ -1,4 +1,4 @@
-package com.example.my.project.authenticator.otp.data.database
+package com.example.my.project.authenticator.otp.domain.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,6 +11,6 @@ data class PasswordEntity(
     val emailOrUsername: String,
     val password: String,
     val notes: String?,
-    val imageRes: Int
+    val profileImagePath: String?,
+    val lastModified: Long = System.currentTimeMillis()
 )
-

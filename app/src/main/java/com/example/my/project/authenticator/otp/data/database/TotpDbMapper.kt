@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.otp.data.database
 
 import com.example.my.project.authenticator.otp.domain.entities.EncryptedTotpKey
+import com.example.my.project.authenticator.otp.domain.entities.TotpDbEntity
 
 object TotpDbMapper {
     fun fromTotpKey(totpKey: EncryptedTotpKey) = TotpDbEntity(
@@ -14,7 +15,7 @@ object TotpDbMapper {
         iv = totpKey.iv,
         shaStr = totpKey.shaStr,
         totpVsHop = totpKey.totpVsHop,
-        filePath= totpKey.filePath
+        filePath = totpKey.filePath
     )
 
     fun toTotpKey(totpEntity: TotpDbEntity) = EncryptedTotpKey(

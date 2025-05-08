@@ -1,5 +1,6 @@
 package com.example.my.project.authenticator.otp.data.database
 
+import com.example.my.project.authenticator.otp.domain.entities.PasswordEntity
 import com.example.my.project.authenticator.otp.domain.model.Password
 
 fun PasswordEntity.toPassword(): Password {
@@ -10,7 +11,8 @@ fun PasswordEntity.toPassword(): Password {
         emailOrUsername = emailOrUsername,
         password = password,
         notes = notes,
-        imageRes = imageRes
+        profileImagePath = this@toPassword.profileImagePath,
+        lastModified = lastModified
     )
 }
 
@@ -22,6 +24,7 @@ fun Password.toEntity(): PasswordEntity {
         emailOrUsername = emailOrUsername,
         password = password,
         notes = notes,
-        imageRes = imageRes
+        profileImagePath = profileImagePath,
+        lastModified = lastModified
     )
 }

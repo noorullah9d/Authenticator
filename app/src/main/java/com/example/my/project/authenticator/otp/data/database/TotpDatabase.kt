@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.my.project.authenticator.otp.domain.entities.PasswordEntity
+import com.example.my.project.authenticator.otp.domain.entities.TotpDbEntity
 
 @Database(
     entities = [TotpDbEntity::class, Categories::class, PasswordEntity::class],

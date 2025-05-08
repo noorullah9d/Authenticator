@@ -40,4 +40,11 @@
     <color name="iap_cross_icon_color">#49495F</color>
     <color name="iap_tile_color">#353535</color>
 
+    <color name="green100">#00833D</color>
+    <color name="greenLight">#001409</color>
+    <color name="orange100">#FFA500</color>
+    <color name="orangeLight">#140D00</color>
+    <color name="red100">#FF3B30</color>
+    <color name="redLight">#140100</color>
+
 </resources>

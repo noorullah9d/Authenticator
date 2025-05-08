@@ -1,7 +1,8 @@
-package com.example.my.project.authenticator.otp.data.database
+package com.example.my.project.authenticator.otp.domain.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.my.project.authenticator.otp.data.database.totpTableName
 
 @Entity(tableName = totpTableName)
 data class TotpDbEntity(

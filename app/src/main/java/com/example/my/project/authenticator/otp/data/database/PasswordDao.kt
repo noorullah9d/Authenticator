@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.otp.data.database
 
 import androidx.room.*
+import com.example.my.project.authenticator.otp.domain.entities.PasswordEntity
 
 @Dao
 interface PasswordDao {

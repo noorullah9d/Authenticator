@@ -3,5 +3,5 @@
     <!-- Focused state -->
     <item android:color="@color/n_sky_blue" android:state_focused="true"/>
     <!-- Default (unfocused) state -->
-    <item android:color="@color/mtrl_textinput_default_box_stroke_color"/>
+    <item android:color="@color/n_stroke_color"/>
 </selector>
