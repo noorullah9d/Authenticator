@@ -200,5 +200,31 @@
 
     <string name="delete_account">Verwyder rekening</string>
     <string name="delete_account_summary">Is jy seker jy wil jou rekening verwyder?</string>
+    <string name="logout_summary">Wil jy regtig uitlog?</string>
+    <string name="vault">Kluis</string>
+    <string name="add_password">Voeg wagwoord by</string>
+    <string name="password_placeholder_summary">Berg jou wagwoorde hier vir vinnige en veilige toegang.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-pos/gebruikersnaam</string>
+    <string name="password_text">Wagwoord</string>
+    <string name="note">Nota</string>
+    <string name="password_saved">Wagwoord gestoor</string>
+    <string name="view">Beskou</string>
+    <string name="copy_url">Kopieer URL</string>
+    <string name="copy_username">Kopieer gebruikersnaam</string>
+    <string name="copy_password">Kopieer wagwoord</string>
+    <string name="share">Deel</string>
+    <string name="last_modified_time">Laaste gewysig %1$s</string>
+    <string name="password_updated">Wagwoord opgedateer!</string>
+    <string name="update">Opdateer</string>
+    <string name="very_strong">Baie sterk</string>
+    <string name="password_length_characters">Wagwoordlengte: %1$s karakters</string>
+    <string name="lowercase_abc">Lae letter (abc)</string>
+    <string name="uppercase_abc">Hoë letter (ABC)</string>
+    <string name="choose_a_password_type">Kies \'n wagwoord tipe</string>
+    <string name="numbers_123">Nommer (123)</string>
+    <string name="randomized_symbols">Gekombineerde simbole (!#$)</string>
+    <string name="use_password">Gebruik wagwoord</string>
+    <string name="generate_password_first">Genereer eers \'n wagwoord</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.my.project.authenticator.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_native_home
 import com.example.my.project.authenticator.databinding.FragmentVaultBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.hideKeyboard
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.openFragment
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.sharePassword
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showKeyboard
@@ -27,6 +34,7 @@ import com.example.my.project.authenticator.extensions.showPasswordOptionsBottom
 import com.example.my.project.authenticator.otp.domain.model.Password
 import com.example.my.project.authenticator.ui.adapters.PasswordAdapter
 import com.example.my.project.authenticator.ui.viewModel.VaultViewModel
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,6 +49,7 @@ class VaultFragment : Fragment() {
     private val viewModel by viewModels<VaultViewModel>()
     private var allPasswords: List<Password> = emptyList() // master list
     private val searchQuery = MutableStateFlow("")         // current query
+    private var isSearchActive: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -140,6 +149,8 @@ class VaultFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.passwords.collect { list ->
+                        binding.progressBar.hide()
+                        binding.ivSearchView.isVisible = list.isNotEmpty()
                         allPasswords = list
                         filterPasswords(searchQuery.value)
                     }
@@ -169,10 +180,13 @@ class VaultFragment : Fragment() {
 
         adapter.updateList(filtered)
 
-        binding.progressBar.isVisible = filtered.isEmpty()
-        binding.searchPlaceHolder.isVisible = filtered.isEmpty()
-        binding.recyclerViewPasswords.isVisible = filtered.isNotEmpty()
-        binding.llPlaceHolderLayout.isVisible = allPasswords.isEmpty()
+        binding.apply {
+//            progressBar.isVisible = filtered.isEmpty()
+            recyclerViewPasswords.isVisible = filtered.isNotEmpty()
+            if (isSearchActive) searchPlaceHolder.isVisible = filtered.isEmpty()
+            llPlaceHolderLayout.isVisible = allPasswords.isEmpty()
+            fabAddPassword.isVisible = filtered.isNotEmpty()
+        }
     }
 
 
@@ -192,19 +206,11 @@ class VaultFragment : Fragment() {
             }
 
             ivSearchView.setOnClickListener {
-                clTopLayout.hide()
-                searchViewLayout.show()
-                search.requestFocus()
-                search.showKeyboard()
+                activateSearch()
             }
 
             tvCancel.setOnClickListener {
-                searchQuery.value = ""
-                search.setQuery("", false)
-                search.clearFocus()
-                searchViewLayout.hide()
-                clTopLayout.show()
-                hideKeyboard()
+                deactivateSearch()
             }
         }
     }
@@ -220,4 +226,36 @@ class VaultFragment : Fragment() {
                 }
             })
     }
+
+    private fun deactivateSearch() {
+        isSearchActive = false
+        binding.apply {
+            searchQuery.value = ""
+            clTopLayout.show()
+            search.setQuery("", false)
+            search.clearFocus()
+            searchPlaceHolder.hide()
+            searchViewLayout.hide()
+            hideKeyboard()
+        }
+    }
+
+    private fun activateSearch() {
+        isSearchActive = true
+        binding.apply {
+            clTopLayout.hide()
+            searchViewLayout.show()
+            search.requestFocus()
+            search.showKeyboard()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "admobNativeAd onDestroyView: called!")
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
 }
+
+private const val TAG = "VaultFragment"

@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -214,8 +214,7 @@
         android:id="@+id/fabAddPassword"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
         android:contentDescription="@string/app_name"
         android:fitsSystemWindows="true"
         app:layout_constraintBottom_toBottomOf="parent"

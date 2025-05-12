@@ -205,5 +205,31 @@
 
     <string name="delete_account">Slet konto</string>
     <string name="delete_account_summary">Er du sikker på, at du vil slette din konto?</string>
+    <string name="logout_summary">Vil du virkelig logge ud?</string>
+    <string name="vault">Pengeskab</string>
+    <string name="add_password">Tilføj adgangskode</string>
+    <string name="password_placeholder_summary">Gem dine adgangskoder her for hurtig og sikker adgang.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Brugernavn</string>
+    <string name="password_text">Adgangskode</string>
+    <string name="note">Note</string>
+    <string name="password_saved">Adgangskode gemt</string>
+    <string name="view">Vis</string>
+    <string name="copy_url">Kopiér URL</string>
+    <string name="copy_username">Kopiér brugernavn</string>
+    <string name="copy_password">Kopiér adgangskode</string>
+    <string name="share">Del</string>
+    <string name="last_modified_time">Sidst ændret %1$s</string>
+    <string name="password_updated">Adgangskode opdateret!</string>
+    <string name="update">Opdater</string>
+    <string name="very_strong">Meget stærk</string>
+    <string name="password_length_characters">Adgangskodens længde: %1$s tegn</string>
+    <string name="lowercase_abc">Små bogstaver (abc)</string>
+    <string name="uppercase_abc">Store bogstaver (ABC)</string>
+    <string name="choose_a_password_type">Vælg en adgangskode type</string>
+    <string name="numbers_123">Tal (123)</string>
+    <string name="randomized_symbols">Tilfældige symboler (!#$)</string>
+    <string name="use_password">Brug adgangskode</string>
+    <string name="generate_password_first">Generer først en adgangskode</string>
 
 </resources>

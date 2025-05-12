@@ -390,7 +390,7 @@
                     android:textColor="@color/n_dark_grey"
                     app:icon="@drawable/ic_cloud_backup"
                     app:iconGravity="textStart"
-                    app:iconSize="@dimen/_12sdp"
+                    app:iconSize="@dimen/_19sdp"
                     app:iconTint="@null" />
 
                 <com.google.android.material.button.MaterialButton

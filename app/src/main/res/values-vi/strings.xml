@@ -204,5 +204,31 @@
 
     <string name="delete_account">Xóa tài khoản</string>
     <string name="delete_account_summary">Bạn có chắc chắn muốn xóa tài khoản của mình không?</string>
+    <string name="logout_summary">Bạn có chắc chắn muốn đăng xuất không?</string>
+    <string name="vault">Kho</string>
+    <string name="add_password">Thêm mật khẩu</string>
+    <string name="password_placeholder_summary">Lưu mật khẩu của bạn ở đây để có quyền truy cập nhanh và bảo mật.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Tên người dùng</string>
+    <string name="password_text">Mật khẩu</string>
+    <string name="note">Ghi chú</string>
+    <string name="password_saved">Mật khẩu đã lưu</string>
+    <string name="view">Xem</string>
+    <string name="copy_url">Sao chép URL</string>
+    <string name="copy_username">Sao chép tên người dùng</string>
+    <string name="copy_password">Sao chép mật khẩu</string>
+    <string name="share">Chia sẻ</string>
+    <string name="last_modified_time">Lần sửa đổi cuối %1$s</string>
+    <string name="password_updated">Mật khẩu đã cập nhật!</string>
+    <string name="update">Cập nhật</string>
+    <string name="very_strong">Rất mạnh</string>
+    <string name="password_length_characters">Chiều dài mật khẩu: %1$s ký tự</string>
+    <string name="lowercase_abc">Chữ thường (abc)</string>
+    <string name="uppercase_abc">Chữ hoa (ABC)</string>
+    <string name="choose_a_password_type">Chọn loại mật khẩu</string>
+    <string name="numbers_123">Số (123)</string>
+    <string name="randomized_symbols">Ký hiệu ngẫu nhiên (!#$)</string>
+    <string name="use_password">Sử dụng mật khẩu</string>
+    <string name="generate_password_first">Tạo mật khẩu trước</string>
 
 </resources>

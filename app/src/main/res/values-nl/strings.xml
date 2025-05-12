@@ -203,5 +203,31 @@
 
     <string name="delete_account">Verwijder account</string>
     <string name="delete_account_summary">Weet je zeker dat je je account wilt verwijderen?</string>
+    <string name="logout_summary">Weet je zeker dat je wilt uitloggen?</string>
+    <string name="vault">Kluis</string>
+    <string name="add_password">Voeg wachtwoord toe</string>
+    <string name="password_placeholder_summary">Sla je wachtwoorden hier op voor snelle en veilige toegang.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-mail/gebruikersnaam</string>
+    <string name="password_text">Wachtwoord</string>
+    <string name="note">Notitie</string>
+    <string name="password_saved">Wachtwoord opgeslagen</string>
+    <string name="view">Bekijk</string>
+    <string name="copy_url">Kopieer URL</string>
+    <string name="copy_username">Kopieer gebruikersnaam</string>
+    <string name="copy_password">Kopieer wachtwoord</string>
+    <string name="share">Delen</string>
+    <string name="last_modified_time">Laatste wijziging %1$s</string>
+    <string name="password_updated">Wachtwoord bijgewerkt!</string>
+    <string name="update">Bijwerken</string>
+    <string name="very_strong">Zeer sterk</string>
+    <string name="password_length_characters">Wachtwoordlengte: %1$s tekens</string>
+    <string name="lowercase_abc">Kleine letters (abc)</string>
+    <string name="uppercase_abc">Hoofdletters (ABC)</string>
+    <string name="choose_a_password_type">Kies een wachtwoordtype</string>
+    <string name="numbers_123">Getallen (123)</string>
+    <string name="randomized_symbols">Willekeurige symbolen (!#$)</string>
+    <string name="use_password">Gebruik wachtwoord</string>
+    <string name="generate_password_first">Genereer eerst een wachtwoord</string>
 
 </resources>

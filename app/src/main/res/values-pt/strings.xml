@@ -203,5 +203,31 @@
 
     <string name="delete_account">Excluir conta</string>
     <string name="delete_account_summary">Tem certeza de que deseja excluir sua conta?</string>
+    <string name="logout_summary">Você realmente deseja sair?</string>
+    <string name="vault">Cofre</string>
+    <string name="add_password">Adicionar senha</string>
+    <string name="password_placeholder_summary">Salve suas senhas aqui para acesso rápido e seguro.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-mail/Usuário</string>
+    <string name="password_text">Senha</string>
+    <string name="note">Nota</string>
+    <string name="password_saved">Senha salva</string>
+    <string name="view">Visualizar</string>
+    <string name="copy_url">Copiar URL</string>
+    <string name="copy_username">Copiar nome de usuário</string>
+    <string name="copy_password">Copiar senha</string>
+    <string name="share">Compartilhar</string>
+    <string name="last_modified_time">Última modificação %1$s</string>
+    <string name="password_updated">Senha atualizada!</string>
+    <string name="update">Atualizar</string>
+    <string name="very_strong">Muito forte</string>
+    <string name="password_length_characters">Comprimento da senha: %1$s caracteres</string>
+    <string name="lowercase_abc">Minúsculas (abc)</string>
+    <string name="uppercase_abc">Maiúsculas (ABC)</string>
+    <string name="choose_a_password_type">Escolha um tipo de senha</string>
+    <string name="numbers_123">Números (123)</string>
+    <string name="randomized_symbols">Símbolos aleatórios (!#$)</string>
+    <string name="use_password">Usar senha</string>
+    <string name="generate_password_first">Gere uma senha primeiro</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.my.project.authenticator.admob
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -59,7 +60,7 @@ object FragInterstitial {
         activity: Activity,
         onDismissed: () -> Unit = {}
     ) {
-        if (PrefsHelper.isAdsRemoved) {
+        if (PrefsHelper.isAdsRemoved || !activity.isInternetAvailable()) {
             onDismissed.invoke()
             return
         }

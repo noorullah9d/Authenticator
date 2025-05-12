@@ -204,5 +204,31 @@
 
     <string name="delete_account">Hesap sil</string>
     <string name="delete_account_summary">Hesabınızı silmek istediğinizden emin misiniz?</string>
+    <string name="logout_summary">Gerçekten çıkış yapmak istediğinizden emin misiniz?</string>
+    <string name="vault">Kasa</string>
+    <string name="add_password">Şifre Ekle</string>
+    <string name="password_placeholder_summary">Şifrelerinizi buraya kaydedin, hızlı ve güvenli erişim için.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-posta/Kullanıcı adı</string>
+    <string name="password_text">Şifre</string>
+    <string name="note">Not</string>
+    <string name="password_saved">Şifre kaydedildi</string>
+    <string name="view">Görünüm</string>
+    <string name="copy_url">URL’yi kopyala</string>
+    <string name="copy_username">Kullanıcı adını kopyala</string>
+    <string name="copy_password">Şifreyi kopyala</string>
+    <string name="share">Paylaş</string>
+    <string name="last_modified_time">Son Düzenleme %1$s</string>
+    <string name="password_updated">Şifre güncellendi!</string>
+    <string name="update">Güncelle</string>
+    <string name="very_strong">Çok güçlü</string>
+    <string name="password_length_characters">Şifre uzunluğu: %1$s karakter</string>
+    <string name="lowercase_abc">Küçük harfler (abc)</string>
+    <string name="uppercase_abc">Büyük harfler (ABC)</string>
+    <string name="choose_a_password_type">Bir şifre türü seçin</string>
+    <string name="numbers_123">Sayılar (123)</string>
+    <string name="randomized_symbols">Rastgele semboller (!#$)</string>
+    <string name="use_password">Şifreyi Kullan</string>
+    <string name="generate_password_first">Önce şifre oluşturun</string>
 
 </resources>

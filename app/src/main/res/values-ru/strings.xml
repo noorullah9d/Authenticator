@@ -202,5 +202,31 @@
 
     <string name="delete_account">Удалить аккаунт</string>
     <string name="delete_account_summary">Вы уверены, что хотите удалить свой аккаунт?</string>
+    <string name="logout_summary">Вы действительно хотите выйти?</string>
+    <string name="vault">Сейф</string>
+    <string name="add_password">Добавить пароль</string>
+    <string name="password_placeholder_summary">Сохраните ваши пароли здесь для быстрого и безопасного доступа.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Электронная почта/Имя пользователя</string>
+    <string name="password_text">Пароль</string>
+    <string name="note">Заметка</string>
+    <string name="password_saved">Пароль сохранен</string>
+    <string name="view">Просмотр</string>
+    <string name="copy_url">Скопировать URL</string>
+    <string name="copy_username">Скопировать имя пользователя</string>
+    <string name="copy_password">Скопировать пароль</string>
+    <string name="share">Поделиться</string>
+    <string name="last_modified_time">Последнее изменение %1$s</string>
+    <string name="password_updated">Пароль обновлен!</string>
+    <string name="update">Обновить</string>
+    <string name="very_strong">Очень сильный</string>
+    <string name="password_length_characters">Длина пароля: %1$s символов</string>
+    <string name="lowercase_abc">Малые буквы (abc)</string>
+    <string name="uppercase_abc">Большие буквы (ABC)</string>
+    <string name="choose_a_password_type">Выберите тип пароля</string>
+    <string name="numbers_123">Числа (123)</string>
+    <string name="randomized_symbols">Случайные символы (!#$)</string>
+    <string name="use_password">Использовать пароль</string>
+    <string name="generate_password_first">Сначала создайте пароль</string>
 
 </resources>

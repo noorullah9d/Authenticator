@@ -205,5 +205,31 @@
 
     <string name="delete_account">Konto löschen</string>
     <string name="delete_account_summary">Bist du sicher, dass du dein Konto löschen möchtest?</string>
+    <string name="logout_summary">Möchten Sie sich wirklich abmelden?</string>
+    <string name="vault">Tresor</string>
+    <string name="add_password">Passwort hinzufügen</string>
+    <string name="password_placeholder_summary">Speichern Sie Ihre Passwörter hier für schnellen und sicheren Zugriff.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-Mail/Benutzername</string>
+    <string name="password_text">Passwort</string>
+    <string name="note">Notiz</string>
+    <string name="password_saved">Passwort gespeichert</string>
+    <string name="view">Anzeigen</string>
+    <string name="copy_url">URL kopieren</string>
+    <string name="copy_username">Benutzernamen kopieren</string>
+    <string name="copy_password">Passwort kopieren</string>
+    <string name="share">Teilen</string>
+    <string name="last_modified_time">Zuletzt geändert %1$s</string>
+    <string name="password_updated">Passwort aktualisiert!</string>
+    <string name="update">Aktualisieren</string>
+    <string name="very_strong">Sehr stark</string>
+    <string name="password_length_characters">Passwortlänge: %1$s Zeichen</string>
+    <string name="lowercase_abc">Kleinbuchstaben (abc)</string>
+    <string name="uppercase_abc">Großbuchstaben (ABC)</string>
+    <string name="choose_a_password_type">Wählen Sie einen Passworttyp</string>
+    <string name="numbers_123">Zahlen (123)</string>
+    <string name="randomized_symbols">Zufällige Symbole (!#$)</string>
+    <string name="use_password">Passwort verwenden</string>
+    <string name="generate_password_first">Erstellen Sie zuerst ein Passwort</string>
 
 </resources>

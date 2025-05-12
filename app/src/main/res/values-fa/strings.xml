@@ -203,5 +203,31 @@
 
     <string name="delete_account">حذف حساب</string>
     <string name="delete_account_summary">آیا مطمئن هستید که می‌خواهید حساب خود را حذف کنید؟</string>
+    <string name="logout_summary">آیا واقعاً می‌خواهید از حساب خود خارج شوید؟</string>
+    <string name="vault">گاوصندوق</string>
+    <string name="add_password">افزودن رمز عبور</string>
+    <string name="password_placeholder_summary">رمزهای عبور خود را در اینجا ذخیره کنید تا به راحتی و به طور ایمن به آن‌ها دسترسی پیدا کنید.</string>
+    <string name="url">آدرس اینترنتی</string>
+    <string name="email_or_username">ایمیل/نام کاربری</string>
+    <string name="password_text">رمز عبور</string>
+    <string name="note">یادداشت</string>
+    <string name="password_saved">رمز عبور ذخیره شد</string>
+    <string name="view">مشاهده</string>
+    <string name="copy_url">کپی آدرس اینترنتی</string>
+    <string name="copy_username">کپی نام کاربری</string>
+    <string name="copy_password">کپی رمز عبور</string>
+    <string name="share">اشتراک‌گذاری</string>
+    <string name="last_modified_time">آخرین تغییر %1$s</string>
+    <string name="password_updated">رمز عبور به‌روزرسانی شد!</string>
+    <string name="update">به‌روزرسانی</string>
+    <string name="very_strong">بسیار قوی</string>
+    <string name="password_length_characters">طول رمز عبور: %1$s کاراکتر</string>
+    <string name="lowercase_abc">حروف کوچک (abc)</string>
+    <string name="uppercase_abc">حروف بزرگ (ABC)</string>
+    <string name="choose_a_password_type">یک نوع رمز عبور انتخاب کنید</string>
+    <string name="numbers_123">اعداد (123)</string>
+    <string name="randomized_symbols">نمادهای تصادفی (!#$)</string>
+    <string name="use_password">استفاده از رمز عبور</string>
+    <string name="generate_password_first">اول یک رمز عبور تولید کنید</string>
 
 </resources>

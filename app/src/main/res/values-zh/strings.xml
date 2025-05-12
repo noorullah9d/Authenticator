@@ -202,5 +202,31 @@
 
     <string name="delete_account">删除账户</string>
     <string name="delete_account_summary">您确定要删除您的账户吗？</string>
+    <string name="logout_summary">您确定要退出登录吗？</string>
+    <string name="vault">保险库</string>
+    <string name="add_password">添加密码</string>
+    <string name="password_placeholder_summary">将您的密码保存在此处，方便快速和安全地访问。</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">电子邮件/用户名</string>
+    <string name="password_text">密码</string>
+    <string name="note">备注</string>
+    <string name="password_saved">密码已保存</string>
+    <string name="view">查看</string>
+    <string name="copy_url">复制 URL</string>
+    <string name="copy_username">复制用户名</string>
+    <string name="copy_password">复制密码</string>
+    <string name="share">分享</string>
+    <string name="last_modified_time">最后修改时间 %1$s</string>
+    <string name="password_updated">密码已更新！</string>
+    <string name="update">更新</string>
+    <string name="very_strong">非常强</string>
+    <string name="password_length_characters">密码长度：%1$s 个字符</string>
+    <string name="lowercase_abc">小写字母 (abc)</string>
+    <string name="uppercase_abc">大写字母 (ABC)</string>
+    <string name="choose_a_password_type">选择密码类型</string>
+    <string name="numbers_123">数字 (123)</string>
+    <string name="randomized_symbols">随机符号 (!#$)</string>
+    <string name="use_password">使用密码</string>
+    <string name="generate_password_first">首先生成密码</string>
 
 </resources>

@@ -29,8 +29,8 @@ android {
         applicationId = "com.authenticator.manager.password.generator"
         minSdk = 24
         targetSdk = 34
-        versionCode = 14
-        versionName = "1.1.3"
+        versionCode = 15
+        versionName = "1.1.4"
         setProperty("archivesBaseName", "authenticator_v$versionCode($versionName)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "APPLICATION_ID", "\"$applicationId\"")
@@ -67,6 +67,8 @@ android {
             resValue("string", "admob_native_id_backup_theme", "ca-app-pub-9555621625220566/1036629933")
             resValue("string", "admob_native_id_exit", "ca-app-pub-9555621625220566/3488862446")
             resValue("string", "admob_native_id_transfer_codes", "ca-app-pub-9555621625220566/7215625517")
+            resValue("string", "admob_native_id_add_password", "ca-app-pub-9555621625220566/9556434544")
+            resValue("string", "admob_native_id_vault", "ca-app-pub-9555621625220566/7989600806")
             resValue("string", "admob_app_open_id", "ca-app-pub-9555621625220566/2140121757")
         }
         debug {
@@ -83,6 +85,8 @@ android {
             resValue("string", "admob_native_id_backup_theme", "ca-app-pub-3940256099942544/2247696110")
             resValue("string", "admob_native_id_exit", "ca-app-pub-3940256099942544/2247696110")
             resValue("string", "admob_native_id_transfer_codes", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_add_password", "ca-app-pub-3940256099942544/2247696110")
+            resValue("string", "admob_native_id_vault", "ca-app-pub-3940256099942544/2247696110")
             resValue("string", "admob_app_open_id", "ca-app-pub-3940256099942544/9257395921")
 
             isMinifyEnabled = false

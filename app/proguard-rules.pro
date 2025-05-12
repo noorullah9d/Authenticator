@@ -26,6 +26,7 @@
 }
 
 -keep class com.example.my.project.authenticator.otp.domain.entities.** { *; }
+-keep class com.example.my.project.authenticator.otp.domain.model.** { *; }
 
 -dontwarn com.facebook.infer.annotation.Nullsafe$Mode
 -dontwarn com.facebook.infer.annotation.Nullsafe

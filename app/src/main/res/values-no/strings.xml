@@ -202,5 +202,31 @@
 
     <string name="delete_account">Slett konto</string>
     <string name="delete_account_summary">Er du sikker på at du vil slette kontoen din?</string>
+    <string name="logout_summary">Er du sikker på at du vil logge ut?</string>
+    <string name="vault">Hvelv</string>
+    <string name="add_password">Legg til passord</string>
+    <string name="password_placeholder_summary">Lagre passordene dine her for rask og sikker tilgang.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">E-post/Brukernavn</string>
+    <string name="password_text">Passord</string>
+    <string name="note">Merknad</string>
+    <string name="password_saved">Passord lagret</string>
+    <string name="view">Vis</string>
+    <string name="copy_url">Kopier URL</string>
+    <string name="copy_username">Kopier brukernavn</string>
+    <string name="copy_password">Kopier passord</string>
+    <string name="share">Del</string>
+    <string name="last_modified_time">Sist endret %1$s</string>
+    <string name="password_updated">Passord oppdatert!</string>
+    <string name="update">Oppdater</string>
+    <string name="very_strong">Veldig sterk</string>
+    <string name="password_length_characters">Passordlengde: %1$s tegn</string>
+    <string name="lowercase_abc">Små bokstaver (abc)</string>
+    <string name="uppercase_abc">Store bokstaver (ABC)</string>
+    <string name="choose_a_password_type">Velg et passordtype</string>
+    <string name="numbers_123">Tall (123)</string>
+    <string name="randomized_symbols">Tilfeldige symboler (!#$)</string>
+    <string name="use_password">Bruk passord</string>
+    <string name="generate_password_first">Generer et passord først</string>
 
 </resources>
