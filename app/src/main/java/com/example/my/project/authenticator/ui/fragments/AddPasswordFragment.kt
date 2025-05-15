@@ -19,7 +19,7 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
-import com.example.my.project.authenticator.admob.admob_native_home
+import com.example.my.project.authenticator.admob.admob_native_add_password
 import com.example.my.project.authenticator.databinding.FragmentAddPasswordBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -105,23 +105,27 @@ class AddPasswordFragment : Fragment() {
 
         NativeAd.loadAd(
             requireActivity(),
-            admob_native_home
+            admob_native_add_password
         )
     }
 
     private fun showNativeAd() {
-        Log.d(TAG, "admobNativeAd showNativeAd: called")
-        if (isAdded) {
-            binding.apply {
-                adFrame.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+        Log.d(TAG, "admobNativeAd showNativeAd: called")
     }
 
     private fun populateFields(password: Password) {

@@ -13,14 +13,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
-import com.example.my.project.authenticator.admob.admob_native_home
+import com.example.my.project.authenticator.admob.admob_native_vault
 import com.example.my.project.authenticator.databinding.FragmentVaultBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
-import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.hideKeyboard
@@ -37,9 +35,11 @@ import com.example.my.project.authenticator.ui.viewModel.VaultViewModel
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
 class VaultFragment : Fragment() {
@@ -68,6 +68,60 @@ class VaultFragment : Fragment() {
         setupClickListeners()
         initSearch()
         handleBackPress()
+        loadAndShowAdd()
+    }
+
+    private fun loadAndShowAdd() {
+        Log.d(TAG, "admobNativeAd loadAndShowAdd: called")
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+
+        /*binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }*/
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            admob_native_vault
+        )
+    }
+
+    private fun showNativeAd() {
+        Log.d(TAG, "admobNativeAd showNativeAd: called")
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initSearch() {
@@ -189,7 +243,6 @@ class VaultFragment : Fragment() {
         }
     }
 
-
     private fun setupClickListeners() {
         val bundle = Bundle().apply {
             putParcelable("password", null)
@@ -220,9 +273,7 @@ class VaultFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val navOptions =
-                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    findNavController().popBackStack()
                 }
             })
     }
@@ -255,6 +306,11 @@ class VaultFragment : Fragment() {
         Log.d(TAG, "admobNativeAd onDestroyView: called!")
         NativeAd.admobNativeAd?.destroy()
         NativeAd.admobNativeAd = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isSearchActive) deactivateSearch()
     }
 }
 

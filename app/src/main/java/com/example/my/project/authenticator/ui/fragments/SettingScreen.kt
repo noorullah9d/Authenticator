@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
@@ -78,9 +77,7 @@ class SettingScreen : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val navOptions =
-                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    findNavController().popBackStack()
                 }
             })
     }

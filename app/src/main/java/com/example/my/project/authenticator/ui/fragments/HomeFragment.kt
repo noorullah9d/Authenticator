@@ -53,6 +53,7 @@ import com.example.my.project.authenticator.utils.GoogleSignInManager
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import com.example.my.project.authenticator.utils.PrefsHelper.isAppRated
+import com.example.my.project.authenticator.utils.PrefsHelper.isBackedGone
 import com.example.my.project.authenticator.utils.TotpCardState
 import com.example.my.project.authenticator.utils.UiState
 import com.google.firebase.auth.FirebaseAuth
@@ -97,11 +98,60 @@ class HomeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
+        initRecyclerView()
         observerData()
         backPress()
         clickListeners()
         loadFragmentInterstitial()
         loadExitNative()
+        handleBackViewVisibility()
+        initViews()
+    }
+
+    private fun initViews() {
+        binding.apply {
+            if (!isBackedGone && hasCodes) {
+                rlNotBackUp.show()
+            } else rlNotBackUp.hide()
+
+            if (isSearchActive) searchPlaceHolder.hide()
+            else {
+                buttonsPlaceHolders.hide()
+                llPlaceHolderLayout.hide()
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        accountAdapter = AccountAdapter(
+            accounts = mutableListOf(),
+            onDeleteSelected = { position, totpCardState ->
+                deleteSelection(totpCardState)
+            },
+            onHOTPRefreshClicked = { account ->
+                homeViewModel.regenerateHOTP(account)
+            },
+            onItemClick = { account ->
+                requireActivity().showEditAccountBottomSheet(
+                    viewLifecycleOwner,
+                    homeViewModel,
+                    account,
+                    onNameChanged = { newName ->
+                        updateAccountName(newName, account)
+                    },
+                    onDelete = { account ->
+                        requireActivity().showDeleteAccountBottomSheet(
+                            onDelete = {
+                                deleteAccount(account)
+                            }
+                        )
+                    }
+                )
+            }
+        )
+
+        binding.accountData.adapter = accountAdapter
+        binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
     }
 
     private fun loadExitNative() {
@@ -121,13 +171,14 @@ class HomeFragment : Fragment() {
             binding.adFrame.hide()
             return
         }
-        binding.adFrame.show()
+
+        /*binding.adFrame.show()
         val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
         binding.adFrame.apply {
             removeAllViews()
             safeAddView(shimmer.root)
             shimmer.root.startShimmerAnimation()
-        }
+        }*/
 
         if (NativeAd.admobNativeAd != null) {
             showNativeAd()
@@ -150,16 +201,20 @@ class HomeFragment : Fragment() {
 
     private fun showNativeAd() {
         Log.d(TAG, "admobNativeAd showNativeAd: called")
-        if (isAdded) {
-            binding.apply {
-                adFrame.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -266,9 +321,9 @@ class HomeFragment : Fragment() {
                 deselectAll()
             }
 
-            if (PrefsHelper.isBackedGone) {
+            /*if (PrefsHelper.isBackedGone) {
                 rlNotBackUp.hide()
-            }
+            }*/
 
             backup.setOnDebouncedClickListener {
                 backup()
@@ -303,7 +358,6 @@ class HomeFragment : Fragment() {
 
             search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-
                     return true
                 }
 
@@ -366,7 +420,7 @@ class HomeFragment : Fragment() {
         binding.apply {
             clTopLayout.show()
             categoriesAccount.show()
-            if (hasCodes) rlNotBackUp.show() else rlNotBackUp.hide()
+            if (!isBackedGone && hasCodes) rlNotBackUp.show() else rlNotBackUp.hide()
             search.setQuery("", false)
             search.clearFocus()
             searchPlaceHolder.hide()
@@ -547,63 +601,19 @@ class HomeFragment : Fragment() {
                 adapter?.updateSelectedIndex(selectedIndex)
             }
 
-            emailCondition()
-
             homeViewModel.homeState.observe(viewLifecycleOwner) { homeState ->
                 Log.d(TAG, "observerData: accounts = ${homeState.totpList.size}")
+                progressBar.hide()
+                if (isSearchActive) searchPlaceHolder.isVisible = homeState.totpList.isEmpty()
+
                 if (homeState.totpList.isNotEmpty()) {
+                    if (!isBackedGone && !isSearchActive) rlNotBackUp.show()
                     hasCodes = true
-                    if (!isSearchActive) rlNotBackUp.show()
-                    if (clEditing.isVisible) faButton.hide()
-                    else faButton.show()
-
-                    progressBar.hide()
-                    if (isSearchActive) searchPlaceHolder.hide()
-                    else {
-                        buttonsPlaceHolders.hide()
-                        llPlaceHolderLayout.hide()
-                    }
-
+                    buttonsPlaceHolders.hide()
+                    llPlaceHolderLayout.hide()
                     accountData.show()
-
-                    if (!::accountAdapter.isInitialized) {
-                        accountAdapter = AccountAdapter(
-                            accounts = /*homeState.totpList.toMutableList()*/mutableListOf(),
-                            onDeleteSelected = { position, totpCardState ->
-                                deleteSelection(totpCardState)
-                            },
-                            onHOTPRefreshClicked = { account ->
-                                homeViewModel.regenerateHOTP(account)
-                            },
-                            onItemClick = { account ->
-//                                requireContext().copyTextToClipboard(account.oneTimeCode.toString())
-                                // open editing bottom sheet
-                                requireActivity().showEditAccountBottomSheet(
-                                    viewLifecycleOwner,
-                                    homeViewModel,
-                                    account,
-                                    onNameChanged = { newName ->
-                                        updateAccountName(newName, account)
-                                    },
-                                    onDelete = { account ->
-                                        requireActivity().showDeleteAccountBottomSheet(
-                                            onDelete = {
-                                                deleteAccount(account)
-                                            }
-                                        )
-                                    }
-                                )
-                            }
-                        )
-
-                        accountAdapter.updateAccounts(homeState.totpList)
-
-                        binding.accountData.adapter = accountAdapter
-                        binding.accountData.layoutManager = LinearLayoutManager(requireActivity())
-                    } else {
-                        Log.d(TAG, "observerData: isInitialized")
-                        accountAdapter.updateAccounts(homeState.totpList)
-                    }
+                    faButton.show()
+                    accountAdapter.updateAccounts(homeState.totpList)
                 } else {
                     Log.d(TAG, "observerData: placeHolder")
                     placeHolder()
@@ -730,7 +740,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun emailCondition() {
+    private fun handleBackViewVisibility() {
         binding.apply {
             if (PrefsHelper.userEmail != "") {
                 PrefsHelper.userEmail.getFirstCharacter()
@@ -742,17 +752,12 @@ class HomeFragment : Fragment() {
                     ivBackedUp.show()
                     ivNext.hide()
                 }
-
-//                setFromRemote()
             } else {
                 rlNotBackUp.setBackgroundResource(R.drawable.bg_gradient_backup)
                 tvBackedUp.text = getString(R.string.data_is_not_backed_up_yet)
                 ivCross.hide()
                 ivBackedUp.hide()
                 ivNext.show()
-                /*if (homeViewModel.setRemote(sharedPreferencesHelper.userEmail) == 0) {
-                    placeHolder()
-                }*/
             }
         }
     }
@@ -803,16 +808,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (isSearchActive) deactivateSearch()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d(TAG, "admobNativeAd onDestroyView: called!")
-        NativeAd.admobNativeAd?.destroy()
-        NativeAd.admobNativeAd = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "admobNativeAd onDestroy: called!")
         NativeAd.admobNativeAd?.destroy()
         NativeAd.admobNativeAd = null
     }

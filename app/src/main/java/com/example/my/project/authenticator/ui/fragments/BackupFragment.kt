@@ -10,7 +10,6 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
@@ -24,7 +23,6 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
-import com.example.my.project.authenticator.extensions.showAskPasswordDialog
 import com.example.my.project.authenticator.extensions.showLogoutBottomSheet
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.utils.GoogleSignInManager
@@ -60,13 +58,13 @@ class BackupFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.apply {
-            ivSystemSelection.setOnCheckedChangeListener { _, isEnabled ->
+            switchBackup.setOnCheckedChangeListener { _, isEnabled ->
                 Log.d(TAG, "onCheckedChanged: $isEnabled")
                 PrefsHelper.isBackedUp = isEnabled
             }
 
             if (PrefsHelper.isBackedUp) {
-                ivSystemSelection.isChecked = true
+                switchBackup.isChecked = true
             }
 
             logout.setOnClickListener {
@@ -81,8 +79,7 @@ class BackupFragment : Fragment() {
             ivProfileImage.text = PrefsHelper.userEmail.getFirstCharacter().toString()
 
             icBack.setOnClickListener {
-                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                findNavController().navigate(R.id.homeFragment, null, navOptions)
+                findNavController().popBackStack()
             }
 
             gmailSwitching.setOnDebouncedClickListener {
@@ -98,9 +95,7 @@ class BackupFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val navOptions =
-                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    findNavController().popBackStack()
                 }
             }
         )
@@ -141,16 +136,20 @@ class BackupFragment : Fragment() {
     }
 
     private fun showNativeAd() {
-        if (isAdded) {
-            binding.apply {
-                adFrame.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -245,13 +244,6 @@ class BackupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         NativeAd.admobNativeAd?.destroy()
-        NativeAd.admobNativeAd = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        NativeAd.admobNativeAd?.destroy()
-        NativeAd.admobNativeAd = null
     }
 }
 

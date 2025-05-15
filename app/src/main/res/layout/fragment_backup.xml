@@ -98,12 +98,12 @@
         android:text="Auto backup"
         android:textColor="@color/n_dark_grey"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_system_selection"
+        app:layout_constraintBottom_toBottomOf="@+id/switchBackup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_system_selection" />
+        app:layout_constraintTop_toTopOf="@+id/switchBackup" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/iv_system_selection"
+        android:id="@+id/switchBackup"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_15sdp"
