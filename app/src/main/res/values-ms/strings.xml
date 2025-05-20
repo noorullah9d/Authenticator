@@ -203,5 +203,31 @@
 
     <string name="delete_account">Padam akaun</string>
     <string name="delete_account_summary">Adakah anda pasti ingin memadam akaun anda?</string>
+    <string name="logout_summary">Adakah anda benar-benar ingin log keluar?</string>
+    <string name="vault">Peti simpanan</string>
+    <string name="add_password">Tambah Kata Laluan</string>
+    <string name="password_placeholder_summary">Simpan kata laluan anda di sini untuk akses cepat dan selamat.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Emel/Nama pengguna</string>
+    <string name="password_text">Kata laluan</string>
+    <string name="note">Nota</string>
+    <string name="password_saved">Kata laluan disimpan</string>
+    <string name="view">Lihat</string>
+    <string name="copy_url">Salin URL</string>
+    <string name="copy_username">Salin nama pengguna</string>
+    <string name="copy_password">Salin kata laluan</string>
+    <string name="share">Kongsi</string>
+    <string name="last_modified_time">Terakhir diubah %1$s</string>
+    <string name="password_updated">Kata laluan dikemas kini!</string>
+    <string name="update">Kemas kini</string>
+    <string name="very_strong">Sangat kuat</string>
+    <string name="password_length_characters">Panjang kata laluan: %1$s aksara</string>
+    <string name="lowercase_abc">Huruf kecil (abc)</string>
+    <string name="uppercase_abc">Huruf besar (ABC)</string>
+    <string name="choose_a_password_type">Pilih jenis kata laluan</string>
+    <string name="numbers_123">Nombor (123)</string>
+    <string name="randomized_symbols">Simbol rawak (!#$)</string>
+    <string name="use_password">Gunakan Kata Laluan</string>
+    <string name="generate_password_first">Hasilkan kata laluan terlebih dahulu</string>
 
 </resources>

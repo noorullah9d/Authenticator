@@ -204,5 +204,31 @@
 
     <string name="delete_account">アカウント削除</string>
     <string name="delete_account_summary">本当にアカウントを削除してもよろしいですか？</string>
+    <string name="logout_summary">本当にログアウトしてもよろしいですか？</string>
+    <string name="vault">金庫</string>
+    <string name="add_password">パスワードを追加</string>
+    <string name="password_placeholder_summary">ここにパスワードを保存して、迅速で安全なアクセスを提供します。</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">メール/ユーザー名</string>
+    <string name="password_text">パスワード</string>
+    <string name="note">メモ</string>
+    <string name="password_saved">パスワードが保存されました</string>
+    <string name="view">表示</string>
+    <string name="copy_url">URLをコピー</string>
+    <string name="copy_username">ユーザー名をコピー</string>
+    <string name="copy_password">パスワードをコピー</string>
+    <string name="share">共有</string>
+    <string name="last_modified_time">最終更新 %1$s</string>
+    <string name="password_updated">パスワードが更新されました！</string>
+    <string name="update">更新</string>
+    <string name="very_strong">非常に強い</string>
+    <string name="password_length_characters">パスワードの長さ: %1$s 文字</string>
+    <string name="lowercase_abc">小文字 (abc)</string>
+    <string name="uppercase_abc">大文字 (ABC)</string>
+    <string name="choose_a_password_type">パスワードの種類を選択</string>
+    <string name="numbers_123">数字 (123)</string>
+    <string name="randomized_symbols">ランダム記号 (!#$)</string>
+    <string name="use_password">パスワードを使用</string>
+    <string name="generate_password_first">まずパスワードを生成してください</string>
 
 </resources>

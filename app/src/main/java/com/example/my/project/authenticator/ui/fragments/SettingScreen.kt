@@ -11,12 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
+import com.example.my.project.authenticator.analytics.SETTINGS_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
@@ -65,6 +66,7 @@ class SettingScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(SETTINGS_SCREEN)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -78,9 +80,7 @@ class SettingScreen : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    val navOptions =
-                        NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    findNavController().popBackStack()
                 }
             })
     }

@@ -8,6 +8,7 @@ import com.example.my.project.authenticator.admob.admob_app_open
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
 import com.example.my.project.authenticator.admob.admob_interstitial_onboarding
 import com.example.my.project.authenticator.admob.admob_interstitial_splash
+import com.example.my.project.authenticator.admob.admob_native_add_password
 import com.example.my.project.authenticator.admob.admob_native_backup
 import com.example.my.project.authenticator.admob.admob_native_exit
 import com.example.my.project.authenticator.admob.admob_native_home
@@ -15,6 +16,7 @@ import com.example.my.project.authenticator.admob.admob_native_languages
 import com.example.my.project.authenticator.admob.admob_native_onboarding
 import com.example.my.project.authenticator.admob.admob_native_scanner
 import com.example.my.project.authenticator.admob.admob_native_transfer_code
+import com.example.my.project.authenticator.admob.admob_native_vault
 import com.example.my.project.authenticator.otp.domain.model.AdIds
 import com.example.my.project.authenticator.otp.domain.repository.RemoteConfigRepository
 import com.example.my.project.authenticator.utils.YEARLY
@@ -135,6 +137,20 @@ class RemoteConfigRepositoryImpl(
                         ""
                     }
 
+                admob_native_vault =
+                    if (adIds.nativeVault?.show == true && adIds.nativeVault?.adId?.isNotEmpty() == true) {
+                        adIds?.nativeVault?.adId ?: ""
+                    } else {
+                        ""
+                    }
+
+                admob_native_add_password =
+                    if (adIds.nativeAddPassword?.show == true && adIds.nativeAddPassword?.adId?.isNotEmpty() == true) {
+                        adIds?.nativeAddPassword?.adId ?: ""
+                    } else {
+                        ""
+                    }
+
                 admob_app_open =
                     if (adIds.appOpen?.show == true && adIds.appOpen?.adId?.isNotEmpty() == true) {
 //                        PrefUtils.isAppOpenAllowedFromRemoteConfig = true
@@ -228,6 +244,20 @@ class RemoteConfigRepositoryImpl(
                         ""
                     }
 
+                admob_native_vault =
+                    if (adIds.nativeVault?.show == true && adIds.nativeVault?.adId?.isNotEmpty() == true) {
+                        adIds?.nativeVault?.adId ?: ""
+                    } else {
+                        ""
+                    }
+
+                admob_native_add_password =
+                    if (adIds.nativeAddPassword?.show == true && adIds.nativeAddPassword?.adId?.isNotEmpty() == true) {
+                        adIds?.nativeAddPassword?.adId ?: ""
+                    } else {
+                        ""
+                    }
+
                 admob_app_open =
                     if (adIds.appOpen?.show == true && adIds.appOpen?.adId?.isNotEmpty() == true) {
 //                        PrefUtils.isAppOpenAllowedFromRemoteConfig = true
@@ -260,6 +290,8 @@ class RemoteConfigRepositoryImpl(
         admob_native_backup = context.getString(R.string.admob_native_id_backup_theme)
         admob_native_transfer_code = context.getString(R.string.admob_native_id_transfer_codes)
         admob_native_onboarding = context.getString(R.string.admob_native_id_onboarding)
+        admob_native_vault = context.getString(R.string.admob_native_id_vault)
+        admob_native_add_password = context.getString(R.string.admob_native_id_add_password)
         admob_app_open = context.getString(R.string.admob_app_open_id)
         splashIAPExperiment = YEARLY
     }

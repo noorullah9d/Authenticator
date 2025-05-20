@@ -16,15 +16,28 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.admob.FragInterstitial
+import com.example.my.project.authenticator.admob.NativeAd
+import com.example.my.project.authenticator.admob.admob_interstitial_fragment
+import com.example.my.project.authenticator.admob.admob_native_add_password
+import com.example.my.project.authenticator.analytics.ADD_PWD_SCREEN
+import com.example.my.project.authenticator.analytics.PWD_SAVE_CLICK
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.FragmentAddPasswordBinding
+import com.example.my.project.authenticator.databinding.GntSmallBinding
+import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.invisible
+import com.example.my.project.authenticator.extensions.isInternetAvailable
+import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setProfileImage
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showPasswordGenerationBottomSheet
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.domain.model.Password
 import com.example.my.project.authenticator.ui.viewModel.VaultViewModel
+import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,6 +61,7 @@ class AddPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(ADD_PWD_SCREEN)
 
         mPassword = arguments?.getParcelable<Password>("password")
         shouldEdit = arguments?.getBoolean("edit", false) == true
@@ -55,8 +69,68 @@ class AddPasswordFragment : Fragment() {
 
         if (mPassword != null) populateFields(mPassword!!)
 
+        loadAndShowAdd()
         setupClickListeners()
         handleBackPress()
+    }
+
+    private fun loadFragmentInterstitial() {
+        FragInterstitial.loadAd(
+            requireContext(),
+            admob_interstitial_fragment
+        )
+    }
+
+    private fun loadAndShowAdd() {
+        Log.d(TAG, "admobNativeAd loadAndShowAdd: called")
+        if (!requireContext().isInternetAvailable() || isAdsRemoved) {
+            binding.adFrame.hide()
+            return
+        }
+        binding.adFrame.show()
+        val shimmer = ShimmerSmallNativeBinding.inflate(layoutInflater)
+        binding.adFrame.apply {
+            removeAllViews()
+            safeAddView(shimmer.root)
+            shimmer.root.startShimmerAnimation()
+        }
+
+        if (NativeAd.admobNativeAd != null) {
+            showNativeAd()
+            return
+        }
+
+        NativeAd.result = {
+            if (it) {
+                showNativeAd()
+            } else {
+                binding.adFrame.hide()
+            }
+        }
+
+        NativeAd.loadAd(
+            requireActivity(),
+            admob_native_add_password
+        )
+    }
+
+    private fun showNativeAd() {
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        Log.d(TAG, "admobNativeAd showNativeAd: called")
     }
 
     private fun populateFields(password: Password) {
@@ -128,7 +202,14 @@ class AddPasswordFragment : Fragment() {
 
             tvSave.setOnClickListener {
                 if (validateInputs()) {
-                    savePassword()
+                    FragInterstitial.showAd(
+                        requireActivity(),
+                        onDismissed = {
+                            loadFragmentInterstitial()
+                            savePassword()
+                            requireActivity().postAnalytics(PWD_SAVE_CLICK)
+                        }
+                    )
                 }
             }
 
@@ -148,6 +229,7 @@ class AddPasswordFragment : Fragment() {
         val password = binding.etPassword.text.toString().trim()
         val url = binding.etUrl.text.toString().trim()
         val note = binding.etNote.text.toString().trim()
+        val imagePath = mPassword?.profileImagePath
         val time = System.currentTimeMillis()
 
         if (shouldEdit) {
@@ -158,7 +240,7 @@ class AddPasswordFragment : Fragment() {
                 password = password,
                 url = url,
                 notes = note,
-                profileImagePath = filePath ?: "",
+                profileImagePath = filePath ?: imagePath,
                 lastModified = time
             )
             viewModel.updatePassword(passwordItem)
@@ -198,12 +280,13 @@ class AddPasswordFragment : Fragment() {
                     requireContext().contentResolver.takePersistableUriPermission(
                         uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
-                    filePath = uri.toString()
-                    displayImage(uri.toString())
                 } catch (e: SecurityException) {
                     e.printStackTrace()
                     toast("Permission error: ${e.message}")
                 }
+
+                filePath = uri.toString()
+                displayImage(uri.toString())
             } else {
                 toast("No image selected")
             }
@@ -215,4 +298,13 @@ class AddPasswordFragment : Fragment() {
         binding.ivProfileImage.setImageURI(imagePath.toUri())
         filePath = imagePath
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "admobNativeAd onDestroyView: called!")
+        NativeAd.admobNativeAd?.destroy()
+        NativeAd.admobNativeAd = null
+    }
 }
+
+private const val TAG = "AddPasswordFragment"

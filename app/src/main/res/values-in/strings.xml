@@ -204,5 +204,31 @@
 
     <string name="delete_account">Hapus akun</string>
     <string name="delete_account_summary">Apakah Anda yakin ingin menghapus akun Anda?</string>
+    <string name="logout_summary">Apakah Anda yakin ingin keluar?</string>
+    <string name="vault">Brankas</string>
+    <string name="add_password">Tambah Kata Sandi</string>
+    <string name="password_placeholder_summary">Simpan kata sandi Anda di sini untuk akses cepat dan aman.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Nama Pengguna</string>
+    <string name="password_text">Kata Sandi</string>
+    <string name="note">Catatan</string>
+    <string name="password_saved">Kata sandi disimpan</string>
+    <string name="view">Lihat</string>
+    <string name="copy_url">Salin URL</string>
+    <string name="copy_username">Salin nama pengguna</string>
+    <string name="copy_password">Salin kata sandi</string>
+    <string name="share">Bagikan</string>
+    <string name="last_modified_time">Terakhir diubah %1$s</string>
+    <string name="password_updated">Kata sandi diperbarui!</string>
+    <string name="update">Perbarui</string>
+    <string name="very_strong">Sangat kuat</string>
+    <string name="password_length_characters">Panjang kata sandi: %1$s karakter</string>
+    <string name="lowercase_abc">Huruf kecil (abc)</string>
+    <string name="uppercase_abc">Huruf besar (ABC)</string>
+    <string name="choose_a_password_type">Pilih jenis kata sandi</string>
+    <string name="numbers_123">Angka (123)</string>
+    <string name="randomized_symbols">Simbol acak (!#$)</string>
+    <string name="use_password">Gunakan Kata Sandi</string>
+    <string name="generate_password_first">Buat kata sandi terlebih dahulu</string>
 
 </resources>

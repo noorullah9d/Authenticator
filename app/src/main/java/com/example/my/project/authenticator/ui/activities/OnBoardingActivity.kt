@@ -2,6 +2,7 @@ package com.example.my.project.authenticator.ui.activities
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
@@ -9,6 +10,13 @@ import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_onboarding
 import com.example.my.project.authenticator.admob.admob_native_onboarding
 import com.example.my.project.authenticator.admob.loadAdmobInterstitial
+import com.example.my.project.authenticator.analytics.LANGUAGE_BACK_CLICK
+import com.example.my.project.authenticator.analytics.ONBOARDING_1
+import com.example.my.project.authenticator.analytics.ONBOARDING_2
+import com.example.my.project.authenticator.analytics.ONBOARDING_3
+import com.example.my.project.authenticator.analytics.ONBOARDING_BACK_CLICK
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.ActivityOnBoardingBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -46,6 +54,23 @@ class OnBoardingActivity : BaseActivity() {
         onClickView()
         loadAndShowAdd()
         loadInterstitial()
+        handleBackPress()
+    }
+
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                postAnalytics(ONBOARDING_BACK_CLICK)
+                showInterstitialAd(
+                    onDismissed = {
+                        if (!isDestroyed && !isFinishing) {
+                            startActivityWithAnimation<MainActivity>()
+                            finish()
+                        }
+                    }
+                )
+            }
+        })
     }
 
     private fun loadInterstitial() {
@@ -127,19 +152,22 @@ class OnBoardingActivity : BaseActivity() {
     }
 
     private fun showNativeAd() {
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntSmallBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        try {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun onClickView() {
-
         binding.btnStart.setOnClickListener {
             when (binding.viewPager.currentItem) {
                 0 -> {
@@ -191,16 +219,19 @@ class OnBoardingActivity : BaseActivity() {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 when (position) {
                     0 -> {
+                        logScreen(ONBOARDING_1)
                         binding.btnStart.text = getString(R.string.get_started)
                         binding.icons.setImageResource(R.drawable.ic_first_start)
                     }
 
                     1 -> {
+                        logScreen(ONBOARDING_2)
                         binding.btnStart.text = getString(R.string.next)
                         binding.icons.setImageResource(R.drawable.ic_second_start)
                     }
 
                     2 -> {
+                        logScreen(ONBOARDING_3)
                         binding.btnStart.text = getString(R.string.let_s_go)
                         binding.icons.setImageResource(R.drawable.ic_third_start)
                     }

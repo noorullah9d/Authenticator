@@ -204,5 +204,31 @@
 
     <string name="delete_account">ลบบัญชี</string>
     <string name="delete_account_summary">คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีของคุณ?</string>
+    <string name="logout_summary">คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?</string>
+    <string name="vault">คลัง</string>
+    <string name="add_password">เพิ่มรหัสผ่าน</string>
+    <string name="password_placeholder_summary">บันทึกรหัสผ่านของคุณที่นี่เพื่อการเข้าถึงที่รวดเร็วและปลอดภัย</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">อีเมล/ชื่อผู้ใช้</string>
+    <string name="password_text">รหัสผ่าน</string>
+    <string name="note">หมายเหตุ</string>
+    <string name="password_saved">บันทึกรหัสผ่านแล้ว</string>
+    <string name="view">ดู</string>
+    <string name="copy_url">คัดลอก URL</string>
+    <string name="copy_username">คัดลอกชื่อผู้ใช้</string>
+    <string name="copy_password">คัดลอกรหัสผ่าน</string>
+    <string name="share">แชร์</string>
+    <string name="last_modified_time">แก้ไขล่าสุด %1$s</string>
+    <string name="password_updated">อัปเดตรหัสผ่านแล้ว!</string>
+    <string name="update">อัปเดต</string>
+    <string name="very_strong">แข็งแกร่งมาก</string>
+    <string name="password_length_characters">ความยาวรหัสผ่าน: %1$s ตัวอักษร</string>
+    <string name="lowercase_abc">ตัวอักษรพิมพ์เล็ก (abc)</string>
+    <string name="uppercase_abc">ตัวอักษรพิมพ์ใหญ่ (ABC)</string>
+    <string name="choose_a_password_type">เลือกประเภทของรหัสผ่าน</string>
+    <string name="numbers_123">ตัวเลข (123)</string>
+    <string name="randomized_symbols">สัญลักษณ์สุ่ม (!#$)</string>
+    <string name="use_password">ใช้รหัสผ่าน</string>
+    <string name="generate_password_first">สร้างรหัสผ่านก่อน</string>
 
 </resources>

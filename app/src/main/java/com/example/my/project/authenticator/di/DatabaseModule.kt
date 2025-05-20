@@ -26,7 +26,8 @@ object DatabaseModule {
         )
             .addMigrations(
                 TotpDatabase.MIGRATION_1_2,
-                TotpDatabase.MIGRATION_2_3
+                TotpDatabase.MIGRATION_2_3,
+                TotpDatabase.MIGRATION_3_4
             )
             .allowMainThreadQueries()
             .build()

@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_transfer_code
+import com.example.my.project.authenticator.analytics.TRANSFER_CODE_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.ActivityImportExportScreenBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -34,6 +36,7 @@ class ImportExportScreen : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityImportExportScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        logScreen(TRANSFER_CODE_SCREEN)
 
         getInputStreamLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { content ->
             if (content == null) {
@@ -108,14 +111,18 @@ class ImportExportScreen : BaseActivity() {
     }
 
     private fun showNativeAd() {
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntSmallBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        try {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

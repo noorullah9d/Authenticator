@@ -3,9 +3,14 @@ package com.example.my.project.authenticator.ui.activities
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_languages
+import com.example.my.project.authenticator.analytics.LANGUAGE_APPLY_CLICK
+import com.example.my.project.authenticator.analytics.LANGUAGE_BACK_CLICK
+import com.example.my.project.authenticator.analytics.LANGUAGE_SCREEN
+import com.example.my.project.authenticator.analytics.LANGUAGE_SHEET
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.ActivitySelectLanguageBinding
 import com.example.my.project.authenticator.databinding.GntLanguagesBinding
 import com.example.my.project.authenticator.databinding.ShimmerLayoutLanguagesNativeBinding
@@ -16,8 +21,8 @@ import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
-import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.ui.adapters.LanguagesAdapterNew
+import com.example.my.project.authenticator.ui.viewModel.LanguageViewModel
 import com.example.my.project.authenticator.utils.PrefsHelper
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +43,14 @@ class SelectLanguageActivity : BaseActivity() {
         setContentView(binding.root)
 
         isFromSettings = intent.getBooleanExtra("isFromSettings", false)
-        if (!isFromSettings) loadAndShowAdd() else binding.adFrame.hide()
+        if (!isFromSettings){
+            loadAndShowAdd()
+            logScreen(LANGUAGE_SCREEN)
+        } else {
+            binding.adFrame.hide()
+            logScreen(LANGUAGE_SHEET)
+        }
+
         initLanguagesRecyclerView()
         setupClickListeners()
         handleBackPress()
@@ -77,14 +89,18 @@ class SelectLanguageActivity : BaseActivity() {
     }
 
     private fun showNativeAd() {
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntLanguagesBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        try {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntLanguagesBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -92,6 +108,7 @@ class SelectLanguageActivity : BaseActivity() {
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (isFromSettings) finish() else navigateToForward()
+                postAnalytics(LANGUAGE_BACK_CLICK)
             }
         })
     }
@@ -100,12 +117,14 @@ class SelectLanguageActivity : BaseActivity() {
         binding.apply {
             icBack.setOnClickListener {
                 if (isFromSettings) finish() else navigateToForward()
+                postAnalytics(LANGUAGE_BACK_CLICK)
             }
 
             confirm.clickWithExtraDebounce {
                 viewModel.setLanguage(selectedLanguage)
                 viewModel.setLanguageFirstTime("true")
                 PrefsHelper.isLanguageShown = true
+                postAnalytics(LANGUAGE_APPLY_CLICK)
                 navigateToForward()
             }
         }

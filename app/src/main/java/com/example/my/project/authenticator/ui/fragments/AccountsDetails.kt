@@ -18,19 +18,20 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_scanner
-import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
+import com.example.my.project.authenticator.analytics.SAVE_OTP_CLICK
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.FragmentAccountsDetailsBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
-import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.createNewGroupDialog
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
-import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.safeAddView
+import com.example.my.project.authenticator.extensions.show
 import com.example.my.project.authenticator.extensions.showReplaceAccountDialog
 import com.example.my.project.authenticator.extensions.toast
 import com.example.my.project.authenticator.otp.data.database.Categories
+import com.example.my.project.authenticator.ui.adapters.StorageDetailsSpinnerArrayAdapter
 import com.example.my.project.authenticator.ui.viewModel.HomeViewModel
 import com.example.my.project.authenticator.utils.PrefsHelper.isAdsRemoved
 import dagger.hilt.android.AndroidEntryPoint
@@ -176,16 +177,20 @@ class AccountsDetails : Fragment() {
     }
 
     private fun showNativeAd() {
-        if (isAdded) {
-            binding.apply {
-                adFrame.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -235,11 +240,10 @@ class AccountsDetails : Fragment() {
                             }
 
                             if (addResult) {
-                                requireActivity().logFirebaseEvent(
-                                    "scan_option",
-                                    mapOf("codescan" to "clicked")
-                                )
-                                requireActivity().finish()
+                                requireActivity().apply {
+                                    postAnalytics(SAVE_OTP_CLICK)
+                                    finish()
+                                }
                             } else {
                                 toast(requireActivity().getString(R.string.error_occurs))
                             }
@@ -313,10 +317,10 @@ class AccountsDetails : Fragment() {
 
             }.invokeOnCompletion {
                 if (result) {
-                    requireActivity().logFirebaseEvent(
+                    /*requireActivity().logFirebaseEvent(
                         "scan_option",
                         mapOf("codescan" to "clicked")
-                    )
+                    )*/
                     requireActivity().finish()
                 } else {
                     toast(requireActivity().getString(R.string.error_occurs))

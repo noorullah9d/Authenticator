@@ -481,16 +481,6 @@ fun Context.showAskPasswordDialog(onDismiss: () -> Unit, onSuccess: (String) -> 
     alertDialog.show()
 }
 
-fun Context.logFirebaseEvent(eventName: String, params: Map<String, String> = emptyMap()) {
-    val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-    val bundle = Bundle().apply {
-        params.forEach { (key, value) ->
-            putString(key, value)
-        }
-    }
-    firebaseAnalytics.logEvent(eventName, bundle)
-}
-
 fun View.setOnDebouncedClickListener(debounceTime: Long = 2000L, action: (View) -> Unit) {
     var lastClickTime = 0L
 
@@ -539,7 +529,6 @@ fun Context.copyTextToClipboard(text: String) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clip = ClipData.newPlainText("Copied Text", text)
     clipboard.setPrimaryClip(clip)
-    toast("Text Copied")
 }
 
 fun String.getFirstCharacter(): Char? {

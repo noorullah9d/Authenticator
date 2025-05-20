@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.my.project.authenticator.analytics.USER_GUIDE_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentUserGuideBinding
 import com.example.my.project.authenticator.extensions.getPlatformList
 import com.example.my.project.authenticator.ui.adapters.GuideAdapter
@@ -26,6 +28,7 @@ class UserGuideFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(USER_GUIDE_SCREEN)
 
         initRecyclerView()
         setupClickListeners()

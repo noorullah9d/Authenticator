@@ -203,5 +203,31 @@
 
     <string name="delete_account">حذف الحساب</string>
     <string name="delete_account_summary">هل أنت متأكد أنك تريد حذف حسابك؟</string>
+    <string name="logout_summary">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="vault">الخزنة</string>
+    <string name="add_password">إضافة كلمة مرور</string>
+    <string name="password_placeholder_summary">احفظ كلمات المرور الخاصة بك هنا للوصول السريع والآمن.</string>
+    <string name="url">رابط</string>
+    <string name="email_or_username">البريد الإلكتروني/اسم المستخدم</string>
+    <string name="password_text">كلمة المرور</string>
+    <string name="note">ملاحظة</string>
+    <string name="password_saved">تم حفظ كلمة المرور</string>
+    <string name="view">عرض</string>
+    <string name="copy_url">نسخ الرابط</string>
+    <string name="copy_username">نسخ اسم المستخدم</string>
+    <string name="copy_password">نسخ كلمة المرور</string>
+    <string name="share">مشاركة</string>
+    <string name="last_modified_time">تم التعديل آخر مرة في %1$s</string>
+    <string name="password_updated">تم تحديث كلمة المرور!</string>
+    <string name="update">تحديث</string>
+    <string name="very_strong">قوي جدًا</string>
+    <string name="password_length_characters">طول كلمة المرور: %1$s حرف</string>
+    <string name="lowercase_abc">حروف صغيرة (abc)</string>
+    <string name="uppercase_abc">حروف كبيرة (ABC)</string>
+    <string name="choose_a_password_type">اختر نوع كلمة المرور</string>
+    <string name="numbers_123">أرقام (123)</string>
+    <string name="randomized_symbols">رموز عشوائية (!#$)</string>
+    <string name="use_password">استخدام كلمة المرور</string>
+    <string name="generate_password_first">قم بتوليد كلمة مرور أولاً</string>
 
 </resources>

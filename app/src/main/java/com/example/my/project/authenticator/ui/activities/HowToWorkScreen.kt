@@ -8,6 +8,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_onboarding
+import com.example.my.project.authenticator.analytics.HOW_IT_WORKS_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.ui.adapters.HowWorksAdapter
 import com.example.my.project.authenticator.databinding.ActivityHowToWorkScreenBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
@@ -34,6 +36,7 @@ class HowToWorkScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHowToWorkScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        logScreen(HOW_IT_WORKS_SCREEN)
 
         viewPager = binding.viewPager
 
@@ -151,14 +154,18 @@ class HowToWorkScreen : AppCompatActivity() {
     }
 
     private fun showNativeAd() {
-        binding.apply {
-            adFrame.show()
-            NativeAd.admobNativeAd?.let {
-                val adView = GntSmallBinding.inflate(layoutInflater)
-                NativeAd.populateNativeAdView(it, adView)
-                adFrame.removeAllViews()
-                adFrame.safeAddView(adView.root)
+        try {
+            binding.apply {
+                adFrame.show()
+                NativeAd.admobNativeAd?.let {
+                    val adView = GntSmallBinding.inflate(layoutInflater)
+                    NativeAd.populateNativeAdView(it, adView)
+                    adFrame.removeAllViews()
+                    adFrame.safeAddView(adView.root)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

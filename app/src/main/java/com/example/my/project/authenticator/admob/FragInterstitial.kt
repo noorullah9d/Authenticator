@@ -3,7 +3,9 @@ package com.example.my.project.authenticator.admob
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.utils.PrefsHelper
+import com.example.my.project.authenticator.utils.isInterstitialShowing
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -59,7 +61,7 @@ object FragInterstitial {
         activity: Activity,
         onDismissed: () -> Unit = {}
     ) {
-        if (PrefsHelper.isAdsRemoved) {
+        if (PrefsHelper.isAdsRemoved || !activity.isInternetAvailable()) {
             onDismissed.invoke()
             return
         }
@@ -72,6 +74,7 @@ object FragInterstitial {
                         onDismissed.invoke()
                         mInterstitialAd = null
                         isLoadingAd = false
+                        isInterstitialShowing = false
                     }
 
                     override fun onAdFailedToShowFullScreenContent(p0: AdError) {
@@ -79,11 +82,18 @@ object FragInterstitial {
                         onDismissed.invoke()
                         mInterstitialAd = null
                         isLoadingAd = false
+                        isInterstitialShowing = false
+                    }
+
+                    override fun onAdShowedFullScreenContent() {
+                        super.onAdShowedFullScreenContent()
+                        isInterstitialShowing = true
                     }
 
                     override fun onAdImpression() {
                         super.onAdImpression()
                         mInterstitialAd = null
+                        isInterstitialShowing = true
                     }
                 }
             mInterstitialAd?.show(activity)

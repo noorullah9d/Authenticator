@@ -204,5 +204,31 @@
 
     <string name="delete_account">खाता हटाएं</string>
     <string name="delete_account_summary">क्या आप सुनिश्चित हैं कि आप अपना खाता हटाना चाहते हैं?</string>
+    <string name="logout_summary">क्या आप सच में लॉगआउट करना चाहते हैं?</string>
+    <string name="vault">सुरक्षित कक्ष</string>
+    <string name="add_password">पासवर्ड जोड़ें</string>
+    <string name="password_placeholder_summary">यहां अपने पासवर्ड सुरक्षित रूप से और त्वरित पहुंच के लिए सेव करें।</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">ईमेल/उपयोगकर्ता नाम</string>
+    <string name="password_text">पासवर्ड</string>
+    <string name="note">नोट</string>
+    <string name="password_saved">पासवर्ड सेव किया गया</string>
+    <string name="view">देखें</string>
+    <string name="copy_url">URL कॉपी करें</string>
+    <string name="copy_username">उपयोगकर्ता नाम कॉपी करें</string>
+    <string name="copy_password">पासवर्ड कॉपी करें</string>
+    <string name="share">साझा करें</string>
+    <string name="last_modified_time">अंतिम संशोधन %1$s</string>
+    <string name="password_updated">पासवर्ड अपडेट हो गया!</string>
+    <string name="update">अद्यतन करें</string>
+    <string name="very_strong">बहुत मजबूत</string>
+    <string name="password_length_characters">पासवर्ड की लंबाई: %1$s वर्ण</string>
+    <string name="lowercase_abc">निम्नलिखित (abc)</string>
+    <string name="uppercase_abc">उच्चलिखित (ABC)</string>
+    <string name="choose_a_password_type">पासवर्ड प्रकार चुनें</string>
+    <string name="numbers_123">संख्याएँ (123)</string>
+    <string name="randomized_symbols">यादृच्छिक प्रतीक (!#$)</string>
+    <string name="use_password">पासवर्ड का उपयोग करें</string>
+    <string name="generate_password_first">पहले पासवर्ड जनरेट करें</string>
 
 </resources>

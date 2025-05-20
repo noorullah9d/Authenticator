@@ -15,6 +15,8 @@ data class AdIds(
     @SerializedName("backup_native") var nativeBackup: AdModel? = AdModel(),
     @SerializedName("transfer_code_native") var nativeTransferCode: AdModel? = AdModel(),
     @SerializedName("onboarding_native") var nativeOnBoarding: AdModel? = AdModel(),
+    @SerializedName("password_native") var nativeVault: AdModel? = AdModel(),
+    @SerializedName("add_password_native") var nativeAddPassword: AdModel? = AdModel(),
     @SerializedName("app_open_resume") var appOpen: AdModel? = AdModel(),
     @SerializedName("splash_iap_exp") var splashIapExp: AdModel? = AdModel(),
 )

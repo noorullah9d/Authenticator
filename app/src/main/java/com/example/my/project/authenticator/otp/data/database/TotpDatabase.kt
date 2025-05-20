@@ -9,7 +9,7 @@ import com.example.my.project.authenticator.otp.domain.entities.TotpDbEntity
 
 @Database(
     entities = [TotpDbEntity::class, Categories::class, PasswordEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class TotpDatabase : RoomDatabase() {
@@ -52,6 +52,25 @@ abstract class TotpDatabase : RoomDatabase() {
                 password TEXT NOT NULL,
                 notes TEXT,
                 imageRes INTEGER NOT NULL
+            )
+            """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    """
+            CREATE TABLE IF NOT EXISTS passwords (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                url TEXT,
+                emailOrUsername TEXT NOT NULL,
+                password TEXT NOT NULL,
+                notes TEXT,
+                profileImagePath TEXT,
+                lastModified INTEGER NOT NULL
             )
             """.trimIndent()
                 )

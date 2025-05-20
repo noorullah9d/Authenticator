@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_backup
+import com.example.my.project.authenticator.analytics.THEME_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentThemesBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -47,9 +49,9 @@ class ThemesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(THEME_SCREEN)
 
         binding.apply {
-
             val colorStateList = ColorStateList(
                 arrayOf(
                     intArrayOf(-android.R.attr.state_enabled),
@@ -192,16 +194,20 @@ class ThemesFragment : Fragment() {
     }
 
     private fun showNativeAd() {
-        if (isAdded) {
-            binding.apply {
-                adFrame.show()
-                NativeAd.admobNativeAd?.let {
-                    val adView = GntSmallBinding.inflate(layoutInflater)
-                    NativeAd.populateNativeAdView(it, adView)
-                    adFrame.removeAllViews()
-                    adFrame.safeAddView(adView.root)
+        try {
+            if (isAdded) {
+                binding.apply {
+                    adFrame.show()
+                    NativeAd.admobNativeAd?.let {
+                        val adView = GntSmallBinding.inflate(layoutInflater)
+                        NativeAd.populateNativeAdView(it, adView)
+                        adFrame.removeAllViews()
+                        adFrame.safeAddView(adView.root)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -205,5 +205,31 @@
 
     <string name="delete_account">Elimina account</string>
     <string name="delete_account_summary">Sei sicuro di voler eliminare il tuo account?</string>
+    <string name="logout_summary">Vuoi davvero disconnetterti?</string>
+    <string name="vault">Cassaforte</string>
+    <string name="add_password">Aggiungi password</string>
+    <string name="password_placeholder_summary">Salva qui le tue password per un accesso rapido e sicuro.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Username</string>
+    <string name="password_text">Password</string>
+    <string name="note">Nota</string>
+    <string name="password_saved">Password salvata</string>
+    <string name="view">Visualizza</string>
+    <string name="copy_url">Copia URL</string>
+    <string name="copy_username">Copia nome utente</string>
+    <string name="copy_password">Copia password</string>
+    <string name="share">Condividi</string>
+    <string name="last_modified_time">Ultima modifica %1$s</string>
+    <string name="password_updated">Password aggiornata!</string>
+    <string name="update">Aggiorna</string>
+    <string name="very_strong">Molto forte</string>
+    <string name="password_length_characters">Lunghezza password: %1$s caratteri</string>
+    <string name="lowercase_abc">Minuscole (abc)</string>
+    <string name="uppercase_abc">Maiuscole (ABC)</string>
+    <string name="choose_a_password_type">Scegli un tipo di password</string>
+    <string name="numbers_123">Numeri (123)</string>
+    <string name="randomized_symbols">Simboli casuali (!#$)</string>
+    <string name="use_password">Usa password</string>
+    <string name="generate_password_first">Genera prima una password</string>
 
 </resources>

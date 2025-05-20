@@ -205,5 +205,31 @@
 
     <string name="delete_account">Smazat účet</string>
     <string name="delete_account_summary">Jste si jisti, že chcete smazat svůj účet?</string>
+    <string name="logout_summary">Opravdu chcete odhlásit?</string>
+    <string name="vault">Trezor</string>
+    <string name="add_password">Přidat heslo</string>
+    <string name="password_placeholder_summary">Uložte svá hesla zde pro rychlý a bezpečný přístup.</string>
+    <string name="url">URL</string>
+    <string name="email_or_username">Email/Uživatelské jméno</string>
+    <string name="password_text">Heslo</string>
+    <string name="note">Poznámka</string>
+    <string name="password_saved">Heslo uloženo</string>
+    <string name="view">Zobrazit</string>
+    <string name="copy_url">Kopírovat URL</string>
+    <string name="copy_username">Kopírovat uživatelské jméno</string>
+    <string name="copy_password">Kopírovat heslo</string>
+    <string name="share">Sdílet</string>
+    <string name="last_modified_time">Poslední úprava %1$s</string>
+    <string name="password_updated">Heslo bylo aktualizováno!</string>
+    <string name="update">Aktualizovat</string>
+    <string name="very_strong">Velmi silné</string>
+    <string name="password_length_characters">Délka hesla: %1$s znaků</string>
+    <string name="lowercase_abc">Malá písmena (abc)</string>
+    <string name="uppercase_abc">Velká písmena (ABC)</string>
+    <string name="choose_a_password_type">Vyberte typ hesla</string>
+    <string name="numbers_123">Čísla (123)</string>
+    <string name="randomized_symbols">Náhodné symboly (!#$)</string>
+    <string name="use_password">Použít heslo</string>
+    <string name="generate_password_first">Nejprve vygenerujte heslo</string>
 
 </resources>

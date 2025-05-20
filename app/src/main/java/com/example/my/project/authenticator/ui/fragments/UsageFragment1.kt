@@ -37,11 +37,7 @@ class UsageFragment1 : Fragment() {
 
             }
         }
-
-
-
     }
-
 
     private fun getSelectedTheme(): AppTheme {
         val themeName = cardSelectionViewModel.getAppTheme()
