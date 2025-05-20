@@ -13,6 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.billingclient.api.ProductDetails
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.analytics.IAP_DISMISS_SETTINGS
+import com.example.my.project.authenticator.analytics.IAP_DISMISS_SPLASH
+import com.example.my.project.authenticator.analytics.IAP_SETTINGS
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.ActivityPremiumBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.formatFreeTrialFooter
@@ -59,6 +64,8 @@ class PremiumActivity : BaseActivity() {
             insets
         }
 
+        logScreen(IAP_SETTINGS)
+
         isFromSplash = intent?.getBooleanExtra("isFromSplash", false) == true
 
         lifecycleScope.launch {
@@ -78,6 +85,7 @@ class PremiumActivity : BaseActivity() {
     private fun handleBackPress() {
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                postAnalytics(IAP_DISMISS_SETTINGS)
                 if (isFromSplash) {
                     if (!viewModel.isLanguageShown()) {
                         navigateToLanguageSelection()
@@ -146,6 +154,7 @@ class PremiumActivity : BaseActivity() {
     private fun setupClickListeners() {
         binding.apply {
             icClose.setOnClickListener {
+                postAnalytics(IAP_DISMISS_SETTINGS)
                 if (isFromSplash) {
                     if (!viewModel.isLanguageShown()) {
                         navigateToLanguageSelection()

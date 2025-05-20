@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_vault
+import com.example.my.project.authenticator.analytics.VAULT_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentVaultBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
@@ -62,6 +64,7 @@ class VaultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(VAULT_SCREEN)
 
         setupRecyclerView()
         observePasswords()

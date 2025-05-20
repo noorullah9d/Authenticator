@@ -20,6 +20,10 @@ import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
 import com.example.my.project.authenticator.admob.admob_native_add_password
+import com.example.my.project.authenticator.analytics.ADD_PWD_SCREEN
+import com.example.my.project.authenticator.analytics.PWD_SAVE_CLICK
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.FragmentAddPasswordBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -57,6 +61,7 @@ class AddPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(ADD_PWD_SCREEN)
 
         mPassword = arguments?.getParcelable<Password>("password")
         shouldEdit = arguments?.getBoolean("edit", false) == true
@@ -202,6 +207,7 @@ class AddPasswordFragment : Fragment() {
                         onDismissed = {
                             loadFragmentInterstitial()
                             savePassword()
+                            requireActivity().postAnalytics(PWD_SAVE_CLICK)
                         }
                     )
                 }

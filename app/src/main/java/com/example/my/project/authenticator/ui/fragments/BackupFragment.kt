@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_native_backup
+import com.example.my.project.authenticator.analytics.BACKUP_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentBackupBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
 import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
@@ -54,6 +56,7 @@ class BackupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(BACKUP_SCREEN)
 
         firebaseAuth = FirebaseAuth.getInstance()
 

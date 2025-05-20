@@ -16,6 +16,8 @@ import com.example.my.project.authenticator.R
 import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
+import com.example.my.project.authenticator.analytics.SETTINGS_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentSettingScreenBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.getLanguageName
@@ -64,6 +66,7 @@ class SettingScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(SETTINGS_SCREEN)
 
         firebaseAuth = FirebaseAuth.getInstance()
 

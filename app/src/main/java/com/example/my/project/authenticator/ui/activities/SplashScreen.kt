@@ -13,6 +13,8 @@ import com.example.my.project.authenticator.admob.admob_interstitial_splash
 import com.example.my.project.authenticator.admob.admob_native_languages
 import com.example.my.project.authenticator.admob.loadAdmobInterstitial
 import com.example.my.project.authenticator.admob.requestConsentForm
+import com.example.my.project.authenticator.analytics.SPLASH_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
 import com.example.my.project.authenticator.databinding.FragmentSplashBinding
 import com.example.my.project.authenticator.extensions.isInternetAvailable
 import com.example.my.project.authenticator.extensions.startActivityWithAnimation
@@ -52,6 +54,7 @@ class SplashScreen : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentSplashBinding.inflate(layoutInflater)
+        logScreen(SPLASH_SCREEN)
 
         // get remote config values
         splashViewModel.getRemoteConfig()

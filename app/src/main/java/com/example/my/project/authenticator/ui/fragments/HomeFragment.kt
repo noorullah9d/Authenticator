@@ -25,14 +25,17 @@ import com.example.my.project.authenticator.admob.FragInterstitial
 import com.example.my.project.authenticator.admob.NativeAd
 import com.example.my.project.authenticator.admob.admob_interstitial_fragment
 import com.example.my.project.authenticator.admob.admob_native_home
+import com.example.my.project.authenticator.analytics.ADD_OTP_MANUAL_CLICK
+import com.example.my.project.authenticator.analytics.ADD_OTP_QR_CLICK
+import com.example.my.project.authenticator.analytics.SIGN_IN_FAILED
+import com.example.my.project.authenticator.analytics.SIGN_IN_SUCCESS
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.FragmentHomeBinding
 import com.example.my.project.authenticator.databinding.GntSmallBinding
-import com.example.my.project.authenticator.databinding.ShimmerSmallNativeBinding
 import com.example.my.project.authenticator.extensions.copyTextToClipboard
 import com.example.my.project.authenticator.extensions.getFirstCharacter
 import com.example.my.project.authenticator.extensions.hide
 import com.example.my.project.authenticator.extensions.isInternetAvailable
-import com.example.my.project.authenticator.extensions.logFirebaseEvent
 import com.example.my.project.authenticator.extensions.safeAddView
 import com.example.my.project.authenticator.extensions.setOnDebouncedClickListener
 import com.example.my.project.authenticator.extensions.show
@@ -296,7 +299,7 @@ class HomeFragment : Fragment() {
                 doOnSuccess = { credentials ->
                     toast("Signed in as: ${credentials.id}")
                     println("Signed in as: ${credentials.id}")
-                    firebaseAuthWithGoogle(idToken = credentials.idToken, email = credentials.id)
+                    firebaseAuthWithGoogle(requireContext(), idToken = credentials.idToken, email = credentials.id)
                 },
                 doOnError = { exception ->
                     println("Sign in failed: ${exception.message}")
@@ -508,40 +511,43 @@ class HomeFragment : Fragment() {
     }
 
     private fun clickAddAccount() {
-        requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
-        requireActivity().showCustomDialog { result ->
+//        requireActivity().logFirebaseEvent("scan_option", mapOf("passkey" to "clicked"))
+        requireActivity().apply {
+            showCustomDialog { result ->
+                when (result) {
+                    "ivScanQR" -> {
+                        postAnalytics(ADD_OTP_QR_CLICK)
+                        FragInterstitial.showAd(
+                            requireActivity(),
+                            onDismissed = {
+                                loadFragmentInterstitial()
+                                val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                                intent.putExtra("edit", 0)
+                                intent.putExtra("bundle", "ivScanQR")
+                                intent.putExtra("backStack", 1)
+                                startActivity(intent)
+                            }
+                        )
+                    }
 
-            when (result) {
-                "ivScanQR" -> {
-                    FragInterstitial.showAd(
-                        requireActivity(),
-                        onDismissed = {
-                            loadFragmentInterstitial()
-                            val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                            intent.putExtra("edit", 0)
-                            intent.putExtra("bundle", "ivScanQR")
-                            intent.putExtra("backStack", 1)
-                            startActivity(intent)
-                        }
-                    )
-                }
+                    "ivEnterKey" -> {
+                        postAnalytics(ADD_OTP_MANUAL_CLICK)
+                        FragInterstitial.showAd(
+                            requireActivity(),
+                            onDismissed = {
+                                loadFragmentInterstitial()
+                                val intent = Intent(requireActivity(), ProfileScreen::class.java)
+                                intent.putExtra("bundle", "ivEnterKey")
+                                intent.putExtra("edit", 0)
+                                intent.putExtra("backStack", 1)
+                                startActivity(intent)
+                            }
+                        )
+                    }
 
-                "ivEnterKey" -> {
-                    FragInterstitial.showAd(
-                        requireActivity(),
-                        onDismissed = {
-                            loadFragmentInterstitial()
-                            val intent = Intent(requireActivity(), ProfileScreen::class.java)
-                            intent.putExtra("bundle", "ivEnterKey")
-                            intent.putExtra("edit", 0)
-                            intent.putExtra("backStack", 1)
-                            startActivity(intent)
-                        }
-                    )
-                }
-
-                "dismiss" -> {
+                    "dismiss" -> {
 //                            btnStartOpt.setImageResource(R.drawable.add)
+                    }
                 }
             }
         }
@@ -659,10 +665,10 @@ class HomeFragment : Fragment() {
                 }
 
                 if (addResult) {
-                    requireActivity().logFirebaseEvent(
+                    /*requireActivity().logFirebaseEvent(
                         "scan_option",
                         mapOf("codescan" to "clicked")
-                    )
+                    )*/
                 } else {
                     toast(requireActivity().getString(R.string.error_occurs))
                 }
@@ -704,10 +710,10 @@ class HomeFragment : Fragment() {
 
                 }.invokeOnCompletion {
                     if (result) {
-                        requireActivity().logFirebaseEvent(
+                        /*requireActivity().logFirebaseEvent(
                             "scan_option",
                             mapOf("codescan" to "clicked")
-                        )
+                        )*/
                     } else {
                         toast(requireActivity().getString(R.string.error_occurs))
                     }
@@ -776,13 +782,14 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String, email: String) {
+    private fun firebaseAuthWithGoogle(context: Context, idToken: String, email: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 homeViewModel.clearTotpData()
                 PrefsHelper.userEmail = email
 
+                context.postAnalytics(SIGN_IN_SUCCESS)
                 PrefsHelper.userEmail.getFirstCharacter()
 
                 lifecycleScope.launch {
@@ -793,7 +800,6 @@ class HomeFragment : Fragment() {
                 setFromRemote()
 
                 // go to backup screen
-//                requireActivity().openFragment(R.id.backupFragment, true)
                 findNavController().navigate(R.id.action_homeFragment_to_backupFragment)
             } else {
                 val errorMessage = when (task.exception) {
@@ -803,6 +809,7 @@ class HomeFragment : Fragment() {
                     else -> "Authentication Failed"
                 }
                 toast(errorMessage)
+                context.postAnalytics(SIGN_IN_FAILED)
                 println(task.exception)
             }
         }

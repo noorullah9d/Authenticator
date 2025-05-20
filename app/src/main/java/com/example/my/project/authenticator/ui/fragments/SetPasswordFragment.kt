@@ -20,6 +20,10 @@ import com.example.my.project.authenticator.extensions.validatePasswordChange
 import com.example.my.project.authenticator.utils.PrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.view.isVisible
+import com.example.my.project.authenticator.analytics.SAVE_APP_PWD_CLICK
+import com.example.my.project.authenticator.analytics.SET_APP_PWD_SCREEN
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 
 @AndroidEntryPoint
 class SetPasswordFragment : Fragment() {
@@ -33,9 +37,9 @@ class SetPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().logScreen(SET_APP_PWD_SCREEN)
 
         binding.apply {
-
             if (PrefsHelper.userPassword.isNotEmpty()) {
                 currentPassword.show()
 //                currentPasswordNotCorrect.beVisible()
@@ -56,6 +60,7 @@ class SetPasswordFragment : Fragment() {
             }
 
             savePassword.setOnDebouncedClickListener {
+                requireActivity().postAnalytics(SAVE_APP_PWD_CLICK)
                 if (currentPassword.isVisible) {
                     val isTrue = PrefsHelper.userPassword.validatePasswordChange(enterCurrentPassword.text.toString(), etNewPassword.text.toString(), etConfirmPassword.text.toString())
                     if (isTrue == "not") {

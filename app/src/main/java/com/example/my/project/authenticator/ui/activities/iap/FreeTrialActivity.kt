@@ -12,6 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.billingclient.api.ProductDetails
 import com.example.my.project.authenticator.R
+import com.example.my.project.authenticator.analytics.IAP_DISMISS_SETTINGS
+import com.example.my.project.authenticator.analytics.IAP_DISMISS_SPLASH
+import com.example.my.project.authenticator.analytics.IAP_SPLASH
+import com.example.my.project.authenticator.analytics.IAP_START_FREE_TRIAL
+import com.example.my.project.authenticator.analytics.logScreen
+import com.example.my.project.authenticator.analytics.postAnalytics
 import com.example.my.project.authenticator.databinding.ActivityFreeTrialBinding
 import com.example.my.project.authenticator.extensions.browse
 import com.example.my.project.authenticator.extensions.formatFreeTrialFooter
@@ -59,6 +65,8 @@ class FreeTrialActivity : BaseActivity() {
             insets
         }
 
+        logScreen(IAP_SPLASH)
+
         isFromSplash = intent?.getBooleanExtra("isFromSplash", false) == true
 
         lifecycleScope.launch {
@@ -78,6 +86,7 @@ class FreeTrialActivity : BaseActivity() {
     private fun handleBackPress() {
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                postAnalytics(IAP_DISMISS_SPLASH)
                 if (isFromSplash) {
                     if (!viewModel.isLanguageShown()) {
                         navigateToLanguageSelection()
@@ -142,6 +151,7 @@ class FreeTrialActivity : BaseActivity() {
     private fun setupClickListeners() {
         binding.apply {
             icClose.setOnClickListener {
+                postAnalytics(IAP_DISMISS_SPLASH)
                 if (isFromSplash) {
                     if (!viewModel.isLanguageShown()) {
                         navigateToLanguageSelection()
@@ -154,6 +164,7 @@ class FreeTrialActivity : BaseActivity() {
             btnBuy.singleClick {
                 try {
                     handleSubscriptionPurchase(selectedProduct)
+                    postAnalytics(IAP_START_FREE_TRIAL)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
